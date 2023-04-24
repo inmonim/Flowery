@@ -4,6 +4,7 @@ import UserMainPage from '../pages/UserMainPage/UserMainPage';
 import SellerMainPage from '../pages/SellerMainPage/SellerMainPage';
 import MyGarden from '../pages/MyGarden/MyGarden';
 import SellerMainLayout from '../layouts/SellerMainLayout';
+import SignInSelectPage from "../pages/SignInSelectPage/SignInSelectPage";
 
 const router = createBrowserRouter([
   {
@@ -13,6 +14,7 @@ const router = createBrowserRouter([
     children: [
       { path: '/', element: <UserMainPage /> },
       { path: '/mygarden', element: <MyGarden /> },
+      { path: "/signinselect", element: <SignInSelectPage /> },
     ],
   },
   {
