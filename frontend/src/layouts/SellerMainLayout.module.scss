@@ -1,15 +1,11 @@
+@import '../assets/styles/variable.scss';
 
-.layout {
-  display: flex;
-  width: 100%;
-  flex-direction: column;
-  justify-content: space-between;
-  min-height: 100vh;
-  //   overflow: hidden;
-}
-.layout-main {
-  width: 100%;
-  position: relative;
-  left: 0;
-  flex: 1;
+.main {
+  @include breakpoint(md) {
+    text-align: center;
+  }
+
+  @include breakpoint(sm) {
+    text-align: right;
+  }
 }
