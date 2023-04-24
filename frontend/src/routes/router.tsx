@@ -2,7 +2,6 @@ import { createBrowserRouter } from 'react-router-dom';
 import MainLayout from '../layouts/MainLayout';
 import MainPage from '../pages/UserMainPage/UserMainPage';
 import SellerMainPage from '../pages/SellerMainPage/SellerMainPage';
-import Landing from '../pages/Landing/Landing';
 import MyGarden from '../pages/MyGarden/MyGarden';
 
 const router = createBrowserRouter([
@@ -13,7 +12,6 @@ const router = createBrowserRouter([
     children: [
       { path: '/', element: <MainPage /> },
       { path: '/seller', element: <SellerMainPage />},
-      { path: '/landing', element: <Landing />},
       { path: '/mygarden', element: <MyGarden />}
     ],
   },
