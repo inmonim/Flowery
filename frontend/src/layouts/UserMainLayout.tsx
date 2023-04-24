@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
 import Container from "../containers/Container";
-import Header from "../components/Common/Header/Header";
+import Header from "../components/Common/Header/UserHeader";
 import styles from "./UserMainLayout.module.scss";
 
 const UserMainLayout = () => {

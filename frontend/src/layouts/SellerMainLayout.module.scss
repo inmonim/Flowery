@@ -1,4 +1,4 @@
-@import '../assets/styles/variable.scss';
+@import "../assets/styles/variable.scss";
 
 .main {
   @include breakpoint(md) {
@@ -6,6 +6,6 @@
   }
 
   @include breakpoint(sm) {
-    text-align: right;
+    padding: 0 3rem;
   }
 }
