@@ -1,0 +1,4 @@
+train: ../3_one_time_data/train/images
+val: ../3_one_time_data/test/images
+nc: 1
+names: ["rose"]
