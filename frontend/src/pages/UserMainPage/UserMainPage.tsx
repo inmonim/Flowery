@@ -1,5 +1,5 @@
 import React from "react";
 
 export default function UserMainPage() {
-  return <div>hellow, world!!!</div>;
+  return <div>이거본문임</div>;
 }
