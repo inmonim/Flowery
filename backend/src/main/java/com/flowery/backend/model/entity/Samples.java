@@ -9,19 +9,19 @@ import javax.persistence.*;
 @Entity
 @Getter
 @NoArgsConstructor
-public class Holydays {
+public class Samples {
 
     @Id
-    @Column(name = "holyday_id")
+    @Column(name = "sample_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int holydayId;
+    private int sampleId;
 
     @ManyToOne
+    @JoinColumn(name = "goods_id")
     @JsonIgnore
-    @JoinColumn(name = "store_id")
-    private Stores StoreId;
+    private Goods goodsId;
 
-    @Column(name = "day")
-    private int day;
+    @Column(name = "price")
+    private String picture;
 
 }

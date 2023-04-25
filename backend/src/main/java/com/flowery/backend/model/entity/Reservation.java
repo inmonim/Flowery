@@ -1,5 +1,6 @@
 package com.flowery.backend.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -17,10 +18,12 @@ public class Reservation {
     private int reservationId;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     @JoinColumn(name = "user_id")
     private Users userId;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     @JoinColumn(name = "goods_id")
     private Goods goodsId;
 
