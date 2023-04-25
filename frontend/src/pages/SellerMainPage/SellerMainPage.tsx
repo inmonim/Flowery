@@ -1,5 +1,10 @@
-import React from 'react';
+import React from "react";
+import ManagePrint from "../../components/Seller/ManagePrint";
 
 export default function SellerMainPage() {
-  return <div>이거판매자임</div>;
+  return (
+    <div>
+      <ManagePrint />
+    </div>
+  );
 }
