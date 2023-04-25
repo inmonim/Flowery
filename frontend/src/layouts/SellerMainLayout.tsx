@@ -5,13 +5,13 @@ import styles from "./SellerMainLayout.module.scss";
 
 const SellerMainLayout = () => {
   return (
-    <div>
+    <div className={styles.body}>
       <Header />
-      <main>
+      <div className={styles.containers}>
         <Container>
           <Outlet />
         </Container>
-      </main>
+      </div>
     </div>
   );
 };
