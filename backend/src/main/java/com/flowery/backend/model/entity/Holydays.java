@@ -1,23 +1,25 @@
 package com.flowery.backend.model.entity;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@Data
 @Entity
 @Getter
 @NoArgsConstructor
-public class Flowers {
+public class Holydays {
 
     @Id
+    @Column(name = "holyday_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "flower_id")
-    private int flowerId;
+    private int holydayId;
 
-    @Column(name = "flower_name")
-    private String flowerName;
+    @ManyToOne
+    @JoinColumn(name = "store_id")
+    private Stores StoreId;
+
+    @Column(name = "day")
+    private int day;
 
 }

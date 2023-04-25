@@ -1,12 +1,13 @@
 package com.flowery.backend.model.entity;
 
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
-@Data
+@Getter
 @NoArgsConstructor
 @Table(name = "users")
 public class Users {

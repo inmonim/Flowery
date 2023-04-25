@@ -1,6 +1,7 @@
 package com.flowery.backend.controller;
 
 
+import com.flowery.backend.model.dto.GoodsDto;
 import com.flowery.backend.model.entity.Goods;
 import com.flowery.backend.model.entity.Stores;
 import com.flowery.backend.model.entity.Users;
@@ -42,7 +43,7 @@ public class Hi {
     }
 
     @GetMapping("goods/hi")
-    public ResponseEntity<List<Goods>> goods(){
+    public ResponseEntity<List<GoodsDto>> goods(){
         return new ResponseEntity<>(goodsService.findAll(), HttpStatus.ACCEPTED);
     }
 
