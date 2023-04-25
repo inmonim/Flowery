@@ -1,0 +1,39 @@
+.image {
+  object-fit: contain;
+  height: 10vh;
+}
+
+.imageInput {
+  display: none;
+}
+
+.letterImage {
+  display: flex;
+  justify-content: center;
+}
+
+.letterPaper {
+  background-image: url("../../assets/letters/Letter1.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  background-color: red;
+  height: 80vh;
+}
+
+.letterContent {
+  margin: 12.5vh; /* 편지지 상단 여백 */
+  margin-left: 7.5em;
+  border: none;
+  background-color: transparent;
+  font-size: 2vh;
+  resize: none;
+  line-height: 4.2vh;
+  width: 20em;
+
+  &:focus {
+    outline: 0cm;
+  }
+}
