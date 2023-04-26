@@ -1,13 +1,15 @@
 import { Outlet } from "react-router-dom";
 import Container from "../containers/Container";
-import Header from "../components/Common/Header/UserHeader";
+import UserHeader from "../components/Common/Header/UserHeader";
 import styles from "./UserMainLayout.module.scss";
 
 const UserMainLayout = () => {
   return (
-    <div className={styles.layout}>
-      <Header />
-      <main className={styles["layout-main"]}>
+    <div className={styles.main}>
+      <div className={styles.header}>
+        <UserHeader />
+      </div>
+      <main>
         <Container>
           <Outlet />
         </Container>
