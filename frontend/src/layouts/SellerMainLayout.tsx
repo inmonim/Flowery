@@ -8,6 +8,7 @@ const SellerMainLayout = () => {
     <div className={styles.body}>
       <Header />
       <div className={styles.containers}>
+        <div className={styles.hello}>꽃집123님 반갑습니다.</div>
         <Container>
           <Outlet />
         </Container>
