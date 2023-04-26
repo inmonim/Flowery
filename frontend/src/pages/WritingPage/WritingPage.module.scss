@@ -1,3 +1,20 @@
+@font-face {
+  font-family: "SDSamliphopangche_Outline";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts-20-12@1.0/SDSamliphopangche_Outline.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+// 김정철 명조
+@font-face {
+  font-family: "KimjungchulMyungjo-Bold";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/KimjungchulMyungjo-Bold.woff2")
+    format("woff2");
+  font-weight: 700;
+  font-style: normal;
+}
+
 .image {
   object-fit: contain;
   height: 10vh;
@@ -45,6 +62,10 @@
   }
 }
 
+.font1 {
+  font-family: "SDSamliphopangche_Outline";
+}
+
 .select1 {
   cursor: pointer;
 }
@@ -75,6 +96,10 @@
   &:focus {
     outline: 0cm;
   }
+}
+
+.font2 {
+  font-family: "KimjungchulMyungjo-Bold";
 }
 
 .select2 {

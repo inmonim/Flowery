@@ -5,10 +5,13 @@ export default function WritingPage() {
   const imageInput = useRef<HTMLInputElement>(null);
   const [image, setImage] = useState<File | null>(null);
   const [letter, setLetter] = useState<number>(1);
+  const [letterForm, setLetterForm] = useState<string>(
+    `${styles[`letterContent${letter}`]} ${styles[`font${letter}`]}`
+  );
   const onCickImageUpload = () => {
     imageInput.current?.click();
   };
-
+  console.log(letter);
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files;
     if (file && file.length > 0) {
@@ -29,17 +32,19 @@ export default function WritingPage() {
         <textarea
           rows={1}
           onChange={handleResizeHeight}
-          className={styles[`letterContent${letter}`]}
+          className={`${styles[`letterContent${letter}`]} ${
+            styles[`font${letter}`]
+          }`}
+          // className={letterForm}
         ></textarea>
       </div>
     );
   };
 
-  const lettersNum: number[] = []
+  const lettersNum: number[] = [];
   for (let i = 1; i <= 3; i++) {
-    lettersNum.push(i)
+    lettersNum.push(i);
   }
-
 
   return (
     // 전체 페이지
@@ -88,6 +93,7 @@ export default function WritingPage() {
           {/* 편지지 */}
           {letterPaper()}
         </div>
+        <div>글씨체</div>
       </div>
       {/* 페이지 이동 */}
       <div className={styles.handlePage}></div>
