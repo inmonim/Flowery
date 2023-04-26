@@ -1,4 +1,4 @@
-@import '../assets/styles/variable.scss';
+@import "../assets/styles/variable.scss";
 
 .main {
   @include breakpoint(md) {
@@ -6,6 +6,42 @@
   }
 
   @include breakpoint(sm) {
-    text-align: right;
+    padding: 0 3rem;
   }
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px;
+
+  position: absolute;
+  width: 100vw;
+
+  min-height: 100vh;
+  height: fit-content;
+
+  /* Neutral/50 */
+
+  background: #fafbfc;
+}
+
+.containers {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 30px 24px 12px;
+  gap: 24px;
+
+  min-height: 100vh;
+  height: fit-content;
+
+  /* Inside auto layout */
+
+  flex: none;
+  order: 1;
+  align-self: stretch;
+  flex-grow: 0;
 }
