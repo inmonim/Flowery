@@ -38,12 +38,13 @@ export default function Reservation() {
         lating: new window.kakao.maps.LatLng(35.313, 129.0103),
       },
     ];
+    var selectedMarker = null;
 
     for (var i = 0; i < positions.length; i++) {
       // 마커 이미지의 이미지 크기 입니다
       var imageSize = new window.kakao.maps.Size(25, 30);
       var clickedImageSize = new window.kakao.maps.Size(35, 40);
-      var selectedMarker = null;
+      var markers = [];
       // 마커 이미지를 생성합니다
       var markerImage = new window.kakao.maps.MarkerImage(imageSrc, imageSize);
       var clikcedMarkerImage = new window.kakao.maps.MarkerImage(
