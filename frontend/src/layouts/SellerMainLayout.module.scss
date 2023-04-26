@@ -1,5 +1,8 @@
 @import "../assets/styles/variable.scss";
-
+@font-face {
+  font-family: "Inter";
+  src: url("../assets/styles/fonts/Inter-SemiBold.ttf");
+}
 .main {
   @include breakpoint(md) {
     text-align: center;
@@ -30,8 +33,6 @@
 .containers {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
   padding: 30px 24px 12px;
   gap: 24px;
 
@@ -44,4 +45,14 @@
   order: 1;
   align-self: stretch;
   flex-grow: 0;
+}
+
+.hello {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 32px;
+  letter-spacing: -0.02em;
+  color: #272d37;
 }
