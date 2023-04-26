@@ -8,12 +8,6 @@
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 10; /* 다른 요소보다 위에 띄우기 */
 
-  // 그냥
-  background-image: url(https://2.bp.blogspot.com/-bPxRUFcgOLY/WnvEZDYv4zI/AAAAAAAAPRY/fnpdkskIkKkylV57fuZhYrLOvtkEpKaIACLcBGAs/s1600/43145rgfdh.gif);
-  background-position: center;
-  background-size: 100vh;
-  background-repeat: no-repeat;
-
   /* 중앙에 위치한 모달 창 */
   display: flex;
   justify-content: center;
@@ -29,7 +23,13 @@
   filter: none;
 }
 
-
 .certification {
-  display: flex;
+}
+
+.password {
+  display: block;
+}
+
+.passwordLabel {
+  z-index: 10;
 }

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import styles from "./NonMemberModal.module.scss";
+import styles from "./SignUpModal.module.scss";
 import { useSetRecoilState } from "recoil";
 
 import phoneNumberState from "../../recoil/atom";
 import { useNavigate } from "react-router-dom";
 
-const NonMemberModal = React.forwardRef<HTMLDivElement, any>((props, ref) => {
+const SignUpModal = React.forwardRef<HTMLDivElement, any>((props, ref) => {
   const [inputPhone, setInputPhone] = useState<string>("");
   const [verify, setVerify] = useState<boolean>(false);
   const [clickVerify, setClickVerify] = useState<boolean>(false);
@@ -57,10 +57,19 @@ const NonMemberModal = React.forwardRef<HTMLDivElement, any>((props, ref) => {
     }
   };
 
+  // 회원가입이 완료됐으면
+  const signUpComplete = () => {
+    // POST 요청
+    // token 저장
+    // atom에 로그인 정보(토큰, 전화번호) 저장
+    alert("회원가입이 완료되었습니다!");
+    navigate("/");
+  };
+
   return (
     <div className={styles.nonMemberModal}>
       <div ref={ref} className={styles.nonMemberModalContent}>
-        <p>전화번호를 인증해주세요!</p>
+        <p>회원가입</p>
         <div className={styles.certification}>
           <input
             type="tel"
@@ -75,20 +84,31 @@ const NonMemberModal = React.forwardRef<HTMLDivElement, any>((props, ref) => {
           </button>
         </div>
         <div>
-          {clickVerify && (
-            <input
-              placeholder="인증번호"
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                setVerifyCode(event.target.value);
-              }}
-              onKeyDown={pressEnter}
-            />
-          )}
+          <input
+            placeholder="인증번호"
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+              setVerifyCode(event.target.value);
+            }}
+            onKeyDown={pressEnter}
+          />
+
+          <input type="button" value="확인" onClick={checkCode} />
         </div>
-        <input type="button" value="확인" onClick={checkCode} />
+        <div>
+          <input type="text" placeholder="아이디" />
+        </div>
+        <div>
+          <input type="text" placeholder="비밀번호" />
+        </div>
+        <div>
+          <input type="text" placeholder="비밀번호 확인" />
+        </div>
+        <div>
+          <button onClick={signUpComplete}>회원가입</button>
+        </div>
       </div>
     </div>
   );
 });
 
-export default NonMemberModal;
+export default SignUpModal;

@@ -4,6 +4,7 @@ import styles from "./WritingPage.module.scss";
 export default function WritingPage() {
   const imageInput = useRef<HTMLInputElement>(null);
   const [image, setImage] = useState<File | null>(null);
+  const [letter, setLetter] = useState<number>(1);
   const onCickImageUpload = () => {
     imageInput.current?.click();
   };
@@ -22,46 +23,70 @@ export default function WritingPage() {
     textarea.currentTarget.style.height = textarea.target.scrollHeight + "px";
   };
 
+  const letterPaper = () => {
+    return (
+      <div className={styles[`letterPaper${letter}`]}>
+        <textarea
+          rows={1}
+          onChange={handleResizeHeight}
+          className={styles[`letterContent${letter}`]}
+        ></textarea>
+      </div>
+    );
+  };
+
+  const lettersNum: number[] = []
+  for (let i = 1; i <= 3; i++) {
+    lettersNum.push(i)
+  }
+
+
   return (
     // 전체 페이지
     <div className={styles.layout}>
       {/* 페이지 내용 */}
       <div className={styles.contents}>
-        {/* 편지지 고르기 */}
-        <div className={styles.selectLetterPaper}></div>
-        {/* 편지 내용 */}
+        {/* 이미지 or 영상 */}
+        <div className={styles.letterImage}>
+          <input
+            type="file"
+            ref={imageInput}
+            onChange={handleFileChange}
+            className={styles.imageInput}
+          ></input>
+          {image ? (
+            <img
+              src={URL.createObjectURL(image)}
+              onClick={onCickImageUpload}
+              className={styles.image}
+            ></img>
+          ) : (
+            <img
+              src={require("../../assets/letters/ImageUpload.png")}
+              onClick={onCickImageUpload}
+              className={styles.image}
+            ></img>
+          )}
+        </div>
+        {/* 편지 */}
         <div className={styles.letter}>
-          {/* 이미지 or 영상 */}
-          <div className={styles.letterImage}>
-            <input
-              type="file"
-              ref={imageInput}
-              onChange={handleFileChange}
-              className={styles.imageInput}
-            ></input>
-            {image ? (
-              <img
-                src={URL.createObjectURL(image)}
-                onClick={onCickImageUpload}
-                className={styles.image}
-              ></img>
-            ) : (
-              <img
-                src={require("../../assets/letters/ImageUpload.png")}
-                onClick={onCickImageUpload}
-                className={styles.image}
-              ></img>
-            )}
+          {/* 편지지 고르기 */}
+          <div className={styles.selectLetterPaper}>
+            편지지 고르기
+            <div>
+              {lettersNum.map((i) => (
+                <div
+                  key={i}
+                  onClick={() => setLetter(i)}
+                  className={styles[`select${i}`]}
+                >
+                  No. {i}
+                </div>
+              ))}
+            </div>
           </div>
           {/* 편지지 */}
-          <div className={styles.letterPaper}>
-            {/* 내용 */}
-            <textarea
-              rows={1}
-              onChange={handleResizeHeight}
-              className={styles.letterContent}
-            ></textarea>
-          </div>
+          {letterPaper()}
         </div>
       </div>
       {/* 페이지 이동 */}
