@@ -24,4 +24,8 @@ public class Users {
 
     @Column(name="phone")
     private String phone;
+
+    @Column(name = "nick_name")
+    private String nickName;
+
 }

@@ -2,12 +2,8 @@ package com.flowery.backend.controller;
 
 
 import com.flowery.backend.model.dto.GoodsDto;
-import com.flowery.backend.model.entity.Goods;
-import com.flowery.backend.model.entity.Stores;
-import com.flowery.backend.model.entity.Users;
-import com.flowery.backend.sevice.GoodsService;
-import com.flowery.backend.sevice.StoresService;
-import com.flowery.backend.sevice.UsersService;
+import com.flowery.backend.model.entity.*;
+import com.flowery.backend.sevice.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -24,12 +20,19 @@ public class Hi {
     private UsersService usersService;
     private StoresService storesService;
     private GoodsService goodsService;
+    private FlowerService flowerService;
+    private MessagesService messagesService;
+    private MygardensService mygardensService;
 
 
-    Hi(UsersService usersService, StoresService storesService, GoodsService goodsService){
+    Hi(UsersService usersService, StoresService storesService, GoodsService goodsService, FlowerService flowerService
+    ,MessagesService messagesService, MygardensService mygardensService){
         this.usersService = usersService;
         this.storesService = storesService;
         this.goodsService = goodsService;
+        this.flowerService = flowerService;
+        this.messagesService = messagesService;
+        this.mygardensService = mygardensService;
     }
 
     @GetMapping("hi")
@@ -46,5 +49,16 @@ public class Hi {
     public ResponseEntity<List<GoodsDto>> goods(){
         return new ResponseEntity<>(goodsService.findAll(), HttpStatus.ACCEPTED);
     }
+
+    @GetMapping("flower/hi")
+    public ResponseEntity<Flowers> flower(){
+        return new ResponseEntity<>(flowerService.findFlower(1), HttpStatus.ACCEPTED);
+    }
+
+    @GetMapping("message/hi")
+    public ResponseEntity<Messages> message(){
+        return new ResponseEntity<>(messagesService.findById(1), HttpStatus.ACCEPTED);
+    }
+
 
 }

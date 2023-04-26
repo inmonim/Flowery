@@ -15,7 +15,7 @@ public class Messages {
     @Column(name = "message_id")
     private int messageId;
 
-    @Column(name = "mesage")
+    @Column(name = "message")
     private String message;
 
     @Column(name = "video")

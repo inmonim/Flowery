@@ -26,7 +26,4 @@ public class Seller {
     @OneToOne(fetch = FetchType.LAZY)
     private Stores storeId;
 
-    @Column(name = "name")
-    private String name;
-
 }

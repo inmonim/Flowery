@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -24,8 +24,11 @@ public class Reservation {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
-    @JoinColumn(name = "goods_id")
-    private Goods goodsId;
+    @JoinColumn(name = "store_id")
+    private Stores storesId;
+
+    @Column(name = "goods_name")
+    private String goodsName;
 
     @Column(name = "price")
     private int price;
@@ -34,7 +37,7 @@ public class Reservation {
     private String demand;
 
     @Column(name = "date")
-    private Date date;
+    private LocalDateTime date;
 
     @Column(name = "print")
     private int print;
