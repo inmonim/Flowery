@@ -25,7 +25,7 @@ public class Reservation {
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
     @JoinColumn(name = "store_id")
-    private Stores storesId;
+    private Stores storeId;
 
     @Column(name = "goods_name")
     private String goodsName;
@@ -39,8 +39,8 @@ public class Reservation {
     @Column(name = "date")
     private LocalDateTime date;
 
-    @Column(name = "print")
-    private int print;
+    @Column(name = "printed")
+    private int printed;
 
     @Column(name = "permission")
     private int permission;

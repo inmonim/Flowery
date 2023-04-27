@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -28,7 +29,7 @@ public class Sales {
     private Reservation reservationId;
 
     @Column(name = "sale_date")
-    private Date saleDate;
+    private LocalDateTime saleDate;
 
     @Column(name = "count")
     private int count;

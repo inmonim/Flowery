@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
-@RequestMapping("reservation/")
+@RequestMapping("/reservation/")
 public class ReservationController {
 
     // 예약이 여기 모여있음 (예약 관련 CRUD)

@@ -21,7 +21,7 @@ public class Samples {
     @JsonIgnore
     private Goods goodsId;
 
-    @Column(name = "price")
+    @Column(name = "picture")
     private String picture;
 
 }

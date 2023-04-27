@@ -15,6 +15,8 @@ import java.util.List;
 @Service
 public class ReservationService {
 
+    // 철거!
+
     private ReservationRepository reservationRepository;
 
     ReservationService(ReservationRepository reservationRepository){
@@ -23,7 +25,7 @@ public class ReservationService {
 
     public List<ReservationDto> findTodayReservation(ReservationDto dto){
 
-        LocalDateTime yesterday = LocalDateTime.of(LocalDate.from(dto.getDate().minusDays(1)), LocalTime.of(0,0,0));
+        LocalDateTime yesterday = LocalDateTime.of(LocalDate.from(dto.getDate()), LocalTime.of(0,0,0));
         LocalDateTime today = LocalDateTime.of(LocalDate.from(dto.getDate()), LocalTime.of(23,59,59));
 
         List<Reservation> list = reservationRepository.findAllByDateBetween(yesterday,today);
@@ -37,9 +39,9 @@ public class ReservationService {
             tmp.setPrice(list.get(i).getPrice());
             tmp.setDemand(list.get(i).getDemand());
             tmp.setPermission(list.get(i).getPermission());
-            tmp.setPrinted(list.get(i).getPrint());
+            tmp.setPrinted(list.get(i).getPrinted());
             tmp.setUserId(list.get(i).getUserId().getUsersId());
-            tmp.setStoreId(list.get(i).getStoresId().getStoreId());
+            tmp.setStoreId(list.get(i).getStoreId().getStoreId());
             tmp.setGoodsName(list.get(i).getGoodsName());
 
             result.add(tmp);

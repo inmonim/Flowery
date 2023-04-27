@@ -21,7 +21,6 @@ public class MygardensController {
         this.mygardensService = mygardensService;
     }
 
-
     @GetMapping("id")
     public ResponseEntity<List<MygardensDto>> findAllByUserId(){
         return new ResponseEntity<>(mygardensService.findAllByUserId(1), HttpStatus.ACCEPTED);
