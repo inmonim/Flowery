@@ -1,8 +1,10 @@
 @import "../assets/styles/variable.scss";
+
 @font-face {
   font-family: "Inter";
   src: url("../assets/styles/fonts/Inter-SemiBold.ttf");
 }
+
 .main {
   @include breakpoint(md) {
     text-align: center;
@@ -18,15 +20,10 @@
   flex-direction: column;
   align-items: flex-start;
   padding: 0px;
-
   position: absolute;
   width: 100vw;
-
   min-height: 100vh;
   height: fit-content;
-
-  /* Neutral/50 */
-
   background: #fafbfc;
 }
 
@@ -35,24 +32,39 @@
   flex-direction: column;
   padding: 30px 24px 12px;
   gap: 24px;
-
-  min-height: 100vh;
   height: fit-content;
-
-  /* Inside auto layout */
-
   flex: none;
   order: 1;
   align-self: stretch;
   flex-grow: 0;
 }
 
-.hello {
-  font-family: "Inter";
-  font-style: normal;
-  font-weight: 600;
-  font-size: 24px;
-  line-height: 32px;
-  letter-spacing: -0.02em;
-  color: #272d37;
+.bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  display: flex;
+  align-items: center;
+}
+
+.modal {
+  width: fit-content;
+  background-color: #fff;
+  padding: 0.5rem 1rem 0.5rem 1rem;
+  box-shadow: 0 0 16px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease-in-out;
+  /* transform: translateX(15rem); */
+  overflow-y: auto;
+  box-sizing: border-box;
+  position: absolute;
+  top: 60px;
+  right: 0;
+}
+
+.modal.show {
+  transform: translateX(0);
 }

@@ -7,7 +7,7 @@ import SellerMainLayout from "../layouts/SellerMainLayout";
 import Reservation from "../pages/Reservation/Reservation";
 import SignInSelectPage from "../pages/SignInSelectPage/SignInSelectPage";
 import WritingPage from "../pages/WritingPage/WritingPage";
-
+import SellerLoginPage from "../pages/SellerLoginPage/SellerLoginPage";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -25,7 +25,10 @@ const router = createBrowserRouter([
     path: "/",
     element: <SellerMainLayout />,
     // errorElement: <NotFound />, // 라우터에 없는 경로로 이동시 NotFound 컴포넌트 화면에 띄운다.
-    children: [{ path: "/seller", element: <SellerMainPage /> }],
+    children: [
+      { path: "/seller", element: <SellerMainPage /> },
+      { path: "/seller/login", element: <SellerLoginPage /> },
+    ],
   },
 ]);
 
