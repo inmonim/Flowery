@@ -10,12 +10,13 @@
   justify-content: space-between;
   align-items: center;
   padding: 10px 16px 10px 10px;
-
+  z-index: 1000;
   width: 100vw;
   height: 60px;
 
   /* Base/White */
-
+  position: sticky;
+  top: 0;
   background: #ffffff;
   /* Neutral/600 */
 
