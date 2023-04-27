@@ -1,23 +1,110 @@
-.image {
-  object-fit: contain;
-  height: 10vh;
+///////////////////////////////////////////////////           글씨체           ///////////////////////////////////////////////////////
+// 삼립호빵체
+@font-face {
+  font-family: "SDSamliphopangche_Outline";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts-20-12@1.0/SDSamliphopangche_Outline.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
 }
 
-.imageInput {
-  display: none;
+.letterFont1 {
+  font-family: "SDSamliphopangche_Outline";
 }
 
-.letter {
-  display: flex;
-  justify-content: center;
+// 김정철 명조
+@font-face {
+  font-family: "KimjungchulMyungjo-Bold";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/KimjungchulMyungjo-Bold.woff2")
+    format("woff2");
+  font-weight: 700;
+  font-style: normal;
 }
 
-.letterImage {
-  display: flex;
-  justify-content: center;
+.letterFont2 {
+  font-family: "KimjungchulMyungjo-Bold";
 }
 
-////////////////////////// 1번 편지지 ////////////////////////////////////
+// 안성탕면체
+@font-face {
+  font-family: "Ansungtangmyun-Bold";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/Ansungtangmyun-Bold.woff2")
+    format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.letterFont3 {
+  font-family: "Ansungtangmyun-Bold";
+}
+
+// 고령딸기체
+@font-face {
+  font-family: "GoryeongStrawberry";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-01@1.0/GoryeongStrawberry.woff2")
+    format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.letterFont4 {
+  font-family: "GoryeongStrawberry";
+}
+
+// 제주돌담체
+@font-face {
+  font-family: "EF_jejudoldam";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2210-EF@1.0/EF_jejudoldam.woff2")
+    format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.letterFont5 {
+  font-family: "EF_jejudoldam";
+}
+
+// 평창평화체
+@font-face {
+  font-family: "PyeongChangPeace-Bold";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2206-02@1.0/PyeongChangPeace-Bold.woff2")
+    format("woff2");
+  font-weight: 700;
+  font-style: normal;
+}
+
+.letterFont6 {
+  font-family: "PyeongChangPeace-Bold";
+}
+
+// 조선100년체
+@font-face {
+  font-family: "ChosunCentennial";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2206-02@1.0/ChosunCentennial.woff2")
+    format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.letterFont7 {
+  font-family: "ChosunCentennial";
+}
+
+// 가나초콜릿체
+@font-face {
+  font-family: "ghanachoco";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.0/ghanachoco.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.letterFont8 {
+  font-family: "ghanachoco";
+}
+
+///////////////////////////////////////////////////           편지지           ///////////////////////////////////////////////////////
+// 1번 편지지
 .letterPaper1 {
   background-image: url("../../assets/letters/Letter1.png");
   background-repeat: no-repeat;
@@ -29,9 +116,9 @@
   background-color: red;
   height: 80vh;
 }
-
+// 편지지 내용
 .letterContent1 {
-  margin: 12.5vh; /* 편지지 상단 여백 */
+  margin: 12.5vh;
   margin-left: 7.5em;
   border: none;
   background-color: transparent;
@@ -39,17 +126,16 @@
   resize: none;
   line-height: 4.2vh;
   width: 20em;
+  height: 60vh;
+  max-height: 75%;
+  overflow: hidden;
 
   &:focus {
     outline: 0cm;
   }
 }
 
-.select1 {
-  cursor: pointer;
-}
-
-////////////////////////// 2번 편지지 ////////////////////////////////////
+// 2번 편지지
 .letterPaper2 {
   background-image: url("../../assets/letters/Letter2.png");
   background-repeat: no-repeat;
@@ -77,11 +163,7 @@
   }
 }
 
-.select2 {
-  cursor: pointer;
-}
-
-////////////////////////// 3번 편지지 ////////////////////////////////////
+// 3번 편지지
 .letterPaper3 {
   background-image: url("../../assets/letters/Letter3.png");
   background-repeat: no-repeat;
@@ -109,10 +191,51 @@
   }
 }
 
-.select3 {
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+.handlePage {
+  display: flex;
+  justify-content: center;
+}
+
+.image {
+  object-fit: contain;
+  height: 10vh;
+}
+
+.imageInput {
+  display: none;
+}
+
+.letter {
+  display: flex;
+  justify-content: center;
+}
+
+.letterImg {
+  width: 80%;
+}
+
+.letterFonts {
+  padding: 2rem;
+}
+
+.uploadImage {
+  display: flex;
+  justify-content: center;
+}
+
+.select {
   cursor: pointer;
 }
 
 .selectLetterPaper {
   margin-right: 3rem;
+  height: 80vh;
+  width: 10vw;
+  background-color: blue;
+}
+
+.selectLetterFont {
+  display: flex;
+  justify-content: center;
 }
