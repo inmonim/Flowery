@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./SellerLoginPage.module.scss";
-
+import InputForm from "../../components/Common/InputForm";
 export default function SellerLogin() {
   return (
     <>
@@ -11,7 +11,12 @@ export default function SellerLogin() {
         </div>
       </div>
       <div className={styles.loginbox}>
-        <div className={styles.subloginbox}>hihi</div>
+        <div className={styles.subloginbox}>
+          <InputForm label="아이디" placeholder="아이디를 입력해주세요" />
+          <InputForm label="비밀번호" placeholder="비밀번호를 입력해주세요" />
+          <div className={styles.find}>ID/PW 찾기</div>
+          <div className={styles.loginbtn}>로그인</div>
+        </div>
       </div>
     </>
   );
