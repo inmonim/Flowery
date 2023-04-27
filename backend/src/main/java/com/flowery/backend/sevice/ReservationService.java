@@ -15,7 +15,7 @@ import java.util.List;
 @Service
 public class ReservationService {
 
-    // 철거!
+    // 예약 거부, 승인, 확인 등이 여기 있음
 
     private ReservationRepository reservationRepository;
 
