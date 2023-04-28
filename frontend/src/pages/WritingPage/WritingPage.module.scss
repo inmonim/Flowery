@@ -110,7 +110,6 @@
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
-  display: flex;
   justify-content: center;
   justify-items: center;
   background-color: red;
@@ -122,6 +121,7 @@
   margin-left: 7.5em;
   border: none;
   background-color: transparent;
+  // background-color: blue;
   font-size: 2vh;
   resize: none;
   line-height: 4.2vh;
@@ -141,7 +141,6 @@
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
-  display: flex;
   justify-content: center;
   justify-items: center;
   background-color: red;
@@ -169,7 +168,6 @@
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
-  display: flex;
   justify-content: center;
   justify-items: center;
   background-color: red;
@@ -192,6 +190,18 @@
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+.button {
+  width: 100%;
+}
+
+.currentPage {
+  display: block;
+}
+
+.cursor {
+  cursor: pointer;
+}
+
 .handlePage {
   display: flex;
   justify-content: center;
@@ -200,6 +210,7 @@
 .image {
   object-fit: contain;
   height: 10vh;
+  cursor: pointer;
 }
 
 .imageInput {
@@ -213,29 +224,39 @@
 
 .letterImg {
   width: 80%;
+  cursor: pointer;
 }
 
 .letterFonts {
   padding: 2rem;
 }
 
-.uploadImage {
+.paper {
   display: flex;
-  justify-content: center;
 }
 
 .select {
-  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .selectLetterPaper {
+  display: flex;
   margin-right: 3rem;
   height: 80vh;
   width: 10vw;
+  justify-content: center;
+  align-items: center;
   background-color: blue;
 }
 
 .selectLetterFont {
+  display: flex;
+  justify-content: center;
+}
+
+.uploadImage {
   display: flex;
   justify-content: center;
 }

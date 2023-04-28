@@ -1,18 +1,56 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styles from "./WritingPage.module.scss";
+import { useRecoilState } from "recoil";
+import {
+  imageState,
+  letterPaperState,
+  letterFontState,
+  totalTextState,
+} from "../../recoil/atom";
+import PreviewModal from "./PreviewModal";
 
 export default function WritingPage() {
-  const [image, setImage] = useState<File | null>(null);
-  const [letterPaper, setLetterPaper] = useState<number>(1);
-  const [letterFont, setLetterFont] = useState<number>(1);
-  const [totalText, setTotalText] = useState<string[]>([]);
-  const [currentText, setCurrentText] = useState<string>("");
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const [image, setImage] = useRecoilState<File | null>(imageState);
+  const [letterPaper, setLetterPaper] =
+    useRecoilState<number>(letterPaperState);
+  const [letterFont, setLetterFont] = useRecoilState<number>(letterFontState);
+  const [letterContent, setLetterContent] =
+    useRecoilState<string>(totalTextState);
+  const [totalText, setTotalText] = useState<Array<string[]>>([]);
+  const [currentText, setCurrentText] = useState<string[]>([""]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [startIndex, setStartIndex] = useState<number>(0);
   const visibleFontsCount = 4;
 
   const imageInput = useRef<HTMLInputElement>(null);
+  const modalRef = useRef<HTMLDivElement>(null);
 
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
+
+  // Modal 이외의 곳을 클릭 하면 Modal 닫힘
+  const handleClickOutside = (event: MouseEvent) => {
+    if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+      console.log("ㅇ");
+      setShowModal(false);
+    }
+  };
+
+  // esc를 누르면 Modal 닫힘
+  const handleKeyDown = (event: KeyboardEvent) => {
+    if (event.code === "Escape") {
+      setShowModal(false);
+    }
+  };
+
+  // 이미지 업로드
   const onCickImageUpload = () => {
     imageInput.current?.click();
   };
@@ -24,11 +62,13 @@ export default function WritingPage() {
     }
   };
 
+  // 편지지 종류 갯수
   const letterPapers: number[] = [];
   for (let i = 1; i <= 3; i++) {
     letterPapers.push(i);
   }
 
+  // 글씨체 종류
   const letterFonts: string[] = [
     "삼립호빵체",
     "김정철명조",
@@ -47,21 +87,65 @@ export default function WritingPage() {
     const { scrollHeight, clientHeight } = textarea;
     if (scrollHeight > clientHeight) {
       textarea.style.height = "100%";
-      textarea.value = currentText;
+      [textarea.value] = currentText;
     } else {
-      setCurrentText(event.target.value);
+      setCurrentText([event.target.value]);
     }
   };
 
+  // 이전 페이지 버튼
+  const prevPage = () => {
+    // if (totalText.length < currentPage) {
+    //   totalText.push(currentText);
+    // } else {
+    totalText[currentPage - 1] = currentText;
+    // }
+    setCurrentText(totalText[currentPage - 2]);
+    setCurrentPage(currentPage - 1);
+  };
+
+  // 다음 페이지 버튼
   const nextPage = () => {
-    setTotalText([...totalText, currentText]);
-    setCurrentText("");
-    setCurrentPage(currentPage);
+    if (totalText.length < currentPage + 1) {
+      totalText[currentPage - 1] = currentText;
+      totalText.push([""]);
+      setCurrentText([""]);
+    } else {
+      totalText[currentPage - 1] = currentText;
+      setCurrentText(totalText[currentPage]);
+    }
+    setCurrentPage(currentPage + 1);
+  };
+
+  // 편지 내용
+  const currentLetter = () => {
+    return (
+      <textarea
+        autoFocus
+        rows={14}
+        onChange={handleTextareaHeight}
+        value={currentText}
+        className={`${styles[`letterContent${letterPaper}`]} ${
+          styles[`letterFont${letterFont}`]
+        }`}
+      ></textarea>
+    );
+  };
+
+  // 다음으로 버튼
+  const submitButton = () => {
+    totalText[currentPage - 1] = currentText;
+    const totalContent = totalText.map((subArr) => subArr[0]).join("^.^");
+    setLetterContent(totalContent);
+    setShowModal(true);
   };
 
   return (
     // 전체 페이지
     <div className={styles.layout}>
+      {showModal && (
+        <PreviewModal ref={modalRef} onClose={() => setShowModal(false)} />
+      )}
       {/* 페이지 내용 */}
       <div className={styles.contents}>
         {/* 이미지 or 영상 */}
@@ -90,16 +174,12 @@ export default function WritingPage() {
         <div className={styles.letter}>
           {/* 편지지 고르기 */}
           <div className={styles.selectLetterPaper}>
-            편지지 고르기
             <div>
               {letterPapers.map((i) => (
-                <div
-                  key={i}
-                  onClick={() => setLetterPaper(i)}
-                  className={styles.select}
-                >
+                <div key={i} className={styles.select}>
                   <img
                     src={require(`../../assets/letters/Letter${i}.png`)}
+                    onClick={() => setLetterPaper(i)}
                     className={styles.letterImg}
                   />
                 </div>
@@ -107,19 +187,22 @@ export default function WritingPage() {
             </div>
           </div>
           {/* 편지지 */}
-          <button>이전 페이지</button>
-          <div className={styles[`letterPaper${letterPaper}`]}>
-            <textarea
-              autoFocus
-              rows={14}
-              onChange={handleTextareaHeight}
-              value={currentText}
-              className={`${styles[`letterContent${letterPaper}`]} ${
-                styles[`letterFont${letterFont}`]
-              }`}
-            ></textarea>
+          <div className={styles.paper}>
+            <div className={styles.button}>
+              {currentPage - 1 > 0 && (
+                <button onClick={prevPage}>이전 페이지</button>
+              )}
+            </div>
+            <div className={styles[`letterPaper${letterPaper}`]}>
+              {currentLetter()}
+              <div className={styles.currentPage}>{currentPage}page</div>
+            </div>
+            <div className={styles.button}>
+              {currentPage + 1 < 6 && (
+                <button onClick={nextPage}>다음 페이지</button>
+              )}
+            </div>
           </div>
-          <button onClick={nextPage}>다음 페이지</button>
         </div>
         {/* 글씨체 고르기 */}
         <div className={styles.selectLetterFont}>
@@ -140,7 +223,7 @@ export default function WritingPage() {
                 className={styles.letterFonts}
               >
                 <div
-                  className={`${styles.select} ${
+                  className={`${styles.cursor} ${
                     styles[`letterFont${startIndex + i + 1}`]
                   } `}
                 >
@@ -159,8 +242,8 @@ export default function WritingPage() {
       {/* 페이지 이동 */}
       <div className={styles.handlePage}>
         <input type="button" value="이전으로" />
-        <input type="button" value="건너뛰기" />
-        <input type="button" value="다음으로" />
+        <input type="button" value="건너뛰기" onClick={submitButton} />
+        <button onClick={submitButton}>다음으로</button>
       </div>
     </div>
   );
