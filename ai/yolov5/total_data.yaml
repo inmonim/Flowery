@@ -1,4 +1,5 @@
 train: ../5_total_data/train/images
 val: ../5_total_data/test/images
-nc: 5
-names: ["rose", "sunflower", "tulip", "carnation", "gerbera"]
+nc: 7
+names:
+  ["rose", "sunflower", "tulip", "carnation", "gerbera", "lily", "lisianthus"]
