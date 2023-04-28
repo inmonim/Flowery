@@ -6,6 +6,7 @@ module.exports = {
     extend: {
       colors: {
         sub: "#FFFAF5",
+        b_bottom: "#EADED0",
       },
     },
   },
