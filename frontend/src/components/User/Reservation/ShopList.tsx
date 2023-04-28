@@ -30,7 +30,7 @@ export default function ShopList() {
           <div className="w-20 h-20 overflow-hidden rounded-full border-solid border-2">
             <img src={shop.profile} alt={shop.title} />
           </div>
-          <div>flower</div>
+          <div>flowery</div>
         </div>
       ))}
     </div>
