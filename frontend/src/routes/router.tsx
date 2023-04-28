@@ -8,6 +8,8 @@ import Reservation from "../components/User/Reservation/Reservation";
 import SignInSelectPage from "../pages/SignInSelectPage/SignInSelectPage";
 import WritingPage from "../pages/WritingPage/WritingPage";
 import SellerLoginPage from "../pages/SellerLoginPage/SellerLoginPage";
+import ReservationOption from "../components/User/Reservation/ReservationOption";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -16,6 +18,7 @@ const router = createBrowserRouter([
     children: [
       { path: "/", element: <UserMainPage /> },
       { path: "/reservation", element: <Reservation /> },
+      { path: "/reservationoption", element: <ReservationOption /> },
       { path: "/mygarden", element: <MyGarden /> },
       { path: "/signinselect", element: <SignInSelectPage /> },
       { path: "/writing", element: <WritingPage /> },

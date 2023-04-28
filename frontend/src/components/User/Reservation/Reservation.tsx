@@ -83,7 +83,7 @@ export default function Reservation() {
           ))}
         </Map>
       </div>
-      <div className="flex-auto absolute z-10 bg-sub rounded-xl inset-x-0 bottom-0 h-80 ">
+      <div className="flex-auto absolute z-10 rounded-xl inset-x-0 bottom-0 h-80 overflow-scroll ">
         <ShopList />
       </div>
     </div>
