@@ -4,7 +4,7 @@ import UserMainPage from "../pages/UserMainPage/UserMainPage";
 import SellerMainPage from "../pages/SellerMainPage/SellerMainPage";
 import MyGarden from "../pages/MyGarden/MyGarden";
 import SellerMainLayout from "../layouts/SellerMainLayout";
-import Reservation from "../pages/Reservation/Reservation";
+import Reservation from "../components/User/Reservation/Reservation";
 import SignInSelectPage from "../pages/SignInSelectPage/SignInSelectPage";
 import WritingPage from "../pages/WritingPage/WritingPage";
 import SellerLoginPage from "../pages/SellerLoginPage/SellerLoginPage";
