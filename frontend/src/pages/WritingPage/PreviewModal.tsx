@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import styles from "./NonMemberModal.module.scss";
+import styles from "./PreviewModal.module.scss";
 import { useSetRecoilState } from "recoil";
 
 import { phoneNumberState } from "../../recoil/atom";
 import { useNavigate } from "react-router-dom";
 
-const NonMemberModal = React.forwardRef<HTMLDivElement, any>((props, ref) => {
+const PreviewModal = React.forwardRef<HTMLDivElement, any>((props, ref) => {
   const [inputPhone, setInputPhone] = useState<string>("");
   const [verify, setVerify] = useState<boolean>(false);
   const [clickVerify, setClickVerify] = useState<boolean>(false);
@@ -91,4 +91,4 @@ const NonMemberModal = React.forwardRef<HTMLDivElement, any>((props, ref) => {
   );
 });
 
-export default NonMemberModal;
+export default PreviewModal;

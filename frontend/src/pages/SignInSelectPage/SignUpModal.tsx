@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styles from "./SignUpModal.module.scss";
 import { useSetRecoilState } from "recoil";
 
-import phoneNumberState from "../../recoil/atom";
+import { phoneNumberState } from "../../recoil/atom";
 import { useNavigate } from "react-router-dom";
 
 const SignUpModal = React.forwardRef<HTMLDivElement, any>((props, ref) => {

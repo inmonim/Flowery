@@ -10,6 +10,7 @@
 
 .letterFont1 {
   font-family: "SDSamliphopangche_Outline";
+  cursor: pointer;
 }
 
 // 김정철 명조
@@ -23,6 +24,7 @@
 
 .letterFont2 {
   font-family: "KimjungchulMyungjo-Bold";
+  cursor: pointer;
 }
 
 // 안성탕면체
@@ -36,6 +38,7 @@
 
 .letterFont3 {
   font-family: "Ansungtangmyun-Bold";
+  cursor: pointer;
 }
 
 // 고령딸기체
@@ -49,6 +52,7 @@
 
 .letterFont4 {
   font-family: "GoryeongStrawberry";
+  cursor: pointer;
 }
 
 // 제주돌담체
@@ -62,6 +66,7 @@
 
 .letterFont5 {
   font-family: "EF_jejudoldam";
+  cursor: pointer;
 }
 
 // 평창평화체
@@ -75,6 +80,7 @@
 
 .letterFont6 {
   font-family: "PyeongChangPeace-Bold";
+  cursor: pointer;
 }
 
 // 조선100년체
@@ -88,6 +94,7 @@
 
 .letterFont7 {
   font-family: "ChosunCentennial";
+  cursor: pointer;
 }
 
 // 가나초콜릿체
@@ -101,6 +108,7 @@
 
 .letterFont8 {
   font-family: "ghanachoco";
+  cursor: pointer;
 }
 
 ///////////////////////////////////////////////////           편지지           ///////////////////////////////////////////////////////
@@ -110,7 +118,6 @@
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
-  display: flex;
   justify-content: center;
   justify-items: center;
   background-color: red;
@@ -122,6 +129,7 @@
   margin-left: 7.5em;
   border: none;
   background-color: transparent;
+  // background-color: blue;
   font-size: 2vh;
   resize: none;
   line-height: 4.2vh;
@@ -141,7 +149,6 @@
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
-  display: flex;
   justify-content: center;
   justify-items: center;
   background-color: red;
@@ -169,7 +176,6 @@
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
-  display: flex;
   justify-content: center;
   justify-items: center;
   background-color: red;
@@ -192,6 +198,14 @@
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+.button {
+  width: 100%;
+}
+
+.currentPage {
+  display: block;
+}
+
 .handlePage {
   display: flex;
   justify-content: center;
@@ -200,6 +214,7 @@
 .image {
   object-fit: contain;
   height: 10vh;
+  cursor: pointer;
 }
 
 .imageInput {
@@ -213,29 +228,39 @@
 
 .letterImg {
   width: 80%;
+  cursor: pointer;
 }
 
 .letterFonts {
   padding: 2rem;
 }
 
-.uploadImage {
+.paper {
   display: flex;
-  justify-content: center;
 }
 
 .select {
-  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .selectLetterPaper {
+  display: flex;
   margin-right: 3rem;
   height: 80vh;
   width: 10vw;
+  justify-content: center;
+  align-items: center;
   background-color: blue;
 }
 
 .selectLetterFont {
+  display: flex;
+  justify-content: center;
+}
+
+.uploadImage {
   display: flex;
   justify-content: center;
 }
