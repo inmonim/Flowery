@@ -38,6 +38,7 @@ export default function WritingPage() {
   // Modal 이외의 곳을 클릭 하면 Modal 닫힘
   const handleClickOutside = (event: MouseEvent) => {
     if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+      console.log("ㅇ");
       setShowModal(false);
     }
   };
@@ -138,10 +139,13 @@ export default function WritingPage() {
     setLetterContent(totalContent);
     setShowModal(true);
   };
-  console.log(showModal)
+
   return (
     // 전체 페이지
     <div className={styles.layout}>
+      {showModal && (
+        <PreviewModal ref={modalRef} onClose={() => setShowModal(false)} />
+      )}
       {/* 페이지 내용 */}
       <div className={styles.contents}>
         {/* 이미지 or 영상 */}
@@ -239,10 +243,7 @@ export default function WritingPage() {
       <div className={styles.handlePage}>
         <input type="button" value="이전으로" />
         <input type="button" value="건너뛰기" onClick={submitButton} />
-        <button onClick={submitButton} >다음으로</button>
-        {showModal && (
-          <PreviewModal ref={modalRef} onClose={() => setShowModal(false)} />
-        )}
+        <button onClick={submitButton}>다음으로</button>
       </div>
     </div>
   );
