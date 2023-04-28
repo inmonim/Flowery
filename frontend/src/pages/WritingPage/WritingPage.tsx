@@ -133,16 +133,12 @@ export default function WritingPage() {
 
   // 다음으로 버튼
   const submitButton = () => {
-    // if (totalText.length < currentPage+1) {
-    //   totalText.push(currentText);
-    // } else {
     totalText[currentPage - 1] = currentText;
-    // }
     const totalContent = totalText.map((subArr) => subArr[0]).join("^.^");
     setLetterContent(totalContent);
     setShowModal(true);
   };
-
+  console.log(showModal)
   return (
     // 전체 페이지
     <div className={styles.layout}>
@@ -223,7 +219,7 @@ export default function WritingPage() {
                 className={styles.letterFonts}
               >
                 <div
-                  className={`${styles.select} ${
+                  className={`${styles.cursor} ${
                     styles[`letterFont${startIndex + i + 1}`]
                   } `}
                 >
@@ -243,7 +239,7 @@ export default function WritingPage() {
       <div className={styles.handlePage}>
         <input type="button" value="이전으로" />
         <input type="button" value="건너뛰기" onClick={submitButton} />
-        <input type="button" value="다음으로" onClick={submitButton} />
+        <button onClick={submitButton} >다음으로</button>
         {showModal && (
           <PreviewModal ref={modalRef} onClose={() => setShowModal(false)} />
         )}

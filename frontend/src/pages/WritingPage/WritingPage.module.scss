@@ -10,7 +10,6 @@
 
 .letterFont1 {
   font-family: "SDSamliphopangche_Outline";
-  cursor: pointer;
 }
 
 // 김정철 명조
@@ -24,7 +23,6 @@
 
 .letterFont2 {
   font-family: "KimjungchulMyungjo-Bold";
-  cursor: pointer;
 }
 
 // 안성탕면체
@@ -38,7 +36,6 @@
 
 .letterFont3 {
   font-family: "Ansungtangmyun-Bold";
-  cursor: pointer;
 }
 
 // 고령딸기체
@@ -52,7 +49,6 @@
 
 .letterFont4 {
   font-family: "GoryeongStrawberry";
-  cursor: pointer;
 }
 
 // 제주돌담체
@@ -66,7 +62,6 @@
 
 .letterFont5 {
   font-family: "EF_jejudoldam";
-  cursor: pointer;
 }
 
 // 평창평화체
@@ -80,7 +75,6 @@
 
 .letterFont6 {
   font-family: "PyeongChangPeace-Bold";
-  cursor: pointer;
 }
 
 // 조선100년체
@@ -94,7 +88,6 @@
 
 .letterFont7 {
   font-family: "ChosunCentennial";
-  cursor: pointer;
 }
 
 // 가나초콜릿체
@@ -108,7 +101,6 @@
 
 .letterFont8 {
   font-family: "ghanachoco";
-  cursor: pointer;
 }
 
 ///////////////////////////////////////////////////           편지지           ///////////////////////////////////////////////////////
@@ -204,6 +196,10 @@
 
 .currentPage {
   display: block;
+}
+
+.cursor {
+  cursor: pointer;
 }
 
 .handlePage {
