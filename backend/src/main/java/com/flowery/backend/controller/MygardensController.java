@@ -1,7 +1,8 @@
 package com.flowery.backend.controller;
 
+import com.flowery.backend.model.dto.MessagesDto;
 import com.flowery.backend.model.dto.MygardensDto;
-import com.flowery.backend.model.entity.Mygardens;
+import com.flowery.backend.model.entity.Messages;
 import com.flowery.backend.sevice.MygardensService;
 import com.google.zxing.*;
 import com.google.zxing.MultiFormatWriter;
@@ -13,19 +14,19 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("myGarden/")
 public class MygardensController {
 
     private MygardensService mygardensService;
+
 
     MygardensController(MygardensService mygardensService){
         this.mygardensService = mygardensService;
@@ -36,6 +37,17 @@ public class MygardensController {
         System.out.println("hhh");
         return new ResponseEntity<>(mygardensService.findAllByUserId(1), HttpStatus.ACCEPTED);
     }
+
+
+    @PostMapping("get-card")
+    public ResponseEntity<Messages> findByMessageId(@RequestBody Map<String, Integer> requestData) {
+
+        int a = requestData.get("messageId");
+
+        return new ResponseEntity<>(mygardensService.findByMessageId(a), HttpStatus.ACCEPTED);
+
+    }
+
 
     @GetMapping("qrTest")
     public Object createQr(@RequestParam String url) throws WriterException, IOException {
