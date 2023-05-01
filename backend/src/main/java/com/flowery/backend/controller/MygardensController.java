@@ -39,15 +39,6 @@ public class MygardensController {
     }
 
 
-    @PostMapping("get-card")
-    public ResponseEntity<Messages> findByMessageId(@RequestBody Map<String, Integer> requestData) {
-
-        int a = requestData.get("messageId");
-
-        return new ResponseEntity<>(mygardensService.findByMessageId(a), HttpStatus.ACCEPTED);
-
-    }
-
 
     @GetMapping("qrTest")
     public Object createQr(@RequestParam String url) throws WriterException, IOException {

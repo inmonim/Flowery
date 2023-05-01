@@ -8,6 +8,7 @@ import com.flowery.backend.model.entity.Users;
 import com.flowery.backend.repository.MessagesRepository;
 import com.flowery.backend.repository.MygardensRepository;
 import com.flowery.backend.repository.UsersRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -25,7 +26,6 @@ public class MygardensService {
                      MessagesRepository messagesRepository){
         this.mygardensRepository = mygardensRepository;
         this.usersRepository = usersRepository;
-        this.messagesRepository = messagesRepository;
     }
 
     public List<MygardensDto> findAllByUserId(int code){
@@ -47,12 +47,6 @@ public class MygardensService {
         return result;
     }
 
-    public Messages findByMessageId(int id){
-        Messages message = messagesRepository.findByMessageId(id);
-//        기본 제공하는 findby를 사용해서 repository 안 만들고 할 때
-//        Messages message = messagesRepository.findByMessageId(id).get();
-        return message;
 
-    }
 
 }
