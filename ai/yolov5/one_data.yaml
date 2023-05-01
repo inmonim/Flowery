@@ -1,5 +1,16 @@
 train: ../3_one_time_data/train/images
 val: ../3_one_time_data/test/images
-nc: 7
+nc: 10
 names:
-  ["rose", "sunflower", "tulip", "carnation", "gerbera", "lily", "lisianthus"]
+  [
+    "rose",
+    "rose_top",
+    "tulip",
+    "carnation",
+    "gerbera",
+    "lily",
+    "lisianthus",
+    "small_chrysanthemum",
+    "pompom_blooms",
+    "sunflower",
+  ]
