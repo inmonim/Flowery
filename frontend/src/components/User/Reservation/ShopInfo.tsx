@@ -17,7 +17,7 @@ export default function ShopInfo() {
   ];
   return (
     <div className="flex flex-col ">
-      <div className="">
+      <div className="p-1">
         <img src={picture1} alt="main" className="" />
       </div>
       {positions.map((position, index) => (

@@ -12,12 +12,16 @@ export default function Dayselect() {
 
   return (
     <>
-      <DatePicker
-        selected={selectedDate}
-        onChange={handleDateChange}
-        locale={ko}
-        dateFormat="yyyy-MM-dd"
-      />
+      <div className="datepicker-wrapper">
+        <DatePicker
+          selected={selectedDate}
+          shouldCloseOnSelect={false}
+          onChange={handleDateChange}
+          locale={ko}
+          dateFormat="yyyy-MM-dd"
+          inline
+        />
+      </div>
     </>
   );
 }
