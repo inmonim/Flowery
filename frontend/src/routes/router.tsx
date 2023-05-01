@@ -9,6 +9,7 @@ import SignInSelectPage from "../pages/SignInSelectPage/SignInSelectPage";
 import WritingPage from "../pages/WritingPage/WritingPage";
 import SellerLoginPage from "../pages/SellerLoginPage/SellerLoginPage";
 import ReservationOption from "../components/User/Reservation/ReservationOption";
+import SellerMainProto from "../pages/SellerMainPage/SellerMainProto";
 
 const router = createBrowserRouter([
   {
@@ -31,6 +32,7 @@ const router = createBrowserRouter([
     children: [
       { path: "/seller", element: <SellerMainPage /> },
       { path: "/seller/login", element: <SellerLoginPage /> },
+      { path: "/seller/proto", element: <SellerMainProto /> },
     ],
   },
 ]);
