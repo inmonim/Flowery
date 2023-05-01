@@ -19,6 +19,15 @@ export default function Header(props: HeaderProps) {
         </div>
       </header>
     );
+  } else if (location.pathname === "/seller/proto") {
+    return (
+      <header className={styles.header}>
+        <div>
+          <img src={Logo} alt="" className={styles.logo} />
+        </div>
+        <img src={scan} alt="" className={styles.scan2} />
+      </header>
+    );
   }
 
   return (
