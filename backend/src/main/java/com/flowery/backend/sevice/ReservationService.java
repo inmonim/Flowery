@@ -23,10 +23,10 @@ public class ReservationService {
         this.reservationRepository = reservationRepository;
     }
 
-    public List<ReservationDto> findTodayReservation(ReservationDto dto){
+    public List<ReservationDto> findTodayReservation(LocalDateTime dateTime){
 
-        LocalDateTime yesterday = LocalDateTime.of(LocalDate.from(dto.getDate()), LocalTime.of(0,0,0));
-        LocalDateTime today = LocalDateTime.of(LocalDate.from(dto.getDate()), LocalTime.of(23,59,59));
+        LocalDateTime yesterday = LocalDateTime.of(LocalDate.from(dateTime), LocalTime.of(0,0,0));
+        LocalDateTime today = LocalDateTime.of(LocalDate.from(dateTime), LocalTime.of(23,59,59));
 
         List<Reservation> list = reservationRepository.findAllByDateBetween(yesterday,today);
         List<ReservationDto> result = new ArrayList<>();

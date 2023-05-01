@@ -5,12 +5,10 @@ import com.flowery.backend.sevice.ReservationService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Controller
@@ -24,12 +22,14 @@ public class ReservationController {
         this.reservationService = reservationService;
     }
 
-    @PostMapping("hi")
-    public ResponseEntity<List<ReservationDto>> findByDate(@RequestBody ReservationDto dto){
+    @GetMapping("hi")
+    public ResponseEntity<List<ReservationDto>> findByDate(@RequestParam String date){
 
-        System.out.println(dto.getDate());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+        LocalDateTime dateTime = LocalDateTime.parse(date, formatter);
+        System.out.println(dateTime);
 
-        return new ResponseEntity<>(reservationService.findTodayReservation(dto), HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(reservationService.findTodayReservation(dateTime), HttpStatus.ACCEPTED);
     }
 
 
