@@ -1,9 +1,7 @@
 import { useEffect, useRef, useState } from "react";
-import NonMemberModal from "./NonMemberModal";
 import { useNavigate } from "react-router-dom";
-import SignUpModal from "./SignUpModal";
 
-export default function SignInSelectPage() {
+export default function SignInPage() {
   //비회원 주문 Modal을 띄우기 위한 변수
   const [showModal, setShowModal] = useState<string>("");
 
@@ -11,43 +9,53 @@ export default function SignInSelectPage() {
 
   // 로그인 시도
   const checkSignIn = () => {
-    navigate("/");
+    navigate("/reservation");
   };
 
-  // 회원가입 Modal
-  const signUp = () => {
-    setShowModal("signUp");
+  // 회원가입
+  const goToSignUp = () => {
+    navigate("/signup");
   };
 
-  // 비회원 주문 Modal 띄우기
-  const nonMember = () => {
-    setShowModal("nonMember");
+  // 비회원주문
+  const goToNonmember = () => {
+    navigate("/nonmember");
   };
 
-  // 화면 클릭 또는 키보드 누름 감지
-  const modalRef = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
-    document.addEventListener("keydown", handleKeyDown);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-      document.removeEventListener("keydown", handleKeyDown);
-    };
-  }, []);
+  // // 회원가입 Modal
+  // const signUp = () => {
+  //   setShowModal("signUp");
+  // };
 
-  // Modal 이외의 곳을 클릭 하면 Modal 닫힘
-  const handleClickOutside = (event: MouseEvent) => {
-    if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
-      setShowModal("");
-    }
-  };
+  // // 비회원 주문 Modal 띄우기
+  // const nonMember = () => {
+  //   setShowModal("nonMember");
+  // };
 
-  // esc를 누르면 Modal 닫힘
-  const handleKeyDown = (event: KeyboardEvent) => {
-    if (event.code === "Escape") {
-      setShowModal("");
-    }
-  };
+  // // 화면 클릭 또는 키보드 누름 감지
+  // const modalRef = useRef<HTMLDivElement>(null);
+  // useEffect(() => {
+  //   document.addEventListener("mousedown", handleClickOutside);
+  //   document.addEventListener("keydown", handleKeyDown);
+  //   return () => {
+  //     document.removeEventListener("mousedown", handleClickOutside);
+  //     document.removeEventListener("keydown", handleKeyDown);
+  //   };
+  // }, []);
+
+  // // Modal 이외의 곳을 클릭 하면 Modal 닫힘
+  // const handleClickOutside = (event: MouseEvent) => {
+  //   if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+  //     setShowModal("");
+  //   }
+  // };
+
+  // // esc를 누르면 Modal 닫힘
+  // const handleKeyDown = (event: KeyboardEvent) => {
+  //   if (event.code === "Escape") {
+  //     setShowModal("");
+  //   }
+  // };
 
   return (
     <section className="gradient-form h-full bg-neutral-200 dark:bg-neutral-700 flex items-center justify-center">
@@ -104,16 +112,20 @@ export default function SignInSelectPage() {
 
                       <div className="mb-3 pb-1 pt-1 text-center">
                         <button
-                          className="mb-3 inline-block w-full rounded px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal bg-red-300 text-white shadow-[0_4px_9px_-4px_rgba(0,0,0,0.2)] transition duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:outline-none focus:ring-0 active:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)]"
                           type="button"
                           data-te-ripple-init
                           data-te-ripple-color="light"
+                          onClick={checkSignIn}
+                          className="mb-3 inline-block w-full rounded px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal bg-red-300 text-white shadow-[0_4px_9px_-4px_rgba(0,0,0,0.2)] transition duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:outline-none focus:ring-0 active:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)]"
                         >
                           로그인
                         </button>
                       </div>
                       <div className="flex ">
-                        <p className="text-blue-600 text-sm ml-auto mb-3 mr-2 cursor-pointer">
+                        <p
+                          onClick={goToNonmember}
+                          className="text-blue-600 text-sm ml-auto mb-3 mr-2 cursor-pointer"
+                        >
                           비회원 주문
                         </p>
                       </div>
@@ -121,9 +133,10 @@ export default function SignInSelectPage() {
                         <div className="ml-auto">
                           <button
                             type="button"
-                            className="inline-block rounded border-2 border-danger px-6 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-danger transition duration-150 ease-in-out hover:border-danger-600 hover:bg-neutral-500 hover:bg-opacity-10 hover:text-danger-600 focus:border-danger-600 focus:text-danger-600 focus:outline-none focus:ring-0 active:border-danger-700 active:text-danger-700 dark:hover:bg-neutral-100 dark:hover:bg-opacity-10"
                             data-te-ripple-init
                             data-te-ripple-color="light"
+                            onClick={goToSignUp}
+                            className="inline-block rounded border-2 border-danger px-6 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-danger transition duration-150 ease-in-out hover:border-danger-600 hover:bg-neutral-500 hover:bg-opacity-10 hover:text-danger-600 focus:border-danger-600 focus:text-danger-600 focus:outline-none focus:ring-0 active:border-danger-700 active:text-danger-700 dark:hover:bg-neutral-100 dark:hover:bg-opacity-10"
                           >
                             회원가입
                           </button>
@@ -139,7 +152,7 @@ export default function SignInSelectPage() {
                 <img
                   src={require("../../assets/example1.jpg")}
                   alt=""
-                  className="hidden items-center rounded-b-lg lg:w-6/12 lg:rounded-r-lg lg:rounded-bl-none md:block"
+                  className="hidden items-center rounded-b-lg lg:w-6/12 lg:rounded-r-lg lg:rounded-bl-none lg:block"
                 >
                   {/* <div className="px-4 py-6 text-white md:mx-6 md:p-12">
                     <img src={require("../../assets/example1.jpg")} alt="" />

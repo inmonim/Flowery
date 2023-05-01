@@ -154,7 +154,7 @@
   background-color: transparent;
   font-size: 2vh;
   resize: none;
-  line-height: 4.2vh;
+  line-height: 3vh;
   width: 20em;
 
   &:focus {
@@ -211,10 +211,12 @@
   object-fit: contain;
   height: 10vh;
   cursor: pointer;
+  background-color: white;
 }
 
 .imageInput {
   display: none;
+  background-color: white;
 }
 
 .letter {
