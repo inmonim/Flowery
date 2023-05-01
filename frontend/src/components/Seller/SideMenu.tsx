@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./Modal.module.scss";
+import styles from "./SideMenu.module.scss";
 import reserve from "../../assets/reserve_logo.png";
 import analysis from "../../assets/analysis_logo.png";
 import manage from "../../assets/manage_logo.png";

@@ -44,13 +44,19 @@
 }
 
 .scan {
-  width: 18px;
+  display: inline-block;
+  vertical-align: middle;
   height: 18px;
   padding-right: 1.3rem;
   padding-bottom: 0.12rem;
 }
 
+.scan2 {
+  height: 20px;
+}
 .menu {
+  display: inline-block;
+  vertical-align: middle;
   margin: 0;
 }
 
