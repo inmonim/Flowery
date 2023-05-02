@@ -56,4 +56,11 @@ public class ReservationController {
 
         return new ResponseEntity<ReservationDto>(reservationService.acceptReservation(reservationId), HttpStatus.ACCEPTED);
     }
+
+//    @PostMapping("make")
+//    public createReservation (@RequestBody Map<String, Object> requestData){
+//        LOGGER.info("createReservation이 호출되었습니다.");
+//
+//
+//    }
 }
