@@ -29,6 +29,10 @@ public class StoresController {
         this.storesService = storesService;
     }
 
+    @GetMapping
+    public ResponseEntity<List<Stores>> findAllStores() {
+        return new ResponseEntity<List<Stores>>(storesService.findAllStores(), HttpStatus.OK);
+    }
 
     @PostMapping("info")
     public ResponseEntity<Stores> findByStoreId(@RequestBody Map<String, Integer> requestData) {
