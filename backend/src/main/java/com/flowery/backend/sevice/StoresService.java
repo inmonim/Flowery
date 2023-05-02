@@ -8,6 +8,7 @@ import com.flowery.backend.repository.GoodsRepository;
 import com.flowery.backend.repository.HolydaysRepository;
 import com.flowery.backend.repository.SamplesRepository;
 import com.flowery.backend.repository.StoreRepository;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -59,6 +60,16 @@ public class StoresService {
 
 
         return result;
+    }
+
+    // 가게 추가하기
+    public Stores createStore(Stores store){
+        return storeRepository.save(store);
+    }
+
+    public Stores findByStoreId(int storeId){
+        Stores store = storeRepository.findById(storeId).get();
+        return store;
     }
 
     // 특정 상품의 샘플 사진들 가져오기

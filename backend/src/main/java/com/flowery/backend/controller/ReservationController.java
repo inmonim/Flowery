@@ -22,6 +22,7 @@ public class ReservationController {
         this.reservationService = reservationService;
     }
 
+    // test
     @GetMapping("hi")
     public ResponseEntity<List<ReservationDto>> findByDate(@RequestParam String date){
 
