@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping("reservation/")
+@RequestMapping("reservation")
 public class ReservationController {
 
     // 예약이 여기 모여있음 (예약 관련 CRUD)
@@ -49,7 +49,7 @@ public class ReservationController {
     }
 
     // 등록된 예약을 승인시킴
-    @PostMapping("accept")
+    @PostMapping("/accept")
     public ResponseEntity<ReservationDto> acceptReservation (@RequestBody Map<String, Integer> requestData){
         LOGGER.info("acceptReservation가 호출되었습니다.");
         int reservationId = requestData.get("reservationId");
@@ -57,10 +57,19 @@ public class ReservationController {
         return new ResponseEntity<ReservationDto>(reservationService.acceptReservation(reservationId), HttpStatus.ACCEPTED);
     }
 
-//    @PostMapping("make")
-//    public createReservation (@RequestBody Map<String, Object> requestData){
-//        LOGGER.info("createReservation이 호출되었습니다.");
-//
-//
-//    }
+    @PostMapping("/make")
+    public ResponseEntity<Boolean> createReservation (@RequestBody ReservationDto reservationDto){
+        LOGGER.info("createReservation이 호출되었습니다.");
+
+        try{
+            boolean result = reservationService.makeReservation(reservationDto);
+
+            if(result) return new ResponseEntity<>(true, HttpStatus.ACCEPTED);
+            return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
+
+        }catch (Exception e){
+            return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
+        }
+
+    }
 }

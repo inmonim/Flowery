@@ -24,4 +24,6 @@ public class ReservationDto {
 
     private int permission;
 
+    private String reservationName;
+
 }

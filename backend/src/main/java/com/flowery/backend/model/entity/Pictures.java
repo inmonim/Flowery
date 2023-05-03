@@ -1,22 +1,24 @@
 package com.flowery.backend.model.entity;
 
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@Data
 @Entity
+@Data
 @NoArgsConstructor
-public class Flowers {
+public class Pictures {
 
     @Id
+    @Column(name = "pictures_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "flower_id")
-    private int flowerId;
+    private int pictureId;
 
-    @Column(name = "flower_name")
-    private String flowerName;
+    @Column(name = "message_id")
+    private int messageId;
+
+    @Column(name = "url")
+    private String url;
 
 }
