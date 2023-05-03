@@ -1,0 +1,197 @@
+///////////////////////////////////////////////////           편지지           ///////////////////////////////////////////////////////
+// 1번 편지지
+.letterPaper1 {
+  background-image: url("../../../assets/letters/Letter1.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  justify-content: center;
+  justify-items: center;
+  height: 80vh;
+}
+// 편지지 내용
+.letterContent1 {
+  margin: 12.5vh;
+  margin-left: 7.5em;
+  border: none;
+  background-color: transparent;
+  font-size: 2vh;
+  resize: none;
+  line-height: 4.2vh;
+  width: 20em;
+  height: 60vh;
+  max-height: 75%;
+  overflow: hidden;
+
+  &:focus {
+    outline: 0cm;
+  }
+}
+
+// 2번 편지지
+  .letterPaper2 {
+    background-image: url("../../../assets/letters/Letter2.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    justify-content: center;
+    height: 80vh;
+    // height: 100%;
+    width: 80vh;
+    // width: 100%;
+    object-fit: contain;
+    position: relative;
+    display: flex;
+  }
+
+  .letterContent2 {
+    position: absolute;
+    border: none;
+    background-color: transparent;
+    font-size: 2vh;
+    resize: none;
+    line-height: 2.7vh;
+    height: 58.3vh;
+    // height: 72%;
+    width: 40vh;
+    // width: 55%;
+    justify-items: center;
+    align-self: center;
+    display: flex;
+    overflow-y: hidden;
+
+    // &:focus {
+    //   outline: 0cm;
+    // }
+  }
+
+// 3번 편지지
+.letterPaper3 {
+  background-image: url("../../../assets/letters/Letter3.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  justify-content: center;
+  justify-items: center;
+  height: 80vh;
+}
+
+.letterContent3 {
+  margin: 12.5vh; /* 편지지 상단 여백 */
+  margin-left: 7.5em;
+  border: none;
+  background-color: transparent;
+  font-size: 2vh;
+  resize: none;
+  line-height: 4.2vh;
+  width: 20em;
+
+  &:focus {
+    outline: 0cm;
+  }
+}
+
+///////////////////////////////////////////////////           글씨체           ///////////////////////////////////////////////////////
+// 삼립호빵체
+@font-face {
+  font-family: "SDSamliphopangche_Outline";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts-20-12@1.0/SDSamliphopangche_Outline.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.letterFont1 {
+  font-family: "SDSamliphopangche_Outline";
+}
+
+// 김정철 명조
+@font-face {
+  font-family: "KimjungchulMyungjo-Bold";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/KimjungchulMyungjo-Bold.woff2")
+    format("woff2");
+  font-weight: 700;
+  font-style: normal;
+}
+
+.letterFont2 {
+  font-family: "KimjungchulMyungjo-Bold";
+}
+
+// 안성탕면체
+@font-face {
+  font-family: "Ansungtangmyun-Bold";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/Ansungtangmyun-Bold.woff2")
+    format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.letterFont3 {
+  font-family: "Ansungtangmyun-Bold";
+}
+
+// 고령딸기체
+@font-face {
+  font-family: "GoryeongStrawberry";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-01@1.0/GoryeongStrawberry.woff2")
+    format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.letterFont4 {
+  font-family: "GoryeongStrawberry";
+}
+
+// 제주돌담체
+@font-face {
+  font-family: "EF_jejudoldam";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2210-EF@1.0/EF_jejudoldam.woff2")
+    format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.letterFont5 {
+  font-family: "EF_jejudoldam";
+}
+
+// 평창평화체
+@font-face {
+  font-family: "PyeongChangPeace-Bold";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2206-02@1.0/PyeongChangPeace-Bold.woff2")
+    format("woff2");
+  font-weight: 700;
+  font-style: normal;
+}
+
+.letterFont6 {
+  font-family: "PyeongChangPeace-Bold";
+}
+
+// 조선100년체
+@font-face {
+  font-family: "ChosunCentennial";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2206-02@1.0/ChosunCentennial.woff2")
+    format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.letterFont7 {
+  font-family: "ChosunCentennial";
+}
+
+// 가나초콜릿체
+@font-face {
+  font-family: "ghanachoco";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.0/ghanachoco.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.letterFont8 {
+  font-family: "ghanachoco";
+}

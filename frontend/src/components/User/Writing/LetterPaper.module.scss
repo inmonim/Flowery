@@ -1,0 +1,85 @@
+///////////////////////////////////////////////////           편지지           ///////////////////////////////////////////////////////
+// 1번 편지지
+.letterPaper1 {
+    background-image: url("../../../assets/letters/Letter1.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    justify-content: center;
+    justify-items: center;
+    background-color: red;
+    height: 80vh;
+  }
+  // 편지지 내용
+  .letterContent1 {
+    margin: 12.5vh;
+    margin-left: 7.5em;
+    border: none;
+    background-color: transparent;
+    // background-color: blue;
+    font-size: 2vh;
+    resize: none;
+    line-height: 4.2vh;
+    width: 20em;
+    height: 60vh;
+    max-height: 75%;
+    overflow: hidden;
+  
+    &:focus {
+      outline: 0cm;
+    }
+  }
+  
+  // 2번 편지지
+  .letterPaper2 {
+    background-image: url("../../../assets/letters/Letter2.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    justify-content: center;
+    justify-items: center;
+    background-color: red;
+    height: 80vh;
+  }
+  
+  .letterContent2 {
+    margin: 12.5vh; /* 편지지 상단 여백 */
+    margin-left: 7.5em;
+    border: none;
+    background-color: transparent;
+    font-size: 2vh;
+    resize: none;
+    line-height: 3vh;
+    width: 20em;
+  
+    &:focus {
+      outline: 0cm;
+    }
+  }
+  
+  // 3번 편지지
+  .letterPaper3 {
+    background-image: url("../../../assets/letters/Letter3.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    justify-content: center;
+    justify-items: center;
+    background-color: red;
+    height: 80vh;
+  }
+  
+  .letterContent3 {
+    margin: 12.5vh; /* 편지지 상단 여백 */
+    margin-left: 7.5em;
+    border: none;
+    background-color: transparent;
+    font-size: 2vh;
+    resize: none;
+    line-height: 4.2vh;
+    width: 20em;
+  
+    &:focus {
+      outline: 0cm;
+    }
+  }
