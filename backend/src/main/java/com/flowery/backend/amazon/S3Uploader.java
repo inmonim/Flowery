@@ -22,12 +22,11 @@ public class S3Uploader {
     @Value("${cloud.aws.region.static}")
     private String region;
 
-
     private final AmazonS3Client amazonS3Client;
 
-    public String uploadProfileImg(UUID userUuid, MultipartFile file) throws Exception {
+    public String uploadFile(MultipartFile file) throws Exception {
         String fileName = file.getOriginalFilename();
-        String filepath = createS3FileName(fileName, userUuid);
+        String filepath = createS3FileName(fileName);
 
         ObjectMetadata metadata = new ObjectMetadata();
         metadata.setContentType(file.getContentType());
@@ -42,13 +41,12 @@ public class S3Uploader {
 
 
     // 파일 이름 및 경로 설정
-    private String createS3FileName (String fileName, UUID userUuid) {
+    private String createS3FileName (String fileName) {
 
         UUID uuid = UUID.randomUUID();
-        String newFileUrl = "image/" + userUuid + "/" + fileName + uuid;
+        String newFileUrl = "files/" + fileName + uuid;
         return newFileUrl;
     }
-
 
     public void deleteS3File(String fileName) throws Exception {
         String filePath = fileName.replace("https://zippyziggyimage.s3.ap-northeast-2.amazonaws.com/", "");
