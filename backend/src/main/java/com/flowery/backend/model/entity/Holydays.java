@@ -1,13 +1,14 @@
 package com.flowery.backend.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
-@Getter
+@Data
 @NoArgsConstructor
 public class Holydays {
 

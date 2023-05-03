@@ -1,6 +1,7 @@
 package com.flowery.backend.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -8,7 +9,7 @@ import javax.persistence.*;
 
 @Entity
 @NoArgsConstructor
-@Getter
+@Data
 public class Seller {
 
     @Id
@@ -25,5 +26,8 @@ public class Seller {
     @JsonIgnore
     @OneToOne(fetch = FetchType.LAZY)
     private Stores storeId;
+
+    @Column(name = "seller_name")
+    private String sellerName;
 
 }

@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Entity
-@Getter
+@Data
 @NoArgsConstructor
 public class Goods {
 

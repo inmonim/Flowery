@@ -46,4 +46,7 @@ public class Reservation {
     @Column(name = "permission")
     private int permission;
 
+    @Column(name = "reservation_name")
+    private String reservationName;
+
 }
