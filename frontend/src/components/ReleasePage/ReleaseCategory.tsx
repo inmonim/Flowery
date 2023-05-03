@@ -24,7 +24,10 @@ export default function ReleaseCategory() {
           <p className="text-white font-bold text-[30px] pl-[40px]">LETTERS</p>
           <img src={letter_img} alt="letter" className="pl-3 overflow-hidden" />
         </Link>
-        <div className=" h-[200px] flex items-center bg-[#DEBFA1] drop-shadow border-b m-2 rounded-2xl">
+        <div
+          className=" h-[200px] flex items-center bg-[#DEBFA1] drop-shadow border-b m-2 rounded-2xl"
+          // onClick={alert("해당 기능은 준비 중입니다. 기대해보시랑꼐")}
+        >
           <p className="text-white font-bold text-[30px] pl-[40px]">VIDEOS</p>
           <img
             src={movie_img}
