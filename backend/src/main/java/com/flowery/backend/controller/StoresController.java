@@ -1,6 +1,7 @@
 package com.flowery.backend.controller;
 
 import com.flowery.backend.model.dto.StoresDto;
+import com.flowery.backend.model.entity.Goods;
 import com.flowery.backend.model.entity.Samples;
 import com.flowery.backend.model.entity.Stores;
 import com.flowery.backend.sevice.StoresService;
@@ -58,10 +59,19 @@ public class StoresController {
 
     }
 
-//    @PatchMapping("/")
-//    public ResponseEntity<Stores> editStore(@RequestBody StoresDto store){
-//        LOGGER.info("editStore 호출되었습니다.");
-//        return new ResponseEntity<Stores>(storesService.editStore(store), HttpStatus.OK);
-//    }
+    @DeleteMapping("/goods/{goodsId}")
+    public ResponseEntity<Void> deleteGoods(@PathVariable("goodsId") Integer goodsId){
+        LOGGER.info("deleteGoods가 호출되었습니다.");
+        storesService.deleteGoods(goodsId);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/{storeId}")
+    public ResponseEntity<Stores> editStore(@PathVariable("storeId") Integer storeId,
+                                            @RequestBody StoresDto storeDto){
+        LOGGER.info("editStore 호출되었습니다.");
+        Stores updatedStore = storesService.editStore(storeId, storeDto);
+        return ResponseEntity.ok(updatedStore);
+    }
 
 }

@@ -1,5 +1,6 @@
 package com.flowery.backend.sevice;
 
+import com.amazonaws.services.kms.model.NotFoundException;
 import com.flowery.backend.model.dto.GoodsDto;
 import com.flowery.backend.model.dto.StoresDto;
 import com.flowery.backend.model.entity.Goods;
@@ -12,6 +13,7 @@ import com.flowery.backend.repository.StoreRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -86,7 +88,25 @@ public class StoresService {
 
 
     // 가게 정보 변경
-//    public Stores editStore(StoresDto store){
-//
-//    }
+    @Transactional
+    public Stores editStore(Integer storeId, StoresDto storeDTO){
+        Stores store = storeRepository.findById(storeId)
+                .orElseThrow(() -> new NotFoundException("Store not found with id : " + storeId));
+
+        // 수정하고자 하는 필드들만 업데이트
+        store.setStorePhone(storeDTO.getStorePhone());
+        store.setOpen(storeDTO.getOpen());
+        store.setClose(storeDTO.getClose());
+        store.setInfo(storeDTO.getInfo());
+
+        Stores updatedStore = storeRepository.save(store);
+        return updatedStore;
+    }
+
+    // 상품 삭제
+    @Transactional
+
+    public void deleteGoods(Integer goodsId) {
+        goodsRepository.deleteByGoodsId(goodsId);
+    }
 }
