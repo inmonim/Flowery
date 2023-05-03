@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 // 상점, 휴일, 상품, 상품 샘플 사진들 레포지토리를 가지고 있음
 
@@ -109,4 +110,15 @@ public class StoresService {
     public void deleteGoods(Integer goodsId) {
         goodsRepository.deleteByGoodsId(goodsId);
     }
+
+//    public Samples createSample(Integer goodsId) {
+//        Goods goods = goodsRepository.findById(goodsId).orElseThrow(() -> new NoSuchElementException("해당 goods_id가 없습니다."));
+//
+//        Samples sample = new Samples();
+//        sample.setPicture(picture);
+//        sample.setGoodsId(goods);
+//
+//        goods.getSamples().add(sample);
+//        goodsRepository.save(goods);
+//    }
 }

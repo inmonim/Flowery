@@ -59,6 +59,7 @@ public class StoresController {
 
     }
 
+    // 상품을 삭제
     @DeleteMapping("/goods/{goodsId}")
     public ResponseEntity<Void> deleteGoods(@PathVariable("goodsId") Integer goodsId){
         LOGGER.info("deleteGoods가 호출되었습니다.");
@@ -66,6 +67,7 @@ public class StoresController {
         return ResponseEntity.noContent().build();
     }
 
+    // 상점의 정보를 수정\
     @PatchMapping("/{storeId}")
     public ResponseEntity<Stores> editStore(@PathVariable("storeId") Integer storeId,
                                             @RequestBody StoresDto storeDto){
@@ -73,5 +75,15 @@ public class StoresController {
         Stores updatedStore = storesService.editStore(storeId, storeDto);
         return ResponseEntity.ok(updatedStore);
     }
+
+    // 굿즈에 샘플 이미지 추가
+//    @DeleteMapping("/goods/{goodsId}")
+//    public ResponseEntity<Samples> createSample(@PathVariable("goodsId") Integer goodsId,
+//                                                @RequestBody Samples storeDto){
+//        LOGGER.info("createSample이 호출되었습니다.");
+//        Samples createdSample = storesService.createSample(goodsId);;
+//        return ResponseEntity.created(createdSample);
+//    }
+
 
 }
