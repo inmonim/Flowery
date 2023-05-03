@@ -1,6 +1,6 @@
 train: ../5_total_data/train/images
 val: ../5_total_data/test/images
-nc: 12
+nc: 13
 names:
   [
     "rose",
@@ -14,4 +14,5 @@ names:
     "pompom_blooms",
     "sunflower",
     "gerbera",
+    "alstroemeria",
   ]

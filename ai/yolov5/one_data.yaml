@@ -1,6 +1,6 @@
 train: ../3_one_time_data/train/images
 val: ../3_one_time_data/test/images
-nc: 12
+nc: 13
 names:
   [
     "rose",
@@ -14,4 +14,6 @@ names:
     "sunflower",
     "gerbera",
     "lisianthus",
+    "alstroemeria",
+    "hydrangea",
   ]
