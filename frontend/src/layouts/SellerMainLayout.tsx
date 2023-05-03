@@ -3,7 +3,7 @@ import { Outlet } from "react-router-dom";
 import Container from "../containers/Container";
 import Header from "../components/Common/Header/SellerHeader";
 import styles from "./SellerMainLayout.module.scss";
-import Modal from "../components/Common/Modal";
+import Modal from "../components/Seller/SideMenu";
 
 const SellerMainLayout = () => {
   const [showModal, setShowModal] = useState(false);

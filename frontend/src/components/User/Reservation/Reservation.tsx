@@ -3,6 +3,7 @@ import { Map, MapMarker, useMap } from "react-kakao-maps-sdk";
 import imageSrc from "../../../assets/flowery_marker.png";
 import "../../../assets/styles/variable.scss";
 import ShopList from "./ShopList";
+import { boolean } from "yargs";
 
 //  이거 왜 해야하더라? -> kakao 객체는 브라우저 전역 객체인 window 안에 포
 
@@ -17,6 +18,8 @@ interface Position {
   };
 }
 export default function Reservation() {
+  const [markers, setMarkers] = useState([] as boolean[]);
+
   const positions: Position[] = [
     {
       content: "꽃들 info",
@@ -29,33 +32,30 @@ export default function Reservation() {
       latlng: { lat: 35.313, lng: 129.0103 },
     },
   ];
-  const EventMarkerContainer = ({
-    position,
-    content,
-  }: {
-    position: { lat: number; lng: number };
-    content: string;
-  }) => {
-    const map = useMap();
-    const [isVisible, setIsVisible] = useState(false);
 
-    return (
-      <MapMarker
-        position={position} // 마커를 표시할 위치
-        image={{ src: imageSrc, size: { width: 35, height: 45 } }}
-        // @ts-ignore
-        onClick={(marker) => {
-          map.panTo(marker.getPosition());
-          // setIsVisible(false);
-          // marker.setImage({ src: imageSrc, size: { width: 45, height: 45 } });
-        }}
-        onMouseOver={() => setIsVisible(true)}
-        onMouseOut={() => setIsVisible(false)}
-      >
-        {isVisible && content}
-      </MapMarker>
-    );
+  const initMarkers = () => {
+    const marker: boolean[] = [];
+    positions.map((index) => {
+      marker.push(false);
+    });
+
+    setMarkers(marker);
   };
+
+  const handleMarkerClick = (index: number) => {
+    const marker: boolean[] = [];
+    positions.map((index) => {
+      marker.push(false);
+    });
+
+    marker[index] = true;
+
+    setMarkers(marker);
+  };
+
+  useEffect(() => {
+    initMarkers();
+  }, []);
 
   return (
     <div className="flex flex-col w-screen h-auto">
@@ -66,6 +66,7 @@ export default function Reservation() {
             lat: 35.2,
             lng: 129.055,
           }}
+          isPanto={true}
           style={{
             // 지도의 크기
             zIndex: 0,
@@ -73,13 +74,16 @@ export default function Reservation() {
             height: "50vh",
           }}
           level={11} // 지도의 확대 레벨
+          onClick={initMarkers} // 클릭 초기화
         >
-          {positions.map((value) => (
-            <EventMarkerContainer
-              key={`EventMarkerContainer-${value.latlng.lat}-${value.latlng.lng}`}
-              position={value.latlng}
-              content={value.content}
-            />
+          {positions.map((value: any, index: number) => (
+            <MapMarker
+              position={value.latlng} // 마커를 표시할 위치
+              image={{ src: imageSrc, size: { width: 35, height: 45 } }}
+              onClick={() => handleMarkerClick(index)}
+            >
+              {markers[index] && <div>{value.title}</div>}
+            </MapMarker>
           ))}
         </Map>
       </div>

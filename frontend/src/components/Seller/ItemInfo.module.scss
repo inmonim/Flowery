@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
 }
+
 .itemcontainer {
   display: flex;
   flex-direction: row;
@@ -114,5 +115,41 @@
     /* Success/700 */
 
     color: #2d8a39;
+  }
+}
+
+.reprinting {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 2px 8px;
+  gap: 4px;
+
+  width: fit-content;
+  height: 22px;
+
+  /* Success/50 */
+
+  background: #f5faff;
+  border-radius: 5px;
+
+  /* Inside auto layout */
+
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+
+  p {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 18px;
+    /* identical to box height, or 138% */
+
+    letter-spacing: -0.1px;
+
+    /* Success/700 */
+
+    color: #3e67e3;
   }
 }

@@ -5,10 +5,13 @@ import SellerMainPage from "../pages/SellerMainPage/SellerMainPage";
 import MyGarden from "../pages/MyGarden/MyGarden";
 import SellerMainLayout from "../layouts/SellerMainLayout";
 import Reservation from "../components/User/Reservation/Reservation";
-import SignInSelectPage from "../pages/SignInSelectPage/SignInSelectPage";
+import SignInPage from "../pages/SignIn/SignInPage";
 import WritingPage from "../pages/WritingPage/WritingPage";
 import SellerLoginPage from "../pages/SellerLoginPage/SellerLoginPage";
 import ReservationOption from "../components/User/Reservation/ReservationOption";
+import SignUpPage from "../pages/SignIn/SignUpPage";
+import NonMemberPage from "../pages/SignIn/NonMember";
+import LetterPage from "../pages/WritingPage/Letter";
 
 const router = createBrowserRouter([
   {
@@ -20,8 +23,11 @@ const router = createBrowserRouter([
       { path: "/reservation", element: <Reservation /> },
       { path: "/reservationoption", element: <ReservationOption /> },
       { path: "/mygarden", element: <MyGarden /> },
-      { path: "/signinselect", element: <SignInSelectPage /> },
+      { path: "/signin", element: <SignInPage /> },
+      { path: "/signup", element: <SignUpPage /> },
+      { path: "/nonmember", element: <NonMemberPage /> },
       { path: "/writing", element: <WritingPage /> },
+      { path: "/letter", element: <LetterPage /> },
     ],
   },
   {
