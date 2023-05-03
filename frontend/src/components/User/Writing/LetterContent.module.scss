@@ -60,9 +60,9 @@
     display: flex;
     overflow-y: hidden;
 
-    // &:focus {
-    //   outline: 0cm;
-    // }
+    &:focus {
+      outline: 0cm;
+    }
   }
 
 // 3번 편지지
