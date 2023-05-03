@@ -23,6 +23,6 @@ public class Holydays {
     private Stores StoreId;
 
     @Column(name = "day")
-    private int day;
+    private String day;
 
 }

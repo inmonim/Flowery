@@ -1,5 +1,6 @@
 package com.flowery.backend.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,12 +12,14 @@ import javax.persistence.*;
 public class Pictures {
 
     @Id
-    @Column(name = "pictures_id")
+    @Column(name = "picture_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int pictureId;
 
-    @Column(name = "message_id")
-    private int messageId;
+    @ManyToOne
+    @JsonIgnore
+    @JoinColumn(name = "message_id")
+    private Messages messageId;
 
     @Column(name = "url")
     private String url;
