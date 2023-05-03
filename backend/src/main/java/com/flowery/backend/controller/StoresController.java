@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping("stores/")
+@RequestMapping("stores")
 public class StoresController {
 
     // 가게 도메인에서 상품, 가게 정보(모든 가게, 특정 가게, 특정 가게의 휴일 등)를 CRUD 가능함
@@ -31,10 +31,11 @@ public class StoresController {
 
     @GetMapping
     public ResponseEntity<List<Stores>> findAllStores() {
-        return new ResponseEntity<List<Stores>>(storesService.findAllStores(), HttpStatus.OK);
+        Integer permitted = 1;
+        return new ResponseEntity<List<Stores>>(storesService.findAllStores(permitted), HttpStatus.OK);
     }
 
-    @PostMapping("info")
+    @PostMapping("/info")
     public ResponseEntity<Stores> findByStoreId(@RequestBody Map<String, Integer> requestData) {
         LOGGER.info("findByStoreId가 호출되었습니다.");
         int storeId = requestData.get("storeId");
@@ -48,7 +49,7 @@ public class StoresController {
         return ResponseEntity.status(HttpStatus.CREATED).body(createdStore);
     }
 
-    @GetMapping("samples")
+    @GetMapping("/samples")
     public ResponseEntity<List<Samples>> findAllPicture(@RequestParam int goodsId){
 
         return new ResponseEntity<>(storesService.findAllByGoods(goodsId), HttpStatus.ACCEPTED);

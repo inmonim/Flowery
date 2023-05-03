@@ -32,8 +32,10 @@ public class StoresService {
     }
 
     // 모든 상점 다 가져오기
-    public List<Stores> findAllStores(){
-        return storeRepository.findAll();
+    public List<Stores> findAllStores(Integer permitted){
+        List<Stores> result = storeRepository.findByPermit(permitted);
+
+        return result;
     }
 
     // 모든 상품들 다 가져오기
