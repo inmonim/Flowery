@@ -45,7 +45,7 @@ export default function LetterFont() {
               className="p-2"
             >
               <div
-                className={`${styles.cursor} ${
+                className={`cursor-pointer ${
                   styles[`letterFont${startIndex + i + 1}`]
                 } `}
               >

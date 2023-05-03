@@ -11,7 +11,6 @@ import SellerLoginPage from "../pages/SellerLoginPage/SellerLoginPage";
 import ReservationOption from "../components/User/Reservation/ReservationOption";
 import SignUpPage from "../pages/SignIn/SignUpPage";
 import NonMemberPage from "../pages/SignIn/NonMember";
-import LetterPage from "../pages/WritingPage/Letter";
 
 const router = createBrowserRouter([
   {
@@ -27,7 +26,6 @@ const router = createBrowserRouter([
       { path: "/signup", element: <SignUpPage /> },
       { path: "/nonmember", element: <NonMemberPage /> },
       { path: "/writing", element: <WritingPage /> },
-      { path: "/letter", element: <LetterPage /> },
     ],
   },
   {

@@ -5,6 +5,7 @@ import ImageInput from "../../components/User/Writing/ImageInput";
 import LetterPaper from "../../components/User/Writing/LetterPaper";
 import LetterFont from "../../components/User/Writing/LetterFont";
 import LetterContent from "../../components/User/Writing/LetterContent";
+import VideoInput from "../../components/User/Writing/VideoInput";
 
 export default function WritingPage() {
   const [showModal, setShowModal] = useState<boolean>(false);
@@ -79,8 +80,26 @@ export default function WritingPage() {
         {/* 글씨체 고르기 */}
         {LetterFont()}
       </div>
+      {/* 영상 업로드 */}
+      <div className="p-4 overflow-y-auto">
+        <div className="space-y-4">
+          <div className="card m-2  border-gray-400 rounded-lg transform transition-all duration-200">
+            <div className="m-3">
+              <div className="flex justify-center">{VideoInput()}</div>
+            </div>
+          </div>
+        </div>
+      </div>
       {/* 이미지 업로드 */}
-      {ImageInput()}
+      <div className="p-4 overflow-y-auto">
+        <div className="space-y-4">
+          <div className="card m-2  border-gray-400 rounded-lg transform transition-all duration-200">
+            <div className="m-3">
+              <div className="flex justify-center">{ImageInput()}</div>
+            </div>
+          </div>
+        </div>
+      </div>
       {/* 페이지 이동 */}
       <div className={styles.handlePage}>
         <input type="button" value="이전으로" />
