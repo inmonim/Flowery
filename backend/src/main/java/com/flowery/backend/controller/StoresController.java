@@ -1,5 +1,6 @@
 package com.flowery.backend.controller;
 
+import com.flowery.backend.model.dto.StoresDto;
 import com.flowery.backend.model.entity.Samples;
 import com.flowery.backend.model.entity.Stores;
 import com.flowery.backend.sevice.StoresService;
@@ -31,6 +32,7 @@ public class StoresController {
 
     @GetMapping
     public ResponseEntity<List<Stores>> findAllStores() {
+        LOGGER.info("findAllStores가 호출되었습니다.");
         Integer permitted = 1;
         return new ResponseEntity<List<Stores>>(storesService.findAllStores(permitted), HttpStatus.OK);
     }
@@ -55,5 +57,11 @@ public class StoresController {
         return new ResponseEntity<>(storesService.findAllByGoods(goodsId), HttpStatus.ACCEPTED);
 
     }
+
+//    @PatchMapping("/")
+//    public ResponseEntity<Stores> editStore(@RequestBody StoresDto store){
+//        LOGGER.info("editStore 호출되었습니다.");
+//        return new ResponseEntity<Stores>(storesService.editStore(store), HttpStatus.OK);
+//    }
 
 }

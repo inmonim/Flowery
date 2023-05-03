@@ -1,6 +1,7 @@
 package com.flowery.backend.sevice;
 
 import com.flowery.backend.model.dto.GoodsDto;
+import com.flowery.backend.model.dto.StoresDto;
 import com.flowery.backend.model.entity.Goods;
 import com.flowery.backend.model.entity.Samples;
 import com.flowery.backend.model.entity.Stores;
@@ -83,4 +84,9 @@ public class StoresService {
 
     }
 
+
+    // 가게 정보 변경
+//    public Stores editStore(StoresDto store){
+//
+//    }
 }
