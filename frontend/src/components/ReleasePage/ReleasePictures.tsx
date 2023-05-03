@@ -18,7 +18,7 @@ export default function ReleasePictures() {
         <p className="flex justify-center">our</p>
         <p className="flex justify-center">memories</p>
       </div>
-      <div className="pr-[5.33vw] pl-[5.33vw]">
+      <div className="flex flex-col justify-center gap-[5rem] pr-[5.33vw] pl-[5.33vw]">
         {memories.map((memory, index) => (
           <img src={memory} key={index} />
         ))}
