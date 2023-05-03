@@ -11,6 +11,9 @@ import SellerLoginPage from "../pages/SellerLoginPage/SellerLoginPage";
 import ReservationOption from "../components/User/Reservation/ReservationOption";
 import SignUpPage from "../pages/SignIn/SignUpPage";
 import NonMemberPage from "../pages/SignIn/NonMember";
+import LetterPage from "../pages/WritingPage/Letter";
+import ProtoPage from "../pages/SellerMainPage/SellerMainProto";
+import TestPage from "../pages/TestPage";
 
 const router = createBrowserRouter([
   {
@@ -19,6 +22,7 @@ const router = createBrowserRouter([
     // errorElement: <NotFound />, // 라우터에 없는 경로로 이동시 NotFound 컴포넌트 화면에 띄운다.
     children: [
       { path: "/", element: <UserMainPage /> },
+      { path: "/test", element: <TestPage /> },
       { path: "/reservation", element: <Reservation /> },
       { path: "/reservationoption", element: <ReservationOption /> },
       { path: "/mygarden", element: <MyGarden /> },
@@ -35,6 +39,7 @@ const router = createBrowserRouter([
     children: [
       { path: "/seller", element: <SellerMainPage /> },
       { path: "/seller/login", element: <SellerLoginPage /> },
+      { path: "/seller/proto", element: <ProtoPage /> },
     ],
   },
 ]);
