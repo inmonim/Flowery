@@ -1,5 +1,10 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function UserMainPage() {
-  return <div>이거본문임</div>;
+  const navigate = useNavigate();
+  function handleNavigate() {
+    navigate("/writing");
+  }
+  return <div onClick={handleNavigate}>이거본문임</div>;
 }
