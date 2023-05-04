@@ -102,9 +102,9 @@ export default function WritingPage() {
       </div>
       {/* 페이지 이동 */}
       <div className={styles.handlePage}>
-        <input type="button" value="이전으로" />
-        <input type="button" value="건너뛰기" onClick={submitButton} />
-        <button onClick={submitButton}>다음으로</button>
+        <input type="button" value="이전으로" className="cursor-pointer"/>
+        <input type="button" value="건너뛰기" onClick={submitButton} className="cursor-pointer"/>
+        <input type="button" value="미리보기" onClick={submitButton} className="cursor-pointer"></input>
       </div>
     </div>
   );
