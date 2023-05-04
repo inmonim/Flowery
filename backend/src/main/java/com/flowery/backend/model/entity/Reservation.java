@@ -28,6 +28,11 @@ public class Reservation {
     @JoinColumn(name = "store_id")
     private Stores storeId;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
+    @JoinColumn(name = "message_id")
+    private Messages messageId;
+
     @Column(name = "goods_name")
     private String goodsName;
 
@@ -48,5 +53,8 @@ public class Reservation {
 
     @Column(name = "reservation_name")
     private String reservationName;
+
+    @Column(name = "phrase")
+    private String phrase;
 
 }
