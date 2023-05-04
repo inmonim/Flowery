@@ -72,33 +72,4 @@ public class ReservationController {
         }
 
     }
-
-
-        return new ResponseEntity<List<ReservationDto>>(reservationService.findByStoreId(storeId), HttpStatus.ACCEPTED);
-    }
-
-    // 등록된 예약을 승인시킴
-    @PostMapping("/accept")
-    public ResponseEntity<ReservationDto> acceptReservation (@RequestBody Map<String, Integer> requestData){
-        LOGGER.info("acceptReservation가 호출되었습니다.");
-        int reservationId = requestData.get("reservationId");
-
-        return new ResponseEntity<ReservationDto>(reservationService.acceptReservation(reservationId), HttpStatus.ACCEPTED);
-    }
-
-    @PostMapping("/make")
-    public ResponseEntity<Boolean> createReservation (@RequestBody ReservationDto reservationDto){
-        LOGGER.info("createReservation이 호출되었습니다.");
-
-        try{
-            boolean result = reservationService.makeReservation(reservationDto);
-
-            if(result) return new ResponseEntity<>(true, HttpStatus.ACCEPTED);
-            return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
-
-        }catch (Exception e){
-            return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
-        }
-
-    }
 }
