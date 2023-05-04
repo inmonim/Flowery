@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styles from "./PrintCard.module.scss";
 import camera from "../../assets/add_logo.png";
+import { saveAs } from "file-saver";
 
 interface PrintCardProps {
   closeModal: () => void;
@@ -50,9 +51,69 @@ export default function PrintCard(props: PrintCardProps) {
         reader.readAsDataURL(file);
       }
     };
-    input.click();
     setStepTwo(true);
+    input.click();
   }
+
+  function handlePrintClick() {
+    if (photoUrl1 && photoUrl2) {
+      // create image elements to save
+      const image1 = new Image();
+      const image2 = new Image();
+      image1.src = photoUrl1;
+      image2.src = photoUrl2;
+
+      // wait for images to load
+      Promise.all([image1.decode(), image2.decode()])
+        .then(() => {
+          // create canvas element for the first image
+          const canvas1 = document.createElement("canvas");
+          canvas1.width = image1.naturalWidth;
+          canvas1.height = image1.naturalHeight;
+
+          // draw first image on canvas
+          const context1 = canvas1.getContext("2d");
+          context1?.drawImage(image1, 0, 0);
+
+          // convert canvas to blob and save as file
+          canvas1.toBlob(
+            (blob1) => {
+              if (blob1) {
+                saveAs(blob1, "test1.jpg");
+
+                // create canvas element for the second image
+                const canvas2 = document.createElement("canvas");
+                canvas2.width = image2.naturalWidth;
+                canvas2.height = image2.naturalHeight;
+
+                // draw second image on canvas
+                const context2 = canvas2.getContext("2d");
+                context2?.drawImage(image2, 0, 0);
+
+                // convert canvas to blob and save as file
+                canvas2.toBlob(
+                  (blob2) => {
+                    if (blob2) {
+                      saveAs(blob2, "test2.jpg");
+
+                      // set the stepOne and stepTwo states to true
+                      setStepOne(true);
+                      setStepTwo(true);
+                    }
+                  },
+                  "image/jpeg",
+                  1
+                );
+              }
+            },
+            "image/jpeg",
+            1
+          );
+        })
+        .catch((err) => console.log(err));
+    }
+  }
+
   return (
     <div className={styles.modal}>
       <div className={styles.modalContent}>
@@ -103,7 +164,9 @@ export default function PrintCard(props: PrintCardProps) {
           </div>
         </div>
         {stepOne && stepTwo ? (
-          <button className={styles.successbutton}>출력</button>
+          <button className={styles.successbutton} onClick={handlePrintClick}>
+            출력
+          </button>
         ) : (
           <button className={styles.printbutton}>출력</button>
         )}

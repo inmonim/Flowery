@@ -31,7 +31,7 @@ export default function ManagePrint() {
   useEffect(() => {
     axios
       .get(
-        `http://k8e107.p.ssafy.io:8080/reservation/hi?date=2023-04-26T11:44:30`
+        `https://flowery.duckdns.org/api/reservation/hi?date=2023-04-26T11:44:30`
       )
       .then((response) => {
         setReservation(response.data as ReservationItem[]);
