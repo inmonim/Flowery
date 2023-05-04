@@ -10,4 +10,6 @@ public interface GoodsRepository extends JpaRepository<Goods, Integer> {
 
     public List<Goods> findGoodsByStoreId(Stores storeId);
 
+    public void deleteByGoodsId(Integer goodsId);
+
 }

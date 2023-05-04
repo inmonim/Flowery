@@ -79,5 +79,20 @@ public class MessagesController {
         return new ResponseEntity<>(messagesService.findByMessageId(a), HttpStatus.ACCEPTED);
     }
 
+    @PostMapping("/flower-picture")
+    public ResponseEntity<Messages> addFlowerPicture(@RequestPart MultipartFile picture,
+                                             @RequestParam Integer reservationId) throws Exception{
+        LOGGER.info("addFlowerPicture 호출되었습니다.");
+        try {
+            String pictureUrl = s3Uploader.uploadFile(picture);
+
+            return new ResponseEntity<Messages>(messagesService.addFlowerPicture(pictureUrl, reservationId), HttpStatus.ACCEPTED);
+        }catch (Exception e){
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+
+    }
+
+
 
 }

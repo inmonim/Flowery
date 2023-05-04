@@ -1,5 +1,7 @@
 package com.flowery.backend.controller;
 
+import com.flowery.backend.model.dto.StoresDto;
+import com.flowery.backend.model.entity.Goods;
 import com.flowery.backend.model.entity.Samples;
 import com.flowery.backend.model.entity.Stores;
 import com.flowery.backend.sevice.StoresService;
@@ -15,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping("stores/")
+@RequestMapping("stores")
 public class StoresController {
 
     // 가게 도메인에서 상품, 가게 정보(모든 가게, 특정 가게, 특정 가게의 휴일 등)를 CRUD 가능함
@@ -31,10 +33,12 @@ public class StoresController {
 
     @GetMapping
     public ResponseEntity<List<Stores>> findAllStores() {
-        return new ResponseEntity<List<Stores>>(storesService.findAllStores(), HttpStatus.OK);
+        LOGGER.info("findAllStores가 호출되었습니다.");
+        Integer permitted = 1;
+        return new ResponseEntity<List<Stores>>(storesService.findAllStores(permitted), HttpStatus.OK);
     }
 
-    @PostMapping("info")
+    @PostMapping("/info")
     public ResponseEntity<Stores> findByStoreId(@RequestBody Map<String, Integer> requestData) {
         LOGGER.info("findByStoreId가 호출되었습니다.");
         int storeId = requestData.get("storeId");
@@ -48,11 +52,38 @@ public class StoresController {
         return ResponseEntity.status(HttpStatus.CREATED).body(createdStore);
     }
 
-    @GetMapping("samples")
+    @GetMapping("/samples")
     public ResponseEntity<List<Samples>> findAllPicture(@RequestParam int goodsId){
 
         return new ResponseEntity<>(storesService.findAllByGoods(goodsId), HttpStatus.ACCEPTED);
 
     }
+
+    // 상품을 삭제
+    @DeleteMapping("/goods/{goodsId}")
+    public ResponseEntity<Void> deleteGoods(@PathVariable("goodsId") Integer goodsId){
+        LOGGER.info("deleteGoods가 호출되었습니다.");
+        storesService.deleteGoods(goodsId);
+        return ResponseEntity.noContent().build();
+    }
+
+    // 상점의 정보를 수정\
+    @PatchMapping("/{storeId}")
+    public ResponseEntity<Stores> editStore(@PathVariable("storeId") Integer storeId,
+                                            @RequestBody StoresDto storeDto){
+        LOGGER.info("editStore 호출되었습니다.");
+        Stores updatedStore = storesService.editStore(storeId, storeDto);
+        return ResponseEntity.ok(updatedStore);
+    }
+
+    // 굿즈에 샘플 이미지 추가
+//    @DeleteMapping("/goods/{goodsId}")
+//    public ResponseEntity<Samples> createSample(@PathVariable("goodsId") Integer goodsId,
+//                                                @RequestBody Samples storeDto){
+//        LOGGER.info("createSample이 호출되었습니다.");
+//        Samples createdSample = storesService.createSample(goodsId);;
+//        return ResponseEntity.created(createdSample);
+//    }
+
 
 }
