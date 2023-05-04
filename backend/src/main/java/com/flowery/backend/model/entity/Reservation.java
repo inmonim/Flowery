@@ -28,7 +28,7 @@ public class Reservation {
     @JoinColumn(name = "store_id")
     private Stores storeId;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JsonIgnore
     @JoinColumn(name = "message_id")
     private Messages messageId;
@@ -53,5 +53,8 @@ public class Reservation {
 
     @Column(name = "reservation_name")
     private String reservationName;
+
+    @Column(name = "phrase")
+    private String phrase;
 
 }

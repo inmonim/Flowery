@@ -44,7 +44,7 @@ public class S3Uploader {
     private String createS3FileName (String fileName) {
 
         UUID uuid = UUID.randomUUID();
-        String newFileUrl = "files/" + fileName + uuid;
+        String newFileUrl = "files/" + uuid + fileName;
         return newFileUrl;
     }
 

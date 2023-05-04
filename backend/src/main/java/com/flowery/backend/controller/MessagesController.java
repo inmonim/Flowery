@@ -31,7 +31,9 @@ public class MessagesController {
     @PostMapping("/card")
     public ResponseEntity<Messages> createCard(@RequestPart(required = false) MultipartFile[] pictures,
                                                @RequestPart(required = false) MultipartFile video,
-                                               @RequestParam Integer paper, @RequestParam String message) throws Exception {
+                                               @RequestParam Integer paper, @RequestParam String message,
+                                               @RequestParam Integer font) throws Exception {
+
         LOGGER.info("createCard가 호출되었습니다.");
 
         try {
@@ -39,6 +41,7 @@ public class MessagesController {
             List<String> pictureUrl = new ArrayList<>();
             String messageValue = null;
             Integer paperValue = 0;
+            Integer fontValue = 0;
 
             if(!video.isEmpty()){
                 videoUrl = s3Uploader.uploadFile(video);
@@ -57,7 +60,11 @@ public class MessagesController {
                 paperValue = paper;
             }
 
-            return new ResponseEntity<>(messagesService.createCard(videoUrl, pictureUrl, messageValue, paperValue), HttpStatus.ACCEPTED);
+            if(-1< paper && paper < 20){
+                fontValue = font;
+            }
+
+            return new ResponseEntity<>(messagesService.createCard(videoUrl, pictureUrl, messageValue, paperValue, fontValue), HttpStatus.ACCEPTED);
         }catch (Exception e){
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
