@@ -11,9 +11,16 @@ export const phoneNumberState = atom<string>({
 });
 
 ////////////////// pages/WritingPage/WritingPage.tsx
-// 업로드한 이미지(영상)
+// 업로드한 이미지
 export const imageState = atom<File | null>({
   key: "imageState",
+  default: null,
+  //   effects_UNSTABLE: [persistAtom],
+});
+
+// 업로드한 영상
+export const videoState = atom<File | null>({
+  key: "videoState",
   default: null,
   //   effects_UNSTABLE: [persistAtom],
 });

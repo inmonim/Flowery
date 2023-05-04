@@ -1,18 +1,18 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useRecoilState } from "recoil";
-import { imageState } from "../../../recoil/atom";
+import { videoState } from "../../../recoil/atom";
 
-export default function ImageInput() {
-  const [image, setImage] = useRecoilState<File | null>(imageState);
+export default function VideoInput() {
+  const [video, setVideo] = useRecoilState<File | null>(videoState);
   const [isDraggingOver, setIsDraggingOver] = useState(false);
 
   const imageInput = useRef<HTMLInputElement>(null);
   // 이미지 업로드
-  const onClickImageUpload = () => {
+  const onClickVideoUpload = () => {
     imageInput.current?.click();
   };
 
-  const handleImageInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleVideoInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files;
     if (file && file.length > 0) {
       const fileType = file[0].type;
@@ -21,7 +21,7 @@ export default function ImageInput() {
         fileType.startsWith("video/") ||
         fileType.startsWith("gif/")
       ) {
-        setImage(file[0]);
+        setVideo(file[0]);
       } else {
         alert("이미지 또는 동영상 파일만 업로드 가능합니다.");
       }
@@ -50,7 +50,7 @@ export default function ImageInput() {
         fileType.startsWith("video/") ||
         fileType.startsWith("gif/")
       ) {
-        setImage(file[0]);
+        setVideo(file[0]);
       } else {
         alert("이미지 또는 동영상 파일만 업로드 가능합니다.");
       }
@@ -65,8 +65,8 @@ export default function ImageInput() {
       draggable="false"
       className="flex items-center justify-center w-full"
     >
-      이미지 업로드
-      {/* 이미지 업로드*/}
+        영상 업로드
+      {/* 영상 업로드*/}
       <div
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
@@ -74,11 +74,11 @@ export default function ImageInput() {
         className="flex justify-center border-2 border-dotted w-[50rem]   "
       >
         {/* input 대신에 클릭 또는 drag & drop을 통해 파일 업로드 하는 코드 */}
-        {image ? (
-          <img src={URL.createObjectURL(image)}></img>
+        {video ? (
+          <img src={URL.createObjectURL(video)}></img>
         ) : (
           <label
-            htmlFor="dropzoneImage"
+            htmlFor="dropzoneVideo"
             className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
           >
             <div
@@ -113,12 +113,12 @@ export default function ImageInput() {
           </label>
         )}
         <input
-          id="dropzoneImage"
+          id="dropzoneVideo"
           type="file"
           multiple
-          accept="image/*, gif/*"
+          accept="video/*"
           ref={imageInput}
-          onChange={handleImageInput}
+          onChange={handleVideoInput}
           className="hidden"
         />
       </div>

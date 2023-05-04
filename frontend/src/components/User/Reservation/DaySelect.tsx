@@ -10,6 +10,8 @@ export default function Dayselect() {
     setSelectedDate(date);
   };
 
+  window.print();
+
   return (
     <>
       <div className="datepicker-wrapper">
