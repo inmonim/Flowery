@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 
 @Controller
-@RequestMapping("sales/")
+@RequestMapping("sales")
 public class SalesController {
 
     // sales에서 판매 기록이 나옴 (매출, 꽃 나간 량)
@@ -26,7 +26,7 @@ public class SalesController {
         this.salesService = salesService;
     }
 
-    @GetMapping("hi")
+    @GetMapping("/hi")
     public ResponseEntity<List<SalesDto>> hi(@RequestParam int reservationId){
         return new ResponseEntity<>(salesService.findByReservationId(reservationId), HttpStatus.ACCEPTED);
     }

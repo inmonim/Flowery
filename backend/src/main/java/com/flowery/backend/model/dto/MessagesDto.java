@@ -4,8 +4,10 @@ import lombok.Data;
 
 @Data
 public class MessagesDto {
+
+    private int messageId;
     private String message;
     private String video;
-    private String picture;
+    private String flowerPicture;
     private int papers;
 }
