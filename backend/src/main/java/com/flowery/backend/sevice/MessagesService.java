@@ -9,6 +9,7 @@ import com.flowery.backend.repository.ReservationRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class MessagesService {
@@ -24,13 +25,13 @@ public class MessagesService {
         this.reservationRepository = reservationRepository;
     }
 
-    public Messages findById(int code){
+    public Messages findById(String code){
         return messagesRepository.findById(code).get();
     }
 
 
-    public Messages findByMessageId(int id){
-        Messages message = messagesRepository.findByMessageId(id);
+    public Messages findByMessageId(String id){
+        Messages message = messagesRepository.findById(id).get();
 //        기본 제공하는 findby를 사용해서 repository 안 만들고 할 때
 //        Messages message = messagesRepository.findByMessageId(id).get();
         return message;
@@ -49,6 +50,7 @@ public class MessagesService {
         }
         message.setPaper(paperValue);
         message.setFont(fontValue);
+        message.setMessageId(UUID.randomUUID().toString());
 
         Messages result = messagesRepository.save(message);
 
@@ -64,7 +66,7 @@ public class MessagesService {
 
     public Messages addFlowerPicture (String pictureUrl, Integer reservationId) throws Exception {
         Reservation reservation = reservationRepository.findById(reservationId).get();
-        int messageId = reservation.getMessageId().getMessageId();
+        String messageId = reservation.getMessageId().getMessageId();
         Messages result = messagesRepository.findById(messageId).get();
         result.setFlowerPicture(pictureUrl);
 

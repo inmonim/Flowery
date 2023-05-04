@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class MessagesDto {
 
-    private int messageId;
+    private String messageId;
     private String message;
     private String video;
     private String flowerPicture;

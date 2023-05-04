@@ -137,7 +137,7 @@ public class ReservationService {
 
         // 메시지 아이디가 null값이 아니라면 가져온다.
         if(reservationDto.getMessageId() != null){
-            messages = messagesRepository.findByMessageId(reservationDto.getMessageId());
+            messages = messagesRepository.findById(reservationDto.getMessageId()).get();
         }
 
         reservation.setStoreId(stores);
