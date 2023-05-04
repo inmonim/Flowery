@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 
 @Controller
-@RequestMapping("sales/")
+@RequestMapping("api/sales/")
 public class SalesController {
 
     // sales에서 판매 기록이 나옴 (매출, 꽃 나간 량)
