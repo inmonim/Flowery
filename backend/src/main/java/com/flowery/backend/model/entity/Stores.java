@@ -1,12 +1,13 @@
 package com.flowery.backend.model.entity;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
-@Getter
+@Data
 @NoArgsConstructor
 public class Stores {
     @Id

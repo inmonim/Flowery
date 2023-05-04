@@ -1,6 +1,7 @@
 package com.flowery.backend.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -8,7 +9,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Getter
+@Data
 @NoArgsConstructor
 public class Reservation {
 
@@ -44,5 +45,8 @@ public class Reservation {
 
     @Column(name = "permission")
     private int permission;
+
+    @Column(name = "reservation_name")
+    private String reservationName;
 
 }

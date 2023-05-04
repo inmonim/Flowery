@@ -2,7 +2,6 @@ package com.flowery.backend.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -10,19 +9,19 @@ import javax.persistence.*;
 @Entity
 @Data
 @NoArgsConstructor
-public class Holydays {
+public class Pictures {
 
     @Id
-    @Column(name = "holyday_id")
+    @Column(name = "picture_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int holydayId;
+    private int pictureId;
 
     @ManyToOne
     @JsonIgnore
-    @JoinColumn(name = "store_id")
-    private Stores StoreId;
+    @JoinColumn(name = "message_id")
+    private Messages messageId;
 
-    @Column(name = "day")
-    private String day;
+    @Column(name = "url")
+    private String url;
 
 }

@@ -1,12 +1,14 @@
 package com.flowery.backend.model.entity;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
-@Getter
+@Data
 @NoArgsConstructor
 public class Messages {
 
@@ -21,7 +23,10 @@ public class Messages {
     @Column(name = "video")
     private String video;
 
-    @Column(name = "picture")
-    private String picture;
+    @Column(name = "flower_picture")
+    private String flowerPicture;
+
+    @Column(name = "paper")
+    private int paper;
 
 }

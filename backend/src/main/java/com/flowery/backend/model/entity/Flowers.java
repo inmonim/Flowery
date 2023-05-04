@@ -8,7 +8,6 @@ import javax.persistence.*;
 
 @Data
 @Entity
-@Getter
 @NoArgsConstructor
 public class Flowers {
 
