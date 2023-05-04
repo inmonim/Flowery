@@ -15,7 +15,7 @@ export default function ReleaseIntro() {
       <p className="absolute text-[#FEF7F1] top-[30%] left-[15%] animate-fadeIn animation-delay-4000">
         qr을 눌러 사진과 편지를 확인하세요!
       </p>
-      <Link to="/releasecategory">
+      <Link to="/userprotopage">
         <img
           src={qr}
           alt="qr"
