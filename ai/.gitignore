@@ -1,6 +1,6 @@
-*.jpg
-*.txt
-*.zip
-*.pt
-*.cache
-*.cache.npy
+**/*.jpg
+**/*.txt
+**/*.zip
+**/*.pt
+**/*.cache
+**/*.cache.npy
