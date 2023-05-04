@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styles from "./PrintCard.module.scss";
 import camera from "../../assets/add_logo.png";
 import { saveAs } from "file-saver";
+import Test1 from "./test1";
 
 interface PrintCardProps {
   closeModal: () => void;
@@ -118,7 +119,7 @@ export default function PrintCard(props: PrintCardProps) {
     <div className={styles.modal}>
       <div className={styles.modalContent}>
         <div className={styles.stepone}>
-          <div>
+          {/* <div>
             {photoUrl1 ? (
               <img
                 src={photoUrl1}
@@ -132,13 +133,14 @@ export default function PrintCard(props: PrintCardProps) {
                 onClick={handleCameraClick1}
               ></img>
             )}
-          </div>
-          <div>
+          </div> */}
+          <Test1 />
+          {/* <div>
             <p className={styles.steptitle}>Step1. 객체인식용 사진촬영</p>
             <p className={styles.stephint}>
               ※ 꽃봉오리가 잘 보이도록 위에서 촬영해주세요
             </p>
-          </div>
+          </div> */}
         </div>
         <div className={styles.stepone}>
           <div>
