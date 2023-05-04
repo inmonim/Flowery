@@ -8,9 +8,11 @@ public class ReservationDto {
 
     private int reservationId;
 
-    private int userId;
+    private Integer userId;
 
-    private int storeId;
+    private Integer storeId;
+
+    private Integer messageId;
 
     private String goodsName;
 
@@ -25,5 +27,7 @@ public class ReservationDto {
     private int permission;
 
     private String reservationName;
+
+    private String phrase;
 
 }
