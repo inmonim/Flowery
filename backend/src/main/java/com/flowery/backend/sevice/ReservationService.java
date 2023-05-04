@@ -1,14 +1,8 @@
 package com.flowery.backend.sevice;
 
 import com.flowery.backend.model.dto.ReservationDto;
-import com.flowery.backend.model.entity.Goods;
-import com.flowery.backend.model.entity.Reservation;
-import com.flowery.backend.model.entity.Stores;
-import com.flowery.backend.model.entity.Users;
-import com.flowery.backend.repository.GoodsRepository;
-import com.flowery.backend.repository.ReservationRepository;
-import com.flowery.backend.repository.StoreRepository;
-import com.flowery.backend.repository.UsersRepository;
+import com.flowery.backend.model.entity.*;
+import com.flowery.backend.repository.*;
 import org.springframework.stereotype.Service;
 
 import javax.swing.text.html.parser.Entity;
@@ -28,13 +22,15 @@ public class ReservationService {
     private StoreRepository storeRepository;
     private UsersRepository usersRepository;
     private GoodsRepository goodsRepository;
+    private MessagesRepository messagesRepository;
 
     ReservationService(ReservationRepository reservationRepository, StoreRepository storeRepository,
-                       UsersRepository usersRepository, GoodsRepository goodsRepository){
+                       UsersRepository usersRepository, GoodsRepository goodsRepository, MessagesRepository messagesRepository){
         this.reservationRepository = reservationRepository;
         this.storeRepository = storeRepository;
         this.usersRepository = usersRepository;
         this.goodsRepository = goodsRepository;
+        this.messagesRepository = messagesRepository;
     }
 
     public List<ReservationDto> findTodayReservation(LocalDateTime dateTime){
@@ -137,15 +133,25 @@ public class ReservationService {
             return false;
         }
 
+        Messages messages = null;
+
+        // 메시지 아이디가 null값이 아니라면 가져온다.
+        if(reservationDto.getMessageId() != null){
+            messages = messagesRepository.findByMessageId(reservationDto.getMessageId());
+        }
+
         reservation.setStoreId(stores);
+        reservation.setMessageId(messages);
+
         reservation.setGoodsName(reservationDto.getGoodsName());
         reservation.setPrice(reservationDto.getPrice());
 
-        reservation.setDate(reservationDto.getDate());
-        reservation.setPermission(0);
-        reservation.setPrinted(0);
         reservation.setDemand(reservationDto.getDemand());
+        reservation.setDate(reservationDto.getDate());
+        reservation.setPrinted(0);
+        reservation.setPermission(0);
         reservation.setReservationName(reservationDto.getReservationName());
+        reservation.setPhrase(reservationDto.getPhrase());
 
         reservationRepository.save(reservation);
         return true;

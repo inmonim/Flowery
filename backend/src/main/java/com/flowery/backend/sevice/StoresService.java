@@ -1,6 +1,8 @@
 package com.flowery.backend.sevice;
 
+import com.amazonaws.services.kms.model.NotFoundException;
 import com.flowery.backend.model.dto.GoodsDto;
+import com.flowery.backend.model.dto.StoresDto;
 import com.flowery.backend.model.entity.Goods;
 import com.flowery.backend.model.entity.Samples;
 import com.flowery.backend.model.entity.Stores;
@@ -11,8 +13,10 @@ import com.flowery.backend.repository.StoreRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 // 상점, 휴일, 상품, 상품 샘플 사진들 레포지토리를 가지고 있음
 
@@ -32,8 +36,10 @@ public class StoresService {
     }
 
     // 모든 상점 다 가져오기
-    public List<Stores> findAllStores(){
-        return storeRepository.findAll();
+    public List<Stores> findAllStores(Integer permitted){
+        List<Stores> result = storeRepository.findByPermit(permitted);
+
+        return result;
     }
 
     // 모든 상품들 다 가져오기
@@ -81,4 +87,38 @@ public class StoresService {
 
     }
 
+
+    // 가게 정보 변경
+    @Transactional
+    public Stores editStore(Integer storeId, StoresDto storeDTO){
+        Stores store = storeRepository.findById(storeId)
+                .orElseThrow(() -> new NotFoundException("Store not found with id : " + storeId));
+
+        // 수정하고자 하는 필드들만 업데이트
+        store.setStorePhone(storeDTO.getStorePhone());
+        store.setOpen(storeDTO.getOpen());
+        store.setClose(storeDTO.getClose());
+        store.setInfo(storeDTO.getInfo());
+
+        Stores updatedStore = storeRepository.save(store);
+        return updatedStore;
+    }
+
+    // 상품 삭제
+    @Transactional
+
+    public void deleteGoods(Integer goodsId) {
+        goodsRepository.deleteByGoodsId(goodsId);
+    }
+
+//    public Samples createSample(Integer goodsId) {
+//        Goods goods = goodsRepository.findById(goodsId).orElseThrow(() -> new NoSuchElementException("해당 goods_id가 없습니다."));
+//
+//        Samples sample = new Samples();
+//        sample.setPicture(picture);
+//        sample.setGoodsId(goods);
+//
+//        goods.getSamples().add(sample);
+//        goodsRepository.save(goods);
+//    }
 }

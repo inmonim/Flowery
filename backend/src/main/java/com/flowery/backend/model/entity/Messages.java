@@ -29,4 +29,7 @@ public class Messages {
     @Column(name = "paper")
     private int paper;
 
+    @Column(name = "font")
+    private int font;
+
 }
