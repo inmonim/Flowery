@@ -40,7 +40,7 @@ public class ReservationController {
     }
 
     // 한 가게에 등록된 예약들을 찾아옴.
-    @PostMapping
+    @PostMapping("/store")
     public ResponseEntity<List<ReservationDto>> findByStoreId(@RequestBody Map<String, Integer> requestData){
         LOGGER.info("findByStoreId가 호출되었습니다.");
         int storeId = requestData.get("storeId");
