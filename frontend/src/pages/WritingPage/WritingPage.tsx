@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from "react";
-import styles from "./WritingPage.module.scss";
 import PreviewModal from "./PreviewModal";
 import ImageInput from "../../components/User/Writing/ImageInput";
 import LetterPaper from "../../components/User/Writing/LetterPaper";
@@ -9,6 +8,8 @@ import VideoInput from "../../components/User/Writing/VideoInput";
 
 export default function WritingPage() {
   const [showModal, setShowModal] = useState<boolean>(false);
+  const [showLetterInput, setShowLetterInput] = useState<boolean>(true);
+  const [showImageInput, setShowImageInput] = useState<boolean>(true);
   const [isDrag, setIsDrag] = useState(false);
 
   const modalRef = useRef<HTMLDivElement>(null);
@@ -69,42 +70,66 @@ export default function WritingPage() {
         <PreviewModal ref={modalRef} onClose={() => setShowModal(false)} />
       )}
       {/* 페이지 내용 */}
-      <div className={styles.contents}>
-        {/* 편지 */}
-        <div className={styles.letter}>
-          {/* 편지지 고르기 */}
-          {/* {LetterPaper()} */}
-          {/* 편지지 */}
-          {LetterContent()}
-        </div>
-        {/* 글씨체 고르기 */}
-        {LetterFont()}
+      <div
+        onClick={() => {
+          setShowLetterInput(!showLetterInput);
+        }}
+        className="flex justify-center w-[fit-content] mx-auto"
+      >
+        편지입력
       </div>
-      {/* 영상 업로드 */}
-      <div className="p-4 overflow-y-auto">
-        <div className="space-y-4">
-          <div className="card m-2  border-gray-400 rounded-lg transform transition-all duration-200">
-            <div className="m-3">
-              <div className="flex justify-center">{VideoInput()}</div>
+      {showLetterInput && (
+        <div>
+          <div className="flex justify-center">
+            <LetterContent />
+          </div>
+          <LetterFont />
+        </div>
+      )}
+      {/* 영상, 이미지 첨부 */}
+      <div>
+        <span
+          onClick={() => {
+            setShowImageInput(!showImageInput);
+          }}
+          className="flex justify-center  w-[fit-content] mx-auto"
+        >
+          이미지, 영상 보내기
+        </span>
+      </div>
+      {showImageInput && (
+        <div className="p-4 overflow-y-auto">
+          <div className="space-y-4">
+            <div className="card m-2  border-gray-400 rounded-lg transform transition-all duration-200">
+              <div className="m-3">
+                {/* 영상 업로드 */}
+                <div className="mb-7">
+                  <VideoInput />
+                </div>
+                {/* 이미지 업로드 */}
+                <div className="mb-7">
+                  <ImageInput />
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      {/* 이미지 업로드 */}
-      <div className="p-4 overflow-y-auto">
-        <div className="space-y-4">
-          <div className="card m-2  border-gray-400 rounded-lg transform transition-all duration-200">
-            <div className="m-3">
-              <div className="flex justify-center">{ImageInput()}</div>
-            </div>
-          </div>
-        </div>
-      </div>
+      )}
       {/* 페이지 이동 */}
-      <div className={styles.handlePage}>
-        <input type="button" value="이전으로" className="cursor-pointer"/>
-        <input type="button" value="건너뛰기" onClick={submitButton} className="cursor-pointer"/>
-        <input type="button" value="미리보기" onClick={submitButton} className="cursor-pointer"></input>
+      <div className="justify-center flex">
+        <input type="button" value="이전으로" className="cursor-pointer" />
+        <input
+          type="button"
+          value="건너뛰기"
+          onClick={submitButton}
+          className="cursor-pointer"
+        />
+        <input
+          type="button"
+          value="미리보기"
+          onClick={submitButton}
+          className="cursor-pointer"
+        ></input>
       </div>
     </div>
   );

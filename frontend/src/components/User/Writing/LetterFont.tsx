@@ -13,7 +13,6 @@ export default function LetterFont() {
     "삼립호빵체",
     "김정철명조",
     "안성탕면체",
-    "고령딸기체",
     "제주돌담체",
     "평창평화체",
     "조선100년체",
@@ -23,16 +22,17 @@ export default function LetterFont() {
   return (
     <div className="flex justify-center">
       {/* 글씨체 고르기 */}
-      <div className="flex p-2">
+      <div className="flex justify-between p-2 w-[35em]">
         {/* 왼쪽 화살표 */}
-        {startIndex !== 0 && (
+        {startIndex !== 0 ? (
           <input
             type="button"
             value="&lt;"
-            disabled={startIndex === 0}
             onClick={() => setStartIndex(startIndex - 1)}
             className="cursor-pointer"
           ></input>
+        ) : (
+          <div></div>
         )}
         {/* 글씨체 목록 */}
         {letterFonts
@@ -55,13 +55,15 @@ export default function LetterFont() {
             </div>
           ))}
         {/* 오른쪽 화살표 */}
-        {startIndex + visibleFontsCount < letterFonts.length && (
+        {startIndex + visibleFontsCount < letterFonts.length ? (
           <input
             type="button"
             value="&gt;"
             onClick={() => setStartIndex(startIndex + 1)}
             className="cursor-pointer"
           ></input>
+        ) : (
+          <div></div>
         )}
       </div>
     </div>
