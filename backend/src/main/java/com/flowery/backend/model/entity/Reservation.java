@@ -28,6 +28,11 @@ public class Reservation {
     @JoinColumn(name = "store_id")
     private Stores storeId;
 
+    @OneToOne
+    @JsonIgnore
+    @JoinColumn(name = "message_id")
+    private Messages messageId;
+
     @Column(name = "goods_name")
     private String goodsName;
 
