@@ -16,14 +16,19 @@ export default function VideoInput() {
     const file = event.target.files;
     if (file && file.length > 0) {
       const fileType = file[0].type;
+      const maxSize = 50 * 1024 * 1024;
+      const fileSize = file[0].size;
+
       if (
-        fileType.startsWith("image/") ||
-        fileType.startsWith("video/") ||
-        fileType.startsWith("gif/")
+        fileType.startsWith("video/")
       ) {
-        setVideo(file[0]);
+        if (fileSize > maxSize) {
+          alert("최대 50MB까지 업로드 가능합니다.");
+        } else {
+          setVideo(file[0]);
+        }
       } else {
-        alert("이미지 또는 동영상 파일만 업로드 가능합니다.");
+        alert("동영상 파일만 업로드 가능합니다.");
       }
     }
   };
@@ -45,14 +50,19 @@ export default function VideoInput() {
     const file = event.dataTransfer.files;
     if (file && file.length > 0) {
       const fileType = file[0].type;
+      const maxSize = 50 * 1024 * 1024;
+      const fileSize = file[0].size;
+
       if (
-        fileType.startsWith("image/") ||
-        fileType.startsWith("video/") ||
-        fileType.startsWith("gif/")
+        fileType.startsWith("video/")
       ) {
-        setVideo(file[0]);
+        if (fileSize > maxSize) {
+          alert("최대 50MB까지 업로드 가능합니다.");
+        } else {
+          setVideo(file[0]);
+        }
       } else {
-        alert("이미지 또는 동영상 파일만 업로드 가능합니다.");
+        alert("동영상 파일만 업로드 가능합니다.");
       }
     }
   };
@@ -65,7 +75,6 @@ export default function VideoInput() {
       draggable="false"
       className="flex items-center justify-center w-full"
     >
-        영상 업로드
       {/* 영상 업로드*/}
       <div
         onDragOver={handleDragOver}
@@ -75,7 +84,7 @@ export default function VideoInput() {
       >
         {/* input 대신에 클릭 또는 drag & drop을 통해 파일 업로드 하는 코드 */}
         {video ? (
-          <img src={URL.createObjectURL(video)}></img>
+          <video src={URL.createObjectURL(video)} onClick={onClickVideoUpload} className="cursor-pointer"></video>
         ) : (
           <label
             htmlFor="dropzoneVideo"
@@ -107,7 +116,10 @@ export default function VideoInput() {
                 and drop
               </p>
               <p className="text-xs text-gray-500 dark:text-gray-400">
-                SVG, PNG, JPG or GIF (MAX. 800x400px)
+                보내고 싶은 영상을 업로드하세요!
+              </p>
+              <p className="text-xs text-gray-500 dark:text-gray-400">
+                (영상은 최대 50MB, 약 20초 내외로 가능합니다)
               </p>
             </div>
           </label>

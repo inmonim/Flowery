@@ -32,6 +32,7 @@ export default function LetterContent() {
     return (
       <textarea
         autoFocus
+        spellCheck='false'
         rows={14}
         onChange={handleTextareaHeight}
         value={letterContent}

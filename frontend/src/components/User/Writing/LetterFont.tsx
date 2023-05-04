@@ -13,7 +13,7 @@ export default function LetterFont() {
     "삼립호빵체",
     "김정철명조",
     "안성탕면체",
-    "고령딸기체",   
+    "고령딸기체",
     "제주돌담체",
     "평창평화체",
     "조선100년체",
@@ -26,12 +26,13 @@ export default function LetterFont() {
       <div className="flex p-2">
         {/* 왼쪽 화살표 */}
         {startIndex !== 0 && (
-          <button
+          <input
+            type="button"
+            value="&lt;"
             disabled={startIndex === 0}
             onClick={() => setStartIndex(startIndex - 1)}
-          >
-            &lt;
-          </button>
+            className="cursor-pointer"
+          ></input>
         )}
         {/* 글씨체 목록 */}
         {letterFonts
@@ -42,7 +43,7 @@ export default function LetterFont() {
               onClick={() => {
                 setLetterFont(startIndex + i + 1);
               }}
-              className="p-2"
+              className="p-2 align-middle justify-center"
             >
               <div
                 className={`cursor-pointer ${
@@ -55,7 +56,12 @@ export default function LetterFont() {
           ))}
         {/* 오른쪽 화살표 */}
         {startIndex + visibleFontsCount < letterFonts.length && (
-          <button onClick={() => setStartIndex(startIndex + 1)}>&gt;</button>
+          <input
+            type="button"
+            value="&gt;"
+            onClick={() => setStartIndex(startIndex + 1)}
+            className="cursor-pointer"
+          ></input>
         )}
       </div>
     </div>

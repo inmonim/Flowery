@@ -12,9 +12,9 @@ export const phoneNumberState = atom<string>({
 
 ////////////////// pages/WritingPage/WritingPage.tsx
 // 업로드한 이미지
-export const imageState = atom<File | null>({
+export const imageState = atom<Array<File>>({
   key: "imageState",
-  default: null,
+  default: [],
   //   effects_UNSTABLE: [persistAtom],
 });
 

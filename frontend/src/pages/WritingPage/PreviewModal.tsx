@@ -8,7 +8,6 @@ import { imageState, totalTextState } from "../../recoil/atom";
 import LetterPreview from "../../components/User/Writing/LetterPreview";
 
 const PreviewModal = React.forwardRef<HTMLDivElement, any>((props, ref) => {
-  const image = useRecoilValue<File | null>(imageState);
   const letter = useRecoilValue<string>(totalTextState);
   const navigate = useNavigate();
 
@@ -102,24 +101,6 @@ const PreviewModal = React.forwardRef<HTMLDivElement, any>((props, ref) => {
                     </div>
                   </div>
                 </div>
-
-                {/* 입력한 사진 */}
-                {image && (
-                  <div className="card m-2  border-gray-400 rounded-lg hover:shadow-md hover:border-opacity-0 transform hover:-translate-y-1 transition-all duration-200">
-                    <div className="m-3">
-                      <span className="cursor-pointer text-sm text-teal-800 font-mono bg-teal-100 inline rounded-full px-2 align-top float-right animate-pulse">
-                        ?
-                      </span>
-                      <div className="flex justify-center">
-                        <img
-                          src={URL.createObjectURL(image)}
-                          alt=""
-                          className="hidden items-center rounded-b-lg lg:w-6/12 lg:rounded-r-lg lg:rounded-bl-none lg:block"
-                        ></img>
-                      </div>
-                    </div>
-                  </div>
-                )}
 
                 {/* 입력한 편지 */}
                 {letter && (
