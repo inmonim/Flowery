@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.util.List;
 
 @Controller
-@RequestMapping("myGarden/")
+@RequestMapping("api/myGarden/")
 public class MygardensController {
 
     private MygardensService mygardensService;
