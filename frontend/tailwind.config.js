@@ -9,9 +9,11 @@ module.exports = {
         b_bottom: "#EADED0",
       },
       animation: {
-        fadeOut: "fadeOut 5s ease-out forwards",
-        fadeIn: "fadeIn 3s ease-in forwards",
-        slider: "slider 3s ease-in forwards",
+        fadeOut: "fadeOut 2s ease-out forwards",
+        fadeIn: "fadeIn 1s ease-in forwards",
+        slider: "slider 1s ease-in forwards",
+        textSlideLtoR: "textSlideLtoR 1s ease-in-out forwards",
+        textSlideRtoL: "textSlideRtoL 1s ease-in-out forwards",
       },
       keyframes: {
         fadeOut: {
@@ -30,6 +32,14 @@ module.exports = {
           "100%": {
             transform: "translateY(100px)",
           },
+        },
+        textSlideLtoR: {
+          "0%": { transform: "translateX(-100%)" },
+          "100%": { transform: "translateX(0)" },
+        },
+        textSlideRtoL: {
+          "0%": { transform: "translateX(100%)" },
+          "100%": { transform: "translateX(0)" },
         },
       },
     },

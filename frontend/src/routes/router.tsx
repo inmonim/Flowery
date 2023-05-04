@@ -18,6 +18,7 @@ import ReleaseIntro from "../components/ReleasePage/ReleaseIntro";
 import ReleaseCategory from "../components/ReleasePage/ReleaseCategory";
 import ReleaseLetters from "../components/ReleasePage/ReleaseLetters";
 import ReleasePictures from "../components/ReleasePage/ReleasePictures";
+import UserProtoPage from "../components/ReleasePage/UserProtoPage";
 
 const router = createBrowserRouter([
   {
@@ -54,6 +55,7 @@ const router = createBrowserRouter([
       { path: "/releasecategory", element: <ReleaseCategory /> },
       { path: "/releasepictures", element: <ReleasePictures /> },
       { path: "/releaseletter", element: <ReleaseLetters /> },
+      { path: "/userprotopage", element: <UserProtoPage /> },
     ],
   },
 ]);
