@@ -1,6 +1,9 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, Component } from "react";
 import { useRecoilState } from "recoil";
 import { imageState } from "../../../recoil/atom";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 export default function ImageInput() {
   const [images, setImages] = useRecoilState<Array<File>>(imageState);
@@ -113,7 +116,7 @@ export default function ImageInput() {
                 <div>
                   <div className="w-[300px] h-[300px] flex items-center">
                     <img
-                      className="cursor-pointer flex justify-center max-h-[300px]  object-fill"
+                      className="cursor-pointer flex justify-center max-h-[300px] object-fill"
                       key={index}
                       src={URL.createObjectURL(image)}
                       onClick={() => {
