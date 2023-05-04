@@ -13,9 +13,8 @@ import javax.persistence.*;
 public class Messages {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "message_id")
-    private int messageId;
+    private String messageId;
 
     @Column(name = "message")
     private String message;

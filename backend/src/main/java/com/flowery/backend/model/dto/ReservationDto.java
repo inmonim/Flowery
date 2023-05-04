@@ -12,7 +12,7 @@ public class ReservationDto {
 
     private Integer storeId;
 
-    private Integer messageId;
+    private String messageId;
 
     private String goodsName;
 
