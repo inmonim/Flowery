@@ -4,3 +4,4 @@
 **/*.pt
 **/*.cache
 **/*.cache.npy
+**/__pycache__
