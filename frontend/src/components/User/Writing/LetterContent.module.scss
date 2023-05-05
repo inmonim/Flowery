@@ -29,41 +29,41 @@
 }
 
 // 2번 편지지
-  .letterPaper2 {
-    background-image: url("../../../assets/letters/Letter2.png");
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: center;
-    justify-content: center;
-    height: 80vh;
-    // height: 100%;
-    width: 80vh;
-    // width: 100%;
-    object-fit: contain;
-    position: relative;
-    display: flex;
-  }
+.letterPaper2 {
+  background-image: url("../../../assets/letters/Letter2.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  justify-content: center;
+  height: 80vh;
+  // height: 100%;
+  width: 80vh;
+  // width: 100%;
+  object-fit: contain;
+  position: relative;
+  display: flex;
+}
 
-  .letterContent2 {
-    position: absolute;
-    border: none;
-    background-color: transparent;
-    font-size: 2vh;
-    resize: none;
-    line-height: 2.7vh;
-    height: 58.3vh;
-    // height: 72%;
-    width: 40vh;
-    // width: 55%;
-    justify-items: center;
-    align-self: center;
-    display: flex;
-    overflow-y: hidden;
+.letterContent2 {
+  position: absolute;
+  border: none;
+  background-color: transparent;
+  font-size: 2vh;
+  resize: none;
+  line-height: 2.7vh;
+  height: 58.3vh;
+  // height: 72%;
+  width: 40vh;
+  // width: 55%;
+  justify-items: center;
+  align-self: center;
+  display: flex;
+  overflow-y: hidden;
 
-    &:focus {
-      outline: 0cm;
-    }
+  &:focus {
+    outline: 0cm;
   }
+}
 
 // 3번 편지지
 .letterPaper3 {
