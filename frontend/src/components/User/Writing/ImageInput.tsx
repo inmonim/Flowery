@@ -113,7 +113,7 @@ export default function ImageInput() {
           event.preventDefault()
         }
         draggable="false"
-        className="flex items-center justify-center w-full"
+        className="flex items-center justify-center"
       >
         {/* 이미지 업로드*/}
         <div
