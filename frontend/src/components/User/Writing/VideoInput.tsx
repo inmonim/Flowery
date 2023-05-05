@@ -73,7 +73,7 @@ export default function VideoInput() {
         event.preventDefault()
       }
       draggable="false"
-      className="flex items-center justify-center w-full"
+      className="flex items-center justify-center"
     >
       {/* 영상 업로드*/}
       <div
