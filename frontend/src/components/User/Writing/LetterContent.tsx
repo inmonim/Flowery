@@ -18,6 +18,7 @@ export default function LetterContent() {
   const handleTextareaHeight = (
     event: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
+    console.log(event);
     const textarea = event.target;
     const { scrollHeight, clientHeight } = textarea;
     if (scrollHeight > clientHeight) {
@@ -32,7 +33,7 @@ export default function LetterContent() {
     return (
       <textarea
         autoFocus
-        spellCheck='false'
+        spellCheck="false"
         rows={14}
         onChange={handleTextareaHeight}
         value={letterContent}
@@ -45,6 +46,10 @@ export default function LetterContent() {
 
   return (
     // 전체 페이지
-    <div className={styles[`letterPaper${letterPaper}`]}>{currentLetter()}</div>
+    <div className="min-h-0 min-w-0">
+      <div className={styles[`letterPaper${letterPaper}`]}>
+        {currentLetter()}
+      </div>
+    </div>
   );
 }
