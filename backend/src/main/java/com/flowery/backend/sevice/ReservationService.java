@@ -96,6 +96,8 @@ public class ReservationService {
         tmp.setUserId(reservation.getUserId().getUsersId());
         tmp.setStoreId(reservation.getStoreId().getStoreId());
         tmp.setGoodsName(reservation.getGoodsName());
+        tmp.setReservationName(reservation.getReservationName());
+        tmp.setPhrase(reservation.getPhrase());
 
         return;
 
