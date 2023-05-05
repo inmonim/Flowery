@@ -1,5 +1,6 @@
 package com.flowery.backend.controller;
 
+import com.flowery.backend.model.dto.CardDto;
 import com.flowery.backend.model.dto.ReservationDto;
 import com.flowery.backend.model.entity.Reservation;
 import com.flowery.backend.sevice.MessagesService;
@@ -72,4 +73,24 @@ public class ReservationController {
         }
 
     }
+
+    @GetMapping("/card")
+    public ResponseEntity<CardDto> getCardInfo (@RequestParam Integer reservationId) {
+        LOGGER.info("printCard가 호출되었습니다.");
+
+        try {
+            CardDto card = reservationService.getcardInfo(reservationId);
+            return ResponseEntity.ok()
+                    .body(card);
+        } catch (ReservationService.ReservationNotFoundException e) {
+            LOGGER.error("예약을 찾을 수 없습니다.", e);
+            return ResponseEntity.notFound()
+                    .build();
+        } catch (Exception e) {
+            LOGGER.error("카드 출력에 실패했습니다.", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .build();
+        }
+    }
+
 }
