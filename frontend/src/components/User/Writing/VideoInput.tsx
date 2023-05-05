@@ -80,7 +80,7 @@ export default function VideoInput() {
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
-        className="flex justify-center border-2 border-dotted w-[50rem]   "
+        className="flex justify-center border-2 border-dotted w-[50em]   "
       >
         {/* input 대신에 클릭 또는 drag & drop을 통해 파일 업로드 하는 코드 */}
         {video ? (
