@@ -1,17 +1,27 @@
 package com.flowery.backend.sevice;
 
+import com.flowery.backend.model.dto.CardDto;
 import com.flowery.backend.model.dto.ReservationDto;
 import com.flowery.backend.model.entity.*;
 import com.flowery.backend.repository.*;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;
 import org.springframework.stereotype.Service;
 
 import javax.swing.text.html.parser.Entity;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Date;
 import java.util.List;
+
 
 @Service
 public class ReservationService {
@@ -32,6 +42,13 @@ public class ReservationService {
         this.goodsRepository = goodsRepository;
         this.messagesRepository = messagesRepository;
     }
+
+    public class ReservationNotFoundException extends RuntimeException {
+        public ReservationNotFoundException(String message) {
+            super(message);
+        }
+    }
+
 
     public List<ReservationDto> findTodayReservation(LocalDateTime dateTime){
 
@@ -158,5 +175,38 @@ public class ReservationService {
         reservationRepository.save(reservation);
         return true;
     }
+
+//    카드 프린트
+    public CardDto getcardInfo (Integer reservationId) throws Exception {
+        Reservation reservation = reservationRepository.findById(reservationId)
+                .orElseThrow(() -> new ReservationNotFoundException("예약을 찾을 수 없습니다."));
+
+        String temp = "https://namu.wiki";
+        String qrBase64 = createQrBase64(temp);
+
+        CardDto card = new CardDto();
+        card.setPhrase(reservation.getPhrase());
+        card.setReservationName(reservation.getReservationName());
+        card.setQrBase64(qrBase64);
+
+        return card;
+    }
+
+// qr을 base64로 뱉는 임시 함수
+    public String createQrBase64(String url) throws WriterException, IOException {
+        int width = 100;
+        int height = 100;
+        BitMatrix matrix = new MultiFormatWriter().encode(url, BarcodeFormat.QR_CODE, width, height);
+
+        try (ByteArrayOutputStream out = new ByteArrayOutputStream()) {
+            MatrixToImageWriter.writeToStream(matrix, "PNG", out);
+            byte[] bytes = out.toByteArray();
+            String encoded = Base64.getEncoder().encodeToString(bytes);
+            return encoded;
+        }
+    }
+
+
+
 
 }
