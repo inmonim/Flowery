@@ -207,6 +207,35 @@ public class ReservationService {
     }
 
 
+    public class AlreadyPrintedException extends Exception {
+        public AlreadyPrintedException(String message) {
+            super(message);
+        }
+    }
+
+    public class NotPermittedException extends Exception {
+        public NotPermittedException(String message) {
+            super(message);
+        }
+    }
+
+// 프린트 여부를 바꿔주는 함수
+    public void checkPrint(ReservationDto reservationId) throws Exception {
+        Reservation reservation = reservationRepository.findById(reservationId.getReservationId())
+                .orElseThrow(() -> new ReservationNotFoundException("예약을 찾을 수 없습니다."));
+
+        if(reservation.getPermission() == 0){
+            throw new NotPermittedException("승인하지 않은 예약입니다.");
+        }
+
+        if(reservation.getPrinted() == 0){
+            reservation.setPrinted(1);
+            reservationRepository.save(reservation);
+        }
+        else {
+            throw new AlreadyPrintedException("이미 출력된 예약입니다.");
+        }
+    }
 
 
 }

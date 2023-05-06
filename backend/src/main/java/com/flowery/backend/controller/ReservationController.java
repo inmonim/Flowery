@@ -5,6 +5,8 @@ import com.flowery.backend.model.dto.ReservationDto;
 import com.flowery.backend.model.entity.Reservation;
 import com.flowery.backend.sevice.MessagesService;
 import com.flowery.backend.sevice.ReservationService;
+import com.flowery.backend.sevice.ReservationService.AlreadyPrintedException;
+import com.flowery.backend.sevice.ReservationService.NotPermittedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -76,7 +78,7 @@ public class ReservationController {
 
     @GetMapping("/card")
     public ResponseEntity<CardDto> getCardInfo (@RequestParam Integer reservationId) {
-        LOGGER.info("printCard가 호출되었습니다.");
+        LOGGER.info("getCardInfo가 호출되었습니다.");
 
         try {
             CardDto card = reservationService.getcardInfo(reservationId);
@@ -88,6 +90,32 @@ public class ReservationController {
                     .build();
         } catch (Exception e) {
             LOGGER.error("카드 출력에 실패했습니다.", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .build();
+        }
+    }
+
+    @PostMapping("print")
+    public ResponseEntity<Boolean> checkPrint (@RequestBody ReservationDto reservationId) {
+        LOGGER.info("checkPrint가 호출되었습니다.");
+
+        try {
+            reservationService.checkPrint(reservationId);
+            return ResponseEntity.ok(true);
+        } catch (ReservationService.ReservationNotFoundException e) {
+            LOGGER.error("예약을 찾을 수 없습니다.", e);
+            return ResponseEntity.notFound()
+                    .build();
+        } catch (NotPermittedException e) {
+            LOGGER.error("승인하지 않은 예약입니다.", e);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(false);
+        }catch (AlreadyPrintedException e) {
+            LOGGER.error("이미 출력된 예약입니다.", e);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(false);
+        } catch (Exception e) {
+            LOGGER.error("프린트 여부 변경에 실패했습니다.", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .build();
         }
