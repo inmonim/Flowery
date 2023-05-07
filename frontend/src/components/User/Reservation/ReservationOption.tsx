@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import Timeselect from "./TImeSelect";
 import Dayselect from "./DaySelect";
 import OptionHeader from "./OptionHeader";
@@ -13,12 +14,11 @@ export default function ReservationOption() {
       <ShopInfo />
       <Dayselect />
       <Timeselect />
-      <div className="">
+      <Link to={"/reservationorder"}>
         <button className="w-[100px] h-30 bg-blue-400 rounded-xl">
           다음단계
         </button>
-      </div>
-      <OrderPage />
+      </Link>
     </div>
   );
 }

@@ -4,6 +4,7 @@ import picture2 from "../../../assets/example1.jpg";
 import profile1 from "../../../assets/profile1.png";
 import profile3 from "../../../assets/profile3.png";
 import selectBtn from "../../../assets/select_button.png";
+import { Link } from "react-router-dom";
 
 export default function ShopList() {
   const shops = [
@@ -81,7 +82,9 @@ export default function ShopList() {
               <div className="text-xs ">{shop.address}</div>
             </div>
             <div className="w-20 justify-center">
-              <img src={selectBtn} />
+              <Link to={"/reservationoption"}>
+                <img src={selectBtn} />
+              </Link>
             </div>
           </div>
           <div className="flex-none w-full h-20 border-solid border-2 mb-2">
