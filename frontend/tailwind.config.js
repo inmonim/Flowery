@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+
 module.exports = {
   // 템플릿 파일의 경로 설정 👀
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
@@ -25,7 +26,7 @@ module.exports = {
       keyframes: {
         typing: {
           from: { width: "0" },
-          to: { width: "14ch" },
+          to: { width: "25ch" },
         },
         heartBeat: {
           "0%": { transform: "scale(1)" },
