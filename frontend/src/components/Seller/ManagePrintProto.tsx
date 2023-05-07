@@ -8,12 +8,15 @@ interface ReservationItem {
   reservationId: number;
   userId: number;
   storeId: number;
+  messageId: string;
   goodsName: string;
   price: number;
   demand: string;
   date: string;
   printed: number;
   permission: number;
+  reservationName: string;
+  phrase: string;
 }
 
 export default function ManagePrint() {
@@ -30,8 +33,10 @@ export default function ManagePrint() {
 
   useEffect(() => {
     axios
-      .get(
-        `https://flowery.duckdns.org/api/reservation/hi?date=2023-04-26T11:44:30`
+      .post(
+        `https://flowery.duckdns.org/api/reservation/store`, {
+          "storeId": 1
+        }
       )
       .then((response) => {
         setReservation(response.data as ReservationItem[]);
@@ -49,9 +54,10 @@ export default function ManagePrint() {
         {reservation.map((item) => (
           <div key={item.reservationId}>
             <ItemInfo
-              goodsName={item.goodsName}
+              reservationName={item.reservationName}
               date={item.date}
               printed={item.printed}
+              reservationId={item.reservationId}
             />
           </div>
         ))}
