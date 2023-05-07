@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import letterOpen from "../../../assets/ReleasePage/letter_open.png";
 import letterClose from "../../../assets/ReleasePage/letter_close.png";
-import PrintCard from "../../Seller/PrintCard";
+// import PrintCard from "../../Seller/PrintCard";
 
 export default function Letters() {
   const nickname = "창근";
@@ -33,7 +33,7 @@ export default function Letters() {
           onClick={handleModal}
         />
       </div>
-      {showModal && <PrintCard closeModal={closeModal} />}
+      {/* {showModal && <PrintCard closeModal={closeModal} />} */}
     </div>
   );
 }
