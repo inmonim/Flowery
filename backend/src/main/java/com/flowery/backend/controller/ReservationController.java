@@ -53,11 +53,64 @@ public class ReservationController {
 
     // 등록된 예약을 승인시킴
     @PostMapping("/accept")
-    public ResponseEntity<ReservationDto> acceptReservation (@RequestBody Map<String, Integer> requestData){
+    public ResponseEntity<ReservationDto> acceptReservation (@RequestBody ReservationDto reservationDto) throws Exception {
         LOGGER.info("acceptReservation가 호출되었습니다.");
-        int reservationId = requestData.get("reservationId");
 
-        return new ResponseEntity<ReservationDto>(reservationService.acceptReservation(reservationId), HttpStatus.ACCEPTED);
+        try {
+            return new ResponseEntity<ReservationDto>(reservationService.acceptReservation(reservationDto), HttpStatus.ACCEPTED);
+        } catch (ReservationService.ReservationNotFoundException e) {
+            LOGGER.error("예약을 찾을 수 없습니다.", e);
+            return ResponseEntity.notFound()
+                    .build();
+        } catch (ReservationService.NotAuthorizedException e) {
+            LOGGER.error("해당 판매자의 예약이 아닙니다.", e);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(null);
+        } catch (NotPermittedException e) {
+            LOGGER.error("승인 거절된 예약입니다.", e);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(null);
+        } catch (ReservationService.AlreadyPermittedException e) {
+            LOGGER.error("이미 승인된 예약입니다.", e);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(null);
+        } catch (Exception e){
+            LOGGER.error("예약 승인에 실패했습니다.", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(null);
+        }
+    }
+
+    @PostMapping("/deny")
+    public ResponseEntity<ReservationDto> denyReservation (@RequestParam String reason, @RequestBody ReservationDto reservationDto) throws Exception {
+        LOGGER.info("denyReservation가 호출되었습니다.");
+
+
+        LOGGER.info(reason.toString());
+
+        try {
+            return new ResponseEntity<ReservationDto>(reservationService.denyReservation(reservationDto), HttpStatus.ACCEPTED);
+        } catch (ReservationService.ReservationNotFoundException e) {
+            LOGGER.error("예약을 찾을 수 없습니다.", e);
+            return ResponseEntity.notFound()
+                    .build();
+        } catch (ReservationService.NotAuthorizedException e) {
+            LOGGER.error("해당 판매자의 예약이 아닙니다.", e);
+            return ResponseEntity.notFound()
+                    .build();
+        } catch (NotPermittedException e) {
+            LOGGER.error("승인 거절된 예약입니다.", e);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(null);
+        } catch (ReservationService.AlreadyPermittedException e) {
+            LOGGER.error("이미 승인된 예약입니다.", e);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(null);
+        } catch (Exception e){
+            LOGGER.error("예약 승인에 실패했습니다.", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(null);
+        }
     }
 
     @PostMapping("/make")

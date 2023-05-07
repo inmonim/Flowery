@@ -106,7 +106,6 @@ public class StoresService {
 
     // 상품 삭제
     @Transactional
-
     public void deleteGoods(Integer goodsId) {
         goodsRepository.deleteByGoodsId(goodsId);
     }
@@ -121,4 +120,18 @@ public class StoresService {
 //        goods.getSamples().add(sample);
 //        goodsRepository.save(goods);
 //    }
+
+    public Goods updateGoods(GoodsDto requestData, Integer goodsId) {
+        Goods goods = goodsRepository.findById(goodsId)
+                .orElseThrow(() -> new NotFoundException("goodsId not found with id : " + goodsId));
+
+        goods.setGoodsDetail(requestData.getGoodsDetail());
+        goods.setGoodsName(requestData.getGoodsName());
+        goods.setGoodsPrice(requestData.getGoodsPrice());
+
+        Goods updatedGoods = goodsRepository.save(goods);
+        return updatedGoods;
+
+    }
+
 }
