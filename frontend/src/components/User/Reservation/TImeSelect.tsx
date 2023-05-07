@@ -27,13 +27,13 @@ export default function Timeselect() {
   console.log(rezBefore, "오전");
 
   return (
-    <>
+    <div>
       <p>오전</p>
       <div className="flex flex-row flex-wrap gap-1">
         {rezBefore.map((time, index) => (
           <div
             key={index}
-            className="w-[60px] p-1 border-solid border-2 border-b_bottom"
+            className="w-[60px] p-1 border-solid border-2 border-b_bottom hover:bg-b_bottom"
           >
             {time}
           </div>
@@ -44,12 +44,12 @@ export default function Timeselect() {
         {rezAfter.map((time, index) => (
           <div
             key={index}
-            className="w-[60px] p-1 border-solid border-2 border-b_bottom"
+            className="w-[60px] p-1 border-solid border-2 border-b_bottom  hover:bg-b_bottom"
           >
             {time}
           </div>
         ))}
       </div>
-    </>
+    </div>
   );
 }

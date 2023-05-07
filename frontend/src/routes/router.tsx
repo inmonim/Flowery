@@ -19,6 +19,7 @@ import ReleaseCategory from "../components/ReleasePage/ReleaseCategory";
 import ReleaseLetters from "../components/ReleasePage/ReleaseLetters";
 import ReleasePictures from "../components/ReleasePage/ReleasePictures";
 import UserProtoPage from "../components/ReleasePage/UserProtoPage";
+import OrderPage from "../components/User/Reservation/OrderPage";
 
 const router = createBrowserRouter([
   {
@@ -35,6 +36,7 @@ const router = createBrowserRouter([
       { path: "/signup", element: <SignUpPage /> },
       { path: "/nonmember", element: <NonMemberPage /> },
       { path: "/writing", element: <WritingPage /> },
+      { path: "/reservationorder", element: <OrderPage /> },
     ],
   },
   {

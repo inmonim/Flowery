@@ -43,14 +43,13 @@ export default function Memories() {
 
       {/* 사용자 input 사진 왼쪽 오른쪽 정렬 */}
       {pictures.map((picture, index) => (
-        <div key={index}>
-          <img
-            src={picture}
-            alt="couple"
-            className={`mb-[10%] w-[90%] ${
-              index % 2 === 0 ? "mr-auto" : "ml-auto"
-            }`}
-          />
+        <div
+          key={index}
+          className={`mb-[10%] w-[90%] overflow-hidden ${
+            index % 2 === 0 ? "mr-auto" : "ml-auto"
+          }`}
+        >
+          <img src={picture} alt="couple" />
         </div>
       ))}
       <Slider {...settings}>
