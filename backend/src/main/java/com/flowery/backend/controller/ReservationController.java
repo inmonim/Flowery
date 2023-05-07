@@ -107,10 +107,14 @@ public class ReservationController {
             return ResponseEntity.notFound()
                     .build();
         } catch (NotPermittedException e) {
+            LOGGER.error("승인 거절한 예약입니다.", e);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(false);
+        } catch (NullPointerException e) {
             LOGGER.error("승인하지 않은 예약입니다.", e);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(false);
-        }catch (AlreadyPrintedException e) {
+        } catch (AlreadyPrintedException e) {
             LOGGER.error("이미 출력된 예약입니다.", e);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(false);

@@ -17,10 +17,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 
 @Service
@@ -168,7 +165,7 @@ public class ReservationService {
         reservation.setDemand(reservationDto.getDemand());
         reservation.setDate(reservationDto.getDate());
         reservation.setPrinted(0);
-        reservation.setPermission(0);
+        reservation.setPermission(null);
         reservation.setReservationName(reservationDto.getReservationName());
         reservation.setPhrase(reservationDto.getPhrase());
 
@@ -224,9 +221,15 @@ public class ReservationService {
         Reservation reservation = reservationRepository.findById(reservationId.getReservationId())
                 .orElseThrow(() -> new ReservationNotFoundException("예약을 찾을 수 없습니다."));
 
-        if(reservation.getPermission() == 0){
-            throw new NotPermittedException("승인하지 않은 예약입니다.");
+        if (Objects.isNull(reservation.getPermission())) {
+            throw new NullPointerException("승인하지 않은 예약입니다.");
         }
+
+
+        if (reservation.getPermission() == 0) {
+            throw new NotPermittedException("승인 거절한 예약입니다.");
+        }
+
 
         if(reservation.getPrinted() == 0){
             reservation.setPrinted(1);
