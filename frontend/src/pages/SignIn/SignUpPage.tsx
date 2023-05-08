@@ -28,6 +28,17 @@ export default function SignUpPage() {
   const navigate = useNavigate();
 
   // 휴대폰 번호 유효성 검사
+  const checkPhoneNum = (event: React.ChangeEvent<HTMLInputElement>) => {
+    let num = "";
+    const isNum = /^[0-9]+$/;
+    for (let i = 0; i < event.target.value.length; i++) {
+      if (isNum.test(event.target.value[i])) {
+        num += event.target.value[i];
+      }
+    }
+    setInputPhone(num);
+  };
+
   const regPhone = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;
   useEffect(() => {
     if (regPhone.test(inputPhone)) {
@@ -122,16 +133,20 @@ export default function SignUpPage() {
             <div className="relative mb-4">
               <input
                 type="tel"
-                className={`peer block min-h-[auto] w-full rounded-xl border-2 border-gray-200 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none focus:border-neutral-300 ${
-                  isVerify ? "bg-gray-200" : ""
-                }`}
                 id="phoneNumber"
                 disabled={isVerify && true}
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                  setInputPhone(event.target.value);
-                }}
+                onChange={
+                  // (event: React.ChangeEvent<HTMLInputElement>) => {
+                  // setInputPhone(event.target.value);
+                  // }
+                  checkPhoneNum
+                }
+                value={inputPhone}
                 onKeyDown={pressCheck}
                 placeholder=" "
+                className={`peer block text-sm min-h-[auto] w-full rounded-xl border-2 border-gray-200 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none focus:border-neutral-300 ${
+                  isVerify ? "bg-gray-200" : ""
+                }`}
               />
               <label
                 htmlFor="phoneNumber"
@@ -156,10 +171,7 @@ export default function SignUpPage() {
             </div>
 
             {!isVerify && clickVerify && (
-              <div
-                className="relative mb-4 transform animate-fadeIn duration-300 ease-in-out"
-                data-te-input-wrapper-init
-              >
+              <div className="relative mb-4" data-te-input-wrapper-init>
                 <input
                   type="text"
                   onKeyDown={pressEnter}
@@ -169,7 +181,7 @@ export default function SignUpPage() {
                 />
                 <label
                   htmlFor="exampleFormControlInput1"
-                  className="absolute text-sm text-gray-500 dark:text-gray-400 duration-150 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-primary peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
+                  className="absolute text-sm cursor-text text-gray-500 duration-150 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-primary peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
                 >
                   인증번호
                 </label>
@@ -190,7 +202,9 @@ export default function SignUpPage() {
                 <div className="relative mb-4" data-te-input-wrapper-init>
                   <input
                     type="text"
-                    className="peer block min-h-[auto] w-full rounded-xl border-2 border-gray-200 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none focus:border-neutral-300"
+                    className={`peer block min-h-[auto] w-full rounded-xl border-2 border-gray-200 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none focus:border-neutral-300 ${
+                      wrongId ? "border-red-700 border-2" : ""
+                    }`}
                     id="id"
                     placeholder=" "
                     onChange={(e) => {
@@ -208,25 +222,29 @@ export default function SignUpPage() {
                   />
                   <label
                     htmlFor="id"
-                    className="absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-primary peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
+                    className="absolute text-sm cursor-text text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-primary peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
                   >
                     아이디
                   </label>
                   <ul>
                     {existId ? (
-                      <ul className="text-sm text-red-700">
+                      <ul className="text-xs ml-2 text-red-700">
                         이미 존재하는 아이디입니다!
                       </ul>
                     ) : null}
                     {id === "" || /^[a-zA-Z0-9]{4,16}$/.test(id) ? null : (
-                      <ul className="text-sm text-red-500">아이디 조건</ul>
+                      <ul className="text-xs ml-2 text-red-500">
+                        4~16자 영문 대 소문자, 숫자만 사용 가능합니다!
+                      </ul>
                     )}
                   </ul>
                 </div>
                 <div className="relative mb-4" data-te-input-wrapper-init>
                   <input
                     type="password"
-                    className="peer block min-h-[auto] w-full rounded-xl border-2 border-gray-200 px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none  focus:border-neutral-300"
+                    className={`peer block min-h-[auto] w-full rounded-xl border-2 border-gray-200 px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none  focus:border-neutral-300 ${
+                      wrongPassword ? "border-red-700 border-2 " : ""
+                    }`}
                     id="password"
                     placeholder=" "
                     onChange={(e) => {
@@ -247,18 +265,22 @@ export default function SignUpPage() {
                   />
                   <label
                     htmlFor="password"
-                    className="absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-primary peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
+                    className="absolute text-sm cursor-text text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-primary peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
                   >
                     비밀번호
                   </label>
                   {password === "" || CheckPassword(password) ? null : (
-                    <p className="text-sm text-red-500">비밀번호 조건</p>
+                    <p className="text-xs ml-2 text-red-500">
+                      8~16자 영문 대 소문자, 숫자, 특수문자를 사용해야 합니다!
+                    </p>
                   )}
                 </div>
                 <div className="relative mb-4" data-te-input-wrapper-init>
                   <input
                     type="password"
-                    className="peer block min-h-[auto] w-full rounded-xl border-2 border-gray-200 px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none focus:border-neutral-300"
+                    className={`peer block min-h-[auto] w-full rounded-xl border-2 border-gray-200 px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none focus:border-neutral-300 ${
+                      wrongPasswordConfirm ? "border-red-700 border-2" : ""
+                    }`}
                     id="passwordConfirm"
                     placeholder=" "
                     onChange={(e) => {
@@ -273,13 +295,13 @@ export default function SignUpPage() {
                   />
                   <label
                     htmlFor="passwordConfirm"
-                    className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-primary peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
+                    className="absolute text-sm cursor-text text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-primary peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
                   >
                     비밀번호 확인
                   </label>
                   {passwordConfirm === "" ||
                   CheckPasswordConfirm(passwordConfirm) ? null : (
-                    <div className="text-sm text-red-500">
+                    <div className="text-xs ml-2 text-red-500">
                       비밀번호가 일치하지 않습니다!
                     </div>
                   )}
