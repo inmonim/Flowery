@@ -110,16 +110,7 @@ public class StoresService {
         goodsRepository.deleteByGoodsId(goodsId);
     }
 
-//    public Samples createSample(Integer goodsId) {
-//        Goods goods = goodsRepository.findById(goodsId).orElseThrow(() -> new NoSuchElementException("해당 goods_id가 없습니다."));
-//
-//        Samples sample = new Samples();
-//        sample.setPicture(picture);
-//        sample.setGoodsId(goods);
-//
-//        goods.getSamples().add(sample);
-//        goodsRepository.save(goods);
-//    }
+
 
     // 상품 등록
     public Goods createGoods(GoodsDto requestData) {

@@ -127,14 +127,6 @@ public class StoresController {
         return ResponseEntity.ok(updatedStore);
     }
 
-    // 굿즈에 샘플 이미지 추가
-//    @DeleteMapping("/goods/{goodsId}")
-//    public ResponseEntity<Samples> createSample(@PathVariable("goodsId") Integer goodsId,
-//                                                @RequestBody Samples storeDto){
-//        LOGGER.info("createSample이 호출되었습니다.");
-//        Samples createdSample = storesService.createSample(goodsId);;
-//        return ResponseEntity.created(createdSample);
-//    }
 
 
 }
