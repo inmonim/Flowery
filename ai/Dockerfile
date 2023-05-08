@@ -7,6 +7,9 @@ WORKDIR /ai
 # copy the Flask app code to the container
 COPY . /ai
 
+# Install core dependencies.
+RUN apt-get update && apt-get install -y libpq-dev build-essential
+
 # install necessary packages
 RUN pip install --no-cache-dir -r requirements.txt
 RUN pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
