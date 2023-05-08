@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import PreviewModal from "./PreviewModal";
+import PreviewModal from "../../components/User/Writing/PreviewModal";
 import ImageInput from "../../components/User/Writing/ImageInput";
 import LetterPaper from "../../components/User/Writing/LetterPaper";
 import LetterFont from "../../components/User/Writing/LetterFont";
@@ -204,7 +204,6 @@ export default function WritingPage() {
           </div>
         )}
       </div>
-
 
       {/* 페이지 이동 */}
       <div className="relative h-[15vh]">
