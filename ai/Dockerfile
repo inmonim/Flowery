@@ -2,10 +2,10 @@
 FROM python:3.11.2
 
 # set the working directory in the container
-WORKDIR /ai
+WORKDIR /ai/flowery
 
 # copy the Flask app code to the container
-COPY . /ai
+COPY . /ai/flowery
 
 # Install core dependencies.
 RUN apt-get update && apt-get install -y libpq-dev build-essential
