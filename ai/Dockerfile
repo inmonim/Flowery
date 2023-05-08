@@ -7,7 +7,7 @@ WORKDIR /ai
 # copy the Flask app code to the container
 COPY . /ai
 
-RUN apt update && apt-get install python3 python3-pip -y
+RUN apt update && pip install --upgrade pip
 
 # install necessary packages
 RUN pip install --no-cache-dir -r requirements.txt
