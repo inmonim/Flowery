@@ -43,7 +43,7 @@ export default function LetterFont() {
               onClick={() => {
                 setLetterFont(startIndex + i + 1);
               }}
-              className="p-2 align-middle justify-center"
+              className="p-2 text-sm md:text-base align-middle justify-center"
             >
               <div
                 className={`cursor-pointer ${

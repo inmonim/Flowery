@@ -94,7 +94,6 @@ export default function ImageInput() {
   };
 
   const settings = {
-    dots: true,
     infinite: false,
     slidesToShow: 1,
     slidesToScroll: 1,
@@ -125,7 +124,7 @@ export default function ImageInput() {
           {/* input 대신에 클릭 또는 drag & drop을 통해 파일 업로드 하는 코드 */}
           {images.length > 0 ? (
             <div className="w-[300px]">
-              <Slider {...settings}>
+              <Slider {...settings} className="h-full">
                 {images.map((image: File, index: number) => (
                   <div className="relative">
                     <div className="w-[300px] h-[300px] flex items-center">
@@ -139,7 +138,7 @@ export default function ImageInput() {
                         }}
                       ></img>
                     </div>
-                    <div className="absolute top-0 right-0 cursor-pointer">
+                    {/* <div className="absolute top-0 right-0 cursor-pointer">
                       <svg
                         onClick={() => {
                           deleteImage(index);
@@ -156,7 +155,7 @@ export default function ImageInput() {
                           fill="currentColor"
                         />
                       </svg>
-                    </div>
+                    </div> */}
                   </div>
                 ))}
               </Slider>
@@ -216,7 +215,7 @@ export default function ImageInput() {
           setSelectIdx(images.length);
           onClickImageUpload();
         }}
-        className="cursor-pointer text-center mt-3"
+        className="cursor-pointer text-center mt-3 pt-3"
       >
         사진 추가하기
       </div>

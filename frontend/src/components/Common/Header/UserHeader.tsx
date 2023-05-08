@@ -4,6 +4,8 @@ import hamburger from "../../../assets/HamburgerGreen.png";
 import profile from "../../../assets/profileGreen.png";
 
 export default function UserHeader() {
+  const navigate = useNavigate();
+
   return (
     <header className="flex justify-between  items-center bg-user_beige">
       <p className=" text-user_green font-ballet bg-transparent p-2 m-1">
