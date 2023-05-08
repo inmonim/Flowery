@@ -103,9 +103,9 @@ export default function WritingPage() {
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                fill-rule="evenodd"
+                fillRule="evenodd"
                 d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                clip-rule="evenodd"
+                clipRule="evenodd"
               ></path>
             </svg>
           </button>
@@ -178,7 +178,7 @@ export default function WritingPage() {
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                fill-rule="evenodd"
+                fillRule="evenodd"
                 d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
                 clipRule="evenodd"
               ></path>
@@ -208,7 +208,7 @@ export default function WritingPage() {
 
       {/* 페이지 이동 */}
       <div className="relative h-[15vh]">
-        <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2">
+        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2">
           <div className="flex">
             <div className="cursor-pointer font-bold py-2 px-4 mx-4 rounded-full bg-[#eed3b5] hover:bg-[#eed3b5]">
               <input type="button" value="건너뛰기" onClick={submitButton} />
