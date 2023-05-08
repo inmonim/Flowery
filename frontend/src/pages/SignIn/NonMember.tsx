@@ -56,7 +56,7 @@ export default function SignUpPage() {
     // if (verifyCode === 인증번호) {
     alert("인증되었습니다!"); // 모달창으로 예쁘게 만들기
     setPhoneNumber(inputPhone);
-    navigate('/')
+    navigate('/reservation')
     // }
   };
 
