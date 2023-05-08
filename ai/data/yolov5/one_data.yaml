@@ -1,6 +1,6 @@
 train: ../3_one_time_data/train/images
 val: ../3_one_time_data/test/images
-nc: 14
+nc: 15
 names:
   [
     "rose",
@@ -17,4 +17,5 @@ names:
     "alstroemeria",
     "hydrangea",
     "peony",
+    "stock",
   ]

@@ -2,10 +2,10 @@
 FROM python:3.11.2
 
 # set the working directory in the container
-WORKDIR /app
+WORKDIR /ai
 
 # copy the Flask app code to the container
-COPY . /app
+COPY . /ai
 
 # install necessary packages
 RUN pip install --no-cache-dir -r requirements.txt
