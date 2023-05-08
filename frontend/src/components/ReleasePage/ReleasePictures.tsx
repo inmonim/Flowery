@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import floral from "../../assets/flowershop1.jpg";
 import memory1 from "../../assets/profile1.png";
 import memory2 from "../../assets/profile2.png";
@@ -15,8 +15,8 @@ export default function ReleasePictures() {
         <img src={floral} alt="shop picture" />
       </div>
       <div className="bg-white h-44444444h border">
-        <p className="flex justify-center">our</p>
-        <p className="flex justify-center">memories</p>
+        <p className={"flex justify-center animate-textSlideLtoR"}>our</p>
+        <p className="flex justify-center animate-textSlideRtoL">memories</p>
       </div>
       <div className="flex flex-col justify-center gap-[5rem] pr-[5.33vw] pl-[5.33vw]">
         {memories.map((memory, index) => (

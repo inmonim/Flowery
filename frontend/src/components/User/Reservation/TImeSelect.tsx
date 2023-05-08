@@ -23,33 +23,33 @@ export default function Timeselect() {
     }
   }
 
-  console.log(rezAfter, "오후");
-  console.log(rezBefore, "오전");
+  // console.log(rezAfter, "오후");
+  // console.log(rezBefore, "오전");
 
   return (
-    <>
-      <p>오전</p>
-      <div className="flex flex-row flex-wrap gap-1">
+    <div className="flex flex-col justify-center align-middle mb-[15%]">
+      <p className="ml-11">오전</p>
+      <div className="flex flex-row flex-wrap ml-11  text-left gap-1">
         {rezBefore.map((time, index) => (
           <div
             key={index}
-            className="w-[60px] p-1 border-solid border-2 border-b_bottom"
+            className="w-[4.5rem] p-1 text-center border-solid border-2 border-b_bottom hover:bg-b_bottom"
           >
             {time}
           </div>
         ))}
       </div>
-      <p>오후</p>
-      <div className="flex flex-row flex-wrap gap-1">
+      <p className="ml-11 mt-[10%]">오후</p>
+      <div className="flex flex-row flex-wrap ml-11 gap-1">
         {rezAfter.map((time, index) => (
           <div
             key={index}
-            className="w-[60px] p-1 border-solid border-2 border-b_bottom"
+            className="w-[4.5rem] p-1 text-center border-solid border-2 border-b_bottom  hover:bg-b_bottom"
           >
             {time}
           </div>
         ))}
       </div>
-    </>
+    </div>
   );
 }

@@ -2,7 +2,14 @@ import { atom } from "recoil";
 import { recoilPersist } from "recoil-persist";
 
 const { persistAtom } = recoilPersist();
-////////////////// pages/SignInSelectPage/NonMemberModal.tsx
+
+// 로그인 여부
+export const isLoggedIn = atom<boolean>({
+  key: "isLoggedIn",
+  default: false,
+  // effects_UNSTABLE: [persistAtom],
+});
+
 // 인증된 전화번호
 export const phoneNumberState = atom<string>({
   key: "phoneNumberState",
@@ -10,11 +17,10 @@ export const phoneNumberState = atom<string>({
   effects_UNSTABLE: [persistAtom],
 });
 
-////////////////// pages/WritingPage/WritingPage.tsx
 // 업로드한 이미지
-export const imageState = atom<File | null>({
+export const imageState = atom<Array<File>>({
   key: "imageState",
-  default: null,
+  default: [],
   //   effects_UNSTABLE: [persistAtom],
 });
 

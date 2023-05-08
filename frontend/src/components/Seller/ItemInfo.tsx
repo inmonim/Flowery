@@ -4,9 +4,10 @@ import flower from "../../assets/example1.jpg";
 import PrintCard from "./PrintCard";
 
 interface ItemInfoProps {
-  goodsName: string;
+  reservationName: string;
   date: string;
   printed: number;
+  reservationId: number;
 }
 
 export default function ItemInfo(props: ItemInfoProps) {
@@ -38,7 +39,7 @@ export default function ItemInfo(props: ItemInfoProps) {
             <img src={flower} alt="flower" />
           </div>
           <div className={styles.description}>
-            <div className={styles.number}>{props.goodsName}</div>
+            <div className={styles.number}>{props.reservationName}</div>
             <div className={styles.time}>{formattedDate}</div>
           </div>
         </div>
@@ -49,7 +50,7 @@ export default function ItemInfo(props: ItemInfoProps) {
           <p>{props.printed === 0 ? "출력" : "재출력"}</p>
         </div>
       </div>
-      {showModal && <PrintCard closeModal={closeModal} />}{" "}
+      {showModal && <PrintCard closeModal={closeModal} reservationId={props.reservationId}/>}{" "}
       {/* 모달이 열린 상태이면 PrintCard 컴포넌트를 렌더링합니다. */}
     </div>
   );
