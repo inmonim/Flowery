@@ -52,13 +52,9 @@ export default function Memories() {
           <img src={picture} alt="couple" />
         </div>
       ))}
-      <Slider {...settings}>
-        {videos.map((video) => (
-          <div>
-            <video src={video} />
-          </div>
-        ))}
-      </Slider>
+      <div>
+        <video src={Video1} />
+      </div>
     </div>
   );
 }
