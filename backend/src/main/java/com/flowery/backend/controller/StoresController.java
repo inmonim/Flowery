@@ -62,6 +62,21 @@ public class StoresController {
 
     }
 
+    // 상품을 추가
+    @PostMapping("/goods")
+    public ResponseEntity<Goods> createGoods(@RequestBody GoodsDto goods)  throws Exception {
+        LOGGER.info("createGoods가 호출되었습니다.");
+
+        try{
+            return new ResponseEntity<Goods>(storesService.createGoods(goods), HttpStatus.CREATED);
+        }catch (Exception e){
+            LOGGER.error("상품 등록에 실패했습니다.", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(null);
+        }
+    }
+
+
     // 상품을 삭제
     @DeleteMapping("/goods/{goodsId}")
     public ResponseEntity<Void> deleteGoods(@PathVariable("goodsId") Integer goodsId){
@@ -96,7 +111,7 @@ public class StoresController {
 //            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
 //                    .body(null);
         } catch (Exception e){
-            LOGGER.error("예약 승인에 실패했습니다.", e);
+            LOGGER.error("상품 정보 변경에 실패했습니다.", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(null);
         }
