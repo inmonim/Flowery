@@ -114,12 +114,12 @@ export default function SignUpPage() {
     // token 저장
     // atom에 로그인 정보(토큰, 전화번호) 저장
     alert("회원가입이 완료되었습니다!");
-    navigate("/");
+    // navigate("/");
   };
 
   return (
     <section className="bg-neutral-200">
-      <div className="flex flex-col items-center px-4 py-8 mx-auto md:h-screen lg:p-10">
+      <div className="flex flex-col items-center px-4 py-8 mx-auto h-screen lg:p-10">
         <div className="w-full bg-white rounded-lg shadow-lg md:mt-0 sm:max-w-md xl:p-0">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
             <img
@@ -159,7 +159,7 @@ export default function SignUpPage() {
                   type="button"
                   disabled={!isPhoneNum}
                   onClick={checkVerify}
-                  className={`absolute flex inset-y-0 right-0 h-full w-1/6 rounded-xl text-xs font-medium leading-normal ${
+                  className={`absolute flex inset-y-0 right-0 h-full w-1/5 rounded-xl text-xs font-medium leading-normal ${
                     isPhoneNum
                       ? "bg-red-300 text-white  shadow-[0_4px_9px_-4px_rgba(0,0,0,0.2)] transition duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] hover:outline-none hover:ring-0 active:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] "
                       : "bg-gray-50 text-gray-300"
@@ -207,11 +207,14 @@ export default function SignUpPage() {
                     }`}
                     id="id"
                     placeholder=" "
-                    onChange={(e) => {
+                    // onBlur={(e: React.FocusEvent<HTMLInputElement>) =>
+                    //   isExistId(e.target.value).then((res: any) => {
+                    //     setExistId(res);
+                    //   })
+                    // }
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                       setId(e.target.value);
-                      // isExistId(e.target.value).then((res: any) => {
-                      //   setExistId(res);
-                      // });
+
                       if (CheckId(e.target.value) === 1) {
                         setIsId(true);
                         setWrongId(false);
@@ -271,7 +274,8 @@ export default function SignUpPage() {
                   </label>
                   {password === "" || CheckPassword(password) ? null : (
                     <p className="text-xs ml-2 text-red-500">
-                      8~16자 영문 대 소문자, 숫자, 특수문자를 사용해야 합니다!
+                      8~16자 영문 대 소문자, 숫자, 특수문자를 모두 사용해야
+                      합니다!
                     </p>
                   )}
                 </div>

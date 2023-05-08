@@ -70,7 +70,7 @@ export default function SignUpPage() {
 
   return (
     <section className="bg-neutral-200">
-      <div className="flex flex-col items-center px-4 py-8 mx-auto md:h-screen lg:p-10">
+      <div className="flex flex-col items-center px-4 py-8 mx-auto h-screen lg:p-10">
         <div className="w-full bg-white rounded-lg shadow-lg md:mt-0 sm:max-w-md xl:p-0">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
             <img
