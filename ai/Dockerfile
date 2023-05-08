@@ -2,16 +2,16 @@
 FROM python:3.11.2
 
 # set the working directory in the container
-WORKDIR /ai/flowery
+WORKDIR /ai
 
 # copy the Flask app code to the container
-COPY . /ai/flowery
+COPY . /ai
 
 # Install core dependencies.
 RUN apt-get update && apt-get install -y libpq-dev build-essential
 
 # install necessary packages
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install -r requirements.txt
 RUN pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
 
 # set environment variables
