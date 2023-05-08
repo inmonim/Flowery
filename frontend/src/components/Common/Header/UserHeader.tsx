@@ -1,22 +1,20 @@
 import styles from "./UserHeader.module.scss";
 import logo from "../../../assets/Flowery_logo.png";
-import { useNavigate } from "react-router";
+import hamburger from "../../../assets/HamburgerGreen.png";
+import profile from "../../../assets/profileGreen.png";
 
 export default function UserHeader() {
   const navigate = useNavigate();
 
   return (
-    <div>
-      <header className={styles.header}>
-        <div className={styles.logo}>
-          <img
-            onClick={() => navigate("/")}
-            className={styles["logo-img"]}
-            src={logo}
-            alt="logo"
-          />
-        </div>
-      </header>
-    </div>
+    <header className="flex justify-between  items-center bg-user_beige">
+      <p className=" text-user_green font-ballet bg-transparent p-2 m-1">
+        Flowery
+      </p>
+      <div className="flex">
+        <img src={profile} alt="profile" className="w-[1rem] mr-3" />
+        <img src={hamburger} alt="hamburger" className="w-[1rem] mr-3" />
+      </div>
+    </header>
   );
 }

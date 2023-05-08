@@ -2,6 +2,7 @@ import React from "react";
 import ShopInfo from "./ShopInfo";
 import OptionHeader from "./OptionHeader";
 import thumbnail from "../../../assets/example1.jpg";
+import { Link } from "react-router-dom";
 
 export default function OrderPage() {
   const productList = [
@@ -60,6 +61,13 @@ export default function OrderPage() {
             </div>
           </div>
         ))}
+      </div>
+      <div className="flex justify-center mt-[10%] mb-[10%]">
+        <Link to={"/reservationorder"}>
+          <button className="w-[10rem] h-30 bg-[#dbc7af] shadow-lg rounded-xl text-white font-nasq font-bold">
+            다음단계
+          </button>
+        </Link>
       </div>
     </div>
   );
