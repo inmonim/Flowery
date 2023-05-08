@@ -88,6 +88,7 @@ public class MessagesController {
 
             return new ResponseEntity<Messages>(messagesService.addFlowerPicture(pictureUrl, reservationId), HttpStatus.ACCEPTED);
         }catch (Exception e){
+            System.out.println(e.toString());
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
 

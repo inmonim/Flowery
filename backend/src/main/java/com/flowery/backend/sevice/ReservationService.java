@@ -17,10 +17,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 
 @Service
@@ -91,9 +88,57 @@ public class ReservationService {
 
     }
 
-    public ReservationDto acceptReservation (int reservationId) {
-        Reservation reservation = reservationRepository.findById(reservationId).get();
+    // 예약 승인
+    public ReservationDto acceptReservation (ReservationDto reservationDto) throws Exception {
+        Reservation reservation = reservationRepository.findById(reservationDto.getReservationId())
+                .orElseThrow(() -> new ReservationNotFoundException("예약을 찾을 수 없습니다."));
+        // 해당 판매자가 아니라면 승인할 수 없음
+        if (reservation.getStoreId().getStoreId() != reservationDto.getStoreId()) {
+            throw new NotAuthorizedException("해당 판매자의 예약이 아닙니다.");
+        }
+
+        if (reservation.getPermission() != null) {
+            if (reservation.getPermission() == 1) {
+                throw new AlreadyPermittedException("이미 승인된 예약입니다.");
+            }
+
+            if (reservation.getPermission() == 0) {
+                throw new NotPermittedException("승인 거절된 예약입니다.");
+            }
+        }
+
+
         reservation.setPermission(1);
+        reservationRepository.save(reservation);
+        ReservationDto tmp = new ReservationDto();
+        reservationEntityToDto(tmp, reservation);
+
+        return tmp;
+
+    }
+
+    // 예약 거절
+    public ReservationDto denyReservation (ReservationDto reservationDto) throws Exception {
+       Reservation reservation = reservationRepository.findById(reservationDto.getReservationId())
+                .orElseThrow(() -> new ReservationNotFoundException("예약을 찾을 수 없습니다."));
+
+        // 해당 판매자가 아니라면 거절할 수 없음
+        if (reservation.getStoreId().getStoreId() != reservationDto.getStoreId()) {
+            throw new NotAuthorizedException("해당 판매자의 예약이 아닙니다.");
+        }
+
+        if (reservation.getPermission() != null) {
+            if (reservation.getPermission() == 1) {
+                throw new AlreadyPermittedException("이미 승인된 예약입니다.");
+            }
+
+            if (reservation.getPermission() == 0) {
+                throw new NotPermittedException("승인 거절된 예약입니다.");
+            }
+        }
+
+
+        reservation.setPermission(0);
         reservationRepository.save(reservation);
         ReservationDto tmp = new ReservationDto();
         reservationEntityToDto(tmp, reservation);
@@ -168,7 +213,7 @@ public class ReservationService {
         reservation.setDemand(reservationDto.getDemand());
         reservation.setDate(reservationDto.getDate());
         reservation.setPrinted(0);
-        reservation.setPermission(0);
+        reservation.setPermission(null);
         reservation.setReservationName(reservationDto.getReservationName());
         reservation.setPhrase(reservationDto.getPhrase());
 
@@ -207,6 +252,52 @@ public class ReservationService {
     }
 
 
+    public class AlreadyPrintedException extends Exception {
+        public AlreadyPrintedException(String message) {
+            super(message);
+        }
+    }
+
+    public class AlreadyPermittedException extends Exception {
+        public AlreadyPermittedException(String message) {
+            super(message);
+        }
+    }
+
+    public class NotPermittedException extends Exception {
+        public NotPermittedException(String message) {
+            super(message);
+        }
+    }
+
+// 프린트 여부를 바꿔주는 함수
+    public void checkPrint(ReservationDto reservationId) throws Exception {
+        Reservation reservation = reservationRepository.findById(reservationId.getReservationId())
+                .orElseThrow(() -> new ReservationNotFoundException("예약을 찾을 수 없습니다."));
+
+        if (Objects.isNull(reservation.getPermission())) {
+            throw new NullPointerException("승인하지 않은 예약입니다.");
+        }
 
 
+        if (reservation.getPermission() == 0) {
+            throw new NotPermittedException("승인 거절한 예약입니다.");
+        }
+
+
+        if(reservation.getPrinted() == 0){
+            reservation.setPrinted(1);
+            reservationRepository.save(reservation);
+        }
+        else {
+            throw new AlreadyPrintedException("이미 출력된 예약입니다.");
+        }
+    }
+
+
+    public class NotAuthorizedException extends Exception {
+        public NotAuthorizedException(String message) {
+            super(message);
+        }
+    }
 }
