@@ -2,10 +2,10 @@
 FROM python:3.11.2
 
 # set the working directory in the container
-WORKDIR /ai/flowery
+WORKDIR /ai
 
 # copy the Flask app code to the container
-COPY . /ai/flowery
+COPY . /ai
 
 # install necessary packages
 RUN pip3 install flask
@@ -28,4 +28,4 @@ ENV FLASK_RUN_PORT=5000
 EXPOSE 5000
 
 # run the Flask app
-#CMD [ "flask", "run", "--host=0.0.0.0", "--port=5000" ]
+CMD [ "flask", "run", "--host=0.0.0.0", "--port=5000" ]
