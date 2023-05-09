@@ -45,8 +45,19 @@ public class MygardensController {
 //        System.out.println("hhh");
 //        return new ResponseEntity<>(mygardensService.findAllByUserId(1), HttpStatus.ACCEPTED);
 //    }
-
+    
     @PostMapping
+    public ResponseEntity<Mygardens> createMyGarden(@RequestBody MygardensDto mygardensDto) throws Exception {
+        try {
+            return new ResponseEntity<Mygardens>(mygardensService.createMyGarden(mygardensDto), HttpStatus.OK);
+        } catch (Exception e) {
+            LOGGER.error("마이가든 저장에 실패했습니다.", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(null);
+        }
+    }
+
+    @PostMapping("/get")
     public ResponseEntity<List<MygardensDto>> findAllByUserId(@RequestBody MygardensDto mygardensDto) throws Exception {
         LOGGER.info("findAllByUserId가 호출되었습니다.");
         try {

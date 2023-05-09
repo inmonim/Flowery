@@ -73,5 +73,14 @@ public class MygardensService {
     }
 
 
+    public Mygardens createMyGarden(MygardensDto mygardensDto) {
+        Mygardens mygarden = new Mygardens();
 
+        Messages message = messagesRepository.findByMessageId(mygardensDto.getMessageId());
+        mygarden.setMessageId(message);
+        mygarden.setUserId(mygarden.getUserId());
+
+
+        return mygardensRepository.save(mygarden);
+    }
 }

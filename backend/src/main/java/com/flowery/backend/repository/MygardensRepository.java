@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface MygardensRepository extends JpaRepository<Mygardens, Integer> {
 
-    public List<Mygardens> findAllByUserId(Users usersId);
 
 
+    List<Mygardens> findAllByUserId(Users user);
 }
