@@ -45,7 +45,6 @@ export default function ImageRecognition() {
   return <div>{componentToRender}</div>;
 }
 
-
 /*
 function handlePrintClick() {
     if (photoUrl1 && photoUrl2) {
@@ -106,3 +105,129 @@ function handlePrintClick() {
     }
   }
   */
+
+/*
+function mergeImages(
+    image1Url: string,
+    image2Base64: string,
+    text: string,
+    text2: string,
+    outputFileName: string
+  ) {
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d");
+
+    const image1 = new Image();
+    image1.onload = () => {
+      canvas.width = image1.width;
+      canvas.height = image1.height;
+
+      // draw image1
+      if (ctx) {
+        ctx.drawImage(image1, 0, 0);
+
+        const image2 = new Image();
+        image2.onload = () => {
+          // draw image2
+          ctx.drawImage(
+            image2,
+            0,
+            0,
+            image2.width,
+            image2.height,
+            750,
+            900,
+            600,
+            600
+          );
+          ctx.font = "100px KCC";
+          ctx.fillStyle = "#000000";
+          ctx.textAlign = "center";
+          ctx.textBaseline = "bottom"; // 텍스트 기준선을 아래쪽으로 설정
+          ctx.fillText(text, canvas.width / 2, canvas.height * 0.675);
+
+          // add underline
+          const { width, actualBoundingBoxDescent } = ctx.measureText(text);
+          ctx.beginPath();
+          ctx.strokeStyle = "#000000";
+          ctx.lineWidth = 8;
+          ctx.moveTo(
+            canvas.width / 2 - width / 2,
+            canvas.height * 0.665 + actualBoundingBoxDescent + 75
+          );
+          ctx.lineTo(
+            canvas.width / 2 + width / 2,
+            canvas.height * 0.665 + actualBoundingBoxDescent + 75
+          );
+          ctx.stroke();
+
+          // draw additional text
+          ctx.font = "80px KCC";
+          ctx.fillStyle = "#000000";
+          ctx.textAlign = "center";
+          ctx.fillText(text2, canvas.width / 2, canvas.height * 0.6);
+
+          const { width: width2, actualBoundingBoxDescent: descent2 } =
+            ctx.measureText(text2);
+          ctx.beginPath();
+          ctx.strokeStyle = "#000000";
+          ctx.lineWidth = 8;
+          ctx.moveTo(
+            canvas.width / 2 - width2 / 2,
+            canvas.height * 0.6 + descent2 + 45
+          );
+          ctx.lineTo(
+            canvas.width / 2 + width2 / 2,
+            canvas.height * 0.6 + descent2 + 45
+          );
+          ctx.stroke();
+          // convert canvas to image file and save
+          canvas.toBlob(
+            (blob) => {
+              if (blob) {
+                saveAs(blob, outputFileName);
+              } else {
+                console.error("Failed to convert canvas to blob");
+              }
+            },
+            "image/jpeg",
+            1
+          );
+        };
+        image2.src = `data:image/png;base64,${image2Base64}`;
+      }
+    };
+    image1.src = image1Url;
+  }
+  */
+
+/*
+  if (!props.printed) {
+        axios.post("https://flowery.duckdns.org/api/reservation/print", {
+          reservationId: reservationId1,
+        });
+      }
+      */
+
+/*
+      axios
+            .get("https://flowery.duckdns.org/api/reservation/card", {
+              params: {
+                reservationId: reservationId1,
+              },
+            })
+            .then((response) => {
+              mergeImages(
+                cardframe,
+                response.data.qrBase64,
+                `${props.phrase}`,
+                `From. ${props.reservationName}`,
+                "test1"
+              );
+              alert("저장이 완료되었습니다");
+            });
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+          */

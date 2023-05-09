@@ -5,11 +5,12 @@
 
 .react-datepicker__month-container {
   padding: 16px;
-  background-color: white;
+  background-color: #d3dad7;
+  color: red;
 }
 
 .react-datepicker__header {
-  background-color: white;
+  background-color: #d3dad7;
 }
 
 .react-datepicker__day-names {
@@ -36,11 +37,12 @@
 }
 
 .react-datepicker__day:hover {
-  background-color: #dbc7af;
+  background-color: #316351;
 }
 
 .react-datepicker__day--today {
-  background-color: #eee;
+  background-color: #316351;
+  opacity: 0.8;
   font-weight: bold;
 }
 

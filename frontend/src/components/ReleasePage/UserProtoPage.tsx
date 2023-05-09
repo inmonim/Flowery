@@ -5,14 +5,18 @@ import ProtoIntro from "./ProtoPage/ProtoIntro";
 import Memories from "./ProtoPage/Memories";
 import More from "./ProtoPage/More";
 
-export default function UserProtoPage() {
+interface UserProtoPageProps {
+  excludeSurvey?: boolean;
+}
+
+export default function UserProtoPage(props: UserProtoPageProps) {
   return (
     <div className="">
       <ProtoIntro />
       <Memories />
       <Letters />
       <More />
-      <Survey />
+      {!props.excludeSurvey && <Survey />}
     </div>
   );
 }

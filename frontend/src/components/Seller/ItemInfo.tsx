@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import styles from "./ItemInfo.module.scss";
 import flower from "../../assets/example1.jpg";
 import PrintCard from "./PrintCard";
-
+import FetchCard from "./FetchCard";
 interface ItemInfoProps {
   reservationName: string;
   date: string;
   printed: number;
   reservationId: number;
+  phrase: string;
 }
 
 export default function ItemInfo(props: ItemInfoProps) {
@@ -47,11 +48,24 @@ export default function ItemInfo(props: ItemInfoProps) {
           className={props.printed === 0 ? styles.printing : styles.reprinting}
           onClick={handleModal}
         >
-          <p>{props.printed === 0 ? "출력" : "재출력"}</p>
+          <p>{props.printed === 0 ? "카드생성" : "가져오기"}</p>
         </div>
       </div>
-      {showModal && <PrintCard closeModal={closeModal} reservationId={props.reservationId}/>}{" "}
-      {/* 모달이 열린 상태이면 PrintCard 컴포넌트를 렌더링합니다. */}
+      {props.printed === 0 && showModal && (
+        <PrintCard
+          closeModal={closeModal}
+          reservationId={props.reservationId}
+          printed={props.printed}
+          reservationName={props.reservationName}
+          phrase={props.phrase}
+        />
+      )}
+      {props.printed === 1 && showModal && (
+        <FetchCard
+          closeModal={closeModal}
+          reservationId={props.reservationId}
+        />
+      )}
     </div>
   );
 }

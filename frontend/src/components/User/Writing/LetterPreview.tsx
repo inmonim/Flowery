@@ -29,6 +29,10 @@ export default function LetterPreview() {
 
   return (
     // 전체 페이지
-    <div className={styles[`letterPaper${letterPaper}`]}>{currentLetter()}</div>
+    <div className="">
+      <div className={styles[`letterPaper${letterPaper}`]}>
+        {currentLetter()}
+      </div>
+    </div>
   );
 }

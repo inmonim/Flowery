@@ -3,7 +3,6 @@ import { Map, MapMarker, useMap } from "react-kakao-maps-sdk";
 import imageSrc from "../../../assets/flowery_marker.png";
 import "../../../assets/styles/variable.scss";
 import ShopList from "./ShopList";
-import { boolean } from "yargs";
 
 //  이거 왜 해야하더라? -> kakao 객체는 브라우저 전역 객체인 window 안에 포
 
@@ -59,7 +58,7 @@ export default function Reservation() {
 
   return (
     <div className="flex flex-col w-screen h-auto">
-      <div className="z-1">
+      <div>
         <Map // 지도를 표시할 Container
           center={{
             // 지도의 중심좌표
@@ -81,6 +80,7 @@ export default function Reservation() {
               position={value.latlng} // 마커를 표시할 위치
               image={{ src: imageSrc, size: { width: 35, height: 45 } }}
               onClick={() => handleMarkerClick(index)}
+              key={index}
             >
               {markers[index] && <div>{value.title}</div>}
             </MapMarker>

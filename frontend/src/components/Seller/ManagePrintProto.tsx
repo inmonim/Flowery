@@ -33,11 +33,9 @@ export default function ManagePrint() {
 
   useEffect(() => {
     axios
-      .post(
-        `https://flowery.duckdns.org/api/reservation/store`, {
-          "storeId": 1
-        }
-      )
+      .post(`https://flowery.duckdns.org/api/reservation/store`, {
+        storeId: 1,
+      })
       .then((response) => {
         setReservation(response.data as ReservationItem[]);
       })
@@ -58,6 +56,7 @@ export default function ManagePrint() {
               date={item.date}
               printed={item.printed}
               reservationId={item.reservationId}
+              phrase={item.phrase}
             />
           </div>
         ))}

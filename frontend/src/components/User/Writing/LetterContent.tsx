@@ -45,7 +45,7 @@ export default function LetterContent() {
 
   return (
     // 전체 페이지
-    <div className="min-h-0 min-w-0 ">
+    <div className="">
       <div className={styles[`letterPaper${letterPaper}`]}>
         {currentLetter()}
       </div>

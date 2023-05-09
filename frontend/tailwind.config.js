@@ -13,6 +13,12 @@ module.exports = {
       colors: {
         sub: "#FFFAF5",
         b_bottom: "#EADED0",
+        user_green: "#316351",
+        user_beige: "#EDEBE8",
+        user_pink: "#F99DA1",
+        user_sol: "#D3DAD7",
+        user_purple: "#9D8CE0",
+        user_black: "#0E0C0D",
       },
       animation: {
         fadeOut: "fadeOut 2s ease-out forwards",
