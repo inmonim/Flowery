@@ -8,6 +8,8 @@ WORKDIR /app
 COPY . /app
 
 # install necessary packages
+RUN pip3 install --upgrade pip
+RUN pip3 install --root-user-action=ignore requests
 RUN pip3 install flask
 RUN pip3 install flask_cors
 RUN pip3 install flask_sqlalchemy
