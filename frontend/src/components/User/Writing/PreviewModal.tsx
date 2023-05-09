@@ -4,9 +4,9 @@ import UserProtoPage from "../../ReleasePage/UserProtoPage";
 
 const PreviewModal = React.forwardRef<HTMLDivElement, any>((props, ref) => {
   return (
-    <div className="opacity-100 z-[60] p-10 bg-gray-300">
-      <div ref={ref} className="">
-        <div className="bg-white">
+    <div className="absolute inset-x-0 bg-opacity-50 bg-black z-[20]">
+      <div className="flex justify-center p-10">
+        <div ref={ref} className="bg-white lg:w-1/4">
           <UserProtoPage excludeSurvey={true} />
         </div>
       </div>
