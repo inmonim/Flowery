@@ -24,7 +24,7 @@ export default function ProtoIntro() {
 
   return (
     <div className="flex flex-col relative items-center h-[100vh]">
-      <div className="absoulte w-[100%]">
+      <div className="absoulte justify-center items-center  w-[100%]">
         <Slider {...settings}>
           {introBackground.map((bg, index) => (
             <div key={index}>

@@ -69,6 +69,7 @@ export default function WritingPage() {
       {showModal && (
         <PreviewModal ref={modalRef} onClose={() => setShowModal(false)} />
       )}
+
       <div>
         {/* 페이지 내용 */}
         <div>
