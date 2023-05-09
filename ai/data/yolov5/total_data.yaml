@@ -1,13 +1,13 @@
 train: ../5_total_data/train/images
 val: ../5_total_data/test/images
-nc: 13
+nc: 21
 names:
   [
     "rose",
-    "rose_top",
+    "empty1",
     "tulip",
     "carnation",
-    "carnation_top",
+    "empty2",
     "lily",
     "lisianthus",
     "small_chrysanthemum",
@@ -15,4 +15,13 @@ names:
     "sunflower",
     "gerbera",
     "alstroemeria",
+    "hydrangea",
+    "peony",
+    "stock",
+    "freesia",
+    "ranunculus",
+    "empty3",
+    "butterfly",
+    "cala",
+    "snapdragon",
   ]
