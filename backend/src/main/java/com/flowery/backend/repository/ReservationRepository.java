@@ -11,11 +11,11 @@ import java.util.Map;
 
 public interface ReservationRepository extends JpaRepository<Reservation, Integer> {
 
-    public List<Reservation> findAllByDateBetween(LocalDateTime before, LocalDateTime after);
+    public List<Reservation> findAllByDateBetweenOrderByDateDateAsc(LocalDateTime before, LocalDateTime after);
 
-    public List<Reservation> findByStoreId(Stores storeId);
+    public List<Reservation> findByStoreIdOrderByDateAsc(Stores storeId);
 
-    public List<Reservation> findAllByStoreIdAndDateBetween(Stores store, LocalDateTime from, LocalDateTime to);
+    public List<Reservation> findAllByStoreIdAndDateBetweenOrderByDateAsc(Stores store, LocalDateTime from, LocalDateTime to);
 
 
 }

@@ -53,7 +53,7 @@ public class ReservationService {
         LocalDateTime yesterday = LocalDateTime.of(LocalDate.from(dateTime), LocalTime.of(0,0,0));
         LocalDateTime today = LocalDateTime.of(LocalDate.from(dateTime), LocalTime.of(23,59,59));
 
-        List<Reservation> list = reservationRepository.findAllByDateBetween(yesterday,today);
+        List<Reservation> list = reservationRepository.findAllByDateBetweenOrderByDateDateAsc(yesterday,today);
         List<ReservationDto> result = new ArrayList<>();
 
         for(int i=0; i<list.size(); i++){
@@ -79,7 +79,7 @@ public class ReservationService {
         Stores store = storeRepository.findById(storeId).get();
 
 //        List<Reservation> list = reservationRepository.findAllByDateBetween(yesterday,today);
-        List<Reservation> list = reservationRepository.findAllByStoreIdAndDateBetween(store, yesterday, today);
+        List<Reservation> list = reservationRepository.findAllByStoreIdAndDateBetweenOrderByDateAsc(store, yesterday, today);
 
         List<ReservationDto> result = new ArrayList<>();
 
@@ -100,7 +100,7 @@ public class ReservationService {
         List<ReservationDto> result = new ArrayList<>();
 
         Stores store = storeRepository.findById(storeId).get();
-        List<Reservation> list = reservationRepository.findByStoreId(store);
+        List<Reservation> list = reservationRepository.findByStoreIdOrderByDateAsc(store);
 
         for(int i=0; i<list.size(); i++){
 
