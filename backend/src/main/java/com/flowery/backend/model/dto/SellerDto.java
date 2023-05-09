@@ -5,11 +5,11 @@ import lombok.Data;
 @Data
 public class SellerDto {
 
-    private int sellerId;
+    private Integer sellerId;
 
-    private int userId;
+    private Integer userId;
 
-    private int storeId;
+    private Integer storeId;
 
     private String name;
 

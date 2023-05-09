@@ -1,5 +1,6 @@
 package com.flowery.backend.controller;
 
+import com.flowery.backend.model.dto.SellerDto;
 import com.flowery.backend.model.dto.UsersDto;
 import com.flowery.backend.model.entity.Users;
 import com.flowery.backend.sevice.StoresService;
@@ -33,6 +34,22 @@ public class UsersController {
             return new ResponseEntity<>(usersService.loginCheck(usersDto.getId(), usersDto.getPass()), HttpStatus.ACCEPTED);
         }catch (Exception e){
             return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
+        }
+
+    }
+
+    @PostMapping("/login-seller")
+    public ResponseEntity<SellerDto> login_seller(@RequestBody UsersDto usersDto){
+
+        try {
+            SellerDto sellerDto = usersService.sellerLoginCheck(usersDto.getId(), usersDto.getPass());
+            if(sellerDto.getUserId() <0 ){
+                return new ResponseEntity<>(sellerDto, HttpStatus.BAD_REQUEST);
+            }
+            return new ResponseEntity<>(sellerDto, HttpStatus.ACCEPTED);
+        }catch (Exception e){
+            SellerDto sellerDto = new SellerDto();
+            return new ResponseEntity<>(sellerDto, HttpStatus.BAD_REQUEST);
         }
 
     }
