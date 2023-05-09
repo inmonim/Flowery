@@ -7,7 +7,7 @@ public class MygardensDto {
 
     private int gardenId;
 
-    private int messageId;
+    private String messageId;
 
     private int userId;
 

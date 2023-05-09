@@ -2,7 +2,14 @@ package com.flowery.backend.model.dto;
 
 import lombok.Data;
 
+import javax.persistence.Column;
+
 @Data
 public class UsersDto {
-    int a;
+
+    private String id;
+
+    private String pass;
+
+    private String phone;
 }

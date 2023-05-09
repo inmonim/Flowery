@@ -1,9 +1,12 @@
 package com.flowery.backend.controller;
 
+import com.flowery.backend.model.dto.GoodsDto;
+import com.flowery.backend.model.dto.ReservationDto;
 import com.flowery.backend.model.dto.StoresDto;
 import com.flowery.backend.model.entity.Goods;
 import com.flowery.backend.model.entity.Samples;
 import com.flowery.backend.model.entity.Stores;
+import com.flowery.backend.sevice.ReservationService;
 import com.flowery.backend.sevice.StoresService;
 import org.apache.catalina.Store;
 import org.slf4j.Logger;
@@ -67,7 +70,40 @@ public class StoresController {
         return ResponseEntity.noContent().build();
     }
 
-    // 상점의 정보를 수정\
+    @PatchMapping("/goods/{goodsId}")
+    public ResponseEntity<Goods> updateGoods(@PathVariable("goodsId") Integer goodsId,
+                                            @RequestBody GoodsDto requestData
+    ){
+        LOGGER.info("updateGoods가 호출되었습니다.");
+//        return new ResponseEntity<Goods>(storesService.updateGoods(requestData, goodsId), HttpStatus.ACCEPTED);
+
+        try {
+            return new ResponseEntity<Goods>(storesService.updateGoods(requestData, goodsId), HttpStatus.ACCEPTED);
+//        } catch (ReservationService.ReservationNotFoundException e) {
+//            LOGGER.error("예약을 찾을 수 없습니다.", e);
+//            return ResponseEntity.notFound()
+//                    .build();
+//        } catch (ReservationService.NotAuthorizedException e) {
+//            LOGGER.error("해당 판매자의 예약이 아닙니다.", e);
+//            return ResponseEntity.notFound()
+//                    .build();
+//        } catch (ReservationService.NotPermittedException e) {
+//            LOGGER.error("승인 거절된 예약입니다.", e);
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+//                    .body(null);
+//        } catch (ReservationService.AlreadyPermittedException e) {
+//            LOGGER.error("이미 승인된 예약입니다.", e);
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+//                    .body(null);
+        } catch (Exception e){
+            LOGGER.error("예약 승인에 실패했습니다.", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(null);
+        }
+//
+//        return ResponseEntity.noContent().build();
+    }
+    // 상점의 정보를 수정
     @PatchMapping("/{storeId}")
     public ResponseEntity<Stores> editStore(@PathVariable("storeId") Integer storeId,
                                             @RequestBody StoresDto storeDto){

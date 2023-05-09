@@ -49,7 +49,7 @@ public class Reservation {
     private int printed;
 
     @Column(name = "permission")
-    private int permission;
+    private Integer permission;
 
     @Column(name = "reservation_name")
     private String reservationName;

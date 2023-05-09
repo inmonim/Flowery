@@ -72,9 +72,9 @@ public class MessagesController {
 
     }
     @PostMapping("/get-card")
-    public ResponseEntity<Messages> findByMessageId(@RequestBody Map<String, Integer> requestData) {
+    public ResponseEntity<Messages> findByMessageId(@RequestBody Map<String, String> requestData) {
         LOGGER.info("findByMessageId가 호출되었습니다.");
-        int a = requestData.get("messageId");
+        String a = requestData.get("messageId");
 
         return new ResponseEntity<>(messagesService.findByMessageId(a), HttpStatus.ACCEPTED);
     }
@@ -88,6 +88,7 @@ public class MessagesController {
 
             return new ResponseEntity<Messages>(messagesService.addFlowerPicture(pictureUrl, reservationId), HttpStatus.ACCEPTED);
         }catch (Exception e){
+            System.out.println(e.toString());
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
 

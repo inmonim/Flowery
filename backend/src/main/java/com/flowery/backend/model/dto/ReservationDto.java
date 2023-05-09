@@ -12,7 +12,7 @@ public class ReservationDto {
 
     private Integer storeId;
 
-    private Integer messageId;
+    private String messageId;
 
     private String goodsName;
 
@@ -24,7 +24,7 @@ public class ReservationDto {
 
     private int printed;
 
-    private int permission;
+    private Integer permission;
 
     private String reservationName;
 
