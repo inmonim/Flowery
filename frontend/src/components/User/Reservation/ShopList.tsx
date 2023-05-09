@@ -34,13 +34,15 @@ export default function ShopList() {
 
   return (
     <div className="flex flex-col">
-      <p className="text-xl font-medium p-3  bg-user_beige text-user_green font-namyeong border-b border-user_green">
-        가게선택
-      </p>
+      <div className="bg-user_beige">
+        <p className="text-xl font-medium text-user_green font-namyeong border-b border-user_green">
+          가게선택
+        </p>
+      </div>
       {shopList.map((shop, index) => (
         <div
           key={index}
-          className="gap-2 bg-user_beige border-solid border-b border-user_green"
+          className="bg-user_beige border-solid border-b border-user_green"
         >
           <div className="flex space-x-4 ">
             <div className="flex-none w-20 h-20 overflow-hidden rounded-full border-solid border-[1px] border-user_green mb-2">
