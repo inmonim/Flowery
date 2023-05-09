@@ -6,10 +6,13 @@ import com.flowery.backend.model.dto.StoresDto;
 import com.flowery.backend.model.entity.*;
 import com.flowery.backend.repository.*;
 import com.google.zxing.BarcodeFormat;
+import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
+import com.google.zxing.client.j2se.MatrixToImageConfig;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
 import org.springframework.stereotype.Service;
 
 import javax.swing.text.html.parser.Entity;
@@ -267,16 +270,35 @@ public class ReservationService {
 
 // qr을 base64로 뱉는 임시 함수
     public String createQrBase64(String url) throws WriterException, IOException {
+        BitMatrix bitMatrix = null;
+        MatrixToImageConfig matrixToImageConfig = null;
+
+        // 큐알코드 바코드 및 배경 색상값
+        int onColor = 0xFF000000;
+        int offColor = 0xFFFEF7F1;
+
+        // 이름 그대로 QRCode 만들때 쓰는 클래스다
+        QRCodeWriter qrCodeWriter = new QRCodeWriter();
+
+        // 큐알 전경과 배경의 색을 정한다. 값을 넣지 않으면 검정코드에 흰 배경이 기본값이다.
+        matrixToImageConfig = new MatrixToImageConfig(onColor, offColor);
+        Map<EncodeHintType, String> hints = new HashMap();
+
+        hints.put(EncodeHintType.ERROR_CORRECTION, "Q");
+
+        // QRCode 전체 크기
+        // 단위는 fixel
         int width = 100;
         int height = 100;
-        BitMatrix matrix = new MultiFormatWriter().encode(url, BarcodeFormat.QR_CODE, width, height);
 
-        try (ByteArrayOutputStream out = new ByteArrayOutputStream()) {
-            MatrixToImageWriter.writeToStream(matrix, "PNG", out);
-            byte[] bytes = out.toByteArray();
-            String encoded = Base64.getEncoder().encodeToString(bytes);
-            return encoded;
-        }
+
+        bitMatrix = qrCodeWriter.encode(url, BarcodeFormat.QR_CODE, width, height, hints);
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        MatrixToImageWriter.writeToStream(bitMatrix, "PNG", outputStream, matrixToImageConfig);
+        byte[] bytes = outputStream.toByteArray();
+        String encoded = Base64.getEncoder().encodeToString(bytes);
+
+        return encoded;
     }
 
 

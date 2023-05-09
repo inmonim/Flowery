@@ -20,13 +20,12 @@ def get_flower_dict():
     conn = engine()
     flowers_table = Table('flowers', metadata, autoload_with=conn)
     flowers = conn.execute(flowers_table.select())
-
     model_flower_label = {
         0 : '장미',
-        1 : '장미',
+        1 : 'empty',
         2 : '튤립',
         3 : '카네이션',
-        4 : '카네이션',
+        4 : 'empty',
         5 : '백합',
         6 : '리시안셔스',
         7 : '소국',
@@ -36,11 +35,13 @@ def get_flower_dict():
         11 : '알스트로메리아',
         12 : '수국',
         13 : '작약',
-        14 : '프리지아',
-        15 : '아이리스',
-        16 : '스톡',
-        17 : '스프레이 장미',
-        18 : '라넌큘러스 버터플라이'
+        14 : '스토크',
+        15 : '프리지아',
+        16 : '라넌큘러스',
+        17 : 'empty',
+        18 : '버터플라이',
+        19 : '칼라',
+        20 : '금어초',
     }
     
     flower_list = [[k,v] for k,v in flowers]
@@ -50,7 +51,7 @@ def get_flower_dict():
 
 model_flower_label, flower_name_dict = get_flower_dict()
 
-model = torch.hub.load('ultralytics/yolov5', 'custom', path=f'./flowery/module/main_5_3_15.pt', force_reload=True)
+model = torch.hub.load('ultralytics/yolov5', 'custom', path=f'./flowery/module/main_5_9.pt', force_reload=True, trust_repo=True)
 
 def get_result(image_path, model=model):
     img = Image.open(image_path)
