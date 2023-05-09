@@ -2,6 +2,7 @@ package com.flowery.backend.sevice;
 
 import com.flowery.backend.model.dto.CardDto;
 import com.flowery.backend.model.dto.ReservationDto;
+import com.flowery.backend.model.dto.StoresDto;
 import com.flowery.backend.model.entity.*;
 import com.flowery.backend.repository.*;
 import com.google.zxing.BarcodeFormat;
@@ -53,6 +54,33 @@ public class ReservationService {
         LocalDateTime today = LocalDateTime.of(LocalDate.from(dateTime), LocalTime.of(23,59,59));
 
         List<Reservation> list = reservationRepository.findAllByDateBetween(yesterday,today);
+        List<ReservationDto> result = new ArrayList<>();
+
+        for(int i=0; i<list.size(); i++){
+
+            ReservationDto tmp = new ReservationDto();
+
+            reservationEntityToDto(tmp, list.get(i));
+
+            result.add(tmp);
+        }
+
+        return result;
+
+    }
+
+    public List<ReservationDto> findDayReservation(StoresDto storesDto, LocalDateTime dateTime){
+
+        LocalDateTime yesterday = LocalDateTime.of(LocalDate.from(dateTime), LocalTime.of(0,0,0));
+        LocalDateTime today = LocalDateTime.of(LocalDate.from(dateTime), LocalTime.of(23,59,59));
+
+
+        int storeId = storesDto.getStoreId();
+        Stores store = storeRepository.findById(storeId).get();
+
+//        List<Reservation> list = reservationRepository.findAllByDateBetween(yesterday,today);
+        List<Reservation> list = reservationRepository.findAllByStoreIdAndDateBetween(store, yesterday, today);
+
         List<ReservationDto> result = new ArrayList<>();
 
         for(int i=0; i<list.size(); i++){
