@@ -44,7 +44,7 @@ public class ReservationController {
         return new ResponseEntity<>(reservationService.findTodayReservation(dateTime), HttpStatus.ACCEPTED);
     }
 
-    @GetMapping("/day")
+    @PostMapping("/day")
     public ResponseEntity<List<ReservationDto>> findByDate(@RequestParam String date, @RequestBody StoresDto storesDto) throws Exception {
         LOGGER.info("findByDateBystoreId가 호출되었습니다.");
 

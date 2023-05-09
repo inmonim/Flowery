@@ -47,4 +47,17 @@ public class GoodsController {
         }
     }
 
+    @DeleteMapping("/sample/{sampleId}")
+    public ResponseEntity<?> deleteSample(@PathVariable("sampleId") Integer sampleId) {
+        LOGGER.info("deleteSample이 호출되었습니다.");
+        try {
+            goodsService.deleteSample(sampleId);
+            return ResponseEntity.noContent().build();
+        } catch (Exception e) {
+            LOGGER.error("샘플 삭제에 실패했습니다.", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(null);
+        }
+    }
+
 }
