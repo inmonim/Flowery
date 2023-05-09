@@ -11,7 +11,7 @@ interface UserProtoPageProps {
 
 export default function UserProtoPage(props: UserProtoPageProps) {
   return (
-    <div className="">
+    <div className="md:w-1/2 md:mx-auto">
       <ProtoIntro />
       <Memories />
       <Letters />
