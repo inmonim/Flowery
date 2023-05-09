@@ -51,7 +51,7 @@ def get_flower_dict():
 
 model_flower_label, flower_name_dict = get_flower_dict()
 
-model = torch.hub.load('ultralytics/yolov5', 'custom', path=f'./flowery/module/main_5_3_15.pt', force_reload=True, trust_repo=True)
+model = torch.hub.load('ultralytics/yolov5', 'custom', path=f'./flowery/module/main_5_9.pt', force_reload=True, trust_repo=True)
 
 def get_result(image_path, model=model):
     img = Image.open(image_path)
