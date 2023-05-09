@@ -12,6 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("goods")
 public class GoodsController {
@@ -31,7 +33,7 @@ public class GoodsController {
     @PostMapping("/{goodsId}/sample")
     public ResponseEntity<Samples> createSample(@PathVariable("goodsId") Integer goodsId,
                                              @RequestPart MultipartFile picture
-    ) throws Exception{
+    ) throws Exception {
         LOGGER.info("createSample이 호출되었습니다.");
         try{
             String pictureUrl = s3Uploader.uploadFile(picture);
@@ -48,7 +50,7 @@ public class GoodsController {
     }
 
     @DeleteMapping("/sample/{sampleId}")
-    public ResponseEntity<?> deleteSample(@PathVariable("sampleId") Integer sampleId) {
+    public ResponseEntity<?> deleteSample(@PathVariable("sampleId") Integer sampleId) throws Exception {
         LOGGER.info("deleteSample이 호출되었습니다.");
         try {
             goodsService.deleteSample(sampleId);
@@ -58,6 +60,19 @@ public class GoodsController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(null);
         }
+    }
+
+    @GetMapping("/{goodsId}/sample")
+    public ResponseEntity<List<Samples>> findByGoodsId(@PathVariable("goodsId") Integer goodsId) throws Exception {
+        LOGGER.info("findByGoodsId가 호출되었습니다.");
+        try {
+            return new ResponseEntity<List<Samples>>(goodsService.findByGoodsId(goodsId), HttpStatus.OK);
+        }catch (Exception e) {
+            LOGGER.info("샘플 정보 불러오기에 실패했습니다.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(null);
+        }
+
     }
 
 }

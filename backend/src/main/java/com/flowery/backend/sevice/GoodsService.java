@@ -6,6 +6,7 @@ import com.flowery.backend.repository.GoodsRepository;
 import com.flowery.backend.repository.SamplesRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
@@ -32,4 +33,19 @@ public class GoodsService {
         Samples sample = samplesRepository.findById(sampleId).orElseThrow(() -> new NoSuchElementException("해당 sample_id가 없습니다."));
         samplesRepository.delete(sample);
     }
+
+    // goods에 해당하는 samples를 가져옴
+    public List<Samples> findByGoodsId(Integer goodsId) {
+        Goods goods = goodsRepository.findById(goodsId)
+                .orElseThrow(() -> new NoSuchElementException("Goods not found with ID: " + goodsId));
+        List<Samples> samples = samplesRepository.findAllByGoodsId(goods);
+
+        if (samples.isEmpty()) {
+            throw new NoSuchElementException("No samples found for Goods with ID: " + goodsId);
+        }
+
+        return samples;
+    }
+
+
 }
