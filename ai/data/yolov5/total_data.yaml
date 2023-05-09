@@ -1,0 +1,18 @@
+train: ../5_total_data/train/images
+val: ../5_total_data/test/images
+nc: 13
+names:
+  [
+    "rose",
+    "rose_top",
+    "tulip",
+    "carnation",
+    "carnation_top",
+    "lily",
+    "lisianthus",
+    "small_chrysanthemum",
+    "pompom_blooms",
+    "sunflower",
+    "gerbera",
+    "alstroemeria",
+  ]
