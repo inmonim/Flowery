@@ -106,21 +106,25 @@ public class StoresService {
 
     // 상품 삭제
     @Transactional
-    public void deleteGoods(Integer goodsId) {
-        goodsRepository.deleteByGoodsId(goodsId);
+    public void deleteGoods(Integer goodsId) throws Exception {
+        Goods goods = goodsRepository.findById(goodsId).orElseThrow(() -> new NoSuchElementException("해당 goods_id가 없습니다."));
+        goodsRepository.delete(goods);
     }
 
-//    public Samples createSample(Integer goodsId) {
-//        Goods goods = goodsRepository.findById(goodsId).orElseThrow(() -> new NoSuchElementException("해당 goods_id가 없습니다."));
-//
-//        Samples sample = new Samples();
-//        sample.setPicture(picture);
-//        sample.setGoodsId(goods);
-//
-//        goods.getSamples().add(sample);
-//        goodsRepository.save(goods);
-//    }
 
+    // 상품 등록
+    public Goods createGoods(GoodsDto requestData) {
+        System.out.println(0);
+        Stores store = storeRepository.findById(requestData.getStoreId())
+                .orElseThrow(() -> new StoreNotFoundException("해당 id의 상점이 존재하지 않습니다."));
+        Goods goods = new Goods();
+        goods.setStoreId(store);
+        goods.setGoodsName(requestData.getGoodsName());
+        goods.setGoodsPrice(requestData.getGoodsPrice());
+        goods.setGoodsDetail(requestData.getGoodsDetail());
+
+        return goodsRepository.save(goods);
+    }
     public Goods updateGoods(GoodsDto requestData, Integer goodsId) {
         Goods goods = goodsRepository.findById(goodsId)
                 .orElseThrow(() -> new NotFoundException("goodsId not found with id : " + goodsId));
@@ -133,5 +137,12 @@ public class StoresService {
         return updatedGoods;
 
     }
+
+    public class StoreNotFoundException extends RuntimeException {
+        public StoreNotFoundException(String message) {
+            super(message);
+        }
+    }
+
 
 }

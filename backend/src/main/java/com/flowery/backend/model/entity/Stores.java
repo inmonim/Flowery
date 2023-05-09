@@ -39,4 +39,7 @@ public class Stores {
     @Column(name = "image")
     private String image;
 
+    @Column(name = "profile")
+    private String profile;
+
 }

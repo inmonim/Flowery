@@ -13,6 +13,9 @@ public interface ReservationRepository extends JpaRepository<Reservation, Intege
 
     public List<Reservation> findAllByDateBetween(LocalDateTime before, LocalDateTime after);
 
-    public List<Reservation> findByStoreId(Stores storeId);
+    public List<Reservation> findByStoreIdOrderByDateAsc(Stores storeId);
+
+    public List<Reservation> findAllByStoreIdAndDateBetween(Stores store, LocalDateTime from, LocalDateTime to);
+
 
 }
