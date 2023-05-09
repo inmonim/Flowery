@@ -34,6 +34,7 @@ public class StoresController {
         this.storesService = storesService;
     }
 
+    // 모든 가게 정보 불러오기
     @GetMapping
     public ResponseEntity<List<Stores>> findAllStores() {
         LOGGER.info("findAllStores가 호출되었습니다.");
@@ -41,6 +42,7 @@ public class StoresController {
         return new ResponseEntity<List<Stores>>(storesService.findAllStores(permitted), HttpStatus.OK);
     }
 
+    // storeId로 가게 정보 가져오기
     @PostMapping("/info")
     public ResponseEntity<Stores> findByStoreId(@RequestBody Map<String, Integer> requestData) {
         LOGGER.info("findByStoreId가 호출되었습니다.");
@@ -48,6 +50,7 @@ public class StoresController {
         return new ResponseEntity<Stores>(storesService.findByStoreId(storeId), HttpStatus.OK);
     }
 
+    // 가게 생성하기
     @PostMapping
     public ResponseEntity<Stores> createStore(@RequestBody Stores store){
         LOGGER.info("createStore가 호출되었습니다.");
