@@ -19,10 +19,11 @@ export default function ProtoIntro() {
     autoplay: true,
     autoplaySpeed: 4000,
     speed: 1200,
+    arrows: false,
   };
 
   return (
-    <div className="flex flex-col items-center h-[100vh]">
+    <div className="flex flex-col relative items-center h-[100vh]">
       <div className="absoulte w-[100%]">
         <Slider {...settings}>
           {introBackground.map((bg, index) => (

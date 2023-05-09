@@ -39,35 +39,48 @@ export default function OrderPage() {
   ];
 
   return (
-    <div className="flex flex-col">
+    <div className=" bg-user_beige ">
       <OptionHeader />
-      <ShopInfo />
-      <p>
-        주의사항 ex) 사진은 실제 저희 가게에서 제공하는 같은 가격의 꽃다발이지만
-        꽃의 종류에 따라 분위기가 달라질 수 있는 점 주의 하지 않으면 할복이다.
-      </p>
-      <div>
-        {productList.map((product, index) => (
-          <div className="flex border-b mb-[1%]" key={index}>
-            <div className="flex flex-col w-3/5 p-3 gap-1">
-              <div className="font-nasq font-bold">{product.title}</div>
-              <div className="font-nasq text-[#8D8E90] text-[0.5rem]">
-                {product.content}
-              </div>
-              <div className="font-bold">{product.price}</div>
-            </div>
-            <div className="w-2/5">
-              <img src={product.thumbnail} alt="thumbnail" className="p-3" />
-            </div>
+      <div className="flex flex-col items-center pt-[3%]">
+        <div className="w-[95%] mb-[10%] shadow-xl bg-white ">
+          <ShopInfo />
+          <div className="p-3 pt-8 pb-8 text-xs">
+            <p className="font-nasq font-bold">
+              주의사항 ex) 사진은 실제 저희 가게에서 제공하는 같은 가격의
+              꽃다발이지만 꽃의 종류에 따라 분위기가 달라질 수 있는 점 주의 해라
+            </p>
           </div>
-        ))}
-      </div>
-      <div className="flex justify-center mt-[10%] mb-[10%]">
-        <Link to={"/reservationorder"}>
-          <button className="w-[10rem] h-30 bg-[#dbc7af] shadow-lg rounded-xl text-white font-nasq font-bold">
-            다음단계
-          </button>
-        </Link>
+          <div>
+            {productList.map((product, index) => (
+              <div
+                className="flex border-t border-user_green pb-[1%] "
+                key={index}
+              >
+                <div className="flex flex-col w-3/5 p-3 gap-1">
+                  <div className="font-nasq font-bold">{product.title}</div>
+                  <div className="font-nasq text-[#8D8E90] text-[0.5rem]">
+                    {product.content}
+                  </div>
+                  <div className="font-bold">{product.price}</div>
+                </div>
+                <div className="w-2/5">
+                  <img
+                    src={product.thumbnail}
+                    alt="thumbnail"
+                    className="p-3"
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="flex justify-center items-center pt-[4%] pb-[15%] bg-user_beige">
+          <Link to={"/reservationorder"}>
+            <button className="w-[10rem] h-30 shadow-lg rounded-xl bg-user_green text-white font-nasq font-bold">
+              다음단계
+            </button>
+          </Link>
+        </div>
       </div>
     </div>
   );

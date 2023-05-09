@@ -6,12 +6,14 @@ import { useNavigate } from "react-router-dom";
 
 export default function UserHeader() {
   const navigate = useNavigate();
-  const goToHome = () => {navigate('/')}
+  const goToHome = () => {
+    navigate("/");
+  };
 
   return (
-    <header className="flex justify-between  items-center bg-user_beige">
+    <header className="flex justify-between  items-center bg-user_beige border-[1px] border-b-user_green">
       <p
-        onClick={() => navigate('/')}
+        onClick={() => navigate("/")}
         className="cursor-pointer text-user_green font-ballet bg-transparent p-2 m-1"
       >
         Flowery

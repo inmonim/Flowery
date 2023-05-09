@@ -16,17 +16,17 @@ export default function ShopInfo() {
     },
   ];
   return (
-    <div className="flex flex-col ">
+    <div className="flex flex-col  ">
       <div className="p-1">
         <img src={picture1} alt="main" className="" />
       </div>
       {positions.map((position, index) => (
-        <div key={index} className="mx-auto font-bold">
+        <div key={index} className="mx-auto font-bold pt-[5%] font-nasq">
           <p>{position.title}</p>
         </div>
       ))}
       {positions.map((position, index) => (
-        <div key={index} className="mx-auto pt-2 text-xs">
+        <div key={index} className="mx-auto pt-2 text-xs text-gray-500">
           <p>{position.address}</p>
         </div>
       ))}
