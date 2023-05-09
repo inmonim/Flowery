@@ -30,4 +30,6 @@ public class ReservationDto {
 
     private String phrase;
 
+    private String image;
+
 }
