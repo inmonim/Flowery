@@ -3,6 +3,7 @@ package com.flowery.backend.controller;
 import com.flowery.backend.model.dto.MessagesDto;
 import com.flowery.backend.model.dto.MygardensDto;
 import com.flowery.backend.model.entity.Messages;
+import com.flowery.backend.model.entity.Mygardens;
 import com.flowery.backend.sevice.MygardensService;
 import com.google.zxing.*;
 import com.google.zxing.MultiFormatWriter;
@@ -12,6 +13,8 @@ import com.google.zxing.common.BitMatrix;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 
 import com.google.zxing.qrcode.QRCodeWriter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -26,26 +29,41 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping("myGarden/")
+@RequestMapping("myGarden")
 public class MygardensController {
 
     private MygardensService mygardensService;
+    private final Logger LOGGER = LoggerFactory.getLogger(MygardensController.class);
 
 
     MygardensController(MygardensService mygardensService){
         this.mygardensService = mygardensService;
     }
 
-    @GetMapping("id")
-    public ResponseEntity<List<MygardensDto>> findAllByUserId(){
-        System.out.println("hhh");
-        return new ResponseEntity<>(mygardensService.findAllByUserId(1), HttpStatus.ACCEPTED);
+//    @GetMapping("id")
+//    public ResponseEntity<List<MygardensDto>> findAllByUserId(){
+//        System.out.println("hhh");
+//        return new ResponseEntity<>(mygardensService.findAllByUserId(1), HttpStatus.ACCEPTED);
+//    }
+
+    @PostMapping
+    public ResponseEntity<List<MygardensDto>> findAllByUserId(@RequestBody MygardensDto mygardensDto) throws Exception {
+        LOGGER.info("findAllByUserId가 호출되었습니다.");
+        try {
+            return new ResponseEntity<List<MygardensDto>>(mygardensService.findAllByUserId(mygardensDto), HttpStatus.OK);
+        } catch (Exception e) {
+            LOGGER.error("마이가든 조회에 실패했습니다.", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(null);
+        }
+
     }
+
 
 
     // 지금 필요한 건 편지와 영상 내용을 띄우는 프론트 페이지 주소가 필요하다.
     // 거기에 mid를 맞춰서 줘서
-    @GetMapping("qrTest")
+    @GetMapping("/qrTest")
     public Object createQR(@RequestParam String url, @RequestParam String color, @RequestParam String baseColor) throws Exception {
 
         BitMatrix bitMatrix = null;
