@@ -86,10 +86,11 @@
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: center;
   padding: 2px 8px;
   gap: 4px;
 
-  width: fit-content;
+  width: 4.3rem;
   height: 22px;
 
   /* Success/50 */
@@ -122,10 +123,11 @@
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: center;
   padding: 2px 8px;
   gap: 4px;
 
-  width: fit-content;
+  width: 4.3rem;
   height: 22px;
 
   /* Success/50 */

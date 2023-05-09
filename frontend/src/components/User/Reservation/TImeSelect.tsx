@@ -33,7 +33,7 @@ export default function Timeselect() {
         {rezBefore.map((time, index) => (
           <div
             key={index}
-            className="w-[4.5rem] p-1 text-center border-solid border-2 border-b_bottom hover:bg-b_bottom"
+            className="w-[4.5rem] p-1 text-center border-solid border-2 border-b_bottom hover:bg-[#dbc7af]"
           >
             {time}
           </div>
@@ -44,7 +44,7 @@ export default function Timeselect() {
         {rezAfter.map((time, index) => (
           <div
             key={index}
-            className="w-[4.5rem] p-1 text-center border-solid border-2 border-b_bottom  hover:bg-b_bottom"
+            className="w-[4.5rem] p-1 text-center border-solid border-2 border-b_bottom  hover:bg-[#dbc7af]"
           >
             {time}
           </div>

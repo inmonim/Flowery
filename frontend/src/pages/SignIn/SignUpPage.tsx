@@ -150,7 +150,7 @@ export default function SignUpPage() {
               />
               <label
                 htmlFor="phoneNumber"
-                className={`absolute text-sm cursor-text bg-white text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] px-2 peer-focus:px-2 peer-focus:text-primary peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1`}
+                className={`absolute text-sm cursor-text bg-white text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] px-2 peer-focus:px-2 peer-focus:text-primary peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1`}
               >
                 전화번호
               </label>
@@ -320,6 +320,7 @@ export default function SignUpPage() {
                       isPasswordConfirm === true
                     ) {
                       // 회원가입 axios
+                      navigate('/reservation')
                     } else {
                       if (isId === false || existId === true) {
                         setWrongId(true);
