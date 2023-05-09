@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
-import styles from "./PreviewModal.module.scss";
 import { useSetRecoilState } from "recoil";
 
 import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
-import { imageState, totalTextState } from "../../recoil/atom";
-import LetterPreview from "../../components/User/Writing/LetterPreview";
+import { imageState, totalTextState } from "../../../recoil/atom";
+import LetterPreview from "./LetterPreview";
 
 const PreviewModal = React.forwardRef<HTMLDivElement, any>((props, ref) => {
   const letter = useRecoilValue<string>(totalTextState);
@@ -72,7 +71,7 @@ const PreviewModal = React.forwardRef<HTMLDivElement, any>((props, ref) => {
                     </span>
                     <div className="flex justify-center">
                       <img
-                        src={require("../../assets/example1.jpg")}
+                        src={require("../../../assets/example1.jpg")}
                         alt=""
                         className="block items-center rounded-b-lg lg:w-6/12 lg:rounded-r-lg lg:rounded-bl-none"
                       ></img>

@@ -22,41 +22,6 @@ export default function SignInPage() {
     navigate("/nonmember");
   };
 
-  // // 회원가입 Modal
-  // const signUp = () => {
-  //   setShowModal("signUp");
-  // };
-
-  // // 비회원 주문 Modal 띄우기
-  // const nonMember = () => {
-  //   setShowModal("nonMember");
-  // };
-
-  // // 화면 클릭 또는 키보드 누름 감지
-  // const modalRef = useRef<HTMLDivElement>(null);
-  // useEffect(() => {
-  //   document.addEventListener("mousedown", handleClickOutside);
-  //   document.addEventListener("keydown", handleKeyDown);
-  //   return () => {
-  //     document.removeEventListener("mousedown", handleClickOutside);
-  //     document.removeEventListener("keydown", handleKeyDown);
-  //   };
-  // }, []);
-
-  // // Modal 이외의 곳을 클릭 하면 Modal 닫힘
-  // const handleClickOutside = (event: MouseEvent) => {
-  //   if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
-  //     setShowModal("");
-  //   }
-  // };
-
-  // // esc를 누르면 Modal 닫힘
-  // const handleKeyDown = (event: KeyboardEvent) => {
-  //   if (event.code === "Escape") {
-  //     setShowModal("");
-  //   }
-  // };
-
   return (
     <section className="gradient-form h-full bg-neutral-200 flex items-center justify-center">
       <div className="container h-screen px-4 py-8 lg:p-10">
@@ -139,9 +104,6 @@ export default function SignInPage() {
                             회원가입
                           </button>
                         </div>
-                        {/* <p className="mb-0 mr-2">
-                          추억을 영원히 간직하고 싶다면
-                        </p> */}
                       </div>
                     </form>
                   </div>
@@ -152,9 +114,6 @@ export default function SignInPage() {
                   alt=""
                   className="hidden items-center rounded-b-lg lg:w-6/12 lg:rounded-r-lg lg:rounded-bl-none lg:block"
                 >
-                  {/* <div className="px-4 py-6 text-white md:mx-6 md:p-12">
-                    <img src={require("../../assets/example1.jpg")} alt="" />
-                  </div> */}
                 </img>
               </div>
             </div>
@@ -162,33 +121,5 @@ export default function SignInPage() {
         </div>
       </div>
     </section>
-    // <div>
-    //   <div className={styles.signIn}>
-    //     <h1>로그인</h1>
-    //     <div className={styles.idInput}>
-    //       <input type="text" placeholder="아이디" className={styles.idInput} />
-    //     </div>
-    //     <div>
-    //       <input
-    //         type="text"
-    //         placeholder="비밀번호"
-    //         className={styles.passwordInput}
-    //       />
-    //     </div>
-    //   </div>
-    //   <input type="button" value="로그인" onClick={checkSignIn} />
-    //   <input type="button" value="회원가입" onClick={signUp} />
-    //   {showModal === "signUp" && (
-    //     <SignUpModal ref={modalRef} onClose={() => setShowModal("")} />
-    //   )}
-    //   {showModal === "nonMember" && (
-    //     <NonMemberModal ref={modalRef} onClose={() => setShowModal("")} />
-    //   )}
-    //   <div>
-    //     <button className={styles.nonMember} onClick={nonMember}>
-    //       비회원으로 계속
-    //     </button>
-    //   </div>
-    // </div>
   );
 }

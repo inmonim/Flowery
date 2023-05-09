@@ -8,10 +8,14 @@ export default function UserMainPage() {
     navigate("/writing");
   }
   return (
-    <div onClick={handleNavigate} className="flex flex-col">
-      <Link to="/reservation">예약 페이지입니다</Link>
-      <Link to="/release">qr 체크시 이동하는 페이지입니다</Link>
-      <Link to="/seller/proto">판매자 페이지입니다</Link>
+    <div>
+      <div onClick={() => navigate("/signin")}>로그인 페이지로</div>
+      <div onClick={() => navigate("/writing")}>편지쓰는 페이지로</div>
+      <div onClick={() => navigate("/reservation")}>에약 페이지로</div>
+      <div onClick={() => navigate("/seller/proto")}>판매자 페이지로</div>
+      <div onClick={() => navigate("/release")}>
+        qr 인식시 이동하는 페이지로
+      </div>
     </div>
   );
 }
