@@ -18,15 +18,15 @@ export default function OptionHeader() {
     },
   ];
   return (
-    <>
-      <div className="w-100vh flex justify-between items-center  border-solid border-2 border-b-black">
-        <img src={back_btn} alt="back" className="w-10 p-3" />
-        {positions.map((position, index) => (
-          <div key={index} className="mx-auto">
-            <p className=" font-bold ">{position.title}</p>
-          </div>
-        ))}
-      </div>
-    </>
+    <div className="w-100vh bg-user_sol flex justify-between items-center  border-solid border- border-b-black">
+      <img src={back_btn} alt="back" className="w-10 p-3" />
+      {positions.map((position, index) => (
+        <div key={index} className="mr-auto ml-[38%]">
+          <p className=" font-bold font-nasq text-user_black ">
+            {position.title}
+          </p>
+        </div>
+      ))}
+    </div>
   );
 }
