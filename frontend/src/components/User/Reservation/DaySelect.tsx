@@ -17,7 +17,7 @@ export default function Dayselect() {
 
   return (
     <>
-      <div className="flex justify-center mt-[10%] mb-[10%]">
+      <div className="flex justify-center pt-[10%] pb-[10%]">
         <DatePicker
           selected={selectedDate}
           shouldCloseOnSelect={false}

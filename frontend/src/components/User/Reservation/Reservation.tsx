@@ -19,35 +19,6 @@ interface Position {
 export default function Reservation() {
   const [markers, setMarkers] = useState([] as boolean[]);
 
-  const [isDragging, setIsDragging] = useState(false);
-  const [dragStartY, setDragStartY] = useState(0);
-  const [draggedY, setDraggedY] = useState(0);
-  const [maxDragY, setMaxDragY] = useState(1200); // 허용되는 최대 드래그
-
-  const handleMouseDown = (event: any) => {
-    setIsDragging(true);
-    setDragStartY(event.clientY);
-  };
-
-  const handleMouseUp = () => {
-    setIsDragging(false);
-    setDraggedY(0);
-  };
-
-  const handleMouseMove = (event: any) => {
-    if (!isDragging) return;
-
-    const dragDistance = event.clientY - dragStartY;
-    const newDraggedY = draggedY + dragDistance;
-
-    if (newDraggedY > maxDragY) {
-      setDraggedY(maxDragY);
-    } else {
-      setDraggedY(newDraggedY);
-    }
-
-    setDragStartY(event.clientY);
-  };
   const positions: Position[] = [
     {
       content: "꽃들 info",
@@ -117,14 +88,6 @@ export default function Reservation() {
         </Map>
       </div>
       <div className="flex-auto absolute z-10 rounded-xl inset-x-0 bottom-0 h-80 overflow-scroll ">
-        <div
-          style={{ transform: `translateY(${draggedY}px)` }}
-          onMouseDown={handleMouseDown}
-          onMouseUp={handleMouseUp}
-          onMouseMove={handleMouseMove}
-        >
-          This div can be dragged vertically up to {maxDragY}px.
-        </div>
         <ShopList />
       </div>
     </div>
