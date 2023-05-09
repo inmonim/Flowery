@@ -7,6 +7,10 @@ WORKDIR /app
 # copy the Flask app code to the container
 COPY . /app
 
+RUN python -m venv venv
+ENV VIRTUAL_ENV=/app/venv
+ENV PATH="$VIRTUAL_ENV/bin:$PATH"
+
 # install necessary packages
 RUN pip3 install --upgrade pip
 RUN pip3 install --root-user-action=ignore requests
