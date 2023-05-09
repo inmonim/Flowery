@@ -28,4 +28,8 @@ public class GoodsService {
         return samplesRepository.save(sample);
     }
 
+    public void deleteSample(Integer sampleId) {
+        Samples sample = samplesRepository.findById(sampleId).orElseThrow(() -> new NoSuchElementException("해당 sample_id가 없습니다."));
+        samplesRepository.delete(sample);
+    }
 }

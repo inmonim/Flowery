@@ -106,10 +106,10 @@ public class StoresService {
 
     // 상품 삭제
     @Transactional
-    public void deleteGoods(Integer goodsId) {
-        goodsRepository.deleteByGoodsId(goodsId);
+    public void deleteGoods(Integer goodsId) throws Exception {
+        Goods goods = goodsRepository.findById(goodsId).orElseThrow(() -> new NoSuchElementException("해당 goods_id가 없습니다."));
+        goodsRepository.delete(goods);
     }
-
 
 
     // 상품 등록

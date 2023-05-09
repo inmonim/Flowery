@@ -82,11 +82,24 @@ public class StoresController {
 
     // 상품을 삭제
     @DeleteMapping("/goods/{goodsId}")
-    public ResponseEntity<Void> deleteGoods(@PathVariable("goodsId") Integer goodsId){
+    public ResponseEntity<Void> deleteGoods(@PathVariable("goodsId") Integer goodsId) throws Exception {
         LOGGER.info("deleteGoods가 호출되었습니다.");
         storesService.deleteGoods(goodsId);
         return ResponseEntity.noContent().build();
     }
+
+//    @DeleteMapping("/goods/{goodsId}")
+//    public ResponseEntity<Void> deleteGoods(@PathVariable("goodsId") Integer goodsId){
+//        LOGGER.info("deleteGoods가 호출되었습니다.");
+//        try {
+//            storesService.deleteGoods(goodsId);
+//            return ResponseEntity.noContent().build();
+//        } catch (NoSuchElementException e) {
+//            LOGGER.error("해당하는 goodsId가 없습니다.", e);
+//            return ResponseEntity.notFound().build();
+//        }
+//    }
+
 
     @PatchMapping("/goods/{goodsId}")
     public ResponseEntity<Goods> updateGoods(@PathVariable("goodsId") Integer goodsId,
