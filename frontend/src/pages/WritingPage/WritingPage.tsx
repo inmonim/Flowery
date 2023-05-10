@@ -5,6 +5,7 @@ import LetterFont from "../../components/User/Writing/LetterFont";
 import LetterContent from "../../components/User/Writing/LetterContent";
 import VideoInput from "../../components/User/Writing/VideoInput";
 import PreviewModal from "../../components/User/Writing/PreviewModal";
+import CardPreview from "../../components/User/Writing/CardPreview";
 
 export default function WritingPage() {
   const [showModal, setShowModal] = useState<boolean>(false);
@@ -74,7 +75,9 @@ export default function WritingPage() {
         {/* 페이지 내용 */}
         <div>
           <h2>
-            여기
+            <div className="p-20 mx-auto sm:w-[150px] md:w-[300px] lg:w-[450px]">
+              <CardPreview/>
+            </div>
           </h2>
           <h2>
             <button
