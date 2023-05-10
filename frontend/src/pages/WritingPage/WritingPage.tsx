@@ -74,6 +74,9 @@ export default function WritingPage() {
         {/* 페이지 내용 */}
         <div>
           <h2>
+            여기
+          </h2>
+          <h2>
             <button
               type="button"
               onClick={() => {
@@ -117,6 +120,7 @@ export default function WritingPage() {
           </h2>
           {showLetterInput && (
             <div>
+              <LetterPaper />
               <div className="flex flex-col justify-center items-center border border-gray-200 md:flex-row ">
                 <LetterContent />
               </div>
@@ -129,7 +133,7 @@ export default function WritingPage() {
               onClick={() => {
                 setShowImageInput(!showImageInput);
               }}
-              className="flex items-center justify-between w-full p-5 font-medium text-left text-gray-500 border border-b-0 border-gray-200 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"
+              className="flex items-center justify-between w-full p-5 font-medium text-left text-gray-500 border border-b border-gray-200 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"
             >
               <span className="flex items-center">
                 <svg
@@ -214,18 +218,18 @@ export default function WritingPage() {
         <div className="relative h-[15vh]">
           <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2">
             <div className="flex">
-              <div className="cursor-pointer font-bold py-2 px-4 mx-4 rounded-full bg-[#eed3b5] hover:bg-[#eed3b5]">
+              {/* <div className="cursor-pointer font-bold py-2 px-4 mx-4 rounded-full bg-[#eed3b5] hover:bg-[#eed3b5]">
                 <input
                   type="button"
                   value="건너뛰기"
                   onClick={submitButton}
                   className="cursor-pointer"
                 />
-              </div>
+              </div> */}
               <div className="cursor-pointer font-bold py-2 px-4 mx-4 rounded-full bg-[#eed3b5] hover:bg-[#eed3b5]">
                 <input
                   type="button"
-                  value="미리보기"
+                  value="다음으로"
                   onClick={submitButton}
                   className="cursor-pointer"
                 ></input>

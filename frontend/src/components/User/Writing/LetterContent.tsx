@@ -33,7 +33,7 @@ export default function LetterContent() {
       <textarea
         autoFocus
         spellCheck="false"
-        rows={14}
+        rows={16}
         onChange={handleTextareaHeight}
         value={letterContent}
         className={`${styles[`letterContent${letterPaper}`]} ${
