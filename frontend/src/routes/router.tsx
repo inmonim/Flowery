@@ -1,17 +1,17 @@
 import { createBrowserRouter } from "react-router-dom";
 import UserMainLayout from "../layouts/UserMainLayout";
 import UserMainPage from "../pages/UserMainPage/UserMainPage";
-import SellerMainPage from "../pages/SellerMainPage/SellerMainPage";
+import SellerMainPage from "../pages/Seller/SellerMainPage/SellerMainPage";
 import MyGarden from "../pages/MyGarden/MyGarden";
 import SellerMainLayout from "../layouts/SellerMainLayout";
 import Reservation from "../components/User/Reservation/Reservation";
 import SignInPage from "../pages/SignIn/SignInPage";
 import WritingPage from "../pages/WritingPage/WritingPage";
-import SellerLoginPage from "../pages/SellerLoginPage/SellerLoginPage";
+import SellerLoginPage from "../pages/Seller/SellerLoginPage/SellerLoginPage";
 import ReservationOption from "../components/User/Reservation/ReservationOption";
 import SignUpPage from "../pages/SignIn/SignUpPage";
 import NonMemberPage from "../pages/SignIn/NonMember";
-import ProtoPage from "../pages/SellerMainPage/SellerMainProto";
+import ProtoPage from "../pages/Seller/SellerMainPage/SellerMainProto";
 import TestPage from "../pages/TestPage";
 import ReleaseIntro from "../components/ReleasePage/ReleaseIntro";
 import ReleaseCategory from "../components/ReleasePage/ReleaseCategory";
@@ -19,7 +19,7 @@ import ReleaseLetters from "../components/ReleasePage/ReleaseLetters";
 import ReleasePictures from "../components/ReleasePage/ReleasePictures";
 import UserProtoPage from "../components/ReleasePage/UserProtoPage";
 import OrderPage from "../components/User/Reservation/OrderPage";
-
+import SellerBookPage from "../pages/Seller/SellerBookPage/SellerBookPage";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -46,6 +46,7 @@ const router = createBrowserRouter([
       { path: "/seller", element: <SellerMainPage /> },
       { path: "/seller/login", element: <SellerLoginPage /> },
       { path: "/seller/proto", element: <ProtoPage /> },
+      { path: "/seller/book", element: <SellerBookPage /> },
     ],
   },
   {

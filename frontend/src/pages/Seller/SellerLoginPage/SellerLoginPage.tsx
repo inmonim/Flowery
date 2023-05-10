@@ -1,9 +1,9 @@
 import React from "react";
 import styles from "./SellerLoginPage.module.scss";
-import InputForm from "../../components/Common/InputForm";
+import InputForm from "../../../components/Common/InputForm";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
-import { storeId, storeName } from "../../recoil/atom";
+import { storeId, storeName } from "../../../recoil/atom";
 import axios from "axios";
 
 export default function SellerLogin() {
