@@ -7,7 +7,7 @@ const { persistAtom } = recoilPersist();
 export const isLoggedIn = atom<boolean>({
   key: "isLoggedIn",
   default: false,
-  // effects_UNSTABLE: [persistAtom],
+  effects_UNSTABLE: [persistAtom],
 });
 
 // 인증된 전화번호
@@ -48,6 +48,18 @@ export const letterFontState = atom<number>({
 // 편지 내용
 export const totalTextState = atom<string>({
   key: "totalTextState",
+  default: "",
+  effects_UNSTABLE: [persistAtom],
+});
+
+export const storeId = atom<number>({
+  key: "storeId",
+  default: 0,
+  effects_UNSTABLE: [persistAtom],
+});
+
+export const storeName = atom<string>({
+  key: "storeName",
   default: "",
   effects_UNSTABLE: [persistAtom],
 });

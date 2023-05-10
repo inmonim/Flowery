@@ -5,13 +5,18 @@ import analysis from "../../assets/analysis_logo.png";
 import manage from "../../assets/manage_logo.png";
 import logout from "../../assets/logout_logo.png";
 import { useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { storeId } from "../../recoil/atom"; // recoil storeId atom
 interface ModalProps {
   handleModalClose: () => void;
 }
 
 export default function Modal(props: ModalProps) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [myStoreId, setStoreId] = useRecoilState(storeId);
   const navigate = useNavigate();
   function handleNavigate() {
+    setStoreId(0);
     navigate("/seller/login");
   }
   return (
