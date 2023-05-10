@@ -247,6 +247,7 @@ public class ReservationService {
         reservation.setPermission(null);
         reservation.setReservationName(reservationDto.getReservationName());
         reservation.setPhrase(reservationDto.getPhrase());
+        reservation.setImage(stores.getImage());
 
         reservationRepository.save(reservation);
         return true;
