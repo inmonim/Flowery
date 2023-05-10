@@ -11,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -32,7 +34,7 @@ public class MessagesController {
     public ResponseEntity<Messages> createCard(@RequestPart(required = false) MultipartFile[] pictures,
                                                @RequestPart(required = false) MultipartFile video,
                                                @RequestParam Integer paper, @RequestParam String message,
-                                               @RequestParam Integer font) throws Exception {
+                                               @RequestParam Integer font, @RequestParam String date) {
 
         LOGGER.info("createCard가 호출되었습니다.");
 
@@ -64,7 +66,11 @@ public class MessagesController {
                 fontValue = font;
             }
 
-            return new ResponseEntity<>(messagesService.createCard(videoUrl, pictureUrl, messageValue, paperValue, fontValue), HttpStatus.ACCEPTED);
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+            LocalDateTime dateTime = LocalDateTime.parse(date, formatter);
+
+
+            return new ResponseEntity<>(messagesService.createCard(videoUrl, pictureUrl, messageValue, paperValue, fontValue, dateTime), HttpStatus.ACCEPTED);
         }catch (Exception e){
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }

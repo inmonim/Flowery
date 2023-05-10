@@ -2,6 +2,8 @@ package com.flowery.backend.model.dto;
 
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 @Data
 public class MessagesDto {
 
@@ -10,4 +12,5 @@ public class MessagesDto {
     private String video;
     private String flowerPicture;
     private int papers;
+    private LocalDateTime date;
 }

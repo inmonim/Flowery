@@ -8,6 +8,8 @@ import com.flowery.backend.repository.PicturesRepository;
 import com.flowery.backend.repository.ReservationRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -31,6 +33,7 @@ public class MessagesService {
 
 
     public Messages findByMessageId(String id){
+        System.out.println(id);
         Messages message = messagesRepository.findById(id).get();
 //        기본 제공하는 findby를 사용해서 repository 안 만들고 할 때
 //        Messages message = messagesRepository.findByMessageId(id).get();
@@ -38,7 +41,7 @@ public class MessagesService {
 
     }
 
-    public Messages createCard(String videoUrl, List<String> pictureUrl, String messageValue, Integer paperValue, Integer fontValue) throws Exception{
+    public Messages createCard(String videoUrl, List<String> pictureUrl, String messageValue, Integer paperValue, Integer fontValue, LocalDateTime dateTime) throws Exception{
         Messages message = new Messages();
 
         // 메시지와 비디오, 사진 값이 비어있지 않다면 넣어준다.
@@ -51,6 +54,7 @@ public class MessagesService {
         message.setPaper(paperValue);
         message.setFont(fontValue);
         message.setMessageId(UUID.randomUUID().toString());
+        message.setMessageDate(dateTime);
 
         Messages result = messagesRepository.save(message);
 
