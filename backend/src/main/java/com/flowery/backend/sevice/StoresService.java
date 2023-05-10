@@ -2,6 +2,7 @@ package com.flowery.backend.sevice;
 
 import com.amazonaws.services.kms.model.NotFoundException;
 import com.flowery.backend.model.dto.GoodsDto;
+import com.flowery.backend.model.dto.HolidaysDto;
 import com.flowery.backend.model.dto.StoresDto;
 import com.flowery.backend.model.entity.Goods;
 import com.flowery.backend.model.entity.Holidays;
@@ -147,8 +148,8 @@ public class StoresService {
 
 
     // 휴일을 확인하는 코드
-    public String getHolidays(StoresDto storeDto) throws Exception {
-        Stores store = storeRepository.findById(storeDto.getStoreId())
+    public String getHolidays(int storeId) throws Exception {
+        Stores store = storeRepository.findById(storeId)
         .orElseThrow(() -> new StoreNotFoundException("해당 id의 상점이 존재하지 않습니다."));
 //        String holyday = "";
         StringBuilder holidays = new StringBuilder(); // 변경된 부분
@@ -162,5 +163,26 @@ public class StoresService {
         return holidays.toString();
     }
 
+
+    // 휴일을 업데이트하는 코드
+    public void updateHolidays(HolidaysDto holidaysDto) throws Exception {
+        Stores store = storeRepository.findById(holidaysDto.getStoreId())
+                .orElseThrow(() -> new StoreNotFoundException("해당 id의 상점이 존재하지 않습니다."));
+        // 일단 해당 storeId로 저장된 값을 다 지움.
+        holidaysRepository.deleteAllByStoreId(store);
+
+        String[] holidays = holidaysDto.getHolidays().split("");
+        System.out.println(holidays);
+
+        for (String day : holidays) {
+            System.out.println(day);
+            Holidays holiday = new Holidays();
+            holiday.setStoreId(store);
+            holiday.setDay(day);
+
+            holidaysRepository.save(holiday);
+        }
+
+    }
 
 }

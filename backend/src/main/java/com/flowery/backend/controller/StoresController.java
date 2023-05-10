@@ -1,14 +1,12 @@
 package com.flowery.backend.controller;
 
 import com.flowery.backend.model.dto.GoodsDto;
-import com.flowery.backend.model.dto.ReservationDto;
+import com.flowery.backend.model.dto.HolidaysDto;
 import com.flowery.backend.model.dto.StoresDto;
 import com.flowery.backend.model.entity.Goods;
 import com.flowery.backend.model.entity.Samples;
 import com.flowery.backend.model.entity.Stores;
-import com.flowery.backend.sevice.ReservationService;
 import com.flowery.backend.sevice.StoresService;
-import org.apache.catalina.Store;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -150,7 +148,8 @@ public class StoresController {
     public ResponseEntity<?> getHolidays(@RequestBody StoresDto storeDto){
         LOGGER.info("getHolidays 호출되었습니다.");
         try {
-            String holidays = storesService.getHolidays(storeDto);
+            int storeId = storeDto.getStoreId();
+            String holidays = storesService.getHolidays(storeId);
             return ResponseEntity.ok(holidays);
 
         } catch(Exception e) {
@@ -162,7 +161,16 @@ public class StoresController {
 
     }
 
-//    @PutMapping("/holy")
+    @PutMapping("/holidays")
+    public void updateHolidays(@RequestBody HolidaysDto holidaysDto){
+        LOGGER.info("updateHolidays 호출되었습니다.");
+        try {
+//            return ResponseEntity.accepted(storesService.updateHolidays(requestData));
+            storesService.updateHolidays(holidaysDto);
+        } catch(Exception e) {
+
+        }
+    }
 
 
 }
