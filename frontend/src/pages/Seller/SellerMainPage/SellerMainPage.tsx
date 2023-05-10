@@ -1,11 +1,11 @@
 import React from "react";
-import ManagePrint from "../../components/Seller/ManagePrint";
-import MainAnalyzing from "../../components/Seller/MainAnalyzing";
-import WaitingApprove from "../../components/Seller/WaitingApprove";
+import ManagePrint from "../../../components/Seller/ManagePrint";
+import MainAnalyzing from "../../../components/Seller/MainAnalyzing";
+import WaitingApprove from "../../../components/Seller/WaitingApprove";
 import styles from "./SellerMainPage.module.scss";
-import "../../assets/styles/variable.scss";
+import "../../../assets/styles/variable.scss";
 import { useRecoilValue } from "recoil";
-import { storeName } from "../../recoil/atom";
+import { storeName } from "../../../recoil/atom";
 export default function SellerMainPage() {
   const name = useRecoilValue(storeName);
   return (

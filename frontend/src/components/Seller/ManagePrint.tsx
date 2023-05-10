@@ -59,7 +59,7 @@ export default function ManagePrint() {
         <div className={styles.title}>
           <Title num={reservation.length} />
         </div>
-        {reservation.map((item) => (
+        {reservation.slice(0, 5).map((item) => (
           <div key={item.reservationId}>
             <ItemInfo
               reservationName={item.reservationName}
