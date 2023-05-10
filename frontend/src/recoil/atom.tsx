@@ -16,6 +16,12 @@ export const cardUrl = atom<string>({
   default: "",
 });
 
+// 카드
+export const card = atom<File | null>({
+  key: "card",
+  default: null,
+});
+
 // 인증된 전화번호
 export const phoneNumberState = atom<string>({
   key: "phoneNumberState",

@@ -3,10 +3,11 @@ import { saveAs } from "file-saver";
 import axios from "axios";
 import cardframe from "../../../assets/card1234.png";
 import { useRecoilState } from "recoil";
-import { cardUrl } from "../../../recoil/atom";
+import { card, cardUrl } from "../../../recoil/atom";
 
 export default function CardPreview() {
   const [imgUrl, setImgUrl] = useRecoilState<string>(cardUrl);
+  const [cardImg, setCardImg] = useRecoilState<any>(card);
 
   function drawMultilineText(
     ctx: CanvasRenderingContext2D,
@@ -120,7 +121,7 @@ export default function CardPreview() {
             900,
             100
           );
-
+          setCardImg(canvas);
           setImgUrl(canvas.toDataURL());
         };
         image2.src = `data:image/png;base64,${image2Base64}`;
