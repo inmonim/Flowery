@@ -10,12 +10,31 @@ export const isLoggedIn = atom<boolean>({
   effects_UNSTABLE: [persistAtom],
 });
 
+// // 카드이미지 Url
+// export const cardUrl = atom<string>({
+//   key: "cardUrl",
+//   default: "",
+// });
+
 // 인증된 전화번호
 export const phoneNumberState = atom<string>({
   key: "phoneNumberState",
   default: "0",
   effects_UNSTABLE: [persistAtom],
 });
+
+// 카드 보내는 이름
+export const cardName = atom<string>({
+  key: "cardNameState",
+  default: "",
+});
+
+// 카드 한줄글
+export const cardContent = atom<string>({
+  key: "cardContentState",
+  default: "",
+});
+
 
 // 업로드한 이미지
 export const imageState = atom<Array<File>>({

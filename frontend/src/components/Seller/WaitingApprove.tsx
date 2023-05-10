@@ -46,22 +46,34 @@ export default function WaitingApprove() {
   return (
     <div className={styles.mainbox}>
       <div className={styles.secondbox}>
-        <p className={styles.font1}>승인 대기</p>
-        {reservation
-          .filter((item) => item.permission === null)
-          .map((item) => (
-            <div key={item.reservationId}>
-              <ApproveInfo
-                reservationName={item.reservationName}
-                goodsName={item.goodsName}
-                date={item.date}
-                permission={item.permission}
-                reservationId={item.reservationId}
-                phrase={item.phrase}
-                demand={item.demand}
-              />
-            </div>
-          ))}
+        <p
+          className={`${styles.font1}  ${
+            reservation.filter((item) => item.permission === null).length <= 0
+              ? "pb-0"
+              : "pb-[1.2rem]"
+          }`}
+        >
+          승인 대기
+        </p>
+        {reservation.filter((item) => item.permission === null).length > 0 ? (
+          reservation
+            .filter((item) => item.permission === null)
+            .map((item) => (
+              <div key={item.reservationId}>
+                <ApproveInfo
+                  reservationName={item.reservationName}
+                  goodsName={item.goodsName}
+                  date={item.date}
+                  permission={item.permission}
+                  reservationId={item.reservationId}
+                  phrase={item.phrase}
+                  demand={item.demand}
+                />
+              </div>
+            ))
+        ) : (
+          <p className={styles.nodata}>승인대기 중인 예약이 없습니다</p>
+        )}
       </div>
     </div>
   );
