@@ -161,16 +161,19 @@ public class StoresController {
 
     }
 
+    // 가게의 휴일 정보 변경
     @PutMapping("/holidays")
-    public void updateHolidays(@RequestBody HolidaysDto holidaysDto){
+    public ResponseEntity<Boolean> updateHolidays(@RequestBody HolidaysDto holidaysDto) {
         LOGGER.info("updateHolidays 호출되었습니다.");
         try {
-//            return ResponseEntity.accepted(storesService.updateHolidays(requestData));
             storesService.updateHolidays(holidaysDto);
-        } catch(Exception e) {
-
+            return ResponseEntity.ok(true); // 성공적으로 완료된 경우 true 반환
+        } catch (Exception e) {
+            LOGGER.error("updateHolidays 처리 중 에러 발생", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(false); // 에러 발생 시 false 반환
         }
     }
+
 
 
 }

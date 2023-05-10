@@ -168,21 +168,23 @@ public class StoresService {
     public void updateHolidays(HolidaysDto holidaysDto) throws Exception {
         Stores store = storeRepository.findById(holidaysDto.getStoreId())
                 .orElseThrow(() -> new StoreNotFoundException("해당 id의 상점이 존재하지 않습니다."));
+
         // 일단 해당 storeId로 저장된 값을 다 지움.
         holidaysRepository.deleteAllByStoreId(store);
 
-        String[] holidays = holidaysDto.getHolidays().split("");
-        System.out.println(holidays);
+        // 빈 문자열이 아닌 경우만 새로운 휴일 데이터를 저장
+        if (!holidaysDto.getHolidays().isEmpty()) {
+            String[] holidays = holidaysDto.getHolidays().split("");
 
-        for (String day : holidays) {
-            System.out.println(day);
-            Holidays holiday = new Holidays();
-            holiday.setStoreId(store);
-            holiday.setDay(day);
+            for (String day : holidays) {
+                Holidays holiday = new Holidays();
+                holiday.setStoreId(store);
+                holiday.setDay(day);
 
-            holidaysRepository.save(holiday);
+                holidaysRepository.save(holiday);
+            }
         }
-
     }
+
 
 }
