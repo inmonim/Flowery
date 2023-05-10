@@ -3,10 +3,12 @@ import { saveAs } from "file-saver";
 import axios from "axios";
 import cardframe from "../../../assets/card1234.png";
 import { useRecoilState } from "recoil";
-import { cardUrl } from "../../../recoil/atom";
+import { cardContent, cardName } from "../../../recoil/atom";
 
 export default function CardPreview() {
-  const [imgUrl, setImgUrl] = useRecoilState<string>(cardUrl);
+  const [imgUrl, setImgUrl] = useState<string>("");
+  const [name, setName] = useRecoilState<string>(cardName);
+  const [content, setContent] = useRecoilState<string>(cardContent);
 
   function drawMultilineText(
     ctx: CanvasRenderingContext2D,
@@ -50,13 +52,11 @@ export default function CardPreview() {
       canvas.width = image1.width;
       canvas.height = image1.height;
 
-      // draw image1
       if (ctx) {
         ctx.drawImage(image1, 0, 0);
 
         const image2 = new Image();
         image2.onload = () => {
-          // draw image2
           ctx.drawImage(
             image2,
             0,
@@ -71,7 +71,7 @@ export default function CardPreview() {
           ctx.font = "120px KCC";
           ctx.fillStyle = "#000000";
           ctx.textAlign = "center";
-          ctx.textBaseline = "bottom"; // 텍스트 기준선을 아래쪽으로 설정
+          ctx.textBaseline = "bottom";
           drawMultilineText(
             ctx,
             text,
@@ -81,7 +81,6 @@ export default function CardPreview() {
             180
           );
 
-          // draw additional text
           ctx.font = "100px KCC";
           ctx.fillStyle = "#000000";
           ctx.textAlign = "center";
@@ -120,7 +119,6 @@ export default function CardPreview() {
             900,
             100
           );
-
           setImgUrl(canvas.toDataURL());
         };
         image2.src = `data:image/png;base64,${image2Base64}`;
@@ -143,8 +141,8 @@ export default function CardPreview() {
       {mergeImages(
         cardframe,
         testQr,
-        "문구",
-        `From. 이름`,
+        `${content}`,
+        `From. ${name}`,
         `kkotdeul`,
         "test1"
       )}
