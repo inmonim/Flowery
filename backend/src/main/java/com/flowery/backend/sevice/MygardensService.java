@@ -23,6 +23,7 @@ public class MygardensService {
                      MessagesRepository messagesRepository){
         this.mygardensRepository = mygardensRepository;
         this.usersRepository = usersRepository;
+        this.messagesRepository = messagesRepository;
     }
 
 //    public List<MygardensDto> findAllByUserId(int code){
@@ -70,14 +71,11 @@ public class MygardensService {
 
     public Mygardens createMyGarden(MygardensDto mygardensDto) {
         Mygardens mygarden = new Mygardens();
-        System.out.println(mygardensDto.getMessageId().getClass().getName());
         String messageId = mygardensDto.getMessageId();
-        System.out.println(messageId);
         Messages message = messagesRepository.findByMessageId(messageId);
-        System.out.println(message);
-//        Messages message = messagesRepository.findById(messageId.toString()).get();
-//                .orElseThrow(() -> new NoSuchElementException("해당 messageId가 없습니다."));
-        System.out.println("여기까지 못 오는 거지?");
+        if (message == null) {
+            throw new NoSuchElementException("해당 messageId가 없습니다.");
+        }
         Integer userId = mygardensDto.getUserId();
         Users user = usersRepository.findById(userId).orElseThrow(() -> new NoSuchElementException("해당 sample_id가 없습니다."));
         mygarden.setMessageId(message);
@@ -85,4 +83,6 @@ public class MygardensService {
 
         return mygardensRepository.save(mygarden);
     }
+
+
 }
