@@ -3,6 +3,7 @@ package com.flowery.backend.sevice;
 import com.flowery.backend.model.dto.CardDto;
 import com.flowery.backend.model.dto.ReservationDto;
 import com.flowery.backend.model.dto.StoresDto;
+import com.flowery.backend.model.dto.UsersDto;
 import com.flowery.backend.model.entity.*;
 import com.flowery.backend.repository.*;
 import com.google.zxing.BarcodeFormat;
@@ -350,5 +351,25 @@ public class ReservationService {
         public NotAuthorizedException(String message) {
             super(message);
         }
+    }
+
+
+    public List<ReservationDto> findByUserId(int userId) {
+        Users user = usersRepository.findByUsersId(userId);
+
+        System.out.println(user);
+        List<Reservation> list = reservationRepository.findAllByUserIdOrderByDateDesc(user);
+        List<ReservationDto> result = new ArrayList<>();
+
+        for(int i=0; i<list.size(); i++){
+
+            ReservationDto tmp = new ReservationDto();
+            System.out.println(list.get(i));
+            reservationEntityToDto(tmp, list.get(i));
+
+            result.add(tmp);
+        }
+
+        return result;
     }
 }
