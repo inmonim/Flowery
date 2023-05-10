@@ -36,7 +36,11 @@ export default function PrintCard(props: PrintCardProps) {
         fetch("https://flowery.duckdns.org/flask/objectDetect", {
           method: "POST",
           body: formData,
-        }).then((response) => console.log("response", response));
+        })
+          .then((response) => {
+            return response.json();
+          })
+          .then((data) => console.log(data.flower_object));
         setPhotoUrl1(URL.createObjectURL(file));
       }
     };

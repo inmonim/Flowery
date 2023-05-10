@@ -2,12 +2,37 @@ import React from "react";
 import styles from "./SellerLoginPage.module.scss";
 import InputForm from "../../components/Common/InputForm";
 import { useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { storeId, storeName } from "../../recoil/atom";
+import axios from "axios";
 
 export default function SellerLogin() {
   const navigate = useNavigate();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [myStoreId, setStoreId] = useRecoilState<number>(storeId);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [myStoreName, setStoreName] = useRecoilState<string>(storeName);
 
   function handleClick() {
-    navigate("/seller");
+    axios
+      .post("https://flowery.duckdns.org/api/users/login-seller", {
+        id: "test1",
+        pass: "1234",
+      })
+      .then((response) => {
+        setStoreId(response.data.storeId);
+        axios
+          .post("https://flowery.duckdns.org/api/stores/info", {
+            storeId: response.data.storeId,
+          })
+          .then((responses) => {
+            setStoreName(responses.data.storeName);
+            navigate("/seller");
+          });
+      })
+      .catch((err) => {
+        alert("파트너스가 아니시거나 잘못된 입력입니다.");
+      });
   }
   return (
     <>
