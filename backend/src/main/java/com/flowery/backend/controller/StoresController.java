@@ -145,4 +145,24 @@ public class StoresController {
 
 
 
+    // 가게의 휴일 정보를 가져오기
+    @PostMapping("/holidays")
+    public ResponseEntity<?> getHolidays(@RequestBody StoresDto storeDto){
+        LOGGER.info("getHolidays 호출되었습니다.");
+        try {
+            String holidays = storesService.getHolidays(storeDto);
+            return ResponseEntity.ok(holidays);
+
+        } catch(Exception e) {
+            LOGGER.error("상품 정보 변경에 실패했습니다.", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+
+
+
+    }
+
+//    @PutMapping("/holy")
+
+
 }
