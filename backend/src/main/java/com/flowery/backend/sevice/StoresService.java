@@ -146,6 +146,7 @@ public class StoresService {
     }
 
 
+    // 휴일을 확인하는 코드
     public String getHolidays(StoresDto storeDto) throws Exception {
         Stores store = storeRepository.findById(storeDto.getStoreId())
         .orElseThrow(() -> new StoreNotFoundException("해당 id의 상점이 존재하지 않습니다."));
@@ -160,5 +161,6 @@ public class StoresService {
 
         return holidays.toString();
     }
+
 
 }
