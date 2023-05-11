@@ -1,3 +1,12 @@
+@font-face {
+  font-family: "KCC";
+  src: local('KCC'), url("../../assets/styles/fonts/KCC-Chassam.ttf"), format('truetype');
+}
+
+.fontcheck {
+  font-family: "KCC";
+  // display: none
+}
 .modal {
   position: fixed;
   width: 100%;
@@ -155,4 +164,5 @@ button {
 .successbutton {
   color: #ffffff;
   background: #437ef7;
+  margin-top: 1.5rem;
 }
