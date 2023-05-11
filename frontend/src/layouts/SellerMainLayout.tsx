@@ -12,7 +12,6 @@ const SellerMainLayout = () => {
   const isLogin = useRecoilValue(storeId);
   const navigate = useNavigate();
   const location = useLocation();
-  console.log(location.pathname);
   useEffect(() => {
     const handleUnload = () => {
       localStorage.removeItem("storeId");
@@ -47,6 +46,10 @@ const SellerMainLayout = () => {
     ) {
       alert("로그인이 필요한 서비스입니다.");
       navigate("/seller/login");
+    }
+
+    if (isLogin && location.pathname === "/seller/login") {
+      navigate("/seller");
     }
   }, [isLogin, location, navigate]);
 
