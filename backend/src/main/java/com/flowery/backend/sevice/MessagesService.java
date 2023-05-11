@@ -20,19 +20,16 @@ public class MessagesService {
     private ReservationRepository reservationRepository;
     private FlowerRepository flowerRepository;
     private MeaningRepository meaningRepository;
-    private PhrasesRepository phrasesRepository;
     private PoemsRepository poemsRepository;
 
     MessagesService(MessagesRepository messagesRepository, PicturesRepository picturesRepository,
                     ReservationRepository reservationRepository, FlowerRepository flowerRepository,
-                    MeaningRepository meaningRepository, PhrasesRepository phrasesRepository,
-                    PoemsRepository poemsRepository){
+                    MeaningRepository meaningRepository, PoemsRepository poemsRepository){
         this.messagesRepository = messagesRepository;
         this.picturesRepository = picturesRepository;
         this.reservationRepository = reservationRepository;
         this.flowerRepository = flowerRepository;
         this.meaningRepository = meaningRepository;
-        this.phrasesRepository = phrasesRepository;
         this.poemsRepository = poemsRepository;
     }
 
@@ -50,7 +47,6 @@ public class MessagesService {
         messagesDto.setFont(messages.getFont());
         messagesDto.setMessageDate(messages.getMessageDate());
         messagesDto.setPoemId(messages.getPoemId() == null ? 0 : messages.getPoemId().getPoemId());
-        messagesDto.setPhraseId(messages.getPhraseId() == null ? 0 : messages.getPhraseId().getPhraseId());
         messagesDto.setMeanId(messages.getMeanId() == null ? 0 : messages.getMeanId().getMeanId());
 
         List<String> result = new ArrayList<>();

@@ -41,13 +41,6 @@ public class Messages {
     @JoinColumn(name = "poem_id")
     private Poems poemId;
 
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnore
-    @JoinColumn(name = "phrase_id")
-    private Phrases phraseId;
-
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
     @JoinColumn(name = "mean_id")
