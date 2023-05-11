@@ -3,6 +3,10 @@ import { Map, MapMarker, useMap } from "react-kakao-maps-sdk";
 import imageSrc from "../../../assets/flowery_marker.png";
 import "../../../assets/styles/variable.scss";
 import ShopList from "./ShopList";
+import { shopInfo } from "../../../recoil/atom";
+import axios from "axios";
+import { useRecoilState, useRecoilValue } from "recoil";
+import GetData from "./GetData";
 
 //  이거 왜 해야하더라? -> kakao 객체는 브라우저 전역 객체인 window 안에 포
 
@@ -16,25 +20,41 @@ interface Position {
     lng: number;
   };
 }
+
 export default function Reservation() {
   const [markers, setMarkers] = useState([] as boolean[]);
+  const [latLngX, setLatLngX] = useState(0);
+  const [latLngY, setLatLngY] = useState(0);
+  const [position, setPosition] = useState([] as any[]);
+  const shopList = useRecoilValue(shopInfo);
 
-  const positions: Position[] = [
-    {
-      content: "꽃들 info",
-      title: "꽃들",
-      latlng: { lat: 35.1569, lng: 129.0591 },
-    },
-    {
-      content: "써니플레르 info",
-      title: "써니플레르",
-      latlng: { lat: 35.313, lng: 129.0103 },
-    },
-  ];
+  useEffect(() => {
+    if (shopList.length === 0) return;
+    const geocoder = new kakao.maps.services.Geocoder();
+    // 첫 렌더링에만 실행
+    shopList.map((shop: any) =>
+      geocoder.addressSearch(`${shop.address}`, function (result: any, status) {
+        // 정상적으로 검색이 완료됐으면
+
+        if (status === kakao.maps.services.Status.OK) {
+          setLatLngX(result[0].x);
+          setLatLngY(result[0].y);
+          setPosition((prevPosition: any) => [
+            ...prevPosition,
+            {
+              title: `${shop.storeName}`,
+              content: "",
+              latlng: { lat: latLngX, lng: latLngY },
+            },
+          ]);
+        }
+      })
+    );
+  }, [shopList]);
 
   const initMarkers = () => {
     const marker: boolean[] = [];
-    positions.map((index) => {
+    position.map((index: any) => {
       marker.push(false);
     });
 
@@ -43,7 +63,7 @@ export default function Reservation() {
 
   const handleMarkerClick = (index: number) => {
     const marker: boolean[] = [];
-    positions.map((index) => {
+    position.map((index: any) => {
       marker.push(false);
     });
 
@@ -52,9 +72,7 @@ export default function Reservation() {
     setMarkers(marker);
   };
 
-  useEffect(() => {
-    initMarkers();
-  }, []);
+  // initMarkers();
 
   return (
     <div className="flex flex-col w-screen h-auto">
@@ -75,7 +93,7 @@ export default function Reservation() {
           level={11} // 지도의 확대 레벨
           onClick={initMarkers} // 클릭 초기화
         >
-          {positions.map((value: any, index: number) => (
+          {position.map((value: any, index: number) => (
             <MapMarker
               position={value.latlng} // 마커를 표시할 위치
               image={{ src: imageSrc, size: { width: 35, height: 45 } }}
