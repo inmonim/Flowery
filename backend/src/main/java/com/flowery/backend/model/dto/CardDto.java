@@ -10,4 +10,6 @@ public class CardDto {
     private String reservationName;
 
     private String phrase;
+
+    private int card;
 }
