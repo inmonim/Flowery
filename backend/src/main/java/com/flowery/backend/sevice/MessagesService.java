@@ -46,8 +46,8 @@ public class MessagesService {
         messagesDto.setPapers(messages.getPaper());
         messagesDto.setFont(messages.getFont());
         messagesDto.setMessageDate(messages.getMessageDate());
-        messagesDto.setPoemId(messages.getPoemId() == null ? 0 : messages.getPoemId().getPoemId());
-        messagesDto.setMeanId(messages.getMeanId() == null ? 0 : messages.getMeanId().getMeanId());
+        messagesDto.setPoem(messages.getPoemId() == null ? null : messages.getPoemId().getPoem());
+        messagesDto.setMean(messages.getMeanId() == null ? null : messages.getMeanId().getMean());
 
         List<String> result = new ArrayList<>();
         for(int i=0; i<picturesList.size(); i++){
