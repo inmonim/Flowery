@@ -1,9 +1,9 @@
 import React from "react";
-import styles from "./PrintCard.module.scss";
+import styles from "./PrintCardProto.module.scss";
 import { saveAs } from "file-saver";
 import axios from "axios";
 import cardframe from "../../assets/card1234.png";
-import "../../assets/styles/variable.scss";
+import cardframe2 from "../../assets/card123.png";
 interface PrintCardProps {
   closeModal: () => void;
   reservationId: number;
@@ -162,14 +162,25 @@ export default function PrintCard(props: PrintCardProps) {
         },
       })
       .then((response) => {
-        return mergeImages(
-          cardframe,
-          response.data.qrBase64,
-          `${props.phrase}`,
-          `From. ${props.reservationName}`,
-          `kkotdeul`,
-          "test1"
-        );
+        if (response.data.card === 0) {
+          return mergeImages(
+            cardframe,
+            response.data.qrBase64,
+            `${props.phrase}`,
+            `From. ${props.reservationName}`,
+            `kkotdeul`,
+            "test1"
+          );
+        } else if (response.data.card === 1) {
+          return mergeImages(
+            cardframe2,
+            response.data.qrBase64,
+            `${props.phrase}`,
+            `From. ${props.reservationName}`,
+            `kkotdeul`,
+            "test1"
+          );
+        }
       })
       .then(() => {
         alert("저장이 완료되었습니다");
@@ -181,6 +192,9 @@ export default function PrintCard(props: PrintCardProps) {
   }
   return (
     <div className={styles.modal}>
+      <div className={styles.fontcheck}>
+        .
+      </div>
       <div className={styles.modalContent}>
         <button
           className={styles.successbutton}
