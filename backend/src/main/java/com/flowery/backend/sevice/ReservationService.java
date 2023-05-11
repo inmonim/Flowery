@@ -259,7 +259,7 @@ public class ReservationService {
         Reservation reservation = reservationRepository.findById(reservationId)
                 .orElseThrow(() -> new ReservationNotFoundException("예약을 찾을 수 없습니다."));
 
-        String temp = "https://namu.wiki";
+        String temp = "https://flowery.duckdns.org/userproto/"+reservation.getMessageId().getMessageId();
         String qrBase64 = createQrBase64(temp);
 
         CardDto card = new CardDto();
@@ -277,7 +277,7 @@ public class ReservationService {
 
         // 큐알코드 바코드 및 배경 색상값
         int onColor = 0xFF000000;
-        int offColor = 0xFFFEF7F1;
+        int offColor = 0x00FEF7F1;
 
         // 이름 그대로 QRCode 만들때 쓰는 클래스다
         QRCodeWriter qrCodeWriter = new QRCodeWriter();
