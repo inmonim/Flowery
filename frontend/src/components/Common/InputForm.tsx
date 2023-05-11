@@ -4,6 +4,9 @@ import styles from "./InputForm.module.scss";
 interface InputFormProps {
   label: string;
   placeholder: string;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  type: string;
 }
 
 export default function InputForm(props: InputFormProps) {
@@ -17,8 +20,10 @@ export default function InputForm(props: InputFormProps) {
         <input
           className={styles.inputform}
           id="id"
-          type="text"
+          type={props.type}
           placeholder={placeholder}
+          value={props.value}
+          onChange={props.onChange}
         />
       </div>
     </>

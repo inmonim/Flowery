@@ -3,7 +3,7 @@ import styles from "./PrintCard.module.scss";
 import camera from "../../assets/add_logo.png";
 import { saveAs } from "file-saver";
 import axios from "axios";
-import cardframe from "../../assets/card123.png";
+import cardframe from "../../assets/card1234.png";
 import "../../assets/styles/variable.scss";
 interface PrintCardProps {
   closeModal: () => void;
@@ -33,10 +33,14 @@ export default function PrintCard(props: PrintCardProps) {
       if (file) {
         const formData = new FormData();
         formData.append("file", file);
-        fetch("https://flowery.duckdns.org/api/flask/objectDetect", {
+        fetch("https://flowery.duckdns.org/flask/objectDetect", {
           method: "POST",
           body: formData,
-        }).then((response) => console.log("response", response));
+        })
+          .then((response) => {
+            return response.json();
+          })
+          .then((data) => console.log(data.flower_object));
         setPhotoUrl1(URL.createObjectURL(file));
       }
     };
@@ -67,11 +71,38 @@ export default function PrintCard(props: PrintCardProps) {
     input.click();
   }
 
+  function drawMultilineText(
+    ctx: CanvasRenderingContext2D,
+    text: string,
+    x: number,
+    y: number,
+    maxWidth: number,
+    lineHeight: number
+  ) {
+    const words = text.split(" ");
+    let line = "";
+    let posY = y;
+    for (let i = 0; i < words.length; i++) {
+      const testLine = line + words[i] + " ";
+      const metrics = ctx.measureText(testLine);
+      const testWidth = metrics.width;
+      if (testWidth > maxWidth && i > 0) {
+        ctx.fillText(line, x, posY);
+        line = words[i] + " ";
+        posY += lineHeight;
+      } else {
+        line = testLine;
+      }
+    }
+    ctx.fillText(line, x, posY);
+  }
+
   function mergeImages(
     image1Url: string,
     image2Base64: string,
     text: string,
     text2: string,
+    text3: string,
     outputFileName: string
   ) {
     const canvas = document.createElement("canvas");
@@ -95,37 +126,36 @@ export default function PrintCard(props: PrintCardProps) {
             0,
             image2.width,
             image2.height,
-            750,
-            900,
-            600,
-            600
+            canvas.width / 2 - 250,
+            800,
+            500,
+            500
           );
-          ctx.font = "100px KCC";
+          ctx.font = "120px KCC";
           ctx.fillStyle = "#000000";
           ctx.textAlign = "center";
           ctx.textBaseline = "bottom"; // 텍스트 기준선을 아래쪽으로 설정
-          ctx.fillText(text, canvas.width / 2, canvas.height * 0.675);
-
-          // add underline
-          const { width, actualBoundingBoxDescent } = ctx.measureText(text);
-          ctx.beginPath();
-          ctx.strokeStyle = "#000000";
-          ctx.lineWidth = 8;
-          ctx.moveTo(
-            canvas.width / 2 - width / 2,
-            canvas.height * 0.665 + actualBoundingBoxDescent + 75
+          drawMultilineText(
+            ctx,
+            text,
+            canvas.width / 2,
+            canvas.height * 0.555,
+            1500,
+            180
           );
-          ctx.lineTo(
-            canvas.width / 2 + width / 2,
-            canvas.height * 0.665 + actualBoundingBoxDescent + 75
-          );
-          ctx.stroke();
 
           // draw additional text
-          ctx.font = "80px KCC";
+          ctx.font = "100px KCC";
           ctx.fillStyle = "#000000";
           ctx.textAlign = "center";
-          ctx.fillText(text2, canvas.width / 2, canvas.height * 0.6);
+          drawMultilineText(
+            ctx,
+            text2,
+            canvas.width / 2,
+            canvas.height * 0.46,
+            900,
+            100
+          );
 
           const { width: width2, actualBoundingBoxDescent: descent2 } =
             ctx.measureText(text2);
@@ -133,14 +163,27 @@ export default function PrintCard(props: PrintCardProps) {
           ctx.strokeStyle = "#000000";
           ctx.lineWidth = 8;
           ctx.moveTo(
-            canvas.width / 2 - width2 / 2,
-            canvas.height * 0.6 + descent2 + 45
+            canvas.width / 2 - width2 / 2 - 20,
+            canvas.height * 0.46 + descent2 + 45
           );
           ctx.lineTo(
             canvas.width / 2 + width2 / 2,
-            canvas.height * 0.6 + descent2 + 45
+            canvas.height * 0.46 + descent2 + 45
           );
           ctx.stroke();
+
+          ctx.font = "100px KCC";
+          ctx.fillStyle = "#000000";
+          ctx.textAlign = "center";
+          drawMultilineText(
+            ctx,
+            text3,
+            canvas.width / 2,
+            canvas.height * 0.76,
+            900,
+            100
+          );
+
           // convert canvas to image file and save
           canvas.toBlob(
             (blob) => {
@@ -175,24 +218,24 @@ export default function PrintCard(props: PrintCardProps) {
           return response.json();
         })
         .then((data) => {
-          console.log(reservationId1);
-          console.log(data.flowerPicture);
-          axios
-            .get("https://flowery.duckdns.org/api/reservation/card", {
-              params: {
-                reservationId: reservationId1,
-              },
-            })
-            .then((response) => {
-              mergeImages(
-                cardframe,
-                response.data.qrBase64,
-                `${props.phrase}`,
-                `From. ${props.reservationName}`,
-                "test1"
-              );
-              alert("저장이 완료되었습니다");
-            });
+          return axios.get("https://flowery.duckdns.org/api/reservation/card", {
+            params: {
+              reservationId: reservationId1,
+            },
+          });
+        })
+        .then((response) => {
+          return mergeImages(
+            cardframe,
+            response.data.qrBase64,
+            `${props.phrase}`,
+            `From. ${props.reservationName}`,
+            `kkotdeul`,
+            "test1"
+          );
+        })
+        .then(() => {
+          alert("저장이 완료되었습니다");
           props.closeModal();
         })
         .catch((error) => {
@@ -200,7 +243,6 @@ export default function PrintCard(props: PrintCardProps) {
         });
     }
   }
-
   return (
     <div className={styles.modal}>
       <div className={styles.modalContent}>

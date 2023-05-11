@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import styles from "./ItemInfo.module.scss";
 import flower from "../../assets/example1.jpg";
-import PrintCard from "./PrintCard";
-import FetchCard from "./FetchCard";
+import PrintCard from "./PrintCardProto";
+import FetchCard from "./FetchCardProto";
 interface ItemInfoProps {
   reservationName: string;
   date: string;

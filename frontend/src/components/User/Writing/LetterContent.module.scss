@@ -6,22 +6,30 @@
   background-size: contain;
   background-position: center;
   justify-content: center;
-  justify-items: center;
-  height: 80vh;
+  height: 68vh;
+  // height: 100%;
+  width: 68vh;
+  // width: 100%;
+  object-fit: contain;
+  position: relative;
+  display: flex;
 }
-// 편지지 내용
+
 .letterContent1 {
-  margin: 12.5vh;
-  margin-left: 7.5em;
+  position: absolute;
   border: none;
   background-color: transparent;
-  font-size: 2vh;
+  // font-size: 2vh;
   resize: none;
-  line-height: 4.2vh;
-  width: 20em;
-  height: 60vh;
-  max-height: 75%;
-  overflow: hidden;
+  line-height: 2.3vh;
+  height: 50vh;
+  // height: 72%;
+  width: 34vh;
+  // width: 55%;
+  justify-items: center;
+  align-self: center;
+  display: flex;
+  overflow-y: hidden;
 
   &:focus {
     outline: 0cm;
@@ -48,10 +56,10 @@
   position: absolute;
   border: none;
   background-color: transparent;
-  font-size: 2vh;
+  // font-size: 2vh;
   resize: none;
-  line-height: 2.31vh;
-  height: 50.3vh;
+  line-height: 2.3vh;
+  height: 50vh;
   // height: 72%;
   width: 34vh;
   // width: 55%;
@@ -72,19 +80,106 @@
   background-size: contain;
   background-position: center;
   justify-content: center;
-  justify-items: center;
-  height: 80vh;
+  height: 68vh;
+  // height: 100%;
+  width: 68vh;
+  // width: 100%;
+  object-fit: contain;
+  position: relative;
+  display: flex;
 }
 
 .letterContent3 {
-  margin: 12.5vh; /* 편지지 상단 여백 */
-  margin-left: 7.5em;
+  position: absolute;
   border: none;
   background-color: transparent;
   font-size: 2vh;
   resize: none;
-  line-height: 4.2vh;
-  width: 20em;
+  line-height: 2.3vh;
+  height: 50.3vh;
+  // height: 72%;
+  width: 34vh;
+  // width: 55%;
+  justify-items: center;
+  align-self: center;
+  display: flex;
+  overflow-y: hidden;
+
+  &:focus {
+    outline: 0cm;
+  }
+}
+
+
+// 4번 편지지
+.letterPaper4 {
+  background-image: url("../../../assets/letters/Letter4.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  justify-content: center;
+  height: 68vh;
+  // height: 100%;
+  width: 68vh;
+  // width: 100%;
+  object-fit: contain;
+  position: relative;
+  display: flex;
+}
+
+.letterContent4 {
+  position: absolute;
+  border: none;
+  background-color: transparent;
+  // font-size: 2vh;
+  resize: none;
+  line-height: 2.3vh;
+  height: 50vh;
+  // height: 72%;
+  width: 34vh;
+  // width: 55%;
+  justify-items: center;
+  align-self: center;
+  display: flex;
+  overflow-y: hidden;
+
+  &:focus {
+    outline: 0cm;
+  }
+}
+
+
+// 5번 편지지
+.letterPaper5 {
+  background-image: url("../../../assets/letters/Letter5.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  justify-content: center;
+  height: 68vh;
+  // height: 100%;
+  width: 68vh;
+  // width: 100%;
+  object-fit: contain;
+  position: relative;
+  display: flex;
+}
+
+.letterContent5 {
+  position: absolute;
+  border: none;
+  background-color: transparent;
+  font-size: 2vh;
+  resize: none;
+  line-height: 2.31vh;
+  height: 50.3vh;
+  // height: 72%;
+  width: 34vh;
+  // width: 55%;
+  justify-items: center;
+  align-self: center;
+  display: flex;
+  overflow-y: hidden;
 
   &:focus {
     outline: 0cm;
@@ -101,21 +196,13 @@
   font-style: normal;
 }
 
-.letterFont1 {
-  font-family: "SDSamliphopangche_Outline";
-}
-
-// 김정철 명조
+// 김정철명조
 @font-face {
   font-family: "KimjungchulMyungjo-Bold";
   src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/KimjungchulMyungjo-Bold.woff2")
     format("woff2");
-  font-weight: 700;
+  font-weight: normal;
   font-style: normal;
-}
-
-.letterFont2 {
-  font-family: "KimjungchulMyungjo-Bold";
 }
 
 // 안성탕면체
@@ -127,10 +214,6 @@
   font-style: normal;
 }
 
-.letterFont3 {
-  font-family: "Ansungtangmyun-Bold";
-}
-
 // 고령딸기체
 @font-face {
   font-family: "GoryeongStrawberry";
@@ -138,10 +221,6 @@
     format("woff2");
   font-weight: normal;
   font-style: normal;
-}
-
-.letterFont4 {
-  font-family: "GoryeongStrawberry";
 }
 
 // 제주돌담체
@@ -153,21 +232,13 @@
   font-style: normal;
 }
 
-.letterFont5 {
-  font-family: "EF_jejudoldam";
-}
-
 // 평창평화체
 @font-face {
   font-family: "PyeongChangPeace-Bold";
   src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2206-02@1.0/PyeongChangPeace-Bold.woff2")
     format("woff2");
-  font-weight: 700;
+  font-weight: normal;
   font-style: normal;
-}
-
-.letterFont6 {
-  font-family: "PyeongChangPeace-Bold";
 }
 
 // 조선100년체
@@ -179,10 +250,6 @@
   font-style: normal;
 }
 
-.letterFont7 {
-  font-family: "ChosunCentennial";
-}
-
 // 가나초콜릿체
 @font-face {
   font-family: "ghanachoco";
@@ -192,6 +259,139 @@
   font-style: normal;
 }
 
-.letterFont8 {
+// 스위트
+@font-face {
+  font-family: 'SUITE-Regular';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+}
+
+// 하남다움체
+@font-face {
+  font-family: 'HANAMDAUM';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/HANAMDAUM.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+}
+
+
+// 둘기마요고딕
+@font-face {
+  font-family: 'Dovemayo_gothic';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.1/Dovemayo_gothic.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+// 거친둘기마요
+@font-face {
+  font-family: 'Dovemayo_wild';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/Dovemayo_wild.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+// 수박화체
+@font-face {
+  font-family: 'EF_watermelonSalad';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2210-EF@1.0/EF_watermelonSalad.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+// 마이쮸체
+@font-face {
+  font-family: 'TTCrownMychewR';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2205@1.0/TTCrownMychewR.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+// 함박눈체
+@font-face {
+  font-family: 'SF_HambakSnow';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2106@1.1/SF_HambakSnow.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+// 건축조각체
+@font-face {
+  font-family: 'ARCHISCULPTURE_v200';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2303@1.0/ARCHISCULPTURE_v200.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+.letterFont1 {
+  font-family: "HANAMDAUM";
+  font-size: 1.6vh;
+}
+
+.letterFont2 {
+  font-family: "KimjungchulMyungjo-Bold";
+  font-size: 1.97vh;
+}
+
+.letterFont3 {
+  font-family: "Ansungtangmyun-Bold";
+  font-size: 2vh;
+}
+
+.letterFont4 {
+  font-family: "EF_jejudoldam";
+  font-size: 1.76vh;
+  
+}
+
+.letterFont5 {
+  font-family: "ChosunCentennial";
+  font-size: 1.95vh;
+}
+
+.letterFont6 {
   font-family: "ghanachoco";
+  font-size: 1.8vh;
+}
+
+.letterFont7 {
+  font-family: "SUITE-Regular";
+  font-size: 2.1vh;
+}
+
+.letterFont8 {
+  font-family: "SDSamliphopangche_Outline";
+  font-size: 2.1vh;
+}
+
+.letterFont9 {
+  font-family: "Dovemayo_gothic";
+  font-size: 2.2vh;
+}
+
+.letterFont10 {
+  font-family: "Dovemayo_wild";
+  font-size: 2.1vh;
+}
+
+.letterFont11 {
+  font-family: "EF_watermelonSalad";
+  font-size: 1.8vh;
+}
+
+.letterFont12 {
+  font-family: "TTCrownMychewR";
+  font-size: 2.3vh;
+}
+
+.letterFont13 {
+  font-family: "SF_HambakSnow";
+  font-size: 1.85vh;
+}
+
+.letterFont14 {
+  font-family: "GoryeongStrawberry";
+  font-size: 2vh;
 }

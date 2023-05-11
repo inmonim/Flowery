@@ -91,7 +91,9 @@ export default function SignUpPage() {
   }
 
   function CheckPassword(password: string) {
-    if (/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{8,16}/.test(password)) {
+    if (
+      /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,16}/.test(password)
+    ) {
       return 1;
     } else {
       return 0;
@@ -274,8 +276,8 @@ export default function SignUpPage() {
                   </label>
                   {password === "" || CheckPassword(password) ? null : (
                     <p className="text-xs ml-2 text-red-500">
-                      8~16자 영문 대 소문자, 숫자, 특수문자를 모두 사용해야
-                      합니다!
+                      8~16자 영문 대 소문자, 숫자, 특수문자(!,@,#,$,%,^,&,*)를
+                      모두 사용해야 합니다!
                     </p>
                   )}
                 </div>
@@ -320,7 +322,7 @@ export default function SignUpPage() {
                       isPasswordConfirm === true
                     ) {
                       // 회원가입 axios
-                      navigate('/reservation')
+                      navigate("/reservation");
                     } else {
                       if (isId === false || existId === true) {
                         setWrongId(true);

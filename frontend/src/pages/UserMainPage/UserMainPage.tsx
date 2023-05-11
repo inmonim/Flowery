@@ -11,6 +11,7 @@ export default function UserMainPage() {
     <div>
       <div onClick={() => navigate("/signin")}>로그인 페이지로</div>
       <div onClick={() => navigate("/writing")}>편지쓰는 페이지로</div>
+      <div onClick={() => navigate("/mygarden")}>마이가든 페이지로</div>
       <div onClick={() => navigate("/reservation")}>에약 페이지로</div>
       <div onClick={() => navigate("/seller/proto")}>판매자 페이지로</div>
       <div onClick={() => navigate("/release")}>

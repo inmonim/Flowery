@@ -17,10 +17,8 @@
   /* Inside auto layout */
 
   flex: none;
-  order: 2;
   align-self: stretch;
   flex-grow: 0;
-  z-index: 2;
   padding-bottom: 1rem;
 }
 
@@ -37,7 +35,6 @@
   /* Inside auto layout */
 
   flex: none;
-  order: 0;
   flex-grow: 0;
 }
 
@@ -101,7 +98,6 @@
   /* Inside auto layout */
 
   flex: none;
-  order: 0;
   flex-grow: 0;
 
   p {
@@ -138,7 +134,6 @@
   /* Inside auto layout */
 
   flex: none;
-  order: 0;
   flex-grow: 0;
 
   p {
