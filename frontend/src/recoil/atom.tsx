@@ -17,6 +17,12 @@ export const phoneNumberState = atom<string>({
   effects_UNSTABLE: [persistAtom],
 });
 
+// 카드 종류
+export const cardState = atom<number>({
+  key: "cardState",
+  default: 0,
+});
+
 // 카드 보내는 이름
 export const cardName = atom<string>({
   key: "cardNameState",

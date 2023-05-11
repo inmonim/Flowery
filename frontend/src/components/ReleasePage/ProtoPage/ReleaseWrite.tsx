@@ -6,11 +6,16 @@ import ReleaseLetterContent from "../Writing/ReleaseLetterContent";
 import ReleaseVideoInput from "../Writing/ReleaseVideoInput";
 import ReleaseCardPreview from "../Writing/ReleaseCardPreview";
 import ReleasePreview from "../Writing/ReleasePreview";
+import Card0 from "../../../assets/Card0.png";
+import Card1 from "../../../assets/Card1.png";
+import { useRecoilState } from "recoil";
+import { cardState } from "../../../recoil/atom";
 
 export default function RealeaseWrite() {
   const [showModal, setShowModal] = useState<boolean>(false);
   const [showLetterInput, setShowLetterInput] = useState<boolean>(false);
   const [showImageInput, setShowImageInput] = useState<boolean>(false);
+  const [card, setCard] = useRecoilState<number>(cardState);
   const [isDrag, setIsDrag] = useState(false);
 
   const modalRef = useRef<HTMLDivElement>(null);
@@ -75,8 +80,19 @@ export default function RealeaseWrite() {
         {/* 페이지 내용 */}
         <div>
           <h2>
-            <div className="p-16 mx-auto sm:w-[150px] md:w-[300px] lg:w-[450px]">
-              <ReleaseCardPreview />
+            <div className="p-16 pb-0 mx-auto sm:w-[150px] md:w-[300px] lg:w-[450px]">
+              <ReleaseCardPreview card={card} />
+            </div>
+            <div className="flex justify-center ">
+              {[Card0, Card1].map((card, i: number) => (
+                <div key={i} className="">
+                  <img
+                    src={card}
+                    onClick={() => setCard(i)}
+                    className="w-[100px] p-4 cursor-pointer"
+                  />
+                </div>
+              ))}
             </div>
           </h2>
           <h2>
