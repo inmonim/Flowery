@@ -1,6 +1,7 @@
 package com.flowery.backend.controller;
 
 import com.flowery.backend.amazon.S3Uploader;
+import com.flowery.backend.model.dto.MessagesDto;
 import com.flowery.backend.model.entity.Messages;
 import com.flowery.backend.sevice.MessagesService;
 import org.slf4j.Logger;
@@ -75,14 +76,67 @@ public class MessagesController {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
 
+    }
+
+    // 프로토타입용 카드 생성기
+    @PostMapping("/card/prototype")
+    public ResponseEntity<Messages> createProtoCard(@RequestPart(required = false) MultipartFile[] pictures,
+                                               @RequestPart(required = false) MultipartFile video,
+                                               @RequestParam Integer paper, @RequestParam String message,
+                                               @RequestParam Integer font, @RequestParam String date) {
+
+        LOGGER.info("createProtoCard가 호출되었습니다.");
+
+        try {
+            String videoUrl = null;
+            List<String> pictureUrl = new ArrayList<>();
+            String messageValue = null;
+            Integer paperValue = 0;
+            Integer fontValue = 0;
+
+            if(!video.isEmpty()){
+                videoUrl = s3Uploader.uploadFile(video);
+            }
+
+            for(int i=0; i<pictures.length; i++){
+                String tmp = s3Uploader.uploadFile(pictures[i]);
+                pictureUrl.add(tmp);
+            }
+
+            if(message != null || !message.equals("")){
+                messageValue = message;
+            }
+
+            if(-1< paper && paper < 3){
+                paperValue = paper;
+            }
+
+            if(-1< paper && paper < 20){
+                fontValue = font;
+            }
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+            LocalDateTime dateTime = LocalDateTime.parse(date, formatter);
+
+
+            return new ResponseEntity<>(messagesService.createProtoCard(videoUrl, pictureUrl, messageValue, paperValue, fontValue, dateTime), HttpStatus.ACCEPTED);
+        }catch (Exception e){
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
 
     }
+
+
+
+
+    
+    // 메시지 정보 가져오기
     @PostMapping("/get-card")
-    public ResponseEntity<Messages> findByMessageId(@RequestBody Map<String, String> requestData) {
+    public ResponseEntity<MessagesDto> findByMessageId(@RequestBody Map<String, String> requestData) {
         LOGGER.info("findByMessageId가 호출되었습니다.");
         String a = requestData.get("messageId");
 
-        return new ResponseEntity<>(messagesService.findByMessageId(a), HttpStatus.ACCEPTED);
+        return new ResponseEntity<MessagesDto>(messagesService.findByMessageId(a), HttpStatus.ACCEPTED);
     }
 
     @PostMapping("/flower-picture")

@@ -1,5 +1,6 @@
 package com.flowery.backend.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -34,5 +35,16 @@ public class Messages {
 
     @Column(name = "message_date")
     private LocalDateTime messageDate;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
+    @JoinColumn(name = "poem_id")
+    private Poems poemId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
+    @JoinColumn(name = "mean_id")
+    private Meaning meanId;
+
 
 }

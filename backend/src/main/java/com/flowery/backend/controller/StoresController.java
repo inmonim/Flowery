@@ -1,14 +1,12 @@
 package com.flowery.backend.controller;
 
 import com.flowery.backend.model.dto.GoodsDto;
-import com.flowery.backend.model.dto.ReservationDto;
+import com.flowery.backend.model.dto.HolidaysDto;
 import com.flowery.backend.model.dto.StoresDto;
 import com.flowery.backend.model.entity.Goods;
 import com.flowery.backend.model.entity.Samples;
 import com.flowery.backend.model.entity.Stores;
-import com.flowery.backend.sevice.ReservationService;
 import com.flowery.backend.sevice.StoresService;
-import org.apache.catalina.Store;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -141,6 +139,39 @@ public class StoresController {
         LOGGER.info("editStore 호출되었습니다.");
         Stores updatedStore = storesService.editStore(storeId, storeDto);
         return ResponseEntity.ok(updatedStore);
+    }
+
+
+
+    // 가게의 휴일 정보를 가져오기
+    @PostMapping("/holidays")
+    public ResponseEntity<?> getHolidays(@RequestBody StoresDto storeDto){
+        LOGGER.info("getHolidays 호출되었습니다.");
+        try {
+            int storeId = storeDto.getStoreId();
+            String holidays = storesService.getHolidays(storeId);
+            return ResponseEntity.ok(holidays);
+
+        } catch(Exception e) {
+            LOGGER.error("상품 정보 변경에 실패했습니다.", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+
+
+
+    }
+
+    // 가게의 휴일 정보 변경
+    @PutMapping("/holidays")
+    public ResponseEntity<Boolean> updateHolidays(@RequestBody HolidaysDto holidaysDto) {
+        LOGGER.info("updateHolidays 호출되었습니다.");
+        try {
+            storesService.updateHolidays(holidaysDto);
+            return ResponseEntity.ok(true); // 성공적으로 완료된 경우 true 반환
+        } catch (Exception e) {
+            LOGGER.error("updateHolidays 처리 중 에러 발생", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(false); // 에러 발생 시 false 반환
+        }
     }
 
 

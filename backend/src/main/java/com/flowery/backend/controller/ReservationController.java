@@ -3,6 +3,7 @@ package com.flowery.backend.controller;
 import com.flowery.backend.model.dto.CardDto;
 import com.flowery.backend.model.dto.ReservationDto;
 import com.flowery.backend.model.dto.StoresDto;
+import com.flowery.backend.model.dto.UsersDto;
 import com.flowery.backend.model.entity.Reservation;
 import com.flowery.backend.sevice.MessagesService;
 import com.flowery.backend.sevice.ReservationService;
@@ -44,8 +45,23 @@ public class ReservationController {
         return new ResponseEntity<>(reservationService.findTodayReservation(dateTime), HttpStatus.ACCEPTED);
     }
 
+    @PostMapping("/user")
+    public ResponseEntity<List<ReservationDto>> findByUserId (@RequestBody Map<String, Integer> requestData) {
+        LOGGER.info("findByUserId가 호출되었습니다.");
+
+        Integer userId = requestData.get("userId");
+
+        try {
+            return new ResponseEntity<List<ReservationDto>>(reservationService.findByUserId(userId.intValue()), HttpStatus.OK);
+        } catch(Exception e) {
+            LOGGER.error("예약 조회에 실패했습니다.", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(null);
+        }
+    }
+
     @PostMapping("/day")
-    public ResponseEntity<List<ReservationDto>> findByDate(@RequestParam String date, @RequestBody StoresDto storesDto) throws Exception {
+    public ResponseEntity<List<ReservationDto>> findByDateBystoreId (@RequestParam String date, @RequestBody StoresDto storesDto) {
         LOGGER.info("findByDateBystoreId가 호출되었습니다.");
 
         try{

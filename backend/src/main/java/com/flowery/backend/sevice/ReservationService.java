@@ -3,6 +3,7 @@ package com.flowery.backend.sevice;
 import com.flowery.backend.model.dto.CardDto;
 import com.flowery.backend.model.dto.ReservationDto;
 import com.flowery.backend.model.dto.StoresDto;
+import com.flowery.backend.model.dto.UsersDto;
 import com.flowery.backend.model.entity.*;
 import com.flowery.backend.repository.*;
 import com.google.zxing.BarcodeFormat;
@@ -191,6 +192,7 @@ public class ReservationService {
         tmp.setGoodsName(reservation.getGoodsName());
         tmp.setReservationName(reservation.getReservationName());
         tmp.setPhrase(reservation.getPhrase());
+        tmp.setCard(reservation.getCard());
 
         return;
 
@@ -248,6 +250,7 @@ public class ReservationService {
         reservation.setReservationName(reservationDto.getReservationName());
         reservation.setPhrase(reservationDto.getPhrase());
         reservation.setImage(stores.getImage());
+        reservation.setCard(reservationDto.getCard());
 
         reservationRepository.save(reservation);
         return true;
@@ -258,7 +261,7 @@ public class ReservationService {
         Reservation reservation = reservationRepository.findById(reservationId)
                 .orElseThrow(() -> new ReservationNotFoundException("예약을 찾을 수 없습니다."));
 
-        String temp = "https://namu.wiki";
+        String temp = "https://flowery.duckdns.org/userproto/"+reservation.getMessageId().getMessageId();
         String qrBase64 = createQrBase64(temp);
 
         CardDto card = new CardDto();
@@ -276,7 +279,7 @@ public class ReservationService {
 
         // 큐알코드 바코드 및 배경 색상값
         int onColor = 0xFF000000;
-        int offColor = 0xFFFEF7F1;
+        int offColor = 0x00FEF7F1;
 
         // 이름 그대로 QRCode 만들때 쓰는 클래스다
         QRCodeWriter qrCodeWriter = new QRCodeWriter();
@@ -350,5 +353,25 @@ public class ReservationService {
         public NotAuthorizedException(String message) {
             super(message);
         }
+    }
+
+
+    public List<ReservationDto> findByUserId(int userId) {
+        Users user = usersRepository.findByUsersId(userId);
+
+        System.out.println(user);
+        List<Reservation> list = reservationRepository.findAllByUserIdOrderByDateDesc(user);
+        List<ReservationDto> result = new ArrayList<>();
+
+        for(int i=0; i<list.size(); i++){
+
+            ReservationDto tmp = new ReservationDto();
+            System.out.println(list.get(i));
+            reservationEntityToDto(tmp, list.get(i));
+
+            result.add(tmp);
+        }
+
+        return result;
     }
 }

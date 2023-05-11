@@ -3,6 +3,7 @@ package com.flowery.backend.model.dto;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 public class MessagesDto {
@@ -12,5 +13,10 @@ public class MessagesDto {
     private String video;
     private String flowerPicture;
     private int papers;
-    private LocalDateTime date;
+    private int font;
+    private LocalDateTime messageDate;
+    private int poemId;
+    private int meanId;
+    private List<String> pictures;
+    
 }

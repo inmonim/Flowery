@@ -2,6 +2,7 @@ package com.flowery.backend.repository;
 
 import com.flowery.backend.model.entity.Reservation;
 import com.flowery.backend.model.entity.Stores;
+import com.flowery.backend.model.entity.Users;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.LocalDateTime;
@@ -17,5 +18,6 @@ public interface ReservationRepository extends JpaRepository<Reservation, Intege
 
     public List<Reservation> findAllByStoreIdAndDateBetween(Stores store, LocalDateTime from, LocalDateTime to);
 
+    public List<Reservation> findAllByUserIdOrderByDateDesc(Users users);
 
 }

@@ -1,9 +1,9 @@
 package com.flowery.backend.repository;
 
-import com.flowery.backend.model.entity.Flowers;
+import com.flowery.backend.model.entity.Poems;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface FlowerRepository extends JpaRepository<Flowers, Integer> {
+public interface PoemsRepository extends JpaRepository<Poems, Integer> {
 }
