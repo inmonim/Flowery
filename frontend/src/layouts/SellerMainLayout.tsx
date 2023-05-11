@@ -40,7 +40,11 @@ const SellerMainLayout = () => {
   };
 
   useEffect(() => {
-    if (!isLogin && location.pathname !== "/seller/login") {
+    if (
+      !isLogin &&
+      location.pathname !== "/seller/login" &&
+      location.pathname !== "/seller/proto"
+    ) {
       alert("로그인이 필요한 서비스입니다.");
       navigate("/seller/login");
     }

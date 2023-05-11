@@ -4,7 +4,8 @@ import Title from "./PrintTitle";
 import ItemInfo from "./ItemInfo";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
-
+import { useRecoilValue } from "recoil";
+import { storeId } from "../../recoil/atom";
 interface ReservationItem {
   reservationId: number;
   userId: number;
@@ -31,12 +32,13 @@ export default function ManagePrint() {
   const formattedDate = `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
 
   const [reservation, setReservation] = useState<ReservationItem[]>([]);
+  const myStoreId = useRecoilValue(storeId);
   const location = useLocation();
 
   useEffect(() => {
     axios
       .post(`https://flowery.duckdns.org/api/reservation/store`, {
-        storeId: 1,
+        storeId: myStoreId,
       })
       .then((response) => {
         let filteredItems = response.data;
@@ -51,7 +53,7 @@ export default function ManagePrint() {
       .catch((error) => {
         console.error(error);
       });
-  }, [formattedDate, location]);
+  }, [formattedDate, location, myStoreId]);
 
   return (
     <div className={styles.mainbox}>
