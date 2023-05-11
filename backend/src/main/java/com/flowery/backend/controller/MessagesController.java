@@ -77,6 +77,8 @@ public class MessagesController {
 
 
     }
+    
+    // 메시지 정보 가져오기
     @PostMapping("/get-card")
     public ResponseEntity<Messages> findByMessageId(@RequestBody Map<String, String> requestData) {
         LOGGER.info("findByMessageId가 호출되었습니다.");

@@ -37,6 +37,11 @@ public class MessagesService {
         Messages message = messagesRepository.findById(id).get();
 //        기본 제공하는 findby를 사용해서 repository 안 만들고 할 때
 //        Messages message = messagesRepository.findByMessageId(id).get();
+
+        List<Pictures> picturesList = picturesRepository.findAllByMessageId(message);
+        System.out.println(picturesList);
+
+
         return message;
 
     }

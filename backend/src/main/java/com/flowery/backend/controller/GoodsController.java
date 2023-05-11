@@ -49,6 +49,7 @@ public class GoodsController {
         }
     }
 
+    // 샘플 이미지 삭제
     @DeleteMapping("/sample/{sampleId}")
     public ResponseEntity<?> deleteSample(@PathVariable("sampleId") Integer sampleId) throws Exception {
         LOGGER.info("deleteSample이 호출되었습니다.");
