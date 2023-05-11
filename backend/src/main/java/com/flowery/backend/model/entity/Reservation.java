@@ -60,4 +60,7 @@ public class Reservation {
     @Column(name = "image")
     private String image;
 
+    @Column(name = "card")
+    private String card;
+
 }

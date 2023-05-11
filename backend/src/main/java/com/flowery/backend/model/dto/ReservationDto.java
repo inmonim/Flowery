@@ -32,4 +32,6 @@ public class ReservationDto {
 
     private String image;
 
+    private Integer card;
+
 }
