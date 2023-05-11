@@ -1,12 +1,9 @@
 package com.flowery.backend.sevice;
 
+import com.amazonaws.services.kms.model.NotFoundException;
 import com.flowery.backend.model.dto.MessagesDto;
-import com.flowery.backend.model.entity.Messages;
-import com.flowery.backend.model.entity.Pictures;
-import com.flowery.backend.model.entity.Reservation;
-import com.flowery.backend.repository.MessagesRepository;
-import com.flowery.backend.repository.PicturesRepository;
-import com.flowery.backend.repository.ReservationRepository;
+import com.flowery.backend.model.entity.*;
+import com.flowery.backend.repository.*;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -21,12 +18,22 @@ public class MessagesService {
     private MessagesRepository messagesRepository;
     private PicturesRepository picturesRepository;
     private ReservationRepository reservationRepository;
+    private FlowerRepository flowerRepository;
+    private MeaningRepository meaningRepository;
+    private PhrasesRepository phrasesRepository;
+    private PoemsRepository poemsRepository;
 
     MessagesService(MessagesRepository messagesRepository, PicturesRepository picturesRepository,
-                    ReservationRepository reservationRepository){
+                    ReservationRepository reservationRepository, FlowerRepository flowerRepository,
+                    MeaningRepository meaningRepository, PhrasesRepository phrasesRepository,
+                    PoemsRepository poemsRepository){
         this.messagesRepository = messagesRepository;
         this.picturesRepository = picturesRepository;
         this.reservationRepository = reservationRepository;
+        this.flowerRepository = flowerRepository;
+        this.meaningRepository = meaningRepository;
+        this.phrasesRepository = phrasesRepository;
+        this.poemsRepository = poemsRepository;
     }
 
     public Messages findById(String code){
@@ -95,6 +102,43 @@ public class MessagesService {
             pictures.setMessageId(result);
             picturesRepository.save(pictures);
         }
+
+        return result;
+    }
+
+    // 프로토타입용 카드 제작
+    public Messages createProtoCard(String videoUrl, List<String> pictureUrl, String messageValue, Integer paperValue, Integer fontValue, LocalDateTime dateTime) throws Exception{
+        Messages message = new Messages();
+
+        // 메시지와 비디오, 사진 값이 비어있지 않다면 넣어준다.
+        if(videoUrl != null){
+            message.setVideo(videoUrl);
+        }
+        if(messageValue != null){
+            message.setMessage(messageValue);
+        }
+        message.setPaper(paperValue);
+        message.setFont(fontValue);
+        message.setMessageId(UUID.randomUUID().toString());
+        message.setMessageDate(dateTime);
+        message.setFlowerPicture("https://s3.bucket.flowery.youngil.s3.ap-northeast-2.amazonaws.com/files/336d280f-a4fc-43b4-bea4-c0e17eb0a431carnation-gd57a053e6_1920.jpg");
+
+
+        Integer carnation = 4;
+        Flowers flower = flowerRepository.findById(carnation).orElseThrow(() -> new NotFoundException("꽃을 찾을 수 없습니다."));
+        System.out.println(flower);
+
+
+        Messages result = new Messages();
+
+//        Messages result = messagesRepository.save(message);
+//
+//        for(int i=0; i<pictureUrl.size(); i++){
+//            Pictures pictures = new Pictures();
+//            pictures.setUrl(pictureUrl.get(i));
+//            pictures.setMessageId(result);
+//            picturesRepository.save(pictures);
+//        }
 
         return result;
     }
