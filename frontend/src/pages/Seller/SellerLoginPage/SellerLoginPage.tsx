@@ -52,6 +52,7 @@ export default function SellerLogin() {
             value={myId}
             onChange={(e) => setMyId(e.target.value)}
             type="text"
+            onEnter={handleClick}
           />
           <InputForm
             label="비밀번호"
@@ -59,6 +60,7 @@ export default function SellerLogin() {
             value={myPw}
             onChange={(e) => setMyPw(e.target.value)}
             type="password"
+            onEnter={handleClick}
           />
           <div className={styles.find}>ID/PW 찾기</div>
           <div className={styles.loginbtn} onClick={handleClick}>

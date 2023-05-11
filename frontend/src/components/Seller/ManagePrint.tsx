@@ -61,17 +61,25 @@ export default function ManagePrint() {
         <div className={styles.title}>
           <Title num={reservation.length} />
         </div>
-        {reservation.slice(0, 5).map((item) => (
-          <div key={item.reservationId}>
-            <ItemInfo
-              reservationName={item.reservationName}
-              date={item.date}
-              printed={item.printed}
-              reservationId={item.reservationId}
-              phrase={item.phrase}
-            />
-          </div>
-        ))}
+        {reservation
+          .filter(
+            (item: ReservationItem) =>
+              location.pathname === "/seller/book" ||
+              (item.permission === 1 && item.printed === 0)
+          )
+          .slice(0, location.pathname === "/seller" ? 5 : undefined)
+          .map((item) => (
+            <div key={item.reservationId}>
+              <ItemInfo
+                reservationName={item.reservationName}
+                date={item.date}
+                printed={item.printed}
+                reservationId={item.reservationId}
+                phrase={item.phrase}
+                permission={item.permission}
+              />
+            </div>
+          ))}
       </div>
     </div>
   );

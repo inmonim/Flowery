@@ -6,7 +6,7 @@ import { storeId } from "../../../recoil/atom";
 export default function SellerMainPage() {
   const [myStoreId, setStoreId] = useRecoilState<number>(storeId);
   useEffect(() => {
-    setStoreId(3);
+    setStoreId(4);
   });
   return (
     <div>
