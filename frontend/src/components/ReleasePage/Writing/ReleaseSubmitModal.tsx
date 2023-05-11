@@ -1,11 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useSetRecoilState } from "recoil";
-
 import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
-import { imageState, totalTextState, videoState } from "../../../recoil/atom";
-import ReleaseLetterPreview from "./ReleaseLetterPreview";
-import Flower from "../../../assets/example1.jpg";
+import {
+  cardContent,
+  cardName,
+  imageState,
+  totalTextState,
+  videoState,
+} from "../../../recoil/atom";
 import axios from "axios";
 import { letterFontState } from "../../../recoil/atom";
 import { letterPaperState } from "../../../recoil/atom";
@@ -17,8 +19,10 @@ const ReleaseSubmitModal = React.forwardRef<HTMLDivElement, any>(
     const letterPaper = useRecoilValue<number>(letterPaperState);
     const image = useRecoilValue<Array<File>>(imageState);
     const video = useRecoilValue<File | null>(videoState);
-    const [reservationConfirm, setReservationConfirm] =
-      useState<boolean>(false);
+
+    const name = useRecoilValue<string>(cardName);
+    const content = useRecoilValue<string>(cardContent);
+
     const navigate = useNavigate();
 
     // axios
