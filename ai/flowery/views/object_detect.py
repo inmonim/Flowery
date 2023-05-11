@@ -1,7 +1,7 @@
 from flask import Flask, Blueprint, request, Response, json
 import os
 
-from flowery.module.model import get_result, model_flower_label, flower_name_dict
+from flowery.module.model import get_result, model_flower_label, flower_name_dict, make_poem, conn
 from flowery.models import Sales
 
 from flowery import db
@@ -12,7 +12,7 @@ bp = Blueprint('object_detect', __name__, url_prefix='/flask/')
 @bp.route('/objectDetect', methods=['GET', 'POST'])
 def object_detect():
     if request.method == 'GET':
-        return '사진을 넣어주세양'
+        return 'POST 방식으로 접근하세용'
     
     elif request.method == 'POST':
         img = request.files['file']
@@ -53,6 +53,8 @@ def save_sales():
         
             db.session.add(sales)
             db.session.commit()
+            
+        make_poem('사랑', '존경')
             
         response = Response(json.dumps({'message' : '입력 성공'}, ensure_ascii=False),
                             headers=({'Access-Control-Allow-Origin': '*'}),
