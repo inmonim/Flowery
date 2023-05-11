@@ -1,6 +1,7 @@
 package com.flowery.backend.controller;
 
 import com.flowery.backend.amazon.S3Uploader;
+import com.flowery.backend.model.dto.MessagesDto;
 import com.flowery.backend.model.entity.Messages;
 import com.flowery.backend.sevice.MessagesService;
 import org.slf4j.Logger;
@@ -80,11 +81,11 @@ public class MessagesController {
     
     // 메시지 정보 가져오기
     @PostMapping("/get-card")
-    public ResponseEntity<Messages> findByMessageId(@RequestBody Map<String, String> requestData) {
+    public ResponseEntity<MessagesDto> findByMessageId(@RequestBody Map<String, String> requestData) {
         LOGGER.info("findByMessageId가 호출되었습니다.");
         String a = requestData.get("messageId");
 
-        return new ResponseEntity<>(messagesService.findByMessageId(a), HttpStatus.ACCEPTED);
+        return new ResponseEntity<MessagesDto>(messagesService.findByMessageId(a), HttpStatus.ACCEPTED);
     }
 
     @PostMapping("/flower-picture")

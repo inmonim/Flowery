@@ -1,5 +1,6 @@
 package com.flowery.backend.sevice;
 
+import com.flowery.backend.model.dto.MessagesDto;
 import com.flowery.backend.model.entity.Messages;
 import com.flowery.backend.model.entity.Pictures;
 import com.flowery.backend.model.entity.Reservation;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -31,8 +33,31 @@ public class MessagesService {
         return messagesRepository.findById(code).get();
     }
 
+    public MessagesDto messageEntityToDto(Messages messages, List<Pictures> picturesList) {
+        MessagesDto messagesDto = new MessagesDto();
+        messagesDto.setMessageId(messages.getMessageId());
+        messagesDto.setMessage(messages.getMessage() == null ? "" : messages.getMessage());
+        messagesDto.setVideo(messages.getVideo() == null ? "" : messages.getVideo());
+        messagesDto.setFlowerPicture(messages.getFlowerPicture() == null ? "" : messages.getFlowerPicture());
+        messagesDto.setPapers(messages.getPaper());
+        messagesDto.setFont(messages.getFont());
+        messagesDto.setMessageDate(messages.getMessageDate());
+        messagesDto.setPoemId(messages.getPoemId() == null ? 0 : messages.getPoemId().getPoemId());
+        messagesDto.setPhraseId(messages.getPhraseId() == null ? 0 : messages.getPhraseId().getPhraseId());
+        messagesDto.setMeanId(messages.getMeanId() == null ? 0 : messages.getMeanId().getMeanId());
 
-    public Messages findByMessageId(String id){
+        List<String> result = new ArrayList<>();
+        for(int i=0; i<picturesList.size(); i++){
+            result.add(picturesList.get(i).getUrl());
+        }
+
+        messagesDto.setPictures(result);
+
+        return messagesDto;
+    }
+
+
+    public MessagesDto findByMessageId(String id){
         System.out.println(id);
         Messages message = messagesRepository.findById(id).get();
 //        기본 제공하는 findby를 사용해서 repository 안 만들고 할 때
@@ -41,8 +66,9 @@ public class MessagesService {
         List<Pictures> picturesList = picturesRepository.findAllByMessageId(message);
         System.out.println(picturesList);
 
+        MessagesDto messagesDto = messageEntityToDto(message, picturesList);
 
-        return message;
+        return messagesDto;
 
     }
 
