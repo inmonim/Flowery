@@ -192,6 +192,7 @@ public class ReservationService {
         tmp.setGoodsName(reservation.getGoodsName());
         tmp.setReservationName(reservation.getReservationName());
         tmp.setPhrase(reservation.getPhrase());
+        tmp.setCard(reservation.getCard());
 
         return;
 
@@ -249,6 +250,7 @@ public class ReservationService {
         reservation.setReservationName(reservationDto.getReservationName());
         reservation.setPhrase(reservationDto.getPhrase());
         reservation.setImage(stores.getImage());
+        reservation.setCard(reservationDto.getCard());
 
         reservationRepository.save(reservation);
         return true;

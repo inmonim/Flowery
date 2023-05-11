@@ -61,6 +61,6 @@ public class Reservation {
     private String image;
 
     @Column(name = "card")
-    private String card;
+    private int card;
 
 }
