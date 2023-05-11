@@ -3,12 +3,10 @@ package com.flowery.backend.sevice;
 import com.flowery.backend.model.dto.CardDto;
 import com.flowery.backend.model.dto.ReservationDto;
 import com.flowery.backend.model.dto.StoresDto;
-import com.flowery.backend.model.dto.UsersDto;
 import com.flowery.backend.model.entity.*;
 import com.flowery.backend.repository.*;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
-import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.client.j2se.MatrixToImageConfig;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
@@ -16,7 +14,6 @@ import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.parser.Entity;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -193,6 +190,9 @@ public class ReservationService {
         tmp.setReservationName(reservation.getReservationName());
         tmp.setPhrase(reservation.getPhrase());
         tmp.setCard(reservation.getCard());
+        tmp.setMessageId(reservation.getMessageId() == null ? null : reservation.getMessageId().getMessageId());
+
+
 
         return;
 
@@ -246,7 +246,9 @@ public class ReservationService {
         reservation.setDemand(reservationDto.getDemand());
         reservation.setDate(reservationDto.getDate());
         reservation.setPrinted(0);
-        reservation.setPermission(null);
+//        reservation.setPermission(null);
+//        프로젝트용 코드
+        reservation.setPermission(1);
         reservation.setReservationName(reservationDto.getReservationName());
         reservation.setPhrase(reservationDto.getPhrase());
         reservation.setImage(stores.getImage());
