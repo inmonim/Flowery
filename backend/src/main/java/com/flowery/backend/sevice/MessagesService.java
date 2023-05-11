@@ -125,8 +125,9 @@ public class MessagesService {
         System.out.println(flower);
 
         System.out.println(1111111111);
-        Meaning meaning = meaningRepository.findByFlowerId(flower);
-        System.out.println(meaning);
+        List<Meaning> meanings = new ArrayList<>();
+        meanings = meaningRepository.findAllByFlowerId(flower);
+        System.out.println(meanings.get(0).getMean());
         System.out.println(222222222);
 //        Poems poem = poemsRepository
 
