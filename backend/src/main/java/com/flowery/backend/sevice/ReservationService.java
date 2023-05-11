@@ -270,6 +270,7 @@ public class ReservationService {
         card.setPhrase(reservation.getPhrase());
         card.setReservationName(reservation.getReservationName());
         card.setQrBase64(qrBase64);
+        card.setCard(reservation.getCard());
 
         return card;
     }
