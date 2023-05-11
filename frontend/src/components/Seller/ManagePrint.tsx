@@ -4,7 +4,8 @@ import Title from "./PrintTitle";
 import ItemInfo from "./ItemInfo";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
-
+import { useRecoilValue } from "recoil";
+import { storeId } from "../../recoil/atom";
 interface ReservationItem {
   reservationId: number;
   userId: number;
@@ -31,12 +32,13 @@ export default function ManagePrint() {
   const formattedDate = `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
 
   const [reservation, setReservation] = useState<ReservationItem[]>([]);
+  const myStoreId = useRecoilValue(storeId);
   const location = useLocation();
 
   useEffect(() => {
     axios
       .post(`https://flowery.duckdns.org/api/reservation/store`, {
-        storeId: 1,
+        storeId: myStoreId,
       })
       .then((response) => {
         let filteredItems = response.data;
@@ -51,7 +53,7 @@ export default function ManagePrint() {
       .catch((error) => {
         console.error(error);
       });
-  }, [formattedDate, location]);
+  }, [formattedDate, location, myStoreId]);
 
   return (
     <div className={styles.mainbox}>
@@ -59,17 +61,25 @@ export default function ManagePrint() {
         <div className={styles.title}>
           <Title num={reservation.length} />
         </div>
-        {reservation.slice(0, 5).map((item) => (
-          <div key={item.reservationId}>
-            <ItemInfo
-              reservationName={item.reservationName}
-              date={item.date}
-              printed={item.printed}
-              reservationId={item.reservationId}
-              phrase={item.phrase}
-            />
-          </div>
-        ))}
+        {reservation
+          .filter(
+            (item: ReservationItem) =>
+              location.pathname === "/seller/book" ||
+              (item.permission === 1 && item.printed === 0)
+          )
+          .slice(0, location.pathname === "/seller" ? 5 : undefined)
+          .map((item) => (
+            <div key={item.reservationId}>
+              <ItemInfo
+                reservationName={item.reservationName}
+                date={item.date}
+                printed={item.printed}
+                reservationId={item.reservationId}
+                phrase={item.phrase}
+                permission={item.permission}
+              />
+            </div>
+          ))}
       </div>
     </div>
   );

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import styles from "./ItemInfo.module.scss";
 import flower from "../../assets/example1.jpg";
-import PrintCard from "./PrintCard";
-import FetchCard from "./FetchCard";
+import PrintCard from "./PrintCardProto";
+import FetchCard from "./FetchCardProto";
 interface ItemInfoProps {
   reservationName: string;
   date: string;
@@ -46,22 +46,10 @@ export default function ItemInfo(props: ItemInfoProps) {
           </div>
         </div>
         <div
-          className={
-            props.permission === 0
-              ? styles.printreject
-              : props.printed === 0
-              ? styles.printing
-              : styles.reprinting
-          }
-          onClick={props.permission === 0 ? undefined : handleModal}
+          className={props.printed === 0 ? styles.printing : styles.reprinting}
+          onClick={handleModal}
         >
-          <p>
-            {props.permission === 0
-              ? "취소됨"
-              : props.printed === 0
-              ? "카드생성"
-              : "가져오기"}
-          </p>
+          <p>{props.printed === 0 ? "카드생성" : "가져오기"}</p>
         </div>
       </div>
       {props.printed === 0 && showModal && (

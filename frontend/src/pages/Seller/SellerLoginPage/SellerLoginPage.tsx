@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./SellerLoginPage.module.scss";
 import InputForm from "../../../components/Common/InputForm";
 import { useNavigate } from "react-router-dom";
@@ -8,16 +8,17 @@ import axios from "axios";
 
 export default function SellerLogin() {
   const navigate = useNavigate();
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [myStoreId, setStoreId] = useRecoilState<number>(storeId);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [myStoreName, setStoreName] = useRecoilState<string>(storeName);
+  const [myId, setMyId] = useState<string>("");
+  const [myPw, setMyPw] = useState<string>("");
 
   function handleClick() {
+    console.log(myId, myPw);
     axios
       .post("https://flowery.duckdns.org/api/users/login-seller", {
-        id: "test1",
-        pass: "1234",
+        id: myId,
+        pass: myPw,
       })
       .then((response) => {
         setStoreId(response.data.storeId);
@@ -34,6 +35,7 @@ export default function SellerLogin() {
         alert("파트너스가 아니시거나 잘못된 입력입니다.");
       });
   }
+
   return (
     <>
       <div className={styles.titlecontainer}>
@@ -44,8 +46,22 @@ export default function SellerLogin() {
       </div>
       <div className={styles.loginbox}>
         <div className={styles.subloginbox}>
-          <InputForm label="아이디" placeholder="아이디를 입력해주세요" />
-          <InputForm label="비밀번호" placeholder="비밀번호를 입력해주세요" />
+          <InputForm
+            label="아이디"
+            placeholder="아이디를 입력해주세요"
+            value={myId}
+            onChange={(e) => setMyId(e.target.value)}
+            type="text"
+            onEnter={handleClick}
+          />
+          <InputForm
+            label="비밀번호"
+            placeholder="비밀번호를 입력해주세요"
+            value={myPw}
+            onChange={(e) => setMyPw(e.target.value)}
+            type="password"
+            onEnter={handleClick}
+          />
           <div className={styles.find}>ID/PW 찾기</div>
           <div className={styles.loginbtn} onClick={handleClick}>
             로그인

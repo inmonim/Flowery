@@ -19,12 +19,7 @@ export default function Header(props: HeaderProps) {
     return (
       <header className={styles.header}>
         <div>
-          <img
-            src={Logo}
-            alt=""
-            onClick={handlenavigate}
-            className={styles.logo}
-          />
+          <img src={Logo} alt="" className={styles.logo} />
         </div>
       </header>
     );
