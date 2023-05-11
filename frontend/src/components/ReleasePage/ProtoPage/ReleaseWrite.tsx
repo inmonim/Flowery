@@ -75,7 +75,7 @@ export default function RealeaseWrite() {
         {/* 페이지 내용 */}
         <div>
           <h2>
-            <div className="p-20 mx-auto sm:w-[150px] md:w-[300px] lg:w-[450px]">
+            <div className="p-16 mx-auto sm:w-[150px] md:w-[300px] lg:w-[450px]">
               <ReleaseCardPreview />
             </div>
           </h2>
