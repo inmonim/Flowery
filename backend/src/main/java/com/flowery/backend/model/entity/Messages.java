@@ -39,19 +39,19 @@ public class Messages {
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
     @JoinColumn(name = "poem_id")
-    private Users poemId;
+    private Poems poemId;
 
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
     @JoinColumn(name = "phrase_id")
-    private Users phraseId;
+    private Phrases phraseId;
 
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
     @JoinColumn(name = "mean_id")
-    private Users meanId;
+    private Meaning meanId;
 
 
 }
