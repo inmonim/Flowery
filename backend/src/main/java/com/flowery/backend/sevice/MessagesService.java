@@ -124,11 +124,17 @@ public class MessagesService {
         Flowers flower = flowerRepository.findById(carnation).orElseThrow(() -> new NotFoundException("꽃을 찾을 수 없습니다."));
         System.out.println(flower);
 
+        System.out.println(1111111111);
+        Meaning meaning = meaningRepository.findByFlowerId(flower);
+        System.out.println(meaning);
+        System.out.println(222222222);
+//        Poems poem = poemsRepository
+
 
         Messages result = new Messages();
 
 //        Messages result = messagesRepository.save(message);
-//
+
 //        for(int i=0; i<pictureUrl.size(); i++){
 //            Pictures pictures = new Pictures();
 //            pictures.setUrl(pictureUrl.get(i));
