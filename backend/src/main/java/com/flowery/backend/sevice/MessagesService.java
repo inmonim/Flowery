@@ -124,27 +124,22 @@ public class MessagesService {
 
         Integer carnation = 4;
         Flowers flower = flowerRepository.findById(carnation).orElseThrow(() -> new NotFoundException("꽃을 찾을 수 없습니다."));
-        System.out.println(flower);
 
-        System.out.println(1111111111);
         List<Meaning> meanings = new ArrayList<>();
         meanings = meaningRepository.findAllByFlowerId(flower);
         if (!meanings.isEmpty()) {
             Random random = new Random();
             int randomIndex = random.nextInt(meanings.size());
             Meaning randomMeaning = meanings.get(randomIndex);
-            System.out.println(randomMeaning.getMean());
             message.setMeanId(randomMeaning);
         }
 
 
-        System.out.println(222222222);
         List<Poems> poemsList = poemsRepository.findAllByFlowerId(flower);
         if (!poemsList.isEmpty()) {
             Random random = new Random();
             int randomIndex = random.nextInt(poemsList.size());
             Poems randomPoem = poemsList.get(randomIndex);
-            System.out.println(randomPoem.getPoem());
             message.setPoemId(randomPoem);
         }
 
