@@ -15,8 +15,8 @@ public class MessagesDto {
     private int papers;
     private int font;
     private LocalDateTime messageDate;
-    private int poemId;
-    private int meanId;
+    private String poem;
+    private String mean;
     private List<String> pictures;
     
 }

@@ -6,10 +6,10 @@ import com.flowery.backend.model.entity.*;
 import com.flowery.backend.repository.*;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 
 @Service
@@ -46,8 +46,8 @@ public class MessagesService {
         messagesDto.setPapers(messages.getPaper());
         messagesDto.setFont(messages.getFont());
         messagesDto.setMessageDate(messages.getMessageDate());
-        messagesDto.setPoemId(messages.getPoemId() == null ? 0 : messages.getPoemId().getPoemId());
-        messagesDto.setMeanId(messages.getMeanId() == null ? 0 : messages.getMeanId().getMeanId());
+        messagesDto.setPoem(messages.getPoemId() == null ? null : messages.getPoemId().getPoem());
+        messagesDto.setMean(messages.getMeanId() == null ? null : messages.getMeanId().getMean());
 
         List<String> result = new ArrayList<>();
         for(int i=0; i<picturesList.size(); i++){
@@ -102,6 +102,8 @@ public class MessagesService {
         return result;
     }
 
+
+
     // 프로토타입용 카드 제작
     public Messages createProtoCard(String videoUrl, List<String> pictureUrl, String messageValue, Integer paperValue, Integer fontValue, LocalDateTime dateTime) throws Exception{
         Messages message = new Messages();
@@ -122,25 +124,35 @@ public class MessagesService {
 
         Integer carnation = 4;
         Flowers flower = flowerRepository.findById(carnation).orElseThrow(() -> new NotFoundException("꽃을 찾을 수 없습니다."));
-        System.out.println(flower);
 
-        System.out.println(1111111111);
-        Meaning meaning = meaningRepository.findByFlowerId(flower);
-        System.out.println(meaning);
-        System.out.println(222222222);
-//        Poems poem = poemsRepository
+        List<Meaning> meanings = new ArrayList<>();
+        meanings = meaningRepository.findAllByFlowerId(flower);
+        if (!meanings.isEmpty()) {
+            Random random = new Random();
+            int randomIndex = random.nextInt(meanings.size());
+            Meaning randomMeaning = meanings.get(randomIndex);
+            message.setMeanId(randomMeaning);
+        }
 
 
-        Messages result = new Messages();
+        List<Poems> poemsList = poemsRepository.findAllByFlowerId(flower);
+        if (!poemsList.isEmpty()) {
+            Random random = new Random();
+            int randomIndex = random.nextInt(poemsList.size());
+            Poems randomPoem = poemsList.get(randomIndex);
+            message.setPoemId(randomPoem);
+        }
 
-//        Messages result = messagesRepository.save(message);
+//        Messages result = new Messages();
 
-//        for(int i=0; i<pictureUrl.size(); i++){
-//            Pictures pictures = new Pictures();
-//            pictures.setUrl(pictureUrl.get(i));
-//            pictures.setMessageId(result);
-//            picturesRepository.save(pictures);
-//        }
+        Messages result = messagesRepository.save(message);
+
+        for(int i=0; i<pictureUrl.size(); i++){
+            Pictures pictures = new Pictures();
+            pictures.setUrl(pictureUrl.get(i));
+            pictures.setMessageId(result);
+            picturesRepository.save(pictures);
+        }
 
         return result;
     }
