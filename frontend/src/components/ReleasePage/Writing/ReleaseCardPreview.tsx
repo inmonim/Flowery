@@ -138,17 +138,51 @@ export default function ReleaseCardPreview() {
         cardframe,
         testQr,
         `${content}`,
-        // `From. ${name}`,
-        // `kkotdeul`,
-        "",
-        "",
+        `From. ${name}`,
+        "꽃들",
         "test1"
       )}
-      {/* <input
-        onChange={(e: any) => setName(e.target.value)}
-        value={name}
-        className="absolute top-[9.5em] resize-none opacity-30"
-      ></input> */}
+      <div className="flex justify-center w-full">
+        <input
+          id="name"
+          autoFocus
+          autoComplete="off"
+          onChange={(e: any) => {
+            const nameInput = e.target.value.slice(0, 6);
+            setName(nameInput);
+          }}
+          value={name}
+          className="absolute top-[40%] opacity-0 focus:cursor-text"
+        ></input>
+        {!name && (
+          <label
+            htmlFor="name"
+            className="absolute text-center text-sm text-gray-300 top-[41.6%] left-[55%] font-sans cursor-text"
+          >
+            Click!
+          </label>
+        )}
+      </div>
+      <div className="flex justify-center">
+        <input
+          autoFocus
+          autoComplete="off"
+          onChange={(e: any) => {
+            setContent(e.target.value);
+          }}
+          value={content}
+          id="content"
+          className="absolute top-[52%] w-full h-[18%] opacity-0 cursor-text"
+        ></input>
+        {!content && (
+          <label
+            htmlFor="content"
+            className="absolute text-center text-sm  text-gray-300 top-[52%] w-full h-[18%]  font-sans cursor-text"
+          >
+            한 줄로 마음을 전해보세요
+          </label>
+        )}
+      </div>
     </div>
   );
 }
