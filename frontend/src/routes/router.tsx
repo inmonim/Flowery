@@ -54,7 +54,7 @@ const router = createBrowserRouter([
     children: [
       { path: "/release", element: <ReleaseIntro /> },
       { path: "/releasewrite", element: <RealeaseWrite /> },
-      { path: "/userproto", element: <UserProtoPage /> },
+      { path: "/userproto/:messageId", element: <UserProtoPage /> },
     ],
   },
 ]);
