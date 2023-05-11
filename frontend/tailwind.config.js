@@ -8,6 +8,11 @@ module.exports = {
         ballet: ["ballet"],
         namyeong: ["namyeong"],
         nasq: ["nasq"],
+        utoB: ["utoB"],
+        utoL: ["utoL"],
+        utoR: ["utoR"],
+        gobaB: ["gobaB"],
+        gobaR: ["gobaR"],
       },
       colors: {
         sub: "#FFFAF5",

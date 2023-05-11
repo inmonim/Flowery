@@ -9,7 +9,6 @@ import bouquet4 from "../../../assets/ReleasePage/releaseBG4.jpg";
 import bouquet5 from "../../../assets/ReleasePage/releaseBG5.jpg";
 
 export default function ProtoIntro() {
-  const nickname = "최창근";
   const introBackground = [bouquet, bouquet2, bouquet3, bouquet4, bouquet5];
   const settings = {
     dots: false,
@@ -38,13 +37,12 @@ export default function ProtoIntro() {
           Flowery
         </p>
       </div>
-      <div className="absolute bottom-[10%] text-white font-nasq">
-        <section className="flex justify-center items-center">
-          <span className=" text-[20px] text-[yellow]">{nickname}</span>
-          님이
+      <div className="absolute bottom-[10%] text-white font-gobaB">
+        <section className="flex justify-center items-center ">
+          <span className=" text-[25px] text-user_pink">당신</span>을
         </section>
         <section className="">
-          <span>준비한 시들지 않는 선물</span>
+          <span>위한 시들지 않는 선물</span>
         </section>
       </div>
     </div>
