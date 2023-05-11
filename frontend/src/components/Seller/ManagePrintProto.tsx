@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styles from "./ManagePrint.module.scss";
 import Title from "./PrintTitle";
-import ItemInfo from "./ItemInfo";
+import ItemInfo from "./ItemInfoProto";
 import axios from "axios";
 
 interface ReservationItem {
@@ -34,7 +34,7 @@ export default function ManagePrint() {
   useEffect(() => {
     axios
       .post(`https://flowery.duckdns.org/api/reservation/store`, {
-        storeId: 1,
+        storeId: 4,
       })
       .then((response) => {
         setReservation(response.data as ReservationItem[]);
@@ -57,6 +57,7 @@ export default function ManagePrint() {
               printed={item.printed}
               reservationId={item.reservationId}
               phrase={item.phrase}
+              permission={item.permission}
             />
           </div>
         ))}

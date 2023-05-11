@@ -1,14 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import styles from "./PrintCard.module.scss";
 import { saveAs } from "file-saver";
 import axios from "axios";
-import cardframe from "../../../assets/card1234.png";
-import { useRecoilState } from "recoil";
-import { cardContent, cardName } from "../../../recoil/atom";
+import cardframe from "../../assets/card1234.png";
+import "../../assets/styles/variable.scss";
+interface PrintCardProps {
+  closeModal: () => void;
+  reservationId: number;
+  printed: number;
+  reservationName: string;
+  phrase: string;
+}
 
-export default function CardPreview() {
-  const [imgUrl, setImgUrl] = useState<string>("");
-  const [name, setName] = useRecoilState<string>(cardName);
-  const [content, setContent] = useRecoilState<string>(cardContent);
+export default function PrintCard(props: PrintCardProps) {
+  function handleClick() {
+    props.closeModal();
+  }
 
   function drawMultilineText(
     ctx: CanvasRenderingContext2D,
@@ -52,11 +59,13 @@ export default function CardPreview() {
       canvas.width = image1.width;
       canvas.height = image1.height;
 
+      // draw image1
       if (ctx) {
         ctx.drawImage(image1, 0, 0);
 
         const image2 = new Image();
         image2.onload = () => {
+          // draw image2
           ctx.drawImage(
             image2,
             0,
@@ -71,7 +80,7 @@ export default function CardPreview() {
           ctx.font = "120px KCC";
           ctx.fillStyle = "#000000";
           ctx.textAlign = "center";
-          ctx.textBaseline = "bottom";
+          ctx.textBaseline = "bottom"; // 텍스트 기준선을 아래쪽으로 설정
           drawMultilineText(
             ctx,
             text,
@@ -81,6 +90,7 @@ export default function CardPreview() {
             180
           );
 
+          // draw additional text
           ctx.font = "100px KCC";
           ctx.fillStyle = "#000000";
           ctx.textAlign = "center";
@@ -106,7 +116,7 @@ export default function CardPreview() {
             canvas.width / 2 + width2 / 2,
             canvas.height * 0.46 + descent2 + 45
           );
-          // ctx.stroke();
+          ctx.stroke();
 
           ctx.font = "100px KCC";
           ctx.fillStyle = "#000000";
@@ -119,35 +129,67 @@ export default function CardPreview() {
             900,
             100
           );
-          setImgUrl(canvas.toDataURL());
+
+          // convert canvas to image file and save
+          canvas.toBlob(
+            (blob) => {
+              if (blob) {
+                saveAs(blob, outputFileName);
+              } else {
+                console.error("Failed to convert canvas to blob");
+              }
+            },
+            "image/jpeg",
+            1
+          );
         };
         image2.src = `data:image/png;base64,${image2Base64}`;
       }
     };
     image1.src = image1Url;
-
-    return <img src={imgUrl} alt="카드" />;
   }
 
-  const testQr = ""
-
+  function handlePrint(reservationId1: number) {
+    if (!props.printed) {
+      axios.post("https://flowery.duckdns.org/api/reservation/print", {
+        reservationId: reservationId1,
+      });
+    }
+    axios
+      .get("https://flowery.duckdns.org/api/reservation/card", {
+        params: {
+          reservationId: reservationId1,
+        },
+      })
+      .then((response) => {
+        return mergeImages(
+          cardframe,
+          response.data.qrBase64,
+          `${props.phrase}`,
+          `From. ${props.reservationName}`,
+          `kkotdeul`,
+          "test1"
+        );
+      })
+      .then(() => {
+        alert("저장이 완료되었습니다");
+        props.closeModal();
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
   return (
-    <div className="relative">
-      {mergeImages(
-        cardframe,
-        testQr,
-        `${content}`,
-        // `From. ${name}`,
-        // `kkotdeul`,
-        "",
-        "",
-        "test1"
-      )}
-      <input
-        onChange={(e: any) => setName(e.target.value)}
-        value={name}
-        className="absolute top-[9.5em] resize-none opacity-30"
-      ></input>
+    <div className={styles.modal}>
+      <div className={styles.modalContent}>
+        <button
+          className={styles.successbutton}
+          onClick={() => handlePrint(props.reservationId)}
+        >
+          생성
+        </button>
+        <button onClick={handleClick}>취소</button>
+      </div>
     </div>
   );
 }
