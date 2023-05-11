@@ -9,18 +9,18 @@ import javax.persistence.*;
 @Entity
 @Data
 @NoArgsConstructor
-public class Meaning {
+public class Phrases {
     @Id
-    @Column(name = "mean_id")
+    @Column(name = "phrase_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int meanId;
+    private int phraseId;
 
     @ManyToOne
     @JsonIgnore
     @JoinColumn(name = "flower_id")
     private Flowers flowerId;
 
-    @Column(name = "mean")
-    private String mean;
+    @Column(name = "phrase")
+    private String phrase;
 
 }
