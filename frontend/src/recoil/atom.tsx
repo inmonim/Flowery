@@ -51,3 +51,25 @@ export const totalTextState = atom<string>({
   default: "",
   effects_UNSTABLE: [persistAtom],
 });
+
+//예약 정보
+export const reservationInfo = atom({
+  key: "resrvationInfo",
+  default: {
+    userId: 1,
+    storeId: 1,
+    messageId: "1",
+    goodsName: "장미다발",
+    price: 10000,
+    demand: "여기 요청사항이 적혀진다 이말이야",
+    date: "2023-05-04T11:44:30.32795",
+    reservationName: "예약명",
+    phrase: "구매자 입력하는 짧은 카드 문구",
+  },
+});
+
+//가게 정보
+export const shopInfo = atom({
+  key: "shopInfo",
+  default: [{}],
+});

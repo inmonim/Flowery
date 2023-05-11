@@ -15,9 +15,6 @@ import LetterPage from "../pages/WritingPage/WritingPage";
 import ProtoPage from "../pages/SellerMainPage/SellerMainProto";
 import TestPage from "../pages/TestPage";
 import ReleaseIntro from "../components/ReleasePage/ReleaseIntro";
-import ReleaseCategory from "../components/ReleasePage/ReleaseCategory";
-import ReleaseLetters from "../components/ReleasePage/ReleaseLetters";
-import ReleasePictures from "../components/ReleasePage/ReleasePictures";
 import UserProtoPage from "../components/ReleasePage/UserProtoPage";
 import OrderPage from "../components/User/Reservation/OrderPage";
 
@@ -54,10 +51,7 @@ const router = createBrowserRouter([
     path: "/",
     children: [
       { path: "/release", element: <ReleaseIntro /> },
-      { path: "/releasecategory", element: <ReleaseCategory /> },
-      { path: "/releasepictures", element: <ReleasePictures /> },
-      { path: "/releaseletter", element: <ReleaseLetters /> },
-      { path: "/userprotopage", element: <UserProtoPage /> },
+      { path: "/userproto", element: <UserProtoPage /> },
     ],
   },
 ]);

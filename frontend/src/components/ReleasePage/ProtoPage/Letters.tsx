@@ -20,7 +20,7 @@ export default function Letters() {
       <div className="h-[10rem] flex flex-col mt-[10%] ml-5">
         <p className="text-[2rem] text-[#8D8E90] font-namyeong">Letter</p>
         <p className="text-[1.2rem] font-namyeong">편지</p>
-        <p className="text-[0.7rem] text-[#82877C] font-namyeong">
+        <p className="text-[0.7rem] text-[#82877C] font-namyeong pt-2">
           {nickname}님이 선물해주신 꽃다발과 편지입니다.
         </p>
       </div>
