@@ -29,7 +29,6 @@ export default function Header(props: HeaderProps) {
         <img
           src={Logo}
           alt=""
-          onClick={handlenavigate}
           className={styles.logo}
         />
       </header>

@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
-import styles from "./PrintCard.module.scss";
+import styles from "./FetchCardProto.module.scss";
 import { saveAs } from "file-saver";
 import axios from "axios";
 import cardframe from "../../assets/card1234.png";
-import "../../assets/styles/variable.scss";
+import cardframe2 from "../../assets/card123.png";
 
 interface CardData {
   qrBase64: string;
   phrase: string;
   reservationName: string;
-  // cardData 객체에 포함될 속성들을 정의합니다.
+  card: number;
 }
 
 interface PrintCardProps {
@@ -185,14 +185,25 @@ export default function PrintCard(props: PrintCardProps) {
       .then((response) => {
         setCardData(response.data);
         if (cardData) {
-          mergeImages(
-            cardframe,
-            cardData.qrBase64,
-            `${cardData.phrase}`,
-            `From. ${cardData.reservationName}`,
-            `kkotdeul`,
-            "test1"
-          );
+          if (cardData.card === 0) {
+            mergeImages(
+              cardframe,
+              cardData.qrBase64,
+              `${cardData.phrase}`,
+              `From. ${cardData.reservationName}`,
+              `kkotdeul`,
+              "test1"
+            );
+          } else if (cardData.card === 1) {
+            mergeImages(
+              cardframe2,
+              cardData.qrBase64,
+              `${cardData.phrase}`,
+              `From. ${cardData.reservationName}`,
+              `kkotdeul`,
+              "test1"
+            );
+          }
         }
       });
     props.closeModal();
@@ -200,6 +211,7 @@ export default function PrintCard(props: PrintCardProps) {
 
   return (
     <div className={styles.modal}>
+      <div className={styles.fontcheck}>.</div>
       <div className={styles.modalContent}>
         <div className={styles.stepone}>
           <div>
