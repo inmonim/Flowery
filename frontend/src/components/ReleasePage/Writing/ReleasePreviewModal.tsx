@@ -4,9 +4,9 @@ import { useSetRecoilState } from "recoil";
 import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { imageState, totalTextState } from "../../../recoil/atom";
-import LetterPreview from "./LetterPreview";
+import ReleaseLetterPreview from "./ReleaseLetterPreview";
 
-const LetterPreviewModal = React.forwardRef<HTMLDivElement, any>((props, ref) => {
+const ReleaseLetterPreviewModal = React.forwardRef<HTMLDivElement, any>((props, ref) => {
   const letter = useRecoilValue<string>(totalTextState);
   const navigate = useNavigate();
 
@@ -21,7 +21,7 @@ const LetterPreviewModal = React.forwardRef<HTMLDivElement, any>((props, ref) =>
           {letter && (
             <div ref={ref} className="card m-2 flex items-center justify-center  rounded-lg ">
                 <div className="flex flex-col justify-center items-center md:flex-row ">
-                  {LetterPreview()}
+                  {ReleaseLetterPreview()}
                 </div>
               </div>
           )}
@@ -30,4 +30,4 @@ const LetterPreviewModal = React.forwardRef<HTMLDivElement, any>((props, ref) =>
   );
 });
 
-export default LetterPreviewModal;
+export default ReleaseLetterPreviewModal;

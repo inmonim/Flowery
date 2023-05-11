@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
-import ImageInput from "../../components/User/Writing/ImageInput";
-import LetterPaper from "../../components/User/Writing/LetterPaper";
-import LetterFont from "../../components/User/Writing/LetterFont";
-import LetterContent from "../../components/User/Writing/LetterContent";
-import VideoInput from "../../components/User/Writing/VideoInput";
-import PreviewModal from "../../components/User/Writing/PreviewModal";
-import CardPreview from "../../components/User/Writing/CardPreview";
+import ReleaseImageInput from "../Writing/ReleaseImageInput";
+import ReleaseLetterPaper from "../Writing/ReleaseLetterPaper";
+import ReleaseLetterFont from "../Writing/ReleaseLetterFont";
+import ReleaseLetterContent from "../Writing/ReleaseLetterContent";
+import ReleaseVideoInput from "../Writing/ReleaseVideoInput";
+import ReleaseCardPreview from "../Writing/ReleaseCardPreview";
+import ReleasePreview from "../Writing/ReleasePreview";
 
-export default function WritingPage() {
+export default function RealeaseWrite() {
   const [showModal, setShowModal] = useState<boolean>(false);
   const [showLetterInput, setShowLetterInput] = useState<boolean>(false);
   const [showImageInput, setShowImageInput] = useState<boolean>(false);
@@ -68,7 +68,7 @@ export default function WritingPage() {
     >
       {/* 미리보기 모달 */}
       {showModal && (
-        <PreviewModal ref={modalRef} onClose={() => setShowModal(false)} />
+        <ReleasePreview ref={modalRef} onClose={() => setShowModal(false)} />
       )}
 
       <div>
@@ -76,7 +76,7 @@ export default function WritingPage() {
         <div>
           <h2>
             <div className="p-20 mx-auto sm:w-[150px] md:w-[300px] lg:w-[450px]">
-              <CardPreview />
+              <ReleaseCardPreview />
             </div>
           </h2>
           <h2>
@@ -90,14 +90,14 @@ export default function WritingPage() {
               <span className="flex items-center">
                 {showLetterInput ? (
                   <img
-                    src={require("../../assets/letters/letter_open.png")}
+                    src={require("../../../assets/letters/letter_open.png")}
                     alt=""
                     className="w-5 mr-2 shrink-0"
                     style={{ border: "1px solid black" }}
                   />
                 ) : (
                   <img
-                    src={require("../../assets/letters/letter_close.png")}
+                    src={require("../../../assets/letters/letter_close.png")}
                     alt=""
                     className="w-5 mr-2 shrink-0"
                     style={{ border: "1px solid black" }}
@@ -123,11 +123,11 @@ export default function WritingPage() {
           </h2>
           {showLetterInput && (
             <div>
-              <LetterPaper />
-              <div className="flex flex-col justify-center items-center border border-gray-200 md:flex-row ">
-                <LetterContent />
+              <ReleaseLetterPaper />
+              <div className="">
+                <ReleaseLetterContent />
               </div>
-              <LetterFont />
+              <ReleaseLetterFont />
             </div>
           )}
           <h2>
@@ -204,11 +204,11 @@ export default function WritingPage() {
                   <div className="m-3">
                     {/* 영상 업로드 */}
                     <div className="mb-7">
-                      <VideoInput />
+                      <ReleaseVideoInput />
                     </div>
                     {/* 이미지 업로드 */}
                     <div className="mb-7">
-                      <ImageInput />
+                      <ReleaseImageInput />
                     </div>
                   </div>
                 </div>

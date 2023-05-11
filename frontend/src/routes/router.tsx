@@ -17,6 +17,8 @@ import ReleaseIntro from "../components/ReleasePage/ReleaseIntro";
 import UserProtoPage from "../components/ReleasePage/UserProtoPage";
 import OrderPage from "../components/User/Reservation/OrderPage";
 import SellerBookPage from "../pages/Seller/SellerBookPage/SellerBookPage";
+import RealeaseWrite from "../components/ReleasePage/ProtoPage/ReleaseWrite";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -51,6 +53,7 @@ const router = createBrowserRouter([
     path: "/",
     children: [
       { path: "/release", element: <ReleaseIntro /> },
+      { path: "/releasewrite", element: <RealeaseWrite /> },
       { path: "/userproto", element: <UserProtoPage /> },
     ],
   },
