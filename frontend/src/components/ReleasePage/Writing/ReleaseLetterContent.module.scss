@@ -6,34 +6,41 @@
   background-size: contain;
   background-position: center;
   justify-content: center;
-  height: 68vh;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 1.25rem;
+  height: 52vh;
   // height: 100%;
-  width: 68vh;
+  // width: 35vh;
   // width: 100%;
-  object-fit: contain;
+  // object-fit: contain;
   position: relative;
   display: flex;
+
+  @media screen and (max-width: 640px) {
+  height: 52vh;
+  }
 }
 
 .letterContent1 {
-  position: absolute;
-  border: none;
-  background-color: transparent;
-  // font-size: 2vh;
-  resize: none;
-  line-height: 2.3vh;
-  height: 50vh;
-  // height: 72%;
-  width: 34vh;
-  // width: 55%;
-  justify-items: center;
-  align-self: center;
-  display: flex;
-  overflow-y: hidden;
+position: absolute;
+border: none;
+background-color: transparent;
+font-size: 1.5vh;
+resize: none;
+line-height: 1.765vh;
+height: 38.5vh;
+// height: 72%;
+width: 26vh;
+// width: 55%;
+justify-items: center;
+align-self: center;
+display: flex;
+overflow-y: hidden;
 
-  &:focus {
-    outline: 0cm;
-  }
+&:focus {
+  outline: 0cm;
+}
 }
 
 // 2번 편지지
@@ -123,34 +130,41 @@
   background-size: contain;
   background-position: center;
   justify-content: center;
-  height: 68vh;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 1.25rem;
+  height: 52vh;
   // height: 100%;
-  width: 68vh;
+  // width: 35vh;
   // width: 100%;
-  object-fit: contain;
+  // object-fit: contain;
   position: relative;
   display: flex;
+
+  @media screen and (max-width: 640px) {
+  height: 52vh;
+  }
 }
 
 .letterContent3 {
-  position: absolute;
-  border: none;
-  background-color: transparent;
-  font-size: 2vh;
-  resize: none;
-  line-height: 2.3vh;
-  height: 50.3vh;
-  // height: 72%;
-  width: 34vh;
-  // width: 55%;
-  justify-items: center;
-  align-self: center;
-  display: flex;
-  overflow-y: hidden;
+position: absolute;
+border: none;
+background-color: transparent;
+font-size: 1.5vh;
+resize: none;
+line-height: 1.765vh;
+height: 38.5vh;
+// height: 72%;
+width: 26vh;
+// width: 55%;
+justify-items: center;
+align-self: center;
+display: flex;
+overflow-y: hidden;
 
-  &:focus {
-    outline: 0cm;
-  }
+&:focus {
+  outline: 0cm;
+}
 }
 
 // 4번 편지지
@@ -160,34 +174,41 @@
   background-size: contain;
   background-position: center;
   justify-content: center;
-  height: 68vh;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 1.25rem;
+  height: 52vh;
   // height: 100%;
-  width: 68vh;
+  // width: 35vh;
   // width: 100%;
-  object-fit: contain;
+  // object-fit: contain;
   position: relative;
   display: flex;
+
+  @media screen and (max-width: 640px) {
+  height: 52vh;
+  }
 }
 
 .letterContent4 {
-  position: absolute;
-  border: none;
-  background-color: transparent;
-  // font-size: 2vh;
-  resize: none;
-  line-height: 2.3vh;
-  height: 50vh;
-  // height: 72%;
-  width: 34vh;
-  // width: 55%;
-  justify-items: center;
-  align-self: center;
-  display: flex;
-  overflow-y: hidden;
+position: absolute;
+border: none;
+background-color: transparent;
+font-size: 1.5vh;
+resize: none;
+line-height: 1.765vh;
+height: 38.5vh;
+// height: 72%;
+width: 26vh;
+// width: 55%;
+justify-items: center;
+align-self: center;
+display: flex;
+overflow-y: hidden;
 
-  &:focus {
-    outline: 0cm;
-  }
+&:focus {
+  outline: 0cm;
+}
 }
 
 // 5번 편지지
@@ -197,34 +218,41 @@
   background-size: contain;
   background-position: center;
   justify-content: center;
-  height: 68vh;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 1.25rem;
+  height: 52vh;
   // height: 100%;
-  width: 68vh;
+  // width: 35vh;
   // width: 100%;
-  object-fit: contain;
+  // object-fit: contain;
   position: relative;
   display: flex;
+
+  @media screen and (max-width: 640px) {
+  height: 52vh;
+  }
 }
 
 .letterContent5 {
-  position: absolute;
-  border: none;
-  background-color: transparent;
-  font-size: 2vh;
-  resize: none;
-  line-height: 2.31vh;
-  height: 50.3vh;
-  // height: 72%;
-  width: 34vh;
-  // width: 55%;
-  justify-items: center;
-  align-self: center;
-  display: flex;
-  overflow-y: hidden;
+position: absolute;
+border: none;
+background-color: transparent;
+font-size: 1.5vh;
+resize: none;
+line-height: 1.765vh;
+height: 38.5vh;
+// height: 72%;
+width: 26vh;
+// width: 55%;
+justify-items: center;
+align-self: center;
+display: flex;
+overflow-y: hidden;
 
-  &:focus {
-    outline: 0cm;
-  }
+&:focus {
+  outline: 0cm;
+}
 }
 
 ///////////////////////////////////////////////////           글씨체           ///////////////////////////////////////////////////////
