@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import Flower from "../../../assets/example1.jpg";
+import Flower from "../../../assets/ReleasePage/flower_release.jpg";
 import styles from "./ReleaseLetter.module.scss";
 import { useRecoilState } from "recoil";
 import {
