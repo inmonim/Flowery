@@ -28,15 +28,15 @@ const ReleaseSubmitModal = React.forwardRef<HTMLDivElement, any>(
     const navigate = useNavigate();
 
     // axios
-    const submitCardInfo = () => {
+    const submitCardInfo = (messageId: string) => {
       const offset = new Date().getTimezoneOffset() * 60000;
       const date = new Date(Date.now() - offset).toISOString().slice(0, -5);
       const jsonData = {
-        userId: 1,
-        storeId: 1,
-        messageId: "5",
+        userId: 3,
+        storeId: 4,
+        messageId: messageId,
         goodsName: "카네이션다발",
-        price: 10001,
+        price: 10000,
         demand: "없음",
         date: date,
         reservationName: name,
@@ -48,6 +48,7 @@ const ReleaseSubmitModal = React.forwardRef<HTMLDivElement, any>(
         .post("https://flowery.duckdns.org/api/reservation/make", jsonData)
         .then((response) => {
           localStorage.clear();
+          navigate("/releaseexit");
         })
         .catch((error) => {
           console.error("실패", error);
@@ -82,17 +83,12 @@ const ReleaseSubmitModal = React.forwardRef<HTMLDivElement, any>(
         .post("https://flowery.duckdns.org/api/messages/card", formData)
         .then((response) => {
           alert("제출이 완료됐습니다!");
-          navigate("/releaseexit");
+          submitCardInfo(response.data.messageId);
         });
     };
 
     return (
-      <div
-        className="relative z-[50]"
-        // aria-labelledby="modal-title"
-        // role="dialog"
-        // aria-modal="true"
-      >
+      <div className="relative z-[50]">
         <div className="fixed inset-0 bg-black bg-opacity-50 transition-opacity"></div>
 
         <div className="fixed inset-0 z-10 overflow-y-auto">
@@ -119,7 +115,6 @@ const ReleaseSubmitModal = React.forwardRef<HTMLDivElement, any>(
               <div className="px-4 py-3 justify-center items-center mx-auto flex sm:px-6">
                 <div
                   onClick={() => {
-                    submitCardInfo();
                     submitReservationInfo();
                   }}
                   className="inline-flex justify-center rounded-md px-3 py-2 mb-4 text-sm font-semibold shadow-sm bg-[#eed3b5] z-[67] hover:hover:bg-[#eed3b5] sm:ml-3 sm:w-auto"
