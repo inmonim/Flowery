@@ -270,7 +270,7 @@ export default function ReleaseWrite() {
                   className="cursor-pointer"
                 />
               </div> */}
-              <div className="cursor-pointer font-bold text-white font-nasq border border-user_green bg-user_sol py-2 pb-2 px-4 mx-4 rounded-full ">
+              <div className="cursor-pointer font-bold font-nasq border bg-[#eed3b5] py-2 pb-2 px-4 mx-4 rounded-full ">
                 <input
                   type="button"
                   value="미리보기"
