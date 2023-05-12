@@ -52,6 +52,7 @@ const ReleasePreviewModal = React.forwardRef<HTMLDivElement, any>(
       }
     };
 
+    
     return (
       <div className="absolute inset-x-0 bg-opacity-50 bg-black z-[20]">
         <div className="m-auto sm:w-full md:w-1/2 lg:w-[34%] p-10">
