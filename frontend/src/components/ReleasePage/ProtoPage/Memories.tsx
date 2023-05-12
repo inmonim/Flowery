@@ -20,10 +20,10 @@ export default function Memories(props: any) {
         <img src={sellerpic} alt="s" />
       </div> */}
 
-      <div className="h-[10rem] flex flex-col mt-[25%] ml-5">
-        <p className="text-[2rem] text-[#8D8E90] font-namyeong">Memories</p>
-        <p className="text-[1.2rem] font-namyeong">추억</p>
-        <p className="text-[0.7rem] text-[#82877C] font-namyeong pt-2">
+      <div className="h-[10rem] flex flex-col mt-[25%] ml-5 pl-2 pr-2 mb-[20%]">
+        <p className="text-[3rem] text-[#8D8E90] font-namyeong">Memories</p>
+        <p className="text-[2rem] font-namyeong">추억</p>
+        <p className="text-[0.8rem] text-[#82877C] font-namyeong pt-2">
           소중한 사람이 꽃과 함께 업로드한 추억들입니다.
         </p>
       </div>
