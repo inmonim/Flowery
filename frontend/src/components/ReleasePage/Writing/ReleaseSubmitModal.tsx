@@ -80,7 +80,10 @@ const ReleaseSubmitModal = React.forwardRef<HTMLDivElement, any>(
       formData.append("date", date);
 
       axios
-        .post("https://flowery.duckdns.org/api/messages/card", formData)
+        .post(
+          "https://flowery.duckdns.org/api/messages/card/prototype",
+          formData
+        )
         .then((response) => {
           alert("제출이 완료됐습니다!");
           submitCardInfo(response.data.messageId);
