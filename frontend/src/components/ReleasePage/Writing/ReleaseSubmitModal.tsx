@@ -12,6 +12,7 @@ import {
 import axios from "axios";
 import { letterFontState } from "../../../recoil/atom";
 import { letterPaperState } from "../../../recoil/atom";
+import Loading from "./LoadingIcon";
 
 const ReleaseSubmitModal = React.forwardRef<HTMLDivElement, any>(
   (props, ref) => {
@@ -24,6 +25,7 @@ const ReleaseSubmitModal = React.forwardRef<HTMLDivElement, any>(
     const name = useRecoilValue<string>(cardName);
     const content = useRecoilValue<string>(cardContent);
     const card = useRecoilValue<number>(cardState);
+    const [loading, setLoading] = useState(false);
 
     const navigate = useNavigate();
 
@@ -51,7 +53,7 @@ const ReleaseSubmitModal = React.forwardRef<HTMLDivElement, any>(
           navigate("/releaseexit");
         })
         .catch((error) => {
-          console.error("실패", error);
+          alert("다시 시도해주세요!");
         });
     };
 
@@ -81,7 +83,7 @@ const ReleaseSubmitModal = React.forwardRef<HTMLDivElement, any>(
 
       axios
         .post(
-          "https://flowery.duckdns.org/api/messages/card/prototype",
+          "https://flowery.duckdns.org/api/messages/card/prototype  ",
           formData
         )
         .then((response) => {
@@ -93,7 +95,7 @@ const ReleaseSubmitModal = React.forwardRef<HTMLDivElement, any>(
     return (
       <div className="relative z-[50]">
         <div className="fixed inset-0 bg-black bg-opacity-50 transition-opacity"></div>
-
+        {/* {loading ? <Loading /> : null} */}
         <div className="fixed inset-0 z-10 overflow-y-auto">
           <div className="flex min-h-full items-center justify-center p-16 text-center w-full sm:items-center sm:p-0">
             <div
@@ -118,9 +120,13 @@ const ReleaseSubmitModal = React.forwardRef<HTMLDivElement, any>(
               <div className="px-4 py-3 justify-center items-center mx-auto flex sm:px-6">
                 <div
                   onClick={() => {
-                    submitReservationInfo();
+                    if (!loading) {
+                      submitReservationInfo();
+                    }
                   }}
-                  className="inline-flex justify-center rounded-md px-3 py-2 mb-4 text-sm font-semibold shadow-sm bg-[#eed3b5] z-[67] hover:hover:bg-[#eed3b5] sm:ml-3 sm:w-auto"
+                  className={`inline-flex justify-center rounded-md px-3 py-2 mb-4 text-sm font-semibold shadow-sm z-[67] sm:ml-3 sm:w-auto ${
+                    loading ? "bg-gray-300" : "bg-[#eed3b5]"
+                  }`}
                 >
                   제출하기
                 </div>
