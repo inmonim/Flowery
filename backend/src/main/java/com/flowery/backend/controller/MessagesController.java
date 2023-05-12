@@ -59,11 +59,11 @@ public class MessagesController {
                 messageValue = message;
             }
 
-            if(-1< paper && paper < 3){
+            if(-1< paper && paper < 10){
                 paperValue = paper;
             }
 
-            if(-1< paper && paper < 20){
+            if(-1< font && font < 20){
                 fontValue = font;
             }
 
@@ -107,11 +107,11 @@ public class MessagesController {
                 messageValue = message;
             }
 
-            if(-1< paper && paper < 3){
+            if(-1< paper && paper < 10){
                 paperValue = paper;
             }
 
-            if(-1< paper && paper < 20){
+            if(-1< font && font < 20){
                 fontValue = font;
             }
 
