@@ -5,6 +5,7 @@ import camera from "../../../assets/add_logo.png";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import imageCompression from "browser-image-compression";
 
 export default function ReleaseImageInput() {
   const [images, setImages] = useRecoilState<Array<File>>(imageState);
@@ -18,25 +19,36 @@ export default function ReleaseImageInput() {
     imageInput.current?.click();
   };
 
-  const handleImageInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageInput = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const file = event.target.files;
+    const options = {
+      maxSizeMB: 6,
+      maxWidthOrHeight: 500,
+    };
+
     if (file) {
       if (images.length + file.length > 5) {
         alert("최대 5장까지 업로드 가능합니다");
       } else {
         let newImages = [...images];
-        const maxSize = 6 * 1024 * 1024;
 
         for (let i = 0; i < file.length; i++) {
           const fileType = file[i].type;
-          const fileSize = file[i].size;
 
           if (fileType.startsWith("image/") || fileType.startsWith("gif/")) {
-            if (fileSize > maxSize) {
-              alert("최대 6MB까지 업로드 가능합니다.");
-            } else {
-              newImages.push(file[i]);
-            }
+            const resizingBlob = await imageCompression(file[i], options);
+            const resizingFile = new File([resizingBlob], file[i].name, {
+              type: file[i].type,
+            });
+            newImages.push(resizingFile);
+
+            // if (fileSize > maxSize) {
+            //   alert("최대 6MB까지 업로드 가능합니다.");
+            // } else {
+            //   newImages.push(file[i]);
+            // }
           } else {
             alert("이미지 파일만 업로드 가능합니다.");
           }
@@ -57,27 +69,36 @@ export default function ReleaseImageInput() {
     setIsDraggingOver(false);
   };
 
-  const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
+  const handleDrop = async (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
     setIsDraggingOver(false);
     const file = event.dataTransfer.files;
+    const options = {
+      maxSizeMB: 6,
+      maxWidthOrHeight: 500,
+    };
+
     if (file) {
       if (images.length + file.length > 5) {
         alert("최대 5장까지 업로드 가능합니다");
       } else {
         let newImages = [...images];
-        const maxSize = 6 * 1024 * 1024;
 
         for (let i = 0; i < file.length; i++) {
           const fileType = file[i].type;
-          const fileSize = file[i].size;
 
           if (fileType.startsWith("image/") || fileType.startsWith("gif/")) {
-            if (fileSize > maxSize) {
-              alert("최대 6MB까지 업로드 가능합니다.");
-            } else {
-              newImages.push(file[i]);
-            }
+            const resizingBlob = await imageCompression(file[i], options);
+            const resizingFile = new File([resizingBlob], file[i].name, {
+              type: file[i].type,
+            });
+            newImages.push(resizingFile);
+
+            // if (fileSize > maxSize) {
+            //   alert("최대 6MB까지 업로드 가능합니다.");
+            // } else {
+            //   newImages.push(file[i]);
+            // }
           } else {
             alert("이미지 파일만 업로드 가능합니다.");
           }
@@ -85,6 +106,31 @@ export default function ReleaseImageInput() {
         setImages(newImages);
       }
     }
+
+    // if (file) {
+    //   if (images.length + file.length > 5) {
+    //     alert("최대 5장까지 업로드 가능합니다");
+    //   } else {
+    //     let newImages = [...images];
+    //     const maxSize = 6 * 1024 * 1024;
+
+    //     for (let i = 0; i < file.length; i++) {
+    //       const fileType = file[i].type;
+    //       const fileSize = file[i].size;
+
+    //       if (fileType.startsWith("image/") || fileType.startsWith("gif/")) {
+    //         if (fileSize > maxSize) {
+    //           alert("최대 6MB까지 업로드 가능합니다.");
+    //         } else {
+    //           newImages.push(file[i]);
+    //         }
+    //       } else {
+    //         alert("이미지 파일만 업로드 가능합니다.");
+    //       }
+    //     }
+    //     setImages(newImages);
+    //   }
+    // }
   };
 
   const deleteImage = (index: number) => {
