@@ -262,14 +262,6 @@ export default function ReleaseWrite() {
         <div className="relative h-[15vh]">
           <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
             <div className="flex">
-              {/* <div className="cursor-pointer font-bold py-2 px-4 mx-4 rounded-full bg-[#eed3b5] hover:bg-[#eed3b5]">
-                <input
-                  type="button"
-                  value="건너뛰기"
-                  onClick={submitButton}
-                  className="cursor-pointer"
-                />
-              </div> */}
               <div className="cursor-pointer font-bold font-nasq border bg-[#eed3b5] py-2 pb-2 px-4 mx-4 rounded-full ">
                 <input
                   type="button"
