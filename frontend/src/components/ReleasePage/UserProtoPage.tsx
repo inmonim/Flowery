@@ -15,6 +15,8 @@ export default function UserProtoPage() {
   const [loading, setLoading] = useState(true);
   const { messageId } = useParams() as { messageId: string };
   const [isMobileView, setIsMobileView] = useState(false);
+  const [isPictures, setIsPictures] = useState(false);
+  const [isVideo, setIsVideo] = useState(false);
 
   useEffect(() => {
     console.log(messageId);
@@ -26,6 +28,14 @@ export default function UserProtoPage() {
             messageId: messageId,
           }
         );
+        if (response) {
+          if (response.data.pictures) {
+            setIsPictures(true);
+          }
+          if (response.data.video) {
+            setIsVideo(true);
+          }
+        }
         setLetterData(response.data);
       } catch (error) {
         console.error(error);
@@ -69,7 +79,7 @@ export default function UserProtoPage() {
   return (
     <div className={styles.customclass}>
       <ProtoIntro />
-      <Memories letterData={letterData} />
+      {isPictures || isVideo ? <Memories letterData={letterData} /> : null}
       <ReleaseLetter letterData={letterData} />
       <More letterData={letterData} />
       <Survey />

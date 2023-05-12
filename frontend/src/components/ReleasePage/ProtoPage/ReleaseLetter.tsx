@@ -46,9 +46,11 @@ export default function ReleaseLetter(props: any) {
         alt=""
         className="items-center justify-center p-10 pb-2 mx-auto"
       />
-      <div className={`h-full ${styles[`letterPaper${letterPaper}`]}`}>
-        {currentLetter()}
-      </div>
+      {letterData.message && (
+        <div className={`h-full ${styles[`letterPaper${letterPaper}`]}`}>
+          {currentLetter()}
+        </div>
+      )}
     </div>
   );
 }
