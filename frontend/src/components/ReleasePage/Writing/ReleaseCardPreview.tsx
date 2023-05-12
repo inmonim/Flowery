@@ -162,7 +162,7 @@ export default function ReleaseCardPreview({ card }: CardProps) {
         testQr,
         `${content}`,
         `From. ${name}`,
-        "꽃들",
+        "kkotdeul",
         "test1"
       )}
       <div className="flex justify-center w-full">
