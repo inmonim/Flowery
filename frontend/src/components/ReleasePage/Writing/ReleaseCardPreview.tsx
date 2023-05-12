@@ -170,15 +170,14 @@ export default function ReleaseCardPreview({ card }: CardProps) {
           autoFocus
           autoComplete="off"
           onBlur={(e: any) => {
-            const nameInput = e.target.value.slice(0, 6);
-            setName(nameInput);
-          }}
-          onChange={(e) => {
+            setName(e.target.value);
             setIsName(true);
-            setInputName(e.target.value);
           }}
-          value={inputName}
-          placeholder="보내는 사람"
+          onChange={(e: any) => {
+            const nameInput = e.target.value.slice(0, 6);
+            e.target.value = nameInput;
+          }}
+          placeholder="From.         "
           className={`w-full mt-6 text-center border focus:outline-[#eed3b5] ${
             !isName && "border-2 border-red-500"
           } `}
@@ -192,21 +191,21 @@ export default function ReleaseCardPreview({ card }: CardProps) {
       <div className="flex justify-center">
         <input
           autoComplete="off"
-          onBlur={(e) => setContent(e.target.value)}
-          onChange={(e) => {
+          onBlur={(e) => {
             setIsContent(true);
-            setInputContent(e.target.value);
+            setContent(e.target.value);
           }}
-          value={inputContent}
           placeholder="한 줄로 마음을 전해보세요"
           className={`w-full my-4 text-center border focus:outline-[#eed3b5] ${
-            isName && !isContent && "border-2 border-red-500"
+            !isContent && "border-2 border-red-500"
           } `}
         ></input>
-        {isName && !isContent && (
+        {!isContent ? (
           <span className=" mt-5">
             <img src={Alert} alt="" className="absolute w-[5%]" />
           </span>
+        ) : (
+          <></>
         )}
       </div>
       {/* <div className="mx-auto w-[35%] flex font-bold py-2 px-4 rounded-full bg-[#eed3b5] hover:bg-[#eed3b5]">
