@@ -100,7 +100,7 @@ export default function ReleaseWrite() {
         {/* 페이지 내용 */}
         <div>
           <div className="flex">
-            <img src={Flowery} alt="" className="w-1/4 " />
+            <img src={Flowery} alt="" className="w-1/3 mx-auto p-7" />
             {/* <p className="font-nasq align-middle my-auto">시들지 않는 추억을 선물하세요</p> */}
           </div>
 
