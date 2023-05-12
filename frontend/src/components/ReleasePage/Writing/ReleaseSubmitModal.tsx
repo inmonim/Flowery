@@ -54,6 +54,7 @@ const ReleaseSubmitModal = React.forwardRef<HTMLDivElement, any>(
         .post("https://flowery.duckdns.org/api/messages/card", formData)
         .then((response) => {
           alert("제출이 완료됐습니다!");
+          navigate("/releaseexit");
         });
     };
 

@@ -11,7 +11,7 @@ import Card1 from "../../../assets/Card1.png";
 import { useRecoilState } from "recoil";
 import { cardState } from "../../../recoil/atom";
 
-export default function RealeaseWrite() {
+export default function ReleaseWrite() {
   const [showModal, setShowModal] = useState<boolean>(false);
   const [showLetterInput, setShowLetterInput] = useState<boolean>(false);
   const [showImageInput, setShowImageInput] = useState<boolean>(false);
