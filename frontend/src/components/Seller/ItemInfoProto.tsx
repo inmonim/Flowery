@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styles from "./ItemInfo.module.scss";
-import flower from "../../assets/example1.jpg";
+import flower from "../../assets/example2.jpg";
 import PrintCard from "./PrintCardProto";
 import FetchCard from "./FetchCardProto";
 interface ItemInfoProps {

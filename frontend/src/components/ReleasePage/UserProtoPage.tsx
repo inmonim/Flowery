@@ -7,6 +7,7 @@ import Memories from "./ProtoPage/Memories";
 import More from "./ProtoPage/More";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import styles from "./UserProtoPage.module.scss";
 
 export default function UserProtoPage() {
   const [letterData, setLetterData] = useState([]);
@@ -42,7 +43,7 @@ export default function UserProtoPage() {
   }
 
   return (
-    <div className="md:w-1/2 md:mx-auto pb-[30%]">
+    <div className={styles.customclass}>
       <ProtoIntro />
       <Memories letterData={letterData} />
       <ReleaseLetter letterData={letterData} />

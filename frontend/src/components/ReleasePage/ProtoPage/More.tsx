@@ -50,7 +50,7 @@ export default function More(props: any) {
                 className="absoulute h-[95%] pr-3 "
               />
               <div className="h-[80%] border-r border-[#322209] border-r-[3px]"></div>
-              <p className="text-[1.5rem]  font-namyeong font-bold pl-4 pr-3 text-[#322209]">
+              <p className="text-[1.5rem]  font-namyeong font-bold pl-4 pr-3 text-[#322209] break-words">
                 {letterData.mean}
               </p>
             </div>
@@ -70,7 +70,7 @@ export default function More(props: any) {
         <div className={styles["card-back"]}>
           <div className="flex justify-center ">
             <div className="h-[fit-content] min-h-[200px] w-[85%] flex justify-center items-center bg-[#AEBAA3] drop-shadow border-b rounded-2xl">
-              <p className=" p-2 overflow-hidden whitespace-pre font-namyeong font-bold text-[#322209] hover:animate-typing">
+              <p className=" p-2 overflow-hidden whitespace-pre font-namyeong font-bold text-[#322209]">
                 {letterData.poem}
               </p>
             </div>
