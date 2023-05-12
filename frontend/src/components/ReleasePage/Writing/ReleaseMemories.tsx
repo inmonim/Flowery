@@ -4,12 +4,12 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { useRecoilValue } from "recoil";
-import { imageState, videoState } from "../../../recoil/atom";
+import { cardName, imageState, videoState } from "../../../recoil/atom";
 
 export default function ReleaseMemories() {
   const images = useRecoilValue<Array<File>>(imageState);
   const video = useRecoilValue<File | null>(videoState);
-  const nickname = "창근";
+  const name = useRecoilValue<string>(cardName);
 
   const settings = {
     dots: true,
@@ -31,7 +31,7 @@ export default function ReleaseMemories() {
         <p className="text-[3rem] text-[#8D8E90] font-namyeong">Memories</p>
         <p className="text-[2rem] font-namyeong">추억</p>
         <p className="text-[0.8rem] text-[#82877C] font-namyeong">
-          {nickname}님이 꽃과 함께 업로드 해주신 추억들입니다.
+          {name}님이 꽃과 함께 업로드 해주신 추억들입니다.
         </p>
       </div>
 
@@ -49,7 +49,7 @@ export default function ReleaseMemories() {
         ))}
       {video && (
         <div>
-          <video src={URL.createObjectURL(video)} controls className="w-full"/>
+          <video src={URL.createObjectURL(video)} controls className="w-full" />
         </div>
       )}
     </div>

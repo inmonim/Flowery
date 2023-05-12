@@ -49,11 +49,13 @@ const ReleaseSubmitModal = React.forwardRef<HTMLDivElement, any>(
       axios
         .post("https://flowery.duckdns.org/api/reservation/make", jsonData)
         .then((response) => {
+          alert("제출이 완료됐습니다!");
           localStorage.clear();
           navigate("/releaseexit");
         })
         .catch((error) => {
           alert("다시 시도해주세요!");
+          setLoading(false);
         });
     };
 
@@ -87,15 +89,14 @@ const ReleaseSubmitModal = React.forwardRef<HTMLDivElement, any>(
           formData
         )
         .then((response) => {
-          alert("제출이 완료됐습니다!");
           submitCardInfo(response.data.messageId);
-        });
+        })
+        .catch((e) => setLoading(false));
     };
 
     return (
       <div className="relative z-[50]">
         <div className="fixed inset-0 bg-black bg-opacity-50 transition-opacity"></div>
-        {/* {loading ? <Loading /> : null} */}
         <div className="fixed inset-0 z-10 overflow-y-auto">
           <div className="flex min-h-full items-center justify-center p-16 text-center w-full sm:items-center sm:p-0">
             <div
@@ -121,6 +122,7 @@ const ReleaseSubmitModal = React.forwardRef<HTMLDivElement, any>(
                 <div
                   onClick={() => {
                     if (!loading) {
+                      setLoading(true);
                       submitReservationInfo();
                     }
                   }}
