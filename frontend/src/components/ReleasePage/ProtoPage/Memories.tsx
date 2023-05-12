@@ -15,7 +15,7 @@ export default function Memories(props: any) {
   console.log(letterData, "here");
 
   return (
-    <div>
+    <div className="mb-[30%]">
       {/* <div className="mb-[25%] flex justify-center">
         <img src={sellerpic} alt="s" />
       </div> */}

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import Flower from "../../../assets/example1.jpg";
-import styles from "../Writing/ReleaseLetterPreview.module.scss";
+import styles from "./ReleaseLetter.module.scss";
 import { useRecoilState } from "recoil";
 import {
   totalTextState,
@@ -33,7 +33,7 @@ export default function ReleaseLetter(props: any) {
 
   return (
     // 전체 페이지
-    <div className=" flex flex-col mt-[15%] mb-[15%]">
+    <div className="">
       <div className="h-[10rem] flex flex-col mt-[10%] ml-5">
         <p className="text-[2rem] text-[#8D8E90] font-namyeong">Letter</p>
         <p className="text-[1.2rem] font-namyeong">편지</p>
@@ -44,7 +44,7 @@ export default function ReleaseLetter(props: any) {
       <img
         src={Flower}
         alt=""
-        className="items-center justify-center p-2 mx-auto"
+        className="items-center justify-center p-10 pb-2 mx-auto"
       />
       <div className={`h-full ${styles[`letterPaper${letterPaper}`]}`}>
         {currentLetter()}

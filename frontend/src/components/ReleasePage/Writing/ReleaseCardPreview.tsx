@@ -145,7 +145,7 @@ export default function ReleaseCardPreview({ card }: CardProps) {
   };
 
   return (
-    <div className="relative">
+    <div className="">
       {mergeImages(
         cardFrame(),
         testQr,
@@ -156,7 +156,6 @@ export default function ReleaseCardPreview({ card }: CardProps) {
       )}
       <div className="flex justify-center w-full">
         <input
-          id="name"
           autoFocus
           autoComplete="off"
           onChange={(e: any) => {
@@ -164,16 +163,9 @@ export default function ReleaseCardPreview({ card }: CardProps) {
             setName(nameInput);
           }}
           value={name}
-          className="absolute top-[40%] opacity-0 focus:cursor-text"
+          placeholder="보내는 사람"
+          className="w-full mt-6 text-center border"
         ></input>
-        {!name && (
-          <label
-            htmlFor="name"
-            className="absolute text-center text-xs text-gray-300 top-[42.2%] left-[55%] font-sans cursor-text"
-          >
-            Click!
-          </label>
-        )}
       </div>
       <div className="flex justify-center">
         <input
@@ -183,17 +175,9 @@ export default function ReleaseCardPreview({ card }: CardProps) {
             setContent(e.target.value);
           }}
           value={content}
-          id="content"
-          className="absolute top-[52%] w-full h-[18%] opacity-0 cursor-text"
+          placeholder="한 줄로 마음을 전해보세요"
+          className="w-full my-4 text-center border"
         ></input>
-        {!content && (
-          <label
-            htmlFor="content"
-            className="absolute text-center text-sm  text-gray-300 top-[52%] w-full h-[18%]  font-sans cursor-text"
-          >
-            한 줄로 마음을 전해보세요
-          </label>
-        )}
       </div>
     </div>
   );

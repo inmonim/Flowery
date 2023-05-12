@@ -15,7 +15,7 @@ export default function More(props: any) {
   const flower = "카네이션";
 
   return (
-    <div className=" flex flex-col mb-[5%]">
+    <div className=" flex flex-col mb-[5%] mt-[30%]">
       <div className="h-[10rem] flex flex-col mt-[10%] ml-5 mb-[10%]">
         <p className="text-[2rem] text-[#8D8E90] font-namyeong">More</p>
         <p className="text-[1.2rem] font-namyeong">더 보기</p>

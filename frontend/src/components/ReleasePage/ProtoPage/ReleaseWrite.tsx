@@ -11,7 +11,7 @@ import Card1 from "../../../assets/Card1.png";
 import { useRecoilState } from "recoil";
 import { cardState } from "../../../recoil/atom";
 
-export default function RealeaseWrite() {
+export default function ReleaseWrite() {
   const [showModal, setShowModal] = useState<boolean>(false);
   const [showLetterInput, setShowLetterInput] = useState<boolean>(false);
   const [showImageInput, setShowImageInput] = useState<boolean>(false);
@@ -80,9 +80,6 @@ export default function RealeaseWrite() {
         {/* 페이지 내용 */}
         <div>
           <h2>
-            <div className="p-16 pb-0 mx-auto sm:w-[150px] md:w-[300px] lg:w-[450px]">
-              <ReleaseCardPreview card={card} />
-            </div>
             <div className="flex justify-center ">
               {[Card0, Card1].map((card, i: number) => (
                 <div key={i} className="">
@@ -93,6 +90,9 @@ export default function RealeaseWrite() {
                   />
                 </div>
               ))}
+            </div>
+            <div className="p-16 pt-0 mx-auto sm:w-[150px] md:w-[300px] lg:w-[450px]">
+              <ReleaseCardPreview card={card} />
             </div>
           </h2>
           <h2>
@@ -248,7 +248,7 @@ export default function RealeaseWrite() {
               <div className="cursor-pointer font-bold py-2 px-4 mx-4 rounded-full bg-[#eed3b5] hover:bg-[#eed3b5]">
                 <input
                   type="button"
-                  value="다음으로"
+                  value="미리보기"
                   onClick={submitButton}
                   className="cursor-pointer"
                 ></input>
