@@ -89,7 +89,7 @@ export default function ReleaseVideoInput() {
         ) : (
           <label
             htmlFor="dropzoneVideo"
-            className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+            className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50  hover:bg-gray-100 "
           >
             <div
               onDragOver={handleDragOver}
@@ -102,10 +102,10 @@ export default function ReleaseVideoInput() {
                 alt="camera icon"
                 className="w-10 h-10 mb-3 text-gray-400"
               ></img>
-              <p className="text-base  font-bold text-gray-500 dark:text-gray-400">
+              <p className="text-base  font-bold text-gray-500 ">
                 보내고 싶은 영상을 업로드하세요!
               </p>
-              <p className="text-xs text-gray-500 dark:text-gray-400">
+              <p className="text-xs text-gray-500 ">
                 (영상은 최대 50MB, 약 20초 내외로 가능합니다)
               </p>
             </div>
