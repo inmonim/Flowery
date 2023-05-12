@@ -71,6 +71,7 @@ export default function ReleaseWrite() {
   const submitButton = () => {
     if (name && content) {
       setShowModal(true);
+      window.scrollTo({ top: 0 });
     } else {
       if (!name) {
         setIsName(false);
