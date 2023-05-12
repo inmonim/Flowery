@@ -67,7 +67,7 @@ const ReleasePreviewModal = React.forwardRef<HTMLDivElement, any>(
                   window.scrollTo({ top: 0 });
                   setReservationConfirm(true);
                 }}
-                className="cursor-pointer border rounded-full p-2 px-4 font-bold text-white bg-[#B89060]"
+                className="cursor-pointer border rounded-full p-2 px-4 font-bold text-white bg-[#eed3b5]"
               >
                 제출하기
               </span>

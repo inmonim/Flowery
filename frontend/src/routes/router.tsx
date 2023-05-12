@@ -18,6 +18,7 @@ import UserProtoPage from "../components/ReleasePage/UserProtoPage";
 import OrderPage from "../components/User/Reservation/OrderPage";
 import SellerBookPage from "../pages/Seller/SellerBookPage/SellerBookPage";
 import RealeaseWrite from "../components/ReleasePage/ProtoPage/ReleaseWrite";
+import ReleaseExitPage from "../components/ReleasePage/Writing/ReleaseExitPage";
 
 const router = createBrowserRouter([
   {
@@ -54,6 +55,7 @@ const router = createBrowserRouter([
     children: [
       { path: "/release", element: <ReleaseIntro /> },
       { path: "/releasewrite", element: <RealeaseWrite /> },
+      { path: "/releaseexit", element: <ReleaseExitPage /> },
       { path: "/userproto/:messageId", element: <UserProtoPage /> },
     ],
   },
