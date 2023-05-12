@@ -33,12 +33,16 @@ export default function UserProtoPage() {
     getData();
   }, []);
 
+  useEffect(() => {
+    console.log("letterData: ", letterData);
+  }, [letterData]);
+
   if (loading) {
     return <div>Loading...</div>; // 로딩 중일 때 표시할 내용
   }
 
   return (
-    <div className="md:w-1/2 md:mx-auto">
+    <div className="md:w-1/2 md:mx-auto pb-[30%]">
       <ProtoIntro />
       <Memories letterData={letterData} />
       <ReleaseLetter letterData={letterData} />

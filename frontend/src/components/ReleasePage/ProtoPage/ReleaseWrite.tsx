@@ -8,14 +8,25 @@ import ReleaseCardPreview from "../Writing/ReleaseCardPreview";
 import ReleasePreview from "../Writing/ReleasePreview";
 import Card0 from "../../../assets/Card0.png";
 import Card1 from "../../../assets/Card1.png";
-import { useRecoilState } from "recoil";
-import { cardState } from "../../../recoil/atom";
+import Flowery from "../../../assets/logo.png";
+import { useRecoilState, useRecoilValue } from "recoil";
+import {
+  cardContent,
+  cardName,
+  cardState,
+  isCardContent,
+  isCardName,
+} from "../../../recoil/atom";
 
 export default function ReleaseWrite() {
   const [showModal, setShowModal] = useState<boolean>(false);
   const [showLetterInput, setShowLetterInput] = useState<boolean>(false);
   const [showImageInput, setShowImageInput] = useState<boolean>(false);
   const [card, setCard] = useRecoilState<number>(cardState);
+  const name = useRecoilValue<string>(cardName);
+  const content = useRecoilValue<string>(cardContent);
+  const [isName, setIsName] = useRecoilState<boolean>(isCardName);
+  const [isContent, setIsContent] = useRecoilState<boolean>(isCardContent);
   const [isDrag, setIsDrag] = useState(false);
 
   const modalRef = useRef<HTMLDivElement>(null);
@@ -58,7 +69,16 @@ export default function ReleaseWrite() {
 
   // 다음으로 버튼
   const submitButton = () => {
-    setShowModal(true);
+    if (name && content) {
+      setShowModal(true);
+    } else {
+      if (!name) {
+        setIsName(false);
+      }
+      if (!content) {
+        setIsContent(false);
+      }
+    }
   };
 
   return (
@@ -79,6 +99,11 @@ export default function ReleaseWrite() {
       <div>
         {/* 페이지 내용 */}
         <div>
+          <div className="flex">
+            <img src={Flowery} alt="" className="w-1/3 mx-auto p-7" />
+            {/* <p className="font-nasq align-middle my-auto">시들지 않는 추억을 선물하세요</p> */}
+          </div>
+
           <h2>
             <div className="flex justify-center ">
               {[Card0, Card1].map((card, i: number) => (
@@ -235,7 +260,7 @@ export default function ReleaseWrite() {
 
         {/* 페이지 이동 */}
         <div className="relative h-[15vh]">
-          <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2">
+          <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
             <div className="flex">
               {/* <div className="cursor-pointer font-bold py-2 px-4 mx-4 rounded-full bg-[#eed3b5] hover:bg-[#eed3b5]">
                 <input
@@ -245,7 +270,7 @@ export default function ReleaseWrite() {
                   className="cursor-pointer"
                 />
               </div> */}
-              <div className="cursor-pointer font-bold py-2 px-4 mx-4 rounded-full bg-[#eed3b5] hover:bg-[#eed3b5]">
+              <div className="cursor-pointer font-bold font-nasq border bg-[#eed3b5] py-2 pb-2 px-4 mx-4 rounded-full ">
                 <input
                   type="button"
                   value="미리보기"

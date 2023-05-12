@@ -96,7 +96,7 @@ const ReleaseSubmitModal = React.forwardRef<HTMLDivElement, any>(
         <div className="fixed inset-0 bg-black bg-opacity-50 transition-opacity"></div>
 
         <div className="fixed inset-0 z-10 overflow-y-auto">
-          <div className="flex min-h-full items-center justify-center p-4 text-center w-full sm:items-center sm:p-0">
+          <div className="flex min-h-full items-center justify-center p-16 text-center w-full sm:items-center sm:p-0">
             <div
               ref={ref}
               className="relative w-full transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all  sm:max-w-lg"
@@ -105,7 +105,7 @@ const ReleaseSubmitModal = React.forwardRef<HTMLDivElement, any>(
                 <div className="justify-center sm:flex sm:items-start">
                   <div className="text-center justify-center items-center sm:mt-0">
                     <h3
-                      className="text-base font-semibold leading-6 text-gray-900"
+                      className="text-base mb-4 font-semibold leading-6 text-gray-900"
                       id="modal-title"
                     >
                       확인
@@ -122,7 +122,7 @@ const ReleaseSubmitModal = React.forwardRef<HTMLDivElement, any>(
                     submitCardInfo();
                     submitReservationInfo();
                   }}
-                  className="inline-flex justify-center rounded-md px-3 py-2 text-sm font-semibold shadow-sm bg-[#eed3b5] z-[67] hover:hover:bg-[#eed3b5] sm:ml-3 sm:w-auto"
+                  className="inline-flex justify-center rounded-md px-3 py-2 mb-4 text-sm font-semibold shadow-sm bg-[#eed3b5] z-[67] hover:hover:bg-[#eed3b5] sm:ml-3 sm:w-auto"
                 >
                   제출하기
                 </div>
