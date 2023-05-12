@@ -3,8 +3,15 @@ import { saveAs } from "file-saver";
 import axios from "axios";
 import Card0 from "../../../assets/Card0.png";
 import Card1 from "../../../assets/Card1.png";
-import { useRecoilState } from "recoil";
-import { cardContent, cardName, cardState } from "../../../recoil/atom";
+import Alert from "../../../assets/alert.png";
+import { useRecoilState, useRecoilValue } from "recoil";
+import {
+  cardContent,
+  cardName,
+  cardState,
+  isCardContent,
+  isCardName,
+} from "../../../recoil/atom";
 
 interface CardProps {
   card: number;
@@ -14,6 +21,10 @@ export default function ReleaseCardPreview({ card }: CardProps) {
   const [imgUrl, setImgUrl] = useState<string>("");
   const [name, setName] = useRecoilState<string>(cardName);
   const [content, setContent] = useRecoilState<string>(cardContent);
+  const [inputName, setInputName] = useState<string>("");
+  const [inputContent, setInputContent] = useState<string>("");
+  const [isName, setIsName] = useRecoilState<boolean>(isCardName);
+  const [isContent, setIsContent] = useRecoilState<boolean>(isCardContent);
 
   function drawMultilineText(
     ctx: CanvasRenderingContext2D,
@@ -158,27 +169,57 @@ export default function ReleaseCardPreview({ card }: CardProps) {
         <input
           autoFocus
           autoComplete="off"
-          onChange={(e: any) => {
+          onBlur={(e: any) => {
             const nameInput = e.target.value.slice(0, 6);
             setName(nameInput);
           }}
-          value={name}
+          onChange={(e) => {
+            setIsName(true);
+            setInputName(e.target.value);
+          }}
+          value={inputName}
           placeholder="보내는 사람"
-          className="w-full mt-6 text-center border"
+          className={`w-full mt-6 text-center border focus:outline-[#eed3b5] ${
+            !isName && "border-2 border-red-500"
+          } `}
         ></input>
+        {!isName && (
+          <span className=" mt-7">
+            <img src={Alert} alt="" className="absolute w-[5%]" />
+          </span>
+        )}
       </div>
       <div className="flex justify-center">
         <input
-          autoFocus
           autoComplete="off"
-          onChange={(e: any) => {
-            setContent(e.target.value);
+          onBlur={(e) => setContent(e.target.value)}
+          onChange={(e) => {
+            setIsContent(true);
+            setInputContent(e.target.value);
           }}
-          value={content}
+          value={inputContent}
           placeholder="한 줄로 마음을 전해보세요"
-          className="w-full my-4 text-center border"
+          className={`w-full my-4 text-center border focus:outline-[#eed3b5] ${
+            isName && !isContent && "border-2 border-red-500"
+          } `}
         ></input>
+        {isName && !isContent && (
+          <span className=" mt-5">
+            <img src={Alert} alt="" className="absolute w-[5%]" />
+          </span>
+        )}
       </div>
+      {/* <div className="mx-auto w-[35%] flex font-bold py-2 px-4 rounded-full bg-[#eed3b5] hover:bg-[#eed3b5]">
+        <input
+          type="button"
+          value="미리보기"
+          onClick={() => {
+            setName(inputName);
+            setContent(inputContent);
+          }}
+          className="cursor-pointer justify-center text-center items-center"
+        ></input>
+      </div> */}
     </div>
   );
 }

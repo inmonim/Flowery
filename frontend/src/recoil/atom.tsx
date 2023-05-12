@@ -29,11 +29,24 @@ export const cardName = atom<string>({
   default: "",
 });
 
+// 카드 보내는 이름 입력 여부
+export const isCardName = atom<boolean>({
+  key: "isCardNameState",
+  default: true,
+});
+
 // 카드 한줄글
 export const cardContent = atom<string>({
   key: "cardContentState",
   default: "",
 });
+
+// 카드 한줄글 입력 여부
+export const isCardContent = atom<boolean>({
+  key: "isCardContentState",
+  default: true,
+});
+
 
 // 업로드한 이미지
 export const imageState = atom<Array<File>>({
