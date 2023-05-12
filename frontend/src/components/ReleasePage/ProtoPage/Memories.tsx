@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Video1 from "../../../assets/ReleasePage/Video1.mp4";
 import sellerpic from "../../../assets/flower_sample.jpg";
+import ErrorImg from "../../../assets/ReleasePage/imageError.png";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -12,7 +13,10 @@ export default function Memories(props: any) {
     return null; // letterData가 없을 경우 컴포넌트를 렌더링하지 않음
   }
 
-  console.log(letterData, "here");
+  const handleImageError = (e: any) => {
+    e.target.onerror = null;
+    e.target.src = ErrorImg;
+  };
 
   return (
     <div className="mb-[30%]">
@@ -37,12 +41,14 @@ export default function Memories(props: any) {
               index % 2 === 0 ? "mr-auto" : "ml-auto"
             }`}
           >
-            <img src={picture} alt="couple" />
+            <img src={picture} alt="couple" onError={(e) => handleImageError} />
           </div>
         ))}
-      <div>
-        <video src={letterData.video} className="w-[100%]" controls />
-      </div>
+      {letterData.video && (
+        <div>
+          <video src={letterData.video} className="w-[100%]" controls />
+        </div>
+      )}
     </div>
   );
 }
