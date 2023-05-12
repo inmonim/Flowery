@@ -1,6 +1,8 @@
 @media (min-width: 501px) {
   .customclass {
-    display: none;
+    // display: none;
+    background-image: url(../../assets/pleasemobile.png);
+    background-repeat: no-repeat;
   }
 }
 
@@ -10,4 +12,9 @@
     margin-right: auto;
     padding-bottom: 30%;
   }
+}
+
+.photo11 {
+  width: 45vw;
+  margin: auto;
 }
