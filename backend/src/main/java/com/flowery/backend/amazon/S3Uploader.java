@@ -37,7 +37,7 @@ public class S3Uploader {
 
         amazonS3Client.putObject(bucket, filepath, file.getInputStream(), metadata);
 
-        String S3Url = "https://" + bucket + ".s3." + region + ".amazonaws.com/" + filepath;
+        String S3Url = "https://s3." + region + ".amazonaws.com/"+ bucket+"/" +  filepath;
 
         return S3Url;
     }
