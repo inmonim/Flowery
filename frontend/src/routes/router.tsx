@@ -19,6 +19,7 @@ import OrderPage from "../components/User/Reservation/OrderPage";
 import SellerBookPage from "../pages/Seller/SellerBookPage/SellerBookPage";
 import RealeaseWrite from "../components/ReleasePage/ProtoPage/ReleaseWrite";
 import ReleaseExitPage from "../components/ReleasePage/Writing/ReleaseExitPage";
+import SellerManagePage from "../pages/Seller/SellerManagePage/SellerManage";
 
 const router = createBrowserRouter([
   {
@@ -47,6 +48,7 @@ const router = createBrowserRouter([
       { path: "/seller/login", element: <SellerLoginPage /> },
       { path: "/seller/proto", element: <ProtoPage /> },
       { path: "/seller/book", element: <SellerBookPage /> },
+      { path: "/seller/manage", element: <SellerManagePage />}
     ],
   },
   {
