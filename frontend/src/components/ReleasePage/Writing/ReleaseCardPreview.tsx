@@ -158,7 +158,7 @@ export default function ReleaseCardPreview() {
     }
   };
 
-  // 카드 글 유효성 검사
+  // 카드 이름 유효성 검사
   const checkName = (e: React.ChangeEvent<HTMLInputElement>) => {
     let name = "";
     const noEmoji =
@@ -168,15 +168,17 @@ export default function ReleaseCardPreview() {
         name += e.target.value[i];
       }
     }
-    const nameInput = e.target.value.slice(0, 6);
+    const nameInput = name.slice(0, 6);
     setName(nameInput);
     e.target.value = nameInput;
   };
 
+  // 카드 글 유효성 검사
   const checkContent = (e: React.ChangeEvent<HTMLInputElement>) => {
     let content = "";
     const noEmoji =
-      /^[0-9a-zA-Zㄱ-힣\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\" ]*$/;
+    /^[0-9a-zA-Zㄱ-힣\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\" ]*$/;
+
     for (let i = 0; i < e.target.value.length; i++) {
       if (noEmoji.test(e.target.value[i])) {
         content += e.target.value[i];
@@ -228,6 +230,7 @@ export default function ReleaseCardPreview() {
             setIsContent(true);
             setContent(e.target.value);
           }}
+          onChange={checkContent}
           placeholder="한 줄로 마음을 전해보세요"
           className={`w-full my-4 text-center border focus:outline-[#eed3b5] ${
             !isContent && "border-2 border-red-500"

@@ -129,7 +129,7 @@ export default function ReleaseCard() {
           );
           setImgUrl(canvas.toDataURL());
         };
-        image2.src = `data:image/png;base64,${image2Base64}`;
+        // image2.src = `data:image/png;base64,${image2Base64}`;
       }
     };
     image1.src = image1Url;
@@ -140,7 +140,7 @@ export default function ReleaseCard() {
     };
 
     return (
-      <div>
+      <div className="">
         <img
           src={imgUrl}
           alt="카드"
