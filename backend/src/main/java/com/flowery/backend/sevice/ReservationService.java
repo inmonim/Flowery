@@ -45,11 +45,44 @@ public class ReservationService {
         this.samplesRepository = samplesRepository;
     }
 
+
     public class ReservationNotFoundException extends RuntimeException {
         public ReservationNotFoundException(String message) {
             super(message);
         }
     }
+
+    public ReservationDto updateReservation(ReservationDto reservationDto) throws Exception {
+        Reservation reservation = reservationRepository.findById(reservationDto.getReservationId())
+                .orElseThrow(() -> new ReservationNotFoundException("예약을 찾을 수 없습니다."));
+
+        reservation.setGoodsName(reservationDto.getGoodsName());
+        reservation.setPrice(reservationDto.getPrice());
+
+        List<Goods> goodsList = goodsRepository.findGoodsByStoreId(reservation.getStoreId());
+        // 올바른 가격과 상품이 선택되었는지 확인함
+        for(int i=0; i<goodsList.size(); i++){
+            if(goodsList.get(i).getGoodsName().equals(reservationDto.getGoodsName())){
+                Goods goods = goodsList.get(i);
+                List<Samples> samplesList = samplesRepository.findAllByGoodsId(goods);
+                if (samplesList.size() > 0) {
+                    String image = samplesList.get(0).getPicture();
+                    reservation.setImage(image);
+                }
+            }
+        }
+
+
+
+        reservationRepository.save(reservation);
+
+        ReservationDto tmp = new ReservationDto();
+        reservationEntityToDto(tmp, reservation);
+
+
+        return tmp;
+    }
+
 
 
     public List<ReservationDto> findTodayReservation(LocalDateTime dateTime){
@@ -258,9 +291,9 @@ public class ReservationService {
         reservation.setDemand(reservationDto.getDemand());
         reservation.setDate(reservationDto.getDate());
         reservation.setPrinted(0);
-        reservation.setPermission(null);
+//        reservation.setPermission(null);
 //        프로젝트용 코드
-//        reservation.setPermission(1);
+        reservation.setPermission(1);
         reservation.setReservationName(reservationDto.getReservationName());
         reservation.setPhrase(reservationDto.getPhrase());
 //        reservation.setImage(stores.getImage());

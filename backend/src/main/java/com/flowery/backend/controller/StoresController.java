@@ -63,7 +63,7 @@ public class StoresController {
 
     }
 
-    // 상품을 추가
+    // 상품을 추가 (예전 코드)
     @PostMapping("/goods")
     public ResponseEntity<Goods> createGoods(@RequestBody GoodsDto goods)  throws Exception {
         LOGGER.info("createGoods가 호출되었습니다.");

@@ -3,9 +3,6 @@ package com.flowery.backend.controller;
 import com.flowery.backend.model.dto.CardDto;
 import com.flowery.backend.model.dto.ReservationDto;
 import com.flowery.backend.model.dto.StoresDto;
-import com.flowery.backend.model.dto.UsersDto;
-import com.flowery.backend.model.entity.Reservation;
-import com.flowery.backend.sevice.MessagesService;
 import com.flowery.backend.sevice.ReservationService;
 import com.flowery.backend.sevice.ReservationService.AlreadyPrintedException;
 import com.flowery.backend.sevice.ReservationService.NotPermittedException;
@@ -43,6 +40,20 @@ public class ReservationController {
         System.out.println(dateTime);
 
         return new ResponseEntity<>(reservationService.findTodayReservation(dateTime), HttpStatus.ACCEPTED);
+    }
+
+    // 예약을 수정
+    @PatchMapping()
+    public ResponseEntity<ReservationDto> updateReservation(@RequestBody ReservationDto reservationDto){
+        LOGGER.info("updateReservation가 호출되었습니다.");
+        
+        try{
+            return new ResponseEntity<ReservationDto>(reservationService.updateReservation(reservationDto), HttpStatus.ACCEPTED);
+        } catch(Exception e) {
+            LOGGER.error("예약 수정에 실패했습니다.", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(null);
+        }        
     }
 
     @PostMapping("/user")
@@ -85,6 +96,7 @@ public class ReservationController {
 
         return new ResponseEntity<List<ReservationDto>>(reservationService.findByStoreId(storeId), HttpStatus.ACCEPTED);
     }
+    
 
     // 등록된 예약을 승인시킴
     @PostMapping("/accept")

@@ -115,7 +115,6 @@ public class StoresService {
 
     // 상품 등록
     public Goods createGoods(GoodsDto requestData) {
-        System.out.println(0);
         Stores store = storeRepository.findById(requestData.getStoreId())
                 .orElseThrow(() -> new StoreNotFoundException("해당 id의 상점이 존재하지 않습니다."));
         Goods goods = new Goods();
@@ -140,7 +139,7 @@ public class StoresService {
     }
 
 
-    public class StoreNotFoundException extends RuntimeException {
+    public static class StoreNotFoundException extends RuntimeException {
         public StoreNotFoundException(String message) {
             super(message);
         }
