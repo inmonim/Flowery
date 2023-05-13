@@ -62,11 +62,11 @@ export default function ReleaseMore() {
         <div className={styles["card-back"]}>
           <div className="flex justify-center ">
             <div className="h-[fit-content] min-h-[200px] w-[85%] flex justify-center items-center bg-[#AEBAA3] drop-shadow border-b rounded-2xl">
-              <p className=" p-2 overflow-hidden whitespace-pre font-namyeong font-bold text-[#322209] hover:animate-typing">
+              <span className=" p-2 overflow-hidden whitespace-pre font-namyeong font-bold text-[#322209] hover:animate-typing">
                 <p className="text-center">꽃말을 이용해 </p>
                 <br />
                 <p className="text-center">Ai가 작성한 시가 보여집니다.</p>
-              </p>
+              </span>
             </div>
           </div>
         </div>
