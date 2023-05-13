@@ -24,9 +24,9 @@ export default function NotSale(props: Props) {
   const [formdatas, setFormdatas] = useState<FormData | null>(null);
   const myStoreId = useRecoilValue(storeId)
   const [myGoods, setMyGoods] = useState<Goods[]>([]);
-  // const [selectedItem, setSelectedItem] = useState<number | null>(null);
   const [selectedItem, setSelectedItem] = useState<Goods | null>(null);
   const [inputValue, setInputValue] = useState("");
+  const [filedata, setFileData] = useState<any>(null);
 
   function handleClick() {
     props.closeModal33();
@@ -72,7 +72,7 @@ export default function NotSale(props: Props) {
           .then((response) => {
             return response.json();
           })
-          .then((data) => console.log(data));
+          .then((data) => setFileData(data));
         setPhotoUrl1(URL.createObjectURL(file));
       }
     };
@@ -85,6 +85,20 @@ export default function NotSale(props: Props) {
 
   function checkStep1() {
     setStep1(true);
+  }
+
+  function checkStep2() {
+
+  }
+
+  function checkwithStep2(price: number) {
+    axios.patch(`https://flowery.duckdns.org/api/stores/goods/${selectedItem?.goodsId}`, {
+      storeId : myStoreId,
+      goodsId : selectedItem?.goodsId,
+      goodsName : selectedItem?.goodsName,
+      goodsPrice : price,
+      goodsDetail : selectedItem?.goodsDetail
+    })
   }
   return (
     <div className={styles.modal}>
@@ -137,7 +151,14 @@ export default function NotSale(props: Props) {
                 </div>
               </div>
               <div className="w-[87vw] flex justify-center">
-          { selectedItem !== null ? <button className={styles.successbutton} onClick={checkStep1}>저장</button> : <button className={styles.printbutton}>저장</button>}</div>
+                {selectedItem && selectedItem.goodsName === '기타' && inputValue !== "" ? (
+                  <button className={styles.successbutton} onClick={() => checkwithStep2(selectedItem.goodsPrice)}>저장</button>
+                ) : selectedItem && selectedItem.goodsName === '기타' && inputValue === "" ? (
+                  <button className={styles.printbutton}>저장</button>
+                ) : (
+                  <button className={styles.successbutton} onClick={checkStep2}>저장</button>
+                )}
+              </div>
               </>
             ) : (
               ''
