@@ -32,6 +32,8 @@ module.exports = {
         textSlideRtoL: "textSlideRtoL 1s ease-in-out forwards",
         heartBeat: "heartBeat 1s ease-in-out infinite",
         typing: "typing 3.5s steps(40, end)",
+        beat: "heartBeat 1s ease-in-out infinite",
+        shakeRight: "shakeRight 1s ease-in-out infinite"
       },
       keyframes: {
         typing: {
@@ -66,6 +68,20 @@ module.exports = {
         textSlideRtoL: {
           "0%": { transform: "translateX(100%)" },
           "100%": { transform: "translateX(0)" },
+        },
+        beat: {
+          "0%": { transform: "scale(1);" },
+          // "25%": { transform: "scale(1.2);" },
+          "50%": { transform: "scale(1.2);" },
+          // "50%": { transform: "scale(1);" },
+          // "75%": { transform: "scale(1.2);" },
+        },
+        shakeRight: {
+          "0%": { transform: "translateX(0)" },
+          "25%": { transform: "translateX(5px) rotateY(7deg)" },
+          "50%": { transform: "translateX(0)" },
+          "75%": { transform: "translateX(5px) rotateY(7deg)" },
+          // "0%": { transform: "translateX(5px)"}
         },
       },
     },
