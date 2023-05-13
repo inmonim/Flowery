@@ -22,6 +22,10 @@ export default function Modal(props: ModalProps) {
   function handleBook() {
     navigate("/seller/book");
   }
+
+  function handleManage() {
+    navigate("/seller/manage");
+  }
   return (
     <div className={styles.bg} onClick={props.handleModalClose}>
       <div className={styles.menuItem} onClick={handleBook}>
@@ -30,7 +34,7 @@ export default function Modal(props: ModalProps) {
       <div className={styles.menuItem}>
         <img src={analysis} alt="" width="16"></img> <span>판매분석</span>
       </div>
-      <div className={styles.menuItem}>
+      <div className={styles.menuItem} onClick={handleManage}>
         <img src={manage} alt="" width="16"></img> <span>매장관리</span>
       </div>
       <hr />

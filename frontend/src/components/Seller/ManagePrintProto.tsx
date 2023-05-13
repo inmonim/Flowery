@@ -20,21 +20,16 @@ interface ReservationItem {
 }
 
 export default function ManagePrint() {
-  const date = new Date();
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const day = String(date.getDate()).padStart(2, "0");
-  const hours = String(date.getHours()).padStart(2, "0");
-  const minutes = String(date.getMinutes()).padStart(2, "0");
-  const seconds = String(date.getSeconds()).padStart(2, "0");
-  const formattedDate = `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
 
   const [reservation, setReservation] = useState<ReservationItem[]>([]);
 
   useEffect(() => {
+    const currentDate = new Date();
+const formattedDate = currentDate.toISOString().split('T')[0] + 'T00:00:00';
+console.log(formattedDate)
     axios
       .post(
-        `https://flowery.duckdns.org/api/reservation/day/?date=2023-05-12T00:00:00`,
+        `https://flowery.duckdns.org/api/reservation/day/?date=${formattedDate}`,
         {
           storeId: 4,
         }
@@ -45,7 +40,7 @@ export default function ManagePrint() {
       .catch((error) => {
         console.error(error);
       });
-  }, [formattedDate]);
+  }, []);
   return (
     <div className={styles.mainbox}>
       <div className={styles.secondbox}>
