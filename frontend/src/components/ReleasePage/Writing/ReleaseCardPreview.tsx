@@ -190,6 +190,7 @@ export default function ReleaseCardPreview() {
 
   const handleCardDisplayed = () => {
     setCardDisplayed(true);
+    window.scrollTo({ top: 0 });
   };
 
   return (
