@@ -69,9 +69,9 @@ export default function ReleaseWrite() {
 
   // 다음으로 버튼
   const submitButton = () => {
+    window.scrollTo({ top: 0 });
     if (name && content) {
       setShowModal(true);
-      window.scrollTo({ top: 0 });
     } else {
       if (!name) {
         setIsName(false);
@@ -102,7 +102,6 @@ export default function ReleaseWrite() {
         <div>
           <div className="flex">
             <img src={Flowery} alt="" className="w-1/3 mx-auto p-7" />
-            {/* <p className="font-nasq align-middle my-auto">시들지 않는 추억을 선물하세요</p> */}
           </div>
 
           <h2>
@@ -118,10 +117,13 @@ export default function ReleaseWrite() {
               ))}
             </div>
             <div className="p-16 pt-0 mx-auto sm:w-[150px] md:w-[300px] lg:w-[450px]">
-              <ReleaseCardPreview card={card} />
+              <ReleaseCardPreview/>
             </div>
           </h2>
           <h2>
+            <p className="mx-auto mb-4 text-xs text-center text-[#eed3b5]">
+              꽃을 받으실 분께 편지를 써보세요
+            </p>
             <button
               type="button"
               onClick={() => {
@@ -173,6 +175,9 @@ export default function ReleaseWrite() {
             </div>
           )}
           <h2>
+          <p className="mx-auto p-4 text-xs text-center text-[#eed3b5]">
+              사진이나 영상도 보낼 수 있습니다
+            </p>
             <button
               type="button"
               onClick={() => {
