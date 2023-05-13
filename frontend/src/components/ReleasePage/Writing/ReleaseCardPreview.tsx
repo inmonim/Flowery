@@ -190,8 +190,13 @@ export default function ReleaseCardPreview() {
 
   const handleCardDisplayed = () => {
     setCardDisplayed(true);
-    window.scrollTo({ top: 0 });
   };
+
+  useEffect(() => {
+    if (cardDisplayed) {
+      window.scrollTo({ top: 0 });
+    }
+  }, [cardDisplayed]);
 
   return (
     <div className="">
