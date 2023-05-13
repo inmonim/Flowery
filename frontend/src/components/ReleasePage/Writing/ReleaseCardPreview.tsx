@@ -193,8 +193,8 @@ export default function ReleaseCardPreview() {
   };
 
   useEffect(() => {
-    if (cardDisplayed) {
-      window.scrollTo({ top: 0 });
+    if (document.getElementById("card")) {
+      window.scrollTo(0, 0);
     }
   }, [cardDisplayed]);
 
@@ -209,7 +209,7 @@ export default function ReleaseCardPreview() {
         "test1"
       )}
       {cardDisplayed && (
-        <div>
+        <div id="card">
           <p className="mx-auto mt-1 text-sm text-center text-[#eed3b5]">
             꽃과 함께 받을 카드입니다.
           </p>
