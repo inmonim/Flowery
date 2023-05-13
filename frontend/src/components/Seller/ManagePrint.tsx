@@ -31,7 +31,7 @@ const formattedDate = currentDate.toISOString().split('T')[0] + 'T00:00:00';
 console.log(formattedDate)
   useEffect(() => {
     axios
-      .post(`https://flowery.duckdns.org/api/reservation/day/?date=${formattedDate}`, {
+      .post(`https://flowery.duckdns.org/api/reservation/day/?date=2023-05-14T00:00:00`, {
         storeId: myStoreId,
       })
       .then((response) => {
@@ -43,6 +43,7 @@ console.log(formattedDate)
           );
         }
         setReservation(filteredItems);
+        console.log(filteredItems)
       })
       .catch((error) => {
         console.error(error);
@@ -53,12 +54,12 @@ console.log(formattedDate)
     <div className={styles.mainbox}>
       <div className={styles.secondbox}>
         <div className={styles.title}>
-          <Title num={reservation.length} />
+          <Title num={reservation.filter((item: ReservationItem) => item.permission !== null).length} />
         </div>
         {reservation
           .filter(
             (item: ReservationItem) =>
-              location.pathname === "/seller/book" ||
+              (location.pathname === "/seller/book" && item.permission !== null) ||
               (item.permission === 1 && item.printed === 0)
           )
           .slice(0, location.pathname === "/seller" ? 5 : undefined)

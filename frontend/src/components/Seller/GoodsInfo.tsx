@@ -14,7 +14,7 @@ interface GoodsItem {
 export default function GoodsInfo(props: GoodsItem) {
 
   function deleteGoods(id: number) {
-    axios.post(`https://flowery.duckdns.org/api/stores/goods/${id}`)
+    axios.delete(`https://flowery.duckdns.org/api/stores/goods/${id}`)
     .then(() => {
       alert('삭제되었습니다.')
       window.location.reload();
