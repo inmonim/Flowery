@@ -125,3 +125,22 @@ def make_poem(keyword1, keyword2, conn=conn):
     poem = completion.choices[0].message.content
     
     conn.execute(text(f"INSERT INTO poems (flower_id, poem) VALUES (4, '{poem}')"))
+    
+    
+def get_flower_lang(conn=conn):
+    
+    flower_lang_dict = {}
+    
+    results = conn.execute(text("SELECT * FROM meaning"))
+    
+    for _, flower_id, flower_lang in results:
+        
+        if flower_lang_dict.get(flower_id):
+            flower_lang_dict[flower_id].append(flower_lang)
+        
+        else:
+            flower_lang_dict[flower_id] = [flower_lang]
+    
+    return flower_lang_dict
+
+flower_lang = get_flower_lang()
