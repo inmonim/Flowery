@@ -1,6 +1,7 @@
 package com.flowery.backend.controller;
 
 import com.flowery.backend.amazon.S3Uploader;
+import com.flowery.backend.model.dto.GoodsDto;
 import com.flowery.backend.model.entity.Goods;
 import com.flowery.backend.model.entity.Samples;
 import com.flowery.backend.sevice.GoodsService;
@@ -11,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("goods")
@@ -26,12 +29,26 @@ public class GoodsController {
         this.s3Uploader = s3Uploader;
     }
 
-    // 굿즈에 샘플 이미지 추가
+    // 상품 목록 조회하기
+    @PostMapping()
+    public ResponseEntity<List<Goods>> findByStoreId(@RequestBody GoodsDto goodsDto){
+        LOGGER.info("findByStoreId가 호출되었습니다.");
+        try{
+            return new ResponseEntity<List<Goods>>(goodsService.findAllBystoreId(goodsDto), HttpStatus.OK);
+        }catch (Exception e){
+            LOGGER.error("상품 조회에 실패했습니다.", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(null);
+        }
+        
+    } 
 
+
+    // 굿즈에 샘플 이미지 추가
     @PostMapping("/{goodsId}/sample")
     public ResponseEntity<Samples> createSample(@PathVariable("goodsId") Integer goodsId,
                                              @RequestPart MultipartFile picture
-    ) throws Exception{
+    ) {
         LOGGER.info("createSample이 호출되었습니다.");
         try{
             String pictureUrl = s3Uploader.uploadFile(picture);
@@ -47,8 +64,9 @@ public class GoodsController {
         }
     }
 
+    // 샘플 이미지 삭제
     @DeleteMapping("/sample/{sampleId}")
-    public ResponseEntity<?> deleteSample(@PathVariable("sampleId") Integer sampleId) {
+    public ResponseEntity<?> deleteSample(@PathVariable("sampleId") Integer sampleId) throws Exception {
         LOGGER.info("deleteSample이 호출되었습니다.");
         try {
             goodsService.deleteSample(sampleId);
@@ -58,6 +76,19 @@ public class GoodsController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(null);
         }
+    }
+
+    @GetMapping("/{goodsId}/sample")
+    public ResponseEntity<List<Samples>> findByGoodsId(@PathVariable("goodsId") Integer goodsId) throws Exception {
+        LOGGER.info("findByGoodsId가 호출되었습니다.");
+        try {
+            return new ResponseEntity<List<Samples>>(goodsService.findByGoodsId(goodsId), HttpStatus.OK);
+        }catch (Exception e) {
+            LOGGER.info("샘플 정보 불러오기에 실패했습니다.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(null);
+        }
+
     }
 
 }

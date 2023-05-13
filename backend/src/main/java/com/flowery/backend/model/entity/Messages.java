@@ -1,11 +1,13 @@
 package com.flowery.backend.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Data
@@ -30,5 +32,19 @@ public class Messages {
 
     @Column(name = "font")
     private int font;
+
+    @Column(name = "message_date")
+    private LocalDateTime messageDate;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
+    @JoinColumn(name = "poem_id")
+    private Poems poemId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
+    @JoinColumn(name = "mean_id")
+    private Meaning meanId;
+
 
 }

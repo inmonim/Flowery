@@ -57,4 +57,10 @@ public class Reservation {
     @Column(name = "phrase")
     private String phrase;
 
+    @Column(name = "image")
+    private String image;
+
+    @Column(name = "card")
+    private int card;
+
 }

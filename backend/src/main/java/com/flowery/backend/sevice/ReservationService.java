@@ -7,7 +7,6 @@ import com.flowery.backend.model.entity.*;
 import com.flowery.backend.repository.*;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
-import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.client.j2se.MatrixToImageConfig;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
@@ -15,7 +14,6 @@ import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.parser.Entity;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -34,14 +32,17 @@ public class ReservationService {
     private UsersRepository usersRepository;
     private GoodsRepository goodsRepository;
     private MessagesRepository messagesRepository;
+    private SamplesRepository samplesRepository;
 
     ReservationService(ReservationRepository reservationRepository, StoreRepository storeRepository,
-                       UsersRepository usersRepository, GoodsRepository goodsRepository, MessagesRepository messagesRepository){
+                       UsersRepository usersRepository, GoodsRepository goodsRepository, MessagesRepository messagesRepository,
+                       SamplesRepository samplesRepository){
         this.reservationRepository = reservationRepository;
         this.storeRepository = storeRepository;
         this.usersRepository = usersRepository;
         this.goodsRepository = goodsRepository;
         this.messagesRepository = messagesRepository;
+        this.samplesRepository = samplesRepository;
     }
 
     public class ReservationNotFoundException extends RuntimeException {
@@ -191,12 +192,17 @@ public class ReservationService {
         tmp.setGoodsName(reservation.getGoodsName());
         tmp.setReservationName(reservation.getReservationName());
         tmp.setPhrase(reservation.getPhrase());
+        tmp.setCard(reservation.getCard());
+        tmp.setMessageId(reservation.getMessageId() == null ? null : reservation.getMessageId().getMessageId());
+        tmp.setImage(reservation.getImage() == null ? null : reservation.getImage());
+
+
 
         return;
 
     }
 
-    public boolean makeReservation(ReservationDto reservationDto) throws Exception{
+    public boolean makeReservation(ReservationDto reservationDto) throws Exception {
 
         Reservation reservation = new Reservation();
         Users users = usersRepository.findById(reservationDto.getUserId()).get();
@@ -211,15 +217,23 @@ public class ReservationService {
             return false;
         }
 
-        List<Goods> goods = goodsRepository.findGoodsByStoreId(stores);
+        List<Goods> goodsList = goodsRepository.findGoodsByStoreId(stores);
 
         boolean check = true;
 
         // 올바른 가격과 상품이 선택되었는지 확인함
-        for(int i=0; i<goods.size(); i++){
-            if(goods.get(i).getGoodsName().equals(reservationDto.getGoodsName()) &&
-            goods.get(i).getGoodsPrice() == reservationDto.getPrice()){
+        for(int i=0; i<goodsList.size(); i++){
+            if(goodsList.get(i).getGoodsName().equals(reservationDto.getGoodsName()) &&
+            goodsList.get(i).getGoodsPrice() == reservationDto.getPrice()){
                 check = false;
+
+                // 샘플 이미지 가져오는 코드
+                Goods goods = goodsList.get(i);
+                List<Samples> samplesList = samplesRepository.findAllByGoodsId(goods);
+                if (samplesList.size() > 0) {
+                    String image = samplesList.get(0).getPicture();
+                    reservation.setImage(image);
+                }
             }
         }
 
@@ -245,8 +259,12 @@ public class ReservationService {
         reservation.setDate(reservationDto.getDate());
         reservation.setPrinted(0);
         reservation.setPermission(null);
+//        프로젝트용 코드
+//        reservation.setPermission(1);
         reservation.setReservationName(reservationDto.getReservationName());
         reservation.setPhrase(reservationDto.getPhrase());
+//        reservation.setImage(stores.getImage());
+        reservation.setCard(reservationDto.getCard());
 
         reservationRepository.save(reservation);
         return true;
@@ -257,13 +275,14 @@ public class ReservationService {
         Reservation reservation = reservationRepository.findById(reservationId)
                 .orElseThrow(() -> new ReservationNotFoundException("예약을 찾을 수 없습니다."));
 
-        String temp = "https://namu.wiki";
+        String temp = "https://flowery.duckdns.org/userproto/"+reservation.getMessageId().getMessageId();
         String qrBase64 = createQrBase64(temp);
 
         CardDto card = new CardDto();
         card.setPhrase(reservation.getPhrase());
         card.setReservationName(reservation.getReservationName());
         card.setQrBase64(qrBase64);
+        card.setCard(reservation.getCard());
 
         return card;
     }
@@ -275,7 +294,7 @@ public class ReservationService {
 
         // 큐알코드 바코드 및 배경 색상값
         int onColor = 0xFF000000;
-        int offColor = 0xFFFEF7F1;
+        int offColor = 0x00FEF7F1;
 
         // 이름 그대로 QRCode 만들때 쓰는 클래스다
         QRCodeWriter qrCodeWriter = new QRCodeWriter();
@@ -349,5 +368,25 @@ public class ReservationService {
         public NotAuthorizedException(String message) {
             super(message);
         }
+    }
+
+
+    public List<ReservationDto> findByUserId(int userId) {
+        Users user = usersRepository.findByUsersId(userId);
+
+        System.out.println(user);
+        List<Reservation> list = reservationRepository.findAllByUserIdOrderByDateDesc(user);
+        List<ReservationDto> result = new ArrayList<>();
+
+        for(int i=0; i<list.size(); i++){
+
+            ReservationDto tmp = new ReservationDto();
+            System.out.println(list.get(i));
+            reservationEntityToDto(tmp, list.get(i));
+
+            result.add(tmp);
+        }
+
+        return result;
     }
 }

@@ -26,6 +26,9 @@ public class S3Uploader {
 
     public String uploadFile(MultipartFile file) throws Exception {
         String fileName = file.getOriginalFilename();
+
+        fileName = removeSpecialCharacters(fileName);
+
         String filepath = createS3FileName(fileName);
 
         ObjectMetadata metadata = new ObjectMetadata();
@@ -34,7 +37,7 @@ public class S3Uploader {
 
         amazonS3Client.putObject(bucket, filepath, file.getInputStream(), metadata);
 
-        String S3Url = "https://" + bucket + ".s3." + region + ".amazonaws.com/" + filepath;
+        String S3Url = "https://s3." + region + ".amazonaws.com/"+ bucket+"/" +  filepath;
 
         return S3Url;
     }
@@ -58,4 +61,12 @@ public class S3Uploader {
         }
 
     }
+
+    public static String removeSpecialCharacters(String str) {
+        if (str == null) {
+            return null;
+        }
+        return str.replaceAll("[^a-zA-Z0-9가-힣\\s.]", "");
+    }
+
 }

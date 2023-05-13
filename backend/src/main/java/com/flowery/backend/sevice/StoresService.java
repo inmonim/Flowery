@@ -2,15 +2,16 @@ package com.flowery.backend.sevice;
 
 import com.amazonaws.services.kms.model.NotFoundException;
 import com.flowery.backend.model.dto.GoodsDto;
+import com.flowery.backend.model.dto.HolidaysDto;
 import com.flowery.backend.model.dto.StoresDto;
 import com.flowery.backend.model.entity.Goods;
+import com.flowery.backend.model.entity.Holidays;
 import com.flowery.backend.model.entity.Samples;
 import com.flowery.backend.model.entity.Stores;
 import com.flowery.backend.repository.GoodsRepository;
-import com.flowery.backend.repository.HolydaysRepository;
+import com.flowery.backend.repository.HolidaysRepository;
 import com.flowery.backend.repository.SamplesRepository;
 import com.flowery.backend.repository.StoreRepository;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -23,16 +24,16 @@ import java.util.NoSuchElementException;
 @Service
 public class StoresService {
     private StoreRepository storeRepository;
-    private HolydaysRepository holydaysRepository;
+    private HolidaysRepository holidaysRepository;
     private GoodsRepository goodsRepository;
     private SamplesRepository samplesRepository;
 
-    StoresService(StoreRepository storeRepository, HolydaysRepository holydaysRepository,
+    StoresService(StoreRepository storeRepository, HolidaysRepository holidaysRepository,
                   GoodsRepository goodsRepository, SamplesRepository samplesRepository){
         this.storeRepository = storeRepository;
-        this.holydaysRepository = holydaysRepository;
+        this.holidaysRepository = holidaysRepository;
         this.goodsRepository = goodsRepository;
-        this.samplesRepository =samplesRepository;
+        this.samplesRepository = samplesRepository;
     }
 
     // 모든 상점 다 가져오기
@@ -138,9 +139,50 @@ public class StoresService {
 
     }
 
+
     public class StoreNotFoundException extends RuntimeException {
         public StoreNotFoundException(String message) {
             super(message);
+        }
+    }
+
+
+    // 휴일을 확인하는 코드
+    public String getHolidays(int storeId) throws Exception {
+        Stores store = storeRepository.findById(storeId)
+        .orElseThrow(() -> new StoreNotFoundException("해당 id의 상점이 존재하지 않습니다."));
+//        String holyday = "";
+        StringBuilder holidays = new StringBuilder(); // 변경된 부분
+
+        List<Holidays>  holidaysList = holidaysRepository.findAllByStoreId(store);
+
+        for (Holidays holiday : holidaysList) {
+            holidays.append(holiday.getDay());
+        }
+
+        return holidays.toString();
+    }
+
+
+    // 휴일을 업데이트하는 코드
+    public void updateHolidays(HolidaysDto holidaysDto) throws Exception {
+        Stores store = storeRepository.findById(holidaysDto.getStoreId())
+                .orElseThrow(() -> new StoreNotFoundException("해당 id의 상점이 존재하지 않습니다."));
+
+        // 일단 해당 storeId로 저장된 값을 다 지움.
+        holidaysRepository.deleteAllByStoreId(store);
+
+        // 빈 문자열이 아닌 경우만 새로운 휴일 데이터를 저장
+        if (!holidaysDto.getHolidays().isEmpty()) {
+            String[] holidays = holidaysDto.getHolidays().split("");
+
+            for (String day : holidays) {
+                Holidays holiday = new Holidays();
+                holiday.setStoreId(store);
+                holiday.setDay(day);
+
+                holidaysRepository.save(holiday);
+            }
         }
     }
 
