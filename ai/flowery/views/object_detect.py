@@ -1,4 +1,4 @@
-from flask import Flask, Blueprint, request, Response, json
+from flask import Flask, Blueprint, request, Response, json, g
 import boto3
 from werkzeug.utils import secure_filename
 
@@ -53,11 +53,11 @@ def object_detect():
         file_url = f"https://s3.{LOCAL}.amazonaws.com/{BUCKET_NAME}/object_detect/{uuid_name}.jpg"
         
         result = {'flower_object' : flower_result,
-                  'file_url' : file_url}
+                  'file_url' : file_url,
+                  'message' : '꽃을 탐지했습니다.'}
         
         if int(img_result.pred[0].sum()) == 0:
-            result = {'message' : '객체가 탐지되지 않았습니다.',
-                      'file_url' : file_url}
+            result['message'] = '꽃이 탐지되지 않았습니다.'
             return Response(json.dumps(result, ensure_ascii=False),
                             headers=({'Access-Control-Allow-Origin': '*'}),
                             content_type='application/json; charset=utf-8',
@@ -91,7 +91,6 @@ def save_sales():
             flower_id_list.append(flower_id)
         
         flower_lang_list = []
-        
         if len(flower_id_list) >= 2:
             flower_id_1, flower_id_2 = random.sample(flower_id_list, 2)
             flower_lang_list.extend(flower_lang[flower_id_1])
@@ -102,15 +101,11 @@ def save_sales():
         
         f_lang_1, f_lang_2 = random.sample(flower_lang_list, 2)
             
-        make_poem(f_lang_1, f_lang_2)
-            
+        make_poem(f_lang_1, f_lang_2, res['reservation_id'], flower_id_1)
+        
         response = Response(json.dumps({'message' : '입력 성공'}, ensure_ascii=False),
                             headers=({'Access-Control-Allow-Origin': '*'}),
                             content_type='application/json; charset=utf-8',
                             status=200)
+        
         return response
-    
-
-# @bp.after_request()
-# def mount_poem():
-    

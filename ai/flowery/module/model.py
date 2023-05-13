@@ -95,21 +95,23 @@ def get_result(image_path, model=model):
 
 
 import openai
+import random
 
 
-current_directory = os.path.dirname(__file__)
-file_path = os.path.join(current_directory, 'openai_api_key.txt')
+# current_directory = os.path.dirname(__file__)
+# file_path = os.path.join(current_directory, 'openai_api_key.txt')
 
-with open(file_path, 'r') as f:
-    api_key = f.readline()
+# with open(file_path, 'r') as f:
+#     api_key = f.readline()
 
+api_key = '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'
 org_id = 'org-Qet9aDzXT2R98RAzCWgbUKtR'
 
 openai.organization = org_id
 openai.api_key = api_key
 
 
-def make_poem(keyword1, keyword2, conn=conn):
+def make_poem(keyword1, keyword2, reservation_id, flower_id, conn=conn):
     
     k = keyword2[-1]
     
@@ -124,8 +126,24 @@ def make_poem(keyword1, keyword2, conn=conn):
     
     poem = completion.choices[0].message.content
     
-    conn.execute(text(f"INSERT INTO poems (flower_id, poem) VALUES (4, '{poem}')"))
+    message_id = conn.execute(text(f"SELECT message_id FROM reservation WHERE reservation_id = {reservation_id}")).one()[0]
+
     
+    conn.execute(text(f"INSERT INTO poems (flower_id, poem) VALUES ({reservation_id}, '{poem}')"))
+
+    conn.commit()
+    
+    poem_id = conn.execute(text(f'SELECT poem_id FROM poems ORDER BY poem_id DESC LIMIT 1')).one()[0]
+ 
+    conn.execute(text(f"UPDATE messages SET poem_id = {poem_id} WHERE message_id = '{message_id}'"))
+    
+    flower_ids = conn.execute(text(f"SELECT mean_id FROM meaning WHERE flower_id = {flower_id}")).all()
+    
+    mean_id = random.choice(flower_ids)[0]
+    
+    conn.execute(text(f"UPDATE messages SET mean_id = {mean_id} WHERE message_id = '{message_id}'"))
+    
+    conn.commit()
     
 def get_flower_lang(conn=conn):
     
