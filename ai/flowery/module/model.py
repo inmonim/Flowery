@@ -1,7 +1,9 @@
+import os
+
 import torch
 from PIL import Image
 
-from sqlalchemy import create_engine, Table, MetaData
+from sqlalchemy import create_engine, Table, MetaData, text
 
 def engine():
     user = 'root'
@@ -15,9 +17,10 @@ def engine():
     
     return engine.connect()
 
-def get_flower_dict():
+conn = engine()
+
+def get_flower_dict(conn):
     metadata = MetaData()
-    conn = engine()
     flowers_table = Table('flowers', metadata, autoload_with=conn)
     flowers = conn.execute(flowers_table.select())
     model_flower_label = {
@@ -49,7 +52,7 @@ def get_flower_dict():
     
     return [model_flower_label, flower_name_dict]
 
-model_flower_label, flower_name_dict = get_flower_dict()
+model_flower_label, flower_name_dict = get_flower_dict(conn)
 
 model = torch.hub.load('ultralytics/yolov5', 'custom', path=f'./flowery/module/main_5_9.pt', force_reload=True, trust_repo=True)
 
@@ -89,3 +92,55 @@ def get_result(image_path, model=model):
                     results.pred[0] = torch.cat((results.pred[0][:di, :], results.pred[0][di+1:, :]), dim=0)
 
     return results
+
+
+import openai
+
+
+current_directory = os.path.dirname(__file__)
+file_path = os.path.join(current_directory, 'openai_api_key.txt')
+
+with open(file_path, 'r') as f:
+    api_key = f.readline()
+
+org_id = 'org-Qet9aDzXT2R98RAzCWgbUKtR'
+
+openai.organization = org_id
+openai.api_key = api_key
+
+
+def make_poem(keyword1, keyword2, conn=conn):
+    
+    k = keyword2[-1]
+    
+    josa = '을' if (ord(k)-44032)%28 else '를'
+
+    completion = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo",
+        messages=[
+            {"role":"user", "content": f"{keyword1}, {keyword2}{josa} 주제로 공백 포함 40글자 이내 짧은 시"}
+        ]
+    )
+    
+    poem = completion.choices[0].message.content
+    
+    conn.execute(text(f"INSERT INTO poems (flower_id, poem) VALUES (4, '{poem}')"))
+    
+    
+def get_flower_lang(conn=conn):
+    
+    flower_lang_dict = {}
+    
+    results = conn.execute(text("SELECT * FROM meaning"))
+    
+    for _, flower_id, flower_lang in results:
+        
+        if flower_lang_dict.get(flower_id):
+            flower_lang_dict[flower_id].append(flower_lang)
+        
+        else:
+            flower_lang_dict[flower_id] = [flower_lang]
+    
+    return flower_lang_dict
+
+flower_lang = get_flower_lang()
