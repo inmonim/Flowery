@@ -9,4 +9,5 @@ import java.util.List;
 public interface SamplesRepository extends JpaRepository<Samples, Integer> {
 
     public List<Samples> findAllByGoodsId(Goods goodsId);
+
 }

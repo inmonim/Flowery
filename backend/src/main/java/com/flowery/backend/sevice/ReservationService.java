@@ -32,14 +32,17 @@ public class ReservationService {
     private UsersRepository usersRepository;
     private GoodsRepository goodsRepository;
     private MessagesRepository messagesRepository;
+    private SamplesRepository samplesRepository;
 
     ReservationService(ReservationRepository reservationRepository, StoreRepository storeRepository,
-                       UsersRepository usersRepository, GoodsRepository goodsRepository, MessagesRepository messagesRepository){
+                       UsersRepository usersRepository, GoodsRepository goodsRepository, MessagesRepository messagesRepository,
+                       SamplesRepository samplesRepository){
         this.reservationRepository = reservationRepository;
         this.storeRepository = storeRepository;
         this.usersRepository = usersRepository;
         this.goodsRepository = goodsRepository;
         this.messagesRepository = messagesRepository;
+        this.samplesRepository = samplesRepository;
     }
 
     public class ReservationNotFoundException extends RuntimeException {
@@ -191,6 +194,7 @@ public class ReservationService {
         tmp.setPhrase(reservation.getPhrase());
         tmp.setCard(reservation.getCard());
         tmp.setMessageId(reservation.getMessageId() == null ? null : reservation.getMessageId().getMessageId());
+        tmp.setImage(reservation.getImage() == null ? null : reservation.getImage());
 
 
 
@@ -198,7 +202,7 @@ public class ReservationService {
 
     }
 
-    public boolean makeReservation(ReservationDto reservationDto) throws Exception{
+    public boolean makeReservation(ReservationDto reservationDto) throws Exception {
 
         Reservation reservation = new Reservation();
         Users users = usersRepository.findById(reservationDto.getUserId()).get();
@@ -213,15 +217,23 @@ public class ReservationService {
             return false;
         }
 
-        List<Goods> goods = goodsRepository.findGoodsByStoreId(stores);
+        List<Goods> goodsList = goodsRepository.findGoodsByStoreId(stores);
 
         boolean check = true;
 
         // 올바른 가격과 상품이 선택되었는지 확인함
-        for(int i=0; i<goods.size(); i++){
-            if(goods.get(i).getGoodsName().equals(reservationDto.getGoodsName()) &&
-            goods.get(i).getGoodsPrice() == reservationDto.getPrice()){
+        for(int i=0; i<goodsList.size(); i++){
+            if(goodsList.get(i).getGoodsName().equals(reservationDto.getGoodsName()) &&
+            goodsList.get(i).getGoodsPrice() == reservationDto.getPrice()){
                 check = false;
+
+                // 샘플 이미지 가져오는 코드
+                Goods goods = goodsList.get(i);
+                List<Samples> samplesList = samplesRepository.findAllByGoodsId(goods);
+                if (samplesList.size() > 0) {
+                    String image = samplesList.get(0).getPicture();
+                    reservation.setImage(image);
+                }
             }
         }
 
@@ -246,12 +258,12 @@ public class ReservationService {
         reservation.setDemand(reservationDto.getDemand());
         reservation.setDate(reservationDto.getDate());
         reservation.setPrinted(0);
-//        reservation.setPermission(null);
+        reservation.setPermission(null);
 //        프로젝트용 코드
-        reservation.setPermission(1);
+//        reservation.setPermission(1);
         reservation.setReservationName(reservationDto.getReservationName());
         reservation.setPhrase(reservationDto.getPhrase());
-        reservation.setImage(stores.getImage());
+//        reservation.setImage(stores.getImage());
         reservation.setCard(reservationDto.getCard());
 
         reservationRepository.save(reservation);
