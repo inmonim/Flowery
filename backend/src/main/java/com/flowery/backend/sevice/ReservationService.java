@@ -291,9 +291,9 @@ public class ReservationService {
         reservation.setDemand(reservationDto.getDemand());
         reservation.setDate(reservationDto.getDate());
         reservation.setPrinted(0);
-        reservation.setPermission(null);
+//        reservation.setPermission(null);
 //        프로젝트용 코드
-//        reservation.setPermission(1);
+        reservation.setPermission(1);
         reservation.setReservationName(reservationDto.getReservationName());
         reservation.setPhrase(reservationDto.getPhrase());
 //        reservation.setImage(stores.getImage());
