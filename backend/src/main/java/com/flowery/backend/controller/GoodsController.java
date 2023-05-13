@@ -1,6 +1,7 @@
 package com.flowery.backend.controller;
 
 import com.flowery.backend.amazon.S3Uploader;
+import com.flowery.backend.model.dto.GoodsDto;
 import com.flowery.backend.model.entity.Goods;
 import com.flowery.backend.model.entity.Samples;
 import com.flowery.backend.sevice.GoodsService;
@@ -28,12 +29,26 @@ public class GoodsController {
         this.s3Uploader = s3Uploader;
     }
 
-    // 굿즈에 샘플 이미지 추가
+    // 상품 목록 조회하기
+    @PostMapping()
+    public ResponseEntity<List<Goods>> findByStoreId(@RequestBody GoodsDto goodsDto){
+        LOGGER.info("findByStoreId가 호출되었습니다.");
+        try{
+            return new ResponseEntity<List<Goods>>(goodsService.findAllBystoreId(goodsDto), HttpStatus.OK);
+        }catch (Exception e){
+            LOGGER.error("상품 조회에 실패했습니다.", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(null);
+        }
+        
+    } 
 
+
+    // 굿즈에 샘플 이미지 추가
     @PostMapping("/{goodsId}/sample")
     public ResponseEntity<Samples> createSample(@PathVariable("goodsId") Integer goodsId,
                                              @RequestPart MultipartFile picture
-    ) throws Exception {
+    ) {
         LOGGER.info("createSample이 호출되었습니다.");
         try{
             String pictureUrl = s3Uploader.uploadFile(picture);
