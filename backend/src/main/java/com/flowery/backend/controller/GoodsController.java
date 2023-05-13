@@ -8,6 +8,7 @@ import com.flowery.backend.sevice.GoodsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -30,7 +31,7 @@ public class GoodsController {
     }
 
     // 상품 목록 조회하기
-    @PostMapping()
+    @PostMapping("info")
     public ResponseEntity<List<Goods>> findByStoreId(@RequestBody GoodsDto goodsDto){
         LOGGER.info("findByStoreId가 호출되었습니다.");
         try{
@@ -41,7 +42,31 @@ public class GoodsController {
                     .body(null);
         }
         
-    } 
+    }
+
+    // 상품을 추가
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Goods> createGoods(@RequestParam("storeId") int storeId,
+                                             @RequestParam("goodsName") String goodsName,
+                                             @RequestParam("goodsPrice") int goodsPrice,
+                                             @RequestParam("goodsDetail") String goodsDetail,
+                                             @RequestPart("pictures") MultipartFile[] pictures) {
+        LOGGER.info("createGoods가 호출되었습니다.");
+
+        try{
+            GoodsDto goodsDto = new GoodsDto();
+            goodsDto.setStoreId(storeId);
+            goodsDto.setGoodsName(goodsName);
+            goodsDto.setGoodsPrice(goodsPrice);
+            goodsDto.setGoodsDetail(goodsDetail);
+
+            return new ResponseEntity<Goods>(goodsService.createGoods(goodsDto, pictures), HttpStatus.CREATED);
+        }catch (Exception e){
+            LOGGER.error("상품 등록에 실패했습니다.", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(null);
+        }
+    }
 
 
     // 굿즈에 샘플 이미지 추가

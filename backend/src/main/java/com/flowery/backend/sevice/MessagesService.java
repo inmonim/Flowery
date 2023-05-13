@@ -75,6 +75,7 @@ public class MessagesService {
 
     }
 
+    // 카드 제작
     public Messages createCard(String videoUrl, List<String> pictureUrl, String messageValue, Integer paperValue, Integer fontValue, LocalDateTime dateTime) throws Exception{
         Messages message = new Messages();
 
