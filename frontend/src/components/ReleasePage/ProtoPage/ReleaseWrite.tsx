@@ -69,9 +69,9 @@ export default function ReleaseWrite() {
 
   // 다음으로 버튼
   const submitButton = () => {
+    window.scrollTo({ top: 0 });
     if (name && content) {
       setShowModal(true);
-      window.scrollTo({ top: 0 });
     } else {
       if (!name) {
         setIsName(false);
@@ -81,6 +81,8 @@ export default function ReleaseWrite() {
       }
     }
   };
+
+
 
   return (
     // 전체 페이지
@@ -102,7 +104,6 @@ export default function ReleaseWrite() {
         <div>
           <div className="flex">
             <img src={Flowery} alt="" className="w-1/3 mx-auto p-7" />
-            {/* <p className="font-nasq align-middle my-auto">시들지 않는 추억을 선물하세요</p> */}
           </div>
 
           <h2>
@@ -118,51 +119,54 @@ export default function ReleaseWrite() {
               ))}
             </div>
             <div className="p-16 pt-0 mx-auto sm:w-[150px] md:w-[300px] lg:w-[450px]">
-              <ReleaseCardPreview card={card} />
+              <ReleaseCardPreview/>
             </div>
           </h2>
-          <h2>
-            <button
-              type="button"
-              onClick={() => {
-                setShowLetterInput(!showLetterInput);
-              }}
-              className="flex items-center justify-between w-full p-5 font-medium text-left text-gray-500 border border-b-0 border-gray-200 rounded-t-xl focus:ring-4 focus:ring-gray-200 hover:bg-gray-100"
-            >
-              <span className="flex items-center">
-                {showLetterInput ? (
-                  <img
-                    src={require("../../../assets/letters/letter_open.png")}
-                    alt=""
-                    className="w-5 mr-2 shrink-0"
-                    style={{ border: "1px solid black" }}
-                  />
-                ) : (
-                  <img
-                    src={require("../../../assets/letters/letter_close.png")}
-                    alt=""
-                    className="w-5 mr-2 shrink-0"
-                    style={{ border: "1px solid black" }}
-                  />
-                )}
-                편지입력
-              </span>
-              <svg
-                className={`w-6 h-6 shrink-0 ${
-                  showLetterInput && "rotate-180"
-                }`}
-                fill="currentColor"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
+            <h2>
+              <p className="mx-auto mb-4 text-xs text-center text-[#eed3b5]">
+                꽃을 받으실 분께 편지를 써보세요
+              </p>
+              <button
+                type="button"
+                onClick={() => {
+                  setShowLetterInput(!showLetterInput);
+                }}
+                className="flex items-center justify-between w-full p-5 font-medium text-left text-gray-500 border border-b-0 border-gray-200 rounded-t-xl focus:ring-4 focus:ring-gray-200 hover:bg-gray-100"
               >
-                <path
-                  fillRule="evenodd"
-                  d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                  clipRule="evenodd"
-                ></path>
-              </svg>
-            </button>
-          </h2>
+                <span className="flex items-center">
+                  {showLetterInput ? (
+                    <img
+                      src={require("../../../assets/letters/letter_open.png")}
+                      alt=""
+                      className="w-5 mr-2 shrink-0"
+                      style={{ border: "1px solid black" }}
+                    />
+                  ) : (
+                    <img
+                      src={require("../../../assets/letters/letter_close.png")}
+                      alt=""
+                      className="w-5 mr-2 shrink-0"
+                      style={{ border: "1px solid black" }}
+                    />
+                  )}
+                  편지입력
+                </span>
+                <svg
+                  className={`w-6 h-6 shrink-0 ${
+                    showLetterInput && "rotate-180"
+                  }`}
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                    clipRule="evenodd"
+                  ></path>
+                </svg>
+              </button>
+            </h2>
           {showLetterInput && (
             <div>
               <ReleaseLetterPaper />
@@ -173,6 +177,9 @@ export default function ReleaseWrite() {
             </div>
           )}
           <h2>
+            <p className="mx-auto p-4 text-xs text-center text-[#eed3b5]">
+              사진이나 영상도 보낼 수 있습니다
+            </p>
             <button
               type="button"
               onClick={() => {
