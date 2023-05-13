@@ -78,17 +78,17 @@ public class GoodsController {
         }
     }
 
-    @GetMapping("/{goodsId}/sample")
-    public ResponseEntity<List<Samples>> findByGoodsId(@PathVariable("goodsId") Integer goodsId) throws Exception {
-        LOGGER.info("findByGoodsId가 호출되었습니다.");
-        try {
-            return new ResponseEntity<List<Samples>>(goodsService.findByGoodsId(goodsId), HttpStatus.OK);
-        }catch (Exception e) {
-            LOGGER.info("샘플 정보 불러오기에 실패했습니다.");
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(null);
-        }
-
-    }
+//    goods 컨트롤러로 변경
+//    @GetMapping("/{goodsId}/sample")
+//    public ResponseEntity<List<Samples>> findByGoodsId(@PathVariable("goodsId") Integer goodsId) throws Exception {
+//        LOGGER.info("findByGoodsId가 호출되었습니다.");
+//        try {
+//            return new ResponseEntity<List<Samples>>(goodsService.findByGoodsId(goodsId), HttpStatus.OK);
+//        }catch (Exception e) {
+//            LOGGER.info("샘플 정보 불러오기에 실패했습니다.");
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+//                    .body(null);
+//        }
+//    }
 
 }

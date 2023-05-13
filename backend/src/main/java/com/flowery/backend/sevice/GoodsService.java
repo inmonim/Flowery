@@ -44,17 +44,17 @@ public class GoodsService {
     }
 
     // goods에 해당하는 samples를 가져옴
-    public List<Samples> findByGoodsId(Integer goodsId) {
-        Goods goods = goodsRepository.findById(goodsId)
-                .orElseThrow(() -> new NoSuchElementException("Goods not found with ID: " + goodsId));
-        List<Samples> samples = samplesRepository.findAllByGoodsId(goods);
-
-        if (samples.isEmpty()) {
-            throw new NoSuchElementException("No samples found for Goods with ID: " + goodsId);
-        }
-
-        return samples;
-    }
+//    public List<Samples> findByGoodsId(Integer goodsId) {
+//        Goods goods = goodsRepository.findById(goodsId)
+//                .orElseThrow(() -> new NoSuchElementException("Goods not found with ID: " + goodsId));
+//        List<Samples> samples = samplesRepository.findAllByGoodsId(goods);
+//
+//        if (samples.isEmpty()) {
+//            throw new NoSuchElementException("No samples found for Goods with ID: " + goodsId);
+//        }
+//
+//        return samples;
+//    }
 
 //  상품 목록 조회하기.
     public List<Goods> findAllBystoreId(GoodsDto goodsDto) {
