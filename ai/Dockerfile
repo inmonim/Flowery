@@ -31,6 +31,7 @@ RUN pip3 install pyyaml
 RUN pip3 install tqdm
 RUN pip3 install matplotlib
 RUN pip3 install seaborn
+RUN pip3 install openai
 RUN pip3 install boto3
 
 
