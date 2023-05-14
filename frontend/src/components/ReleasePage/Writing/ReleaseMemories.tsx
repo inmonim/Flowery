@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import sellerpic from "../../assets/flower_sample.jpg";
+import VideoPoster from "../../../assets/play-button.jpg";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -40,16 +40,20 @@ export default function ReleaseMemories() {
         images.map((image: any, index: any) => (
           <div
             key={index}
-            className={`pb-[10%] w-[90%] overflow-hidden ${
-              index % 2 === 0 ? "mr-auto" : "ml-auto"
+            className={`pb-[10%] overflow-hidden ${
+              images.length === 1
+                ? "flex justify-center items-center"
+                : index % 2 === 0
+                ? "w-[90%] mr-auto"
+                : "w-[90%] ml-auto"
             }`}
           >
-            <img src={URL.createObjectURL(image)} />
+            <img src={image} alt="couple" />
           </div>
         ))}
       {video && (
         <div>
-          <video src={URL.createObjectURL(video)} className="w-[100%]" controls />
+          <video src={URL.createObjectURL(video)} className="w-[100%]" controls poster={VideoPoster}/>
         </div>
       )}
     </div>

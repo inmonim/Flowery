@@ -136,7 +136,7 @@ export default function ReleaseCard({ onLoad }: any) {
   };
 
   return (
-    <div className="relative">
+    <div className="relative animate-fadeOut animation-delay-4000">
       {mergeImages(
         cardFrame(),
         `${content}`,
