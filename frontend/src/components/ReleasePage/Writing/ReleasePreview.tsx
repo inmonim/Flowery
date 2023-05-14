@@ -102,7 +102,7 @@ const ReleasePreviewModal = React.forwardRef<HTMLDivElement, any>(
                         src={`data:image/png;base64,${testQr}`}
                         alt="qr"
                         onClick={() => setClickQR(true)}
-                        className="absolute mx-auto w-[24%] top-[22.9%] cursor-pointer animate-heartBeat"
+                        className="absolute mx-auto w-[24%] top-[22.9%] cursor-pointer animate-beat "
                       />
                     </div>
                   </div>
