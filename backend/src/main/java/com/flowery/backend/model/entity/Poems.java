@@ -15,10 +15,11 @@ public class Poems {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int poemId;
 
-    @ManyToOne
-    @JsonIgnore
-    @JoinColumn(name = "flower_id")
-    private Flowers flowerId;
+//    @ManyToOne
+//    @JsonIgnore
+//    @JoinColumn(name = "flower_id")
+    @Column(name = "flower_id")
+    private Integer flowerId;
 
     @Column(name = "poem")
     private String poem;
