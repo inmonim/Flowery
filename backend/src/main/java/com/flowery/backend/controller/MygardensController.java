@@ -45,7 +45,7 @@ public class MygardensController {
     public ResponseEntity<Mygardens> createMyGarden(@RequestBody MygardensDto mygardensDto) throws Exception {
         LOGGER.info("createMyGarden가 호출되었습니다.");
         try {
-            return new ResponseEntity<Mygardens>(mygardensService.createMyGarden(mygardensDto), HttpStatus.OK);
+            return new ResponseEntity<Mygardens>(mygardensService.createMyGarden(mygardensDto), HttpStatus.CREATED);
         } catch (Exception e) {
             LOGGER.error("마이가든 저장에 실패했습니다.", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
