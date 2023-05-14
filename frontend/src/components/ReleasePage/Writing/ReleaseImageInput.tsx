@@ -217,8 +217,8 @@ export default function ReleaseImageInput() {
           />
         </div>
       </div>
-      <div className="text-center mt-5 pt-3">
-        {images.length > 0 && (
+      <div className="text-center mt-5 pt-3 mb-7">
+        {images && images.length < 5 && (
           <span
             onClick={() => {
               setSelectIdx(images.length);

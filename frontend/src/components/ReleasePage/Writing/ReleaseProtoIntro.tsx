@@ -7,6 +7,7 @@ import bouquet2 from "../../../assets/ReleasePage/releaseBG2.jpg";
 import bouquet3 from "../../../assets/ReleasePage/releaseBG3.jpg";
 import bouquet4 from "../../../assets/ReleasePage/releaseBG4.jpg";
 import bouquet5 from "../../../assets/ReleasePage/releaseBG5.jpg";
+import Flower from "../../../assets/example1.jpg";
 import { useRecoilValue } from "recoil";
 import { cardName } from "../../../recoil/atom";
 
@@ -25,22 +26,27 @@ export default function ReleaseProtoIntro() {
   };
 
   return (
-    <div className="flex flex-col relative items-center h-[100vh]">
-      <div className="absoulte justify-center items-center  w-[100%]">
+    <div className="flex flex-col relative items-center">
+      {/* <div className="absoulte justify-center items-center  w-[100%]">
         <Slider {...settings}>
           {introBackground.map((bg, index) => (
             <div key={index}>
               <img src={bg} alt="index" className="h-screen" />
             </div>
           ))}
-        </Slider>
-      </div>
-      <div>
-        <p className="absolute top-[33%] left-[28%] text-[4rem] text-white font-ballet">
+          </Slider>
+        </div> */}
+        <p className="mx-auto text-[3rem] font-ballet">
           Flowery
         </p>
+        <img
+          src={Flower}
+          alt=""
+          className="items-center justify-center p-2 mx-auto"
+        />
+      <div>
       </div>
-      <div className="absolute bottom-[10%] text-white font-gobaB">
+      <div className="font-gobaB">
         <section className="flex justify-center items-center ">
           <span className=" text-[25px] text-user_pink">{name}</span>님이
         </section>

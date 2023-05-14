@@ -27,6 +27,7 @@ export const cardState = atom<number>({
 export const cardName = atom<string>({
   key: "cardNameState",
   default: "",
+  effects_UNSTABLE: [persistAtom],
 });
 
 // 카드 보내는 이름 입력 여부
@@ -39,6 +40,7 @@ export const isCardName = atom<boolean>({
 export const cardContent = atom<string>({
   key: "cardContentState",
   default: "",
+  effects_UNSTABLE: [persistAtom],
 });
 
 // 카드 한줄글 입력 여부
@@ -46,7 +48,6 @@ export const isCardContent = atom<boolean>({
   key: "isCardContentState",
   default: true,
 });
-
 
 // 업로드한 이미지
 export const imageState = atom<Array<File>>({
@@ -65,7 +66,7 @@ export const videoState = atom<File | null>({
 // 편지지 종류
 export const letterPaperState = atom<number>({
   key: "letterPaperState",
-  default: 2,
+  default: 1,
   effects_UNSTABLE: [persistAtom],
 });
 
@@ -99,6 +100,13 @@ export const reservationInfo = atom({
   },
 });
 
+// 예약 최종 제출 모달 오픈 여부
+export const reservationConfirmState = atom<boolean>({
+  key: "reservationConfirmState",
+  default: false,
+});
+
+
 //가게 정보
 export const shopInfo = atom({
   key: "shopInfo",
@@ -116,3 +124,5 @@ export const storeName = atom<string>({
   default: "",
   effects_UNSTABLE: [persistAtom],
 });
+
+
