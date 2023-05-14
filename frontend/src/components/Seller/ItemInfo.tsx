@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import styles from "./ItemInfo.module.scss";
-import flower from "../../assets/example1.jpg";
 import PrintCard from "./PrintCard";
 import FetchCard from "./FetchCard";
 interface ItemInfoProps {
@@ -10,6 +9,7 @@ interface ItemInfoProps {
   reservationId: number;
   phrase: string;
   permission: number;
+  image: string;
 }
 
 export default function ItemInfo(props: ItemInfoProps) {
@@ -38,7 +38,7 @@ export default function ItemInfo(props: ItemInfoProps) {
       <div className={styles.itemcontainer}>
         <div className={styles.items}>
           <div className={styles.picture}>
-            <img src={flower} alt="flower" />
+            <img src={props.image} alt="flower" />
           </div>
           <div className={styles.description}>
             <div className={styles.number}>{props.reservationName}</div>

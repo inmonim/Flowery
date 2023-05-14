@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import styles from "./WaitingApprove.module.scss";
 import ApproveInfo from "./ApproveInfo";
 import axios from "axios";
+import { useRecoilValue } from "recoil";
+import { storeId } from "../../recoil/atom";
 
 interface ReservationItem {
   reservationId: number;
@@ -19,21 +21,15 @@ interface ReservationItem {
 }
 
 export default function WaitingApprove() {
-  const date = new Date();
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const day = String(date.getDate()).padStart(2, "0");
-  const hours = String(date.getHours()).padStart(2, "0");
-  const minutes = String(date.getMinutes()).padStart(2, "0");
-  const seconds = String(date.getSeconds()).padStart(2, "0");
-  const formattedDate = `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
-
+  const myStoreId = useRecoilValue(storeId)
   const [reservation, setReservation] = useState<ReservationItem[]>([]);
 
   useEffect(() => {
+    const currentDate = new Date();
+const formattedDate = currentDate.toISOString().split('T')[0] + 'T00:00:00';
     axios
-      .post(`https://flowery.duckdns.org/api/reservation/store`, {
-        storeId: 1,
+      .post(`https://flowery.duckdns.org/api/reservation/day/?date=2023-05-14T00:00:00`, {
+        storeId: myStoreId,
       })
       .then((response) => {
         setReservation(response.data as ReservationItem[]);
@@ -41,7 +37,7 @@ export default function WaitingApprove() {
       .catch((error) => {
         console.error(error);
       });
-  }, [formattedDate]);
+  }, []);
 
   return (
     <div className={styles.mainbox}>

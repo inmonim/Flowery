@@ -5,6 +5,8 @@ import closebtn from "../../assets/close_btn.png";
 import axios from "axios";
 import Reason from "./RejectReason";
 import "../../assets/styles/variable.scss";
+import { useRecoilValue } from "recoil";
+import { storeId } from "../../recoil/atom";
 interface PrintCardProps {
   closeModal: () => void;
   goodsName: string;
@@ -15,6 +17,7 @@ interface PrintCardProps {
 }
 
 export default function CheckOrder(props: PrintCardProps) {
+  const myStoreId = useRecoilValue(storeId);
   const dateString = props.date;
   const date = new Date(dateString);
 
@@ -35,7 +38,7 @@ export default function CheckOrder(props: PrintCardProps) {
     axios
       .post("https://flowery.duckdns.org/api/reservation/accept", {
         reservationId: id,
-        storeId: 1,
+        storeId: myStoreId,
       })
       .then(() => {
         alert("예약이 수락되었습니다.");
@@ -56,7 +59,7 @@ export default function CheckOrder(props: PrintCardProps) {
         `https://flowery.duckdns.org/api/reservation/deny?reason=${reason}`,
         {
           reservationId: id,
-          storeId: 1,
+          storeId: myStoreId,
         }
       )
       .then(() => {
