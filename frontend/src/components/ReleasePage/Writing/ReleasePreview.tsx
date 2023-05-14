@@ -95,14 +95,14 @@ const ReleasePreviewModal = React.forwardRef<HTMLDivElement, any>(
                     </div>
                     <div className="absolute flex w-[8%] top-[28.5%] left-[20%]">
                       {/* <p className="mr-2 font-bold text-red-500">Click!</p> */}
-                      <img src={Arrow} className="animate-shakeRight " />
+                      <img src={Arrow} className="" />
                     </div>
                     <div className="w-full mx-auto flex items-center justify-center">
                       <img
                         src={`data:image/png;base64,${testQr}`}
                         alt="qr"
                         onClick={() => setClickQR(true)}
-                        className="absolute mx-auto w-[24%] top-[22.9%] cursor-pointer animate-beat "
+                        className="absolute mx-auto w-[24%] top-[22.9%] cursor-pointer "
                       />
                     </div>
                   </div>
