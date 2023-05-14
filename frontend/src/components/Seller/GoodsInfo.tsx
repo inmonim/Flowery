@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./GoodsInfo.module.scss";
 import flower from "../../assets/example1.jpg";
 import deletebtn from "../../assets/delete_btn.png";
@@ -12,6 +12,13 @@ interface GoodsItem {
 }
 
 export default function GoodsInfo(props: GoodsItem) {
+  useEffect(() => {
+    axios
+      .get(`https://flowery.duckdns.org/api/goods/${props.goodsId}/sample`)
+      .then((response) => {
+        console.log(response);
+      });
+  });
   function deleteGoods(id: number) {
     axios
       .delete(`https://flowery.duckdns.org/api/stores/goods/${id}`)

@@ -84,10 +84,7 @@ const ReleaseSubmitModal = React.forwardRef<HTMLDivElement, any>(
       formData.append("paper", String(letterPaper));
       formData.append("date", date);
       axios
-        .post(
-          "https://flowery.duckdns.org/api/messages/card/prototype  ",
-          formData
-        )
+        .post("https://flowery.duckdns.org/api/messages/card", formData)
         .then((response) => {
           submitCardInfo(response.data.messageId);
         })

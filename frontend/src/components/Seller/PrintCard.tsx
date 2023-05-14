@@ -255,7 +255,7 @@ export default function PrintCard(props: PrintCardProps) {
       }
       if (inputValue !== "") {
         console.log("나는 기타");
-        axios.patch("https://flowery.duckdns.org/api/reservation", {
+        axios.post("https://flowery.duckdns.org/api/reservation/fix", {
           reservationId: props.reservationId,
           goodsName: selectedItem?.goodsName,
           price: inputValue,
@@ -267,7 +267,7 @@ export default function PrintCard(props: PrintCardProps) {
           selectedItem?.goodsName,
           selectedItem?.goodsPrice
         );
-        axios.patch("https://flowery.duckdns.org/api/reservation", {
+        axios.post("https://flowery.duckdns.org/api/reservation/fix", {
           reservationId: props.reservationId,
           goodsName: selectedItem?.goodsName,
           price: selectedItem?.goodsPrice,
