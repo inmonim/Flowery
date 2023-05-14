@@ -37,8 +37,12 @@ export default function Memories(props: any) {
         letterData.pictures.map((picture: any, index: any) => (
           <div
             key={index}
-            className={`pb-[10%] w-[90%] overflow-hidden ${
-              index % 2 === 0 ? "mr-auto" : "ml-auto"
+            className={`pb-[10%] overflow-hidden ${
+              letterData.pictures.length === 1
+                ? "flex justify-center items-center"
+                : index % 2 === 0
+                ? "w-[90%] mr-auto"
+                : "w-[90%] ml-auto"
             }`}
           >
             <img src={picture} alt="couple" onError={(e) => handleImageError} />
