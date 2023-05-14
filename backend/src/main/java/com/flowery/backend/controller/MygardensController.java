@@ -40,6 +40,7 @@ public class MygardensController {
 //        return new ResponseEntity<>(mygardensService.findAllByUserId(1), HttpStatus.ACCEPTED);
 //    }
     
+    // 마이가든에 저장
     @PostMapping
     public ResponseEntity<Mygardens> createMyGarden(@RequestBody MygardensDto mygardensDto) throws Exception {
         LOGGER.info("createMyGarden가 호출되었습니다.");
@@ -52,6 +53,7 @@ public class MygardensController {
         }
     }
 
+    // 마이가든 값 불러오기
     @PostMapping("/get")
     public ResponseEntity<List<MygardensDto>> findAllByUserId(@RequestBody MygardensDto mygardensDto) throws Exception {
         LOGGER.info("findAllByUserId가 호출되었습니다.");
@@ -64,7 +66,24 @@ public class MygardensController {
         }
 
     }
-
+    
+    //마이가든 삭제
+    @DeleteMapping("/{mygardenId}")
+    public ResponseEntity<?> deleteMygarden(@PathVariable("mygardenId") Integer mygardenId) {
+        LOGGER.info("deleteMygarden이 호출되었습니다.");
+        try{
+            boolean isDeleted = mygardensService.deleteMygarden(mygardenId);
+            if (isDeleted) {
+                return ResponseEntity.noContent().build();
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (Exception e) {
+            LOGGER.error("마이가든 삭제에 실패했습니다.", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(null);
+        }
+    }
 
 
     // 지금 필요한 건 편지와 영상 내용을 띄우는 프론트 페이지 주소가 필요하다.
