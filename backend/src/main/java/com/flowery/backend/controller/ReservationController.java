@@ -43,7 +43,7 @@ public class ReservationController {
     }
 
     // 예약을 수정
-    @PatchMapping()
+    @PutMapping("/fix")
     public ResponseEntity<ReservationDto> updateReservation(@RequestBody ReservationDto reservationDto){
         LOGGER.info("updateReservation가 호출되었습니다.");
         
