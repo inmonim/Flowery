@@ -69,7 +69,7 @@ public class MygardensService {
     }
 
 
-    public Mygardens createMyGarden(MygardensDto mygardensDto) {
+    public Mygardens createMyGarden(MygardensDto mygardensDto) throws Exception {
         Mygardens mygarden = new Mygardens();
         String messageId = mygardensDto.getMessageId();
         Messages message = messagesRepository.findByMessageId(messageId);
@@ -85,4 +85,13 @@ public class MygardensService {
     }
 
 
+    public boolean deleteMygarden(Integer mygardenId) {
+        Optional<Mygardens> mygardenOptional = mygardensRepository.findById(mygardenId);
+        if (mygardenOptional.isPresent()) {
+            mygardensRepository.deleteById(mygardenId);
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

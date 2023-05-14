@@ -99,6 +99,7 @@ public class StoresController {
 //    }
 
 
+    // 상품 정보 변경
     @PatchMapping("/goods/{goodsId}")
     public ResponseEntity<Goods> updateGoods(@PathVariable("goodsId") Integer goodsId,
                                             @RequestBody GoodsDto requestData
