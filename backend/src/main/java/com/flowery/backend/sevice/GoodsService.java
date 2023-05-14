@@ -34,6 +34,7 @@ public class GoodsService {
 
     }
 
+    // 샘플 추가
     public Samples createSample(Integer goodsId, String pictureUrl) {
         Goods goods = goodsRepository.findById(goodsId).orElseThrow(() -> new NoSuchElementException("해당 goods_id가 없습니다."));
 
@@ -46,6 +47,7 @@ public class GoodsService {
         return samplesRepository.save(sample);
     }
 
+    // 샘플 삭제
     public void deleteSample(Integer sampleId) {
         Samples sample = samplesRepository.findById(sampleId).orElseThrow(() -> new NoSuchElementException("해당 sample_id가 없습니다."));
         samplesRepository.delete(sample);
