@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styles from "./GoodsInfo.module.scss";
 import flower from "../../assets/example1.jpg";
 import deletebtn from "../../assets/delete_btn.png";
-import axios from 'axios';
+import axios from "axios";
 
 interface GoodsItem {
   goodsId: number;
@@ -12,13 +12,12 @@ interface GoodsItem {
 }
 
 export default function GoodsInfo(props: GoodsItem) {
-
   function deleteGoods(id: number) {
-    axios.delete(`https://flowery.duckdns.org/api/stores/goods/${id}`)
-    .then(() => {
-      alert('삭제되었습니다.')
-      window.location.reload();
-    })
+    axios
+      .delete(`https://flowery.duckdns.org/api/stores/goods/${id}`)
+      .then(() => {
+        alert("삭제되었습니다.");
+      });
   }
   return (
     <div className={styles.maincontainer}>
@@ -32,7 +31,11 @@ export default function GoodsInfo(props: GoodsItem) {
             <div className={styles.time}>₩ {props.goodsPrice}</div>
           </div>
           <div className={styles.imgbtn}>
-            <img src={deletebtn} alt="" onClick={() => deleteGoods(props.goodsId)}></img>
+            <img
+              src={deletebtn}
+              alt=""
+              onClick={() => deleteGoods(props.goodsId)}
+            ></img>
           </div>
         </div>
         {/* <div className={styles.printing} onClick={handleModal}>

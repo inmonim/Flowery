@@ -246,6 +246,7 @@ export default function PrintCard(props: PrintCardProps) {
   }
 
   function handlePrint(reservationId1: number) {
+    console.log(props.reservationId, selectedItem?.goodsName, inputValue);
     if (formdatas) {
       if (!props.printed) {
         axios.post("https://flowery.duckdns.org/api/reservation/print", {
@@ -253,10 +254,23 @@ export default function PrintCard(props: PrintCardProps) {
         });
       }
       if (inputValue !== "") {
-        axios.patch("https://flowery.duckdns.org/api/", {
+        console.log("나는 기타");
+        axios.patch("https://flowery.duckdns.org/api/reservation", {
           reservationId: props.reservationId,
           goodsName: selectedItem?.goodsName,
           price: inputValue,
+        });
+      } else {
+        console.log("나는 선택한거");
+        console.log(
+          props.reservationId,
+          selectedItem?.goodsName,
+          selectedItem?.goodsPrice
+        );
+        axios.patch("https://flowery.duckdns.org/api/reservation", {
+          reservationId: props.reservationId,
+          goodsName: selectedItem?.goodsName,
+          price: selectedItem?.goodsPrice,
         });
       }
       fetch("https://flowery.duckdns.org/api/messages/flower-picture", {

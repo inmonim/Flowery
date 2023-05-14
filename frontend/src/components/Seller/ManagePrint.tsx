@@ -19,6 +19,7 @@ interface ReservationItem {
   permission: number;
   reservationName: string;
   phrase: string;
+  image: string;
 }
 
 export default function ManagePrint() {
@@ -80,6 +81,7 @@ export default function ManagePrint() {
                 reservationId={item.reservationId}
                 phrase={item.phrase}
                 permission={item.permission}
+                image={item.image}
               />
             </div>
           ))}
