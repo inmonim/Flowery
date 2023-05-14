@@ -31,11 +31,11 @@ export default function ReleaseLetterPreview() {
   return (
     // 전체 페이지
     <div className="">
-      <img
+      {/* <img
         src={Flower}
         alt=""
         className="items-center justify-center p-2 mx-auto"
-      />
+      /> */}
       <div className={`h-full ${styles[`letterPaper${letterPaper}`]}`}>
         {currentLetter()}
       </div>

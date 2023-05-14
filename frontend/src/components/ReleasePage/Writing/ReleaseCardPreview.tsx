@@ -210,10 +210,7 @@ export default function ReleaseCardPreview() {
       )}
       {cardDisplayed && (
         <div id="card">
-          <p className="mx-auto mt-1 text-sm text-center text-[#eed3b5]">
-            꽃과 함께 받을 카드입니다.
-          </p>
-          <p className="mx-auto mt-2 text-xs text-center text-[#eed3b5]">
+          <p className="mx-auto mt-2 text-xs text-center font-nasq">
             선물 주는 분의 이름을 적어주세요.
           </p>
           <div className="flex justify-center w-full">
@@ -227,6 +224,7 @@ export default function ReleaseCardPreview() {
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 checkName(e);
               }}
+              defaultValue={name}
               placeholder="ex) From. 아들"
               className={`w-full mt-1 text-center border focus:outline-[#eed3b5] ${
                 !isName && "border-2 border-red-500"
@@ -238,7 +236,7 @@ export default function ReleaseCardPreview() {
               </span>
             )}
           </div>
-          <p className="mx-auto mt-2 text-xs text-center text-[#eed3b5]">
+          <p className="mx-auto mt-2 text-xs text-center  font-nasq">
             한 줄로 마음을 전하세요.
           </p>
           <div className="flex justify-center">
@@ -249,6 +247,7 @@ export default function ReleaseCardPreview() {
                 setContent(e.target.value);
               }}
               onChange={checkContent}
+              defaultValue={content}
               placeholder="ex) 부모님 사랑합니다"
               className={`w-full my-1 text-center border focus:outline-[#eed3b5] ${
                 !isContent && "border-2 border-red-500"
