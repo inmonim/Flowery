@@ -12,11 +12,12 @@ interface GoodsItem {
 }
 
 export default function GoodsInfo(props: GoodsItem) {
+  const [images, setImages] = useState<string>("");
   useEffect(() => {
     axios
       .get(`https://flowery.duckdns.org/api/goods/${props.goodsId}/sample`)
       .then((response) => {
-        console.log(response);
+        setImages(response.data[0].picture);
       });
   });
   function deleteGoods(id: number) {
@@ -31,7 +32,7 @@ export default function GoodsInfo(props: GoodsItem) {
       <div className={styles.itemcontainer}>
         <div className={styles.items}>
           <div className={styles.picture}>
-            <img src={flower} alt="flower" />
+            <img src={images} alt="flower" />
           </div>
           <div className={styles.description}>
             <div className={styles.number}>{props.goodsName}</div>

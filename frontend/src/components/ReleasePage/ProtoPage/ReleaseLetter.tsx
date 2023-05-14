@@ -42,7 +42,7 @@ export default function ReleaseLetter(props: any) {
         </p>
       </div>
       <img
-        src={Flower}
+        src={props.flowerData}
         alt=""
         className="items-center justify-center p-10 pb-2 mx-auto"
       />

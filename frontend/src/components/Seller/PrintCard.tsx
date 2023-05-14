@@ -72,8 +72,10 @@ export default function PrintCard(props: PrintCardProps) {
           .then((response) => {
             return response.json();
           })
+          .catch(() => {
+            alert("잘못된 사진입니다. 다시 입력해주세요.");
+          })
           .then((data) => {
-            console.log(data.file_url, data.flower_object, data.message);
             setPhotoUrl1(data.file_url);
 
             const flowerDataArray = Object.entries(data.flower_object).map(
@@ -246,7 +248,6 @@ export default function PrintCard(props: PrintCardProps) {
   }
 
   function handlePrint(reservationId1: number) {
-    console.log(props.reservationId, selectedItem?.goodsName, inputValue);
     if (formdatas) {
       if (!props.printed) {
         axios.post("https://flowery.duckdns.org/api/reservation/print", {
