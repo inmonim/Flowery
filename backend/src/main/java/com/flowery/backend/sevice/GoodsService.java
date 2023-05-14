@@ -94,23 +94,18 @@ public class GoodsService {
         Goods savedGoods = goodsRepository.save(goods);
 
         // 샘플 이미지를 저장하는 부분
-        List<String> pictureUrl = new ArrayList<>();
-
-        if(pictures == null ||pictures.length == 0){
+        if (pictures == null || pictures.length == 0) {
             throw new NoSuchElementException("사진을 넣지 않았습니다.");
         }
 
-        for(int i=0; i<pictures.length; i++){
-            if (!pictures[i].isEmpty()){
+        for (MultipartFile picture : pictures) {
+            if (picture.isEmpty()) {
                 throw new NoSuchElementException("사진을 넣지 않았습니다.");
             }
-            String tmp = s3Uploader.uploadFile(pictures[i]);
-            pictureUrl.add(tmp);
-        }
+            String tmp = s3Uploader.uploadFile(picture);
 
-        for(int i=0; i<pictureUrl.size(); i++){
             Samples sample = new Samples();
-            sample.setPicture(pictureUrl.get(i));
+            sample.setPicture(tmp);
             sample.setGoodsId(savedGoods);
             samplesRepository.save(sample);
         }
