@@ -15,7 +15,9 @@ export default function ReleaseLetterPaper() {
   }
 
   return (
-    <div className="flex justify-center border-t h-[150px]">
+    <div
+      className="flex justify-center border-t h-[150px]"
+    >
       {/* 글씨체 고르기 */}
       <div className="flex justify-between p-2 w-[35em]">
         {/* 왼쪽 화살표 */}
