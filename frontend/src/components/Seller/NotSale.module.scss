@@ -1,11 +1,12 @@
 @font-face {
   font-family: "KCC";
-  src: local('KCC'), url("../../assets/styles/fonts/KCC-Chassam.ttf"), format('truetype');
+  src: local("KCC"), url("../../assets/styles/fonts/KCC-Chassam.ttf"),
+    format("truetype");
 }
 
 .fontcheck {
   font-family: "KCC";
-  display: none
+  display: none;
 }
 
 .modal {
@@ -76,16 +77,23 @@
   border-radius: 10px;
 
   p {
-      font-family: "Inter";
-      font-style: normal;
-      font-weight: 800;
-      font-size: 20px;
-      line-height: 24px;
-      /* or 120% */
-    
-      letter-spacing: -0.1px;
-      /* Gray/700 */
-      color: #272d37;
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 800;
+    font-size: 20px;
+    line-height: 24px;
+    /* or 120% */
+
+    letter-spacing: -0.1px;
+    /* Gray/700 */
+    color: #272d37;
+  }
+
+  .classTim {
+    font-weight: 400;
+    font-size: 1rem;
+    text-align: center;
+    padding-top: 5px;
   }
 
   .steptitle {
@@ -96,14 +104,14 @@
     font-size: 18px;
     line-height: 28px;
     /* identical to box height, or 140% */
-  
+
     letter-spacing: -0.02em;
-  
+
     /* Gray/700 */
-  
+
     color: #272d37;
   }
-  
+
   .stephint {
     text-align: center;
     font-family: "Inter";
@@ -112,12 +120,12 @@
     font-size: 11px;
     line-height: 20px;
     /* identical to box height, or 154% */
-  
+
     text-align: center;
     letter-spacing: -0.1px;
-  
+
     /* Gray/50 */
-  
+
     color: #5f6d7e;
   }
 }
@@ -204,8 +212,9 @@ button {
   overflow: hidden; /* 이미지가 border-radius 안에 꽉 차도록 */
 }
 
-.stepone img { /* 부모 요소인 .picture에 맞게 이미지 크기 조정 */
-  margin:auto;
+.stepone img {
+  /* 부모 요소인 .picture에 맞게 이미지 크기 조정 */
+  margin: auto;
   padding-bottom: 1.5rem;
   height: auto; /* 이미지 비율 유지 */
   display: block; /* inline 요소를 block 요소로 변경 */
@@ -221,5 +230,5 @@ button {
 }
 
 .time {
-  color:rgba(0, 0, 0, 0.5)
+  color: rgba(0, 0, 0, 0.5);
 }
