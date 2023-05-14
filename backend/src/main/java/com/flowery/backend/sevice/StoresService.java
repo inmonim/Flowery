@@ -109,6 +109,11 @@ public class StoresService {
     @Transactional
     public void deleteGoods(Integer goodsId) throws Exception {
         Goods goods = goodsRepository.findById(goodsId).orElseThrow(() -> new NoSuchElementException("해당 goods_id가 없습니다."));
+        // Goods와 연결된 Samples 삭제
+        for (Samples sample : samplesRepository.findAllByGoodsId(goods)) {
+            System.out.println(sample);
+            samplesRepository.delete(sample);
+        }
         goodsRepository.delete(goods);
     }
 
