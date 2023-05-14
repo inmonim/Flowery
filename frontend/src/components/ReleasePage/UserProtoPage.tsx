@@ -17,6 +17,7 @@ export default function UserProtoPage() {
   const [isMobileView, setIsMobileView] = useState(false);
   const [isPictures, setIsPictures] = useState(false);
   const [isVideo, setIsVideo] = useState(false);
+  const [flowerData, setFlowerData] = useState<string>("");
 
   useEffect(() => {
     console.log(messageId);
@@ -37,6 +38,7 @@ export default function UserProtoPage() {
           }
         }
         setLetterData(response.data);
+        setFlowerData(response.data.flowerPicture);
       } catch (error) {
         console.error(error);
       } finally {
@@ -80,7 +82,7 @@ export default function UserProtoPage() {
     <div className={styles.customclass}>
       <ProtoIntro />
       {isPictures || isVideo ? <Memories letterData={letterData} /> : null}
-      <ReleaseLetter letterData={letterData} />
+      <ReleaseLetter letterData={letterData} flowerData={flowerData} />
       <More letterData={letterData} />
       <Survey />
     </div>
