@@ -68,6 +68,7 @@ export default function GoodsAdd(props: modalProps) {
       body: formdatas,
     }).then((response) => {
       alert("등록이 완료되었습니다.");
+      window.location.reload();
     });
   }
   return (

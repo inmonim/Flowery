@@ -132,6 +132,8 @@ export default function NotSale(props: Props) {
       })
       .then(() => {
         setRecogOK(true);
+        alert("저장이 완료되었습니다.");
+        props.closeModal33();
       })
       .catch((err) => {
         console.log(err);
