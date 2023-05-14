@@ -92,8 +92,8 @@ def save_sales():
         
         flower_lang_list = []
         if len(flower_id_list) >= 2:
-            flower_id_1, flower_id_2 = random.sample(flower_id_list, 2)
-            flower_lang_list.extend(flower_lang[flower_id_1])
+            flower_id, flower_id_2 = random.sample(flower_id_list, 2)
+            flower_lang_list.extend(flower_lang[flower_id])
             flower_lang_list.extend(flower_lang[flower_id_2])
         else:
             flower_id = flower_id_list[0]
@@ -101,7 +101,7 @@ def save_sales():
         
         f_lang_1, f_lang_2 = random.sample(flower_lang_list, 2)
             
-        make_poem(f_lang_1, f_lang_2, res['reservation_id'], flower_id_1)
+        make_poem(f_lang_1, f_lang_2, res['reservation_id'], flower_id)
         
         response = Response(json.dumps({'message' : '입력 성공'}, ensure_ascii=False),
                             headers=({'Access-Control-Allow-Origin': '*'}),
