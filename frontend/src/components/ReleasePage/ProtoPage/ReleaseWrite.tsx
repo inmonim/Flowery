@@ -14,9 +14,17 @@ import {
   cardContent,
   cardName,
   cardState,
+  imageState,
   isCardContent,
   isCardName,
+  letterFontState,
+  letterPaperState,
+  totalTextState,
+  videoState,
 } from "../../../recoil/atom";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import ReleaseSubmitModal from "../Writing/ReleaseSubmitModal";
 
 export default function ReleaseWrite() {
   const [showModal, setShowModal] = useState<boolean>(false);
@@ -28,8 +36,19 @@ export default function ReleaseWrite() {
   const [isName, setIsName] = useRecoilState<boolean>(isCardName);
   const [isContent, setIsContent] = useRecoilState<boolean>(isCardContent);
   const [isDrag, setIsDrag] = useState(false);
+  const letter = useRecoilValue<string>(totalTextState);
+  const letterFont = useRecoilValue<number>(letterFontState);
+  const letterPaper = useRecoilValue<number>(letterPaperState);
+  const image = useRecoilValue<Array<File>>(imageState);
+  const video = useRecoilValue<File | null>(videoState);
+  const [loading, setLoading] = useState(false);
+  const [reservationConfirm, setReservationConfirm] =
+  useState<boolean>(false);
+
+  const navigate = useNavigate();
 
   const modalRef = useRef<HTMLDivElement>(null);
+
 
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
@@ -82,6 +101,69 @@ export default function ReleaseWrite() {
     }
   };
 
+  // 제출 버튼
+  const submitCardInfo = (messageId: string) => {
+    const offset = new Date().getTimezoneOffset() * 60000;
+    const date = new Date(Date.now() - offset).toISOString().slice(0, -5);
+    const jsonData = {
+      userId: 2,
+      storeId: 3,
+      messageId: messageId,
+      goodsName: "기타",
+      price: 0,
+      demand: "없음",
+      date: date,
+      reservationName: name,
+      phrase: content,
+      card: card,
+    };
+
+    axios
+      .post("https://flowery.duckdns.org/api/reservation/make", jsonData)
+      .then((response) => {
+        alert("제출이 완료됐습니다!");
+        localStorage.clear();
+        navigate("/releaseexit");
+      })
+      .catch((error) => {
+        alert("다시 시도해주세요!");
+        setLoading(false);
+      });
+  };
+
+  const submitReservationInfo = () => {
+    const formData = new FormData();
+
+    const offset = new Date().getTimezoneOffset() * 60000;
+    const date = new Date(Date.now() - offset).toISOString().slice(0, -5);
+
+    formData.append("message", letter);
+
+    if (video) {
+      formData.append("video", video);
+    } else {
+      formData.append("video", new Blob(undefined));
+    }
+    if (image.length > 0) {
+      for (let i = 0; i < image.length; i++) {
+        formData.append(`pictures`, image[i]);
+        console.log(image);
+      }
+    } else {
+      formData.append(`pictures`, new Blob(undefined));
+    }
+    formData.append("font", String(letterFont));
+    formData.append("paper", String(letterPaper));
+    formData.append("date", date);
+    axios
+      .post("https://flowery.duckdns.org/api/messages/card", formData)
+      .then((response) => {
+        submitCardInfo(response.data.messageId);
+      })
+      .catch((e) => setLoading(false));
+  };
+
+
   return (
     // 전체 페이지
     <div
@@ -97,6 +179,13 @@ export default function ReleaseWrite() {
         <ReleasePreview ref={modalRef} onClose={() => setShowModal(false)} />
       )}
 
+        {/* 제출하기 모달 */}
+        {reservationConfirm && (
+            <ReleaseSubmitModal
+              onClose={() => setReservationConfirm(false)}
+              ref={modalRef} 
+            />
+          )}
       <div>
         {/* 페이지 내용 */}
         <div>
@@ -275,6 +364,17 @@ export default function ReleaseWrite() {
                   type="button"
                   value="미리보기"
                   onClick={submitButton}
+                  className="cursor-pointer"
+                ></input>
+              </div>
+              <div className="cursor-pointer font-bold bg-[#eed3b5] font-nasq border py-2 pb-2 px-4 mx-4 rounded-full">
+                <input
+                  type="button"
+                  value="제출하기"
+                  onClick={() => {
+                    window.scrollTo({ top: 0 });
+                    setReservationConfirm(true);
+                  }}
                   className="cursor-pointer"
                 ></input>
               </div>
