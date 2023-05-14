@@ -96,10 +96,28 @@ public class StoresService {
                 .orElseThrow(() -> new NotFoundException("Store not found with id : " + storeId));
 
         // 수정하고자 하는 필드들만 업데이트
-        store.setStorePhone(storeDTO.getStorePhone());
-        store.setOpen(storeDTO.getOpen());
-        store.setClose(storeDTO.getClose());
-        store.setInfo(storeDTO.getInfo());
+        if (storeDTO.getStorePhone() != null) {
+            store.setStorePhone(storeDTO.getStorePhone());
+        }
+        if (storeDTO.getOpen() != null) {
+            store.setOpen(storeDTO.getOpen());
+        }
+        if (storeDTO.getClose() != null) {
+            store.setClose(storeDTO.getClose());
+        }
+        if (storeDTO.getInfo() != null) {
+            store.setInfo(storeDTO.getInfo());
+        }
+        if (storeDTO.getAddress() != null) {
+            store.setAddress(storeDTO.getAddress());
+        }
+        if (storeDTO.getImage() != null) {
+            store.setImage(storeDTO.getImage());
+        }
+        if (storeDTO.getProfile() != null) {
+            store.setProfile(storeDTO.getProfile());
+        }
+
 
         Stores updatedStore = storeRepository.save(store);
         return updatedStore;
