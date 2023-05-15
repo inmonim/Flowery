@@ -106,10 +106,11 @@ export const reservationConfirmState = atom<boolean>({
   default: false,
 });
 
-//가게 정보
-export const shopInfo = atom({
-  key: "shopInfo",
-  default: [{}],
+//가게 리스트 (창근)
+export const shopListState = atom({
+  key: "shopListState",
+  default: [],
+  effects_UNSTABLE: [persistAtom],
 });
 
 //가게 정보(창근)
