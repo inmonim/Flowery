@@ -1,11 +1,37 @@
 import React, { useState } from "react";
 import styles from "./ChangeTime.module.scss";
+import axios from "axios";
+import { useRecoilValue, useRecoilState } from "recoil";
+import { storeId, storeInfo } from "../../recoil/atom";
 
 export default function ChangeTime() {
   const daysOfWeek = ["월", "화", "수", "목", "금", "토", "일"];
   const [selectedDays, setSelectedDays] = useState<boolean[]>(
     Array(7).fill(false)
   );
+  const [value1, setValue1] = useState(0);
+  const [value2, setValue2] = useState(0);
+  const myStoreId = useRecoilValue(storeId);
+  const myStoreInfo = useRecoilValue(storeInfo);
+  const convertTimeToNumber = (time: any) => {
+    const [hours, minutes] = time.split(":");
+    const timeNumber = parseInt(hours + minutes, 10);
+    return timeNumber;
+  };
+
+  const handleInputChange1 = (event: any) => {
+    const timeValue = event.target.value;
+    const convertedValue = convertTimeToNumber(timeValue);
+    console.log(convertedValue);
+    setValue1(convertedValue);
+  };
+
+  const handleInputChange2 = (event: any) => {
+    const timeValue = event.target.value;
+    const convertedValue = convertTimeToNumber(timeValue);
+    console.log(convertedValue);
+    setValue2(convertedValue);
+  };
 
   const handleClick = (index: number) => {
     const updatedSelectedDays = [...selectedDays];
@@ -14,10 +40,20 @@ export default function ChangeTime() {
   };
 
   const applyChanges = () => {
-    const selectedDaysToSend = daysOfWeek.filter(
-      (day, index) => selectedDays[index]
-    );
-    // Perform axios request with selectedDaysToSend
+    if (value1 > 0 && value2 > 0 && value1 < value2) {
+      axios
+        .patch(`https://flowery.duckdns.org/api/stores/${myStoreId}`, {
+          storePhone: myStoreInfo.storePhone,
+          info: myStoreInfo.info,
+          open: value1,
+          close: value2,
+          image: myStoreInfo.image,
+          profile: myStoreInfo.profile,
+        })
+        .then(() => {
+          alert("영업시간이 변경되었습니다");
+        });
+    }
   };
 
   return (
@@ -40,11 +76,10 @@ export default function ChangeTime() {
           ))} */}
         </div>
         <div className="w-[100%] flex justify-center">
-          <input
-            maxLength={11}
-            placeholder="ex) 09:00~13:00"
-            className="border border-black rounded-lg h-[3rem] px-3"
-          />
+          <div>
+            <input type="time" onChange={handleInputChange1}></input>
+            <input type="time" onChange={handleInputChange2}></input>
+          </div>
         </div>
         <button className="w-[100%]" onClick={applyChanges}>
           저장
