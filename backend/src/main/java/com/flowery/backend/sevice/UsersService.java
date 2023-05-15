@@ -6,6 +6,7 @@ import com.flowery.backend.model.dto.SellerDto;
 import com.flowery.backend.model.dto.UsersDto;
 import com.flowery.backend.model.entity.Seller;
 import com.flowery.backend.model.entity.Users;
+import com.flowery.backend.redis.RedisDao;
 import com.flowery.backend.repository.SellerRepository;
 import com.flowery.backend.repository.UsersRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,13 +21,18 @@ public class UsersService {
     private final Logger LOGGER = LoggerFactory.getLogger(MessagesController.class);
     private UsersRepository usersRepository;
     private SellerRepository sellerRepository;
-
     private PasswordEncoder passwordEncoder;
+    private RedisDao redisDao;
 
-    UsersService(UsersRepository usersRepository, SellerRepository sellerRepository, PasswordEncoder passwordEncoder){
+    private final String atxPreFix = "atk_";
+    private final String rtxPreFix = "rtk_";
+    private final String rolePreFix = "role_";
+
+    UsersService(UsersRepository usersRepository, SellerRepository sellerRepository, PasswordEncoder passwordEncoder, RedisDao redisDao){
         this.usersRepository = usersRepository;
         this.sellerRepository = sellerRepository;
         this.passwordEncoder = passwordEncoder;
+        this.redisDao = redisDao;
     }
 
     // 유저 고유번호로 유저 정보를 가져옴
@@ -43,6 +49,13 @@ public class UsersService {
         }
         else{
             UsersDto usersDto = new UsersDto(users);
+            if(redisDao.hasKey(atxPreFix+usersDto.getId())){
+                redisDao.setBlackList(redisDao.getValue(atxPreFix+usersDto.getId()), "accessToken", 10);
+            }
+
+            redisDao.deleteKey(atxPreFix+usersDto.getId());
+            redisDao.deleteKey(rtxPreFix+usersDto.getId());
+            redisDao.deleteKey(rolePreFix+usersDto.getId());
             return usersDto;
         }
     }
@@ -79,6 +92,15 @@ public class UsersService {
         usersRepository.save(users);
 
         return true;
+
+    }
+
+    public void logout(UsersDto usersDto) throws Exception{
+
+        redisDao.setBlackList(redisDao.getValue(atxPreFix+usersDto.getId()), "accessToken", 10);
+        redisDao.deleteKey(atxPreFix+usersDto.getId());
+        redisDao.deleteKey(rtxPreFix+usersDto.getId());
+        redisDao.deleteKey(rolePreFix+usersDto.getId());
 
     }
 

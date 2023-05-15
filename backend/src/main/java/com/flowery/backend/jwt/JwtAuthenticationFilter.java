@@ -39,11 +39,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
                 UserDetails userDetails = usersDetailService.loadUserByUsername(subject.getId());
 
-                if(requestURI.equals("/api/users/login-seller")){
-                    System.out.println("hhhh!@3#$#$%");
-                    userDetails = usersDetailService.loadSellerByUserId(subject.getId());
-                }
-
                 Authentication token = new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
                 SecurityContextHolder.getContext().setAuthentication(token);
             } catch (JwtException e) {

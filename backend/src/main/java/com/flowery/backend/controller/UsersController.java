@@ -5,7 +5,7 @@ import com.flowery.backend.jwt.TokenResponse;
 import com.flowery.backend.model.dto.SellerDto;
 import com.flowery.backend.model.dto.UsersDto;
 import com.flowery.backend.redis.PasswordGenerator;
-import com.flowery.backend.redis.SmsCertificationDao;
+import com.flowery.backend.redis.RedisDao;
 import com.flowery.backend.sevice.StoresService;
 import com.flowery.backend.sevice.UsersService;
 import net.nurigo.sdk.NurigoApp;
@@ -13,19 +13,11 @@ import net.nurigo.sdk.message.model.Message;
 import net.nurigo.sdk.message.request.SingleMessageSendingRequest;
 import net.nurigo.sdk.message.response.SingleMessageSentResponse;
 import net.nurigo.sdk.message.service.DefaultMessageService;
-import org.apache.commons.codec.binary.Base64;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import retrofit2.http.GET;
 
-import javax.crypto.Mac;
-import javax.crypto.spec.SecretKeySpec;
-import java.io.UnsupportedEncodingException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
 import java.util.Random;
 
 
@@ -38,13 +30,13 @@ public class UsersController {
     private StoresService storesService;
     final DefaultMessageService messageService;
     private final JwtProvider jwtProvider;
-    private final SmsCertificationDao smsCertificationDao;
+    private final RedisDao redisDao;
     private final int LIMIT_TIME = 3 * 60;  // (2)
 
-    UsersController(UsersService usersService, StoresService storesService, SmsCertificationDao smsCertificationDao, JwtProvider jwtProvider){
+    UsersController(UsersService usersService, StoresService storesService, RedisDao redisDao, JwtProvider jwtProvider){
         this.usersService = usersService;
         this.storesService = storesService;
-        this.smsCertificationDao = smsCertificationDao;
+        this.redisDao = redisDao;
         this.jwtProvider =jwtProvider;
         this.messageService = NurigoApp.INSTANCE.initialize("NCSCFJLKKGWYQQ0R", "SS1RDBJ0LYUXJGE5YLYK1EMMSJYKKBNJ", "https://api.coolsms.co.kr");
     }
@@ -65,6 +57,7 @@ public class UsersController {
 
         try {
             UsersDto usersDto = usersService.loginCheck(loginDto);
+            usersService.sellerLoginCheck(loginDto.getId(), loginDto.getPass());
             return new ResponseEntity<>(jwtProvider.createTokensBySellerLogin(usersDto), HttpStatus.ACCEPTED);
         }catch (Exception e){
             throw new RuntimeException("회원 정보를 다시 확인해주세요");
@@ -118,7 +111,7 @@ public class UsersController {
         SingleMessageSentResponse response = this.messageService.sendOne(new SingleMessageSendingRequest(message));
         System.out.println(response);
 
-        smsCertificationDao.createSmsCertification(usersDto.getPhone(),code);
+        redisDao.setValues(usersDto.getPhone(),code);
 
         System.out.println(code);
 
@@ -145,13 +138,13 @@ public class UsersController {
 
     @PostMapping("/phone-check")
     public ResponseEntity<Boolean> phoneCheck(@RequestBody UsersDto usersDto){
-        String value = smsCertificationDao.getSmsCertification(usersDto.getPhone());
+        String value = redisDao.getValue(usersDto.getPhone());
 
         if(value==null || !value.equals(usersDto.getPass())){
             return new ResponseEntity<>(false, HttpStatus.ACCEPTED);
         }
 
-        smsCertificationDao.removeSmsCertification(usersDto.getPhone());
+        redisDao.deleteKey(usersDto.getPhone());
 
         return new ResponseEntity<>(true, HttpStatus.ACCEPTED);
 
@@ -160,6 +153,17 @@ public class UsersController {
     @GetMapping("/ayo")
     public ResponseEntity<String> hello(){
         return new ResponseEntity<>("ayo",HttpStatus.ACCEPTED);
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<Boolean> logout(@RequestBody UsersDto loginDto){
+        try {
+            usersService.logout(loginDto);
+
+        }catch (Exception e){
+            throw new RuntimeException("login 정보가 없습니다!");
+        }
+        return new ResponseEntity<>(true,HttpStatus.ACCEPTED);
     }
 
 }

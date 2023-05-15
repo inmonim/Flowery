@@ -5,11 +5,9 @@ import com.flowery.backend.jwt.JwtProvider;
 import com.flowery.backend.jwt.TokenResponse;
 import com.flowery.backend.jwt.UsersDetail;
 import com.flowery.backend.model.dto.UsersDto;
-import com.flowery.backend.redis.SmsCertificationDao;
-import com.flowery.backend.sevice.StoresService;
+import com.flowery.backend.redis.RedisDao;
 import com.flowery.backend.sevice.UsersService;
 import lombok.RequiredArgsConstructor;
-import net.nurigo.sdk.message.service.DefaultMessageService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -25,7 +23,7 @@ public class JwtController {
 
     private UsersService usersService;
     private final JwtProvider jwtProvider;
-    private final SmsCertificationDao smsCertificationDao;
+    private final RedisDao redisDao;
 
     @GetMapping("/reissue")
     public ResponseEntity<TokenResponse> reissue(@AuthenticationPrincipal UsersDetail usersDetail) throws JsonProcessingException {
@@ -35,7 +33,7 @@ public class JwtController {
 
     @GetMapping("/rtk")
     public ResponseEntity<TokenResponse> getRtk(@RequestParam String userId){
-        TokenResponse tokenResponse = new TokenResponse("",smsCertificationDao.getValue(userId));
+        TokenResponse tokenResponse = new TokenResponse("", redisDao.getValue(userId));
         return new ResponseEntity<>(tokenResponse, HttpStatus.ACCEPTED);
     }
 
