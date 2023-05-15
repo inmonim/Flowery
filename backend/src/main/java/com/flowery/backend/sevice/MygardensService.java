@@ -1,5 +1,6 @@
 package com.flowery.backend.sevice;
 
+import com.amazonaws.services.kms.model.AlreadyExistsException;
 import com.flowery.backend.model.dto.MygardensDto;
 import com.flowery.backend.model.entity.Messages;
 import com.flowery.backend.model.entity.Mygardens;
@@ -78,6 +79,12 @@ public class MygardensService {
         }
         Integer userId = mygardensDto.getUserId();
         Users user = usersRepository.findById(userId).orElseThrow(() -> new NoSuchElementException("해당 sample_id가 없습니다."));
+
+        Mygardens existingRecord = mygardensRepository.findByUserIdAndMessageId(user, message);
+        if (existingRecord != null) {
+            throw new AlreadyExistsException("해당 userId와 messageId로 이미 저장된 row가 있습니다.");
+        }
+
         mygarden.setMessageId(message);
         mygarden.setUserId(user);
 
