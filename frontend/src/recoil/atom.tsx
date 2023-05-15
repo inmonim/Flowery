@@ -106,11 +106,17 @@ export const reservationConfirmState = atom<boolean>({
   default: false,
 });
 
-
 //가게 정보
 export const shopInfo = atom({
   key: "shopInfo",
   default: [{}],
+});
+
+//가게 정보(창근)
+export const shopDataState = atom({
+  key: "shopDataState",
+  default: [],
+  effects_UNSTABLE: [persistAtom],
 });
 
 export const storeId = atom<number>({
@@ -125,4 +131,23 @@ export const storeName = atom<string>({
   effects_UNSTABLE: [persistAtom],
 });
 
+// 예약 시간 (창근)
+export const reservationTimeState = atom<string>({
+  key: "storeTimeState",
+  default: "",
+  effects_UNSTABLE: [persistAtom],
+});
 
+// 예약 날짜 (창근)
+export const reservatonDayState = atom<string>({
+  key: "storeDayState",
+  default: "",
+  effects_UNSTABLE: [persistAtom],
+});
+
+// 상품 선택 (창근)
+export const goodsState = atom({
+  key: "goodsState",
+  default: {},
+  effects_UNSTABLE: [persistAtom],
+});

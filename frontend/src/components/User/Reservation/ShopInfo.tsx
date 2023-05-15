@@ -3,8 +3,10 @@ import picture1 from "../../../assets/flowershop1.jpg";
 import picture2 from "../../../assets/example1.jpg";
 import profile1 from "../../../assets/profile1.png";
 import profile3 from "../../../assets/profile3.png";
+import { useRecoilValue } from "recoil";
+import { shopDataState } from "../../../recoil/atom";
 
-export default function ShopInfo() {
+export default function ShopInfo(shopData: any) {
   const positions = [
     {
       content: "오늘도 꽃을 열심히 팔아봅시다",
@@ -15,26 +17,22 @@ export default function ShopInfo() {
       profile: profile3,
     },
   ];
+  const shopInfo = useRecoilValue(shopDataState);
+
   return (
-    <div className="flex flex-col  ">
-      <div className="p-1">
-        <img src={picture1} alt="main" className="" />
+    <div className="flex flex-col ">
+      <div className="p-1 h-[50vh] overflow-hidden">
+        <img src={shopInfo.image} alt="main" className="w-full h-full " />
       </div>
-      {positions.map((position, index) => (
-        <div key={index} className="mx-auto font-bold pt-[5%] font-nasq">
-          <p>{position.title}</p>
-        </div>
-      ))}
-      {positions.map((position, index) => (
-        <div key={index} className="mx-auto pt-2 text-xs text-gray-500">
-          <p>{position.address}</p>
-        </div>
-      ))}
-      {positions.map((position, index) => (
-        <div key={index} className="mx-auto text-center p-2">
-          <p>{position.content}</p>
-        </div>
-      ))}
+      <div className="mx-auto font-bold pt-[5%] font-nasq">
+        <p>{shopInfo.storeName}</p>
+      </div>
+      <div className="mx-auto pt-2 text-[0.5rem] text-gray-500">
+        <p>{shopInfo.address}</p>
+      </div>
+      <div className="mx-auto text-center p-2">
+        <p>{shopInfo.info}</p>
+      </div>
       {positions.map((position, index) => (
         <div className="flex flex-row space-10 gap-1 pl-2.5 pr-2.5  overflow-scroll">
           {Array.from({ length: 4 }, (_, index) => (
@@ -42,6 +40,7 @@ export default function ShopInfo() {
               className="w-1/4"
               src={position.images[index]}
               alt="shop.title"
+              key={index}
             />
           ))}
         </div>
