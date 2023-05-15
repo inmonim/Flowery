@@ -14,9 +14,9 @@ public class StoresDto {
 
     private int permit;
 
-    private int open;
+    private Integer open;
 
-    private int close;
+    private Integer close;
 
     private String address;
 
