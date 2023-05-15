@@ -192,9 +192,7 @@ export default function PrintCard(props: PrintCardProps) {
   }
   return (
     <div className={styles.modal}>
-      <div className={styles.fontcheck}>
-        .
-      </div>
+      <div className={styles.fontcheck}>.</div>
       <div className={styles.modalContent}>
         <button
           className={styles.successbutton}

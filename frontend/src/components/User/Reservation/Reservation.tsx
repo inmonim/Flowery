@@ -3,10 +3,8 @@ import { Map, MapMarker, useMap } from "react-kakao-maps-sdk";
 import imageSrc from "../../../assets/flowery_marker.png";
 import "../../../assets/styles/variable.scss";
 import ShopList from "./ShopList";
-import { shopInfo } from "../../../recoil/atom";
-import axios from "axios";
 import { useRecoilState, useRecoilValue } from "recoil";
-import GetData from "./GetData";
+import { shopListState } from "../../../recoil/atom";
 
 //  이거 왜 해야하더라? -> kakao 객체는 브라우저 전역 객체인 window 안에 포
 
@@ -23,47 +21,57 @@ interface Position {
 
 export default function Reservation() {
   const [markers, setMarkers] = useState([] as boolean[]);
-  const [latLngX, setLatLngX] = useState(0);
-  const [latLngY, setLatLngY] = useState(0);
-  const [position, setPosition] = useState([] as any[]);
-  const shopList = useRecoilValue(shopInfo);
+  // const [position, setPosition] = useState([] as Position[]);
+  const [updatedShopList, setUpdatedShopList] = useState([] as Position[]);
+
+  const shopList = useRecoilState(shopListState)[0];
 
   useEffect(() => {
-    if (shopList.length === 0) return;
-    const geocoder = new kakao.maps.services.Geocoder();
-    // 첫 렌더링에만 실행
-    shopList.map((shop: any) =>
-      geocoder.addressSearch(`${shop.address}`, function (result: any, status) {
-        // 정상적으로 검색이 완료됐으면
+    async function geocodeShops() {
+      const updatedShops: Position[] = [];
+      const geocoder = new window.kakao.maps.services.Geocoder();
 
-        if (status === kakao.maps.services.Status.OK) {
-          setLatLngX(result[0].x);
-          setLatLngY(result[0].y);
-          setPosition((prevPosition: any) => [
-            ...prevPosition,
-            {
-              title: `${shop.storeName}`,
-              content: "",
-              latlng: { lat: latLngX, lng: latLngY },
-            },
-          ]);
-        }
-      })
-    );
-  }, [shopList]);
+      for (const shop of shopList) {
+        await new Promise<void>((resolve) => {
+          geocoder.addressSearch(shop.address, function (result, status) {
+            if (status === window.kakao.maps.services.Status.OK) {
+              const latlng = {
+                lat: parseFloat(result[0].y),
+                lng: parseFloat(result[0].x),
+              };
+              const updatedShop = { ...shop, latlng: latlng };
+              updatedShops.push(updatedShop);
+            }
+            resolve(); // 비동기 작업 완료 후 resolve 호출
+          });
+        });
+      }
 
-  const initMarkers = () => {
-    const marker: boolean[] = [];
-    position.map((index: any) => {
-      marker.push(false);
-    });
+      setUpdatedShopList(updatedShops); // 업데이트된 상점 리스트 설정
+      // setPosition(updatedShops);
+      // 위치 설정
+    }
 
-    setMarkers(marker);
-  };
+    geocodeShops();
+  }, []);
 
+  console.log(shopList, "here");
+
+  useEffect(() => {
+    console.log(updatedShopList);
+  }, [updatedShopList]);
+
+  // const initMarkers = () => {
+  //   const marker: boolean[] = [];
+  //   updatedShopList.map((index: any) => {
+  //     marker.push(false);
+  //   });
+
+  //   setMarkers(marker);
+  // };
   const handleMarkerClick = (index: number) => {
     const marker: boolean[] = [];
-    position.map((index: any) => {
+    updatedShopList.map((index: any) => {
       marker.push(false);
     });
 
@@ -72,7 +80,9 @@ export default function Reservation() {
     setMarkers(marker);
   };
 
-  // initMarkers();
+  // useEffect(() => {
+  //   initMarkers();
+  // }, [updatedShopList]);
 
   return (
     <div className="flex flex-col w-screen h-auto">
@@ -91,16 +101,15 @@ export default function Reservation() {
             height: "50vh",
           }}
           level={11} // 지도의 확대 레벨
-          onClick={initMarkers} // 클릭 초기화
         >
-          {position.map((value: any, index: number) => (
+          {updatedShopList.map((value: any, index: number) => (
             <MapMarker
               position={value.latlng} // 마커를 표시할 위치
               image={{ src: imageSrc, size: { width: 35, height: 45 } }}
               onClick={() => handleMarkerClick(index)}
               key={index}
             >
-              {markers[index] && <div>{value.title}</div>}
+              {/* {markers[index] && <div>{value.title}</div>} */}
             </MapMarker>
           ))}
         </Map>

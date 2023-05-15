@@ -32,7 +32,7 @@ export default function ManagePrint() {
   useEffect(() => {
     axios
       .post(
-        `https://flowery.duckdns.org/api/reservation/day/?date=2023-05-14T00:00:00`,
+        `https://flowery.duckdns.org/api/reservation/day/?date=${formattedDate}`,
         {
           storeId: myStoreId,
         }

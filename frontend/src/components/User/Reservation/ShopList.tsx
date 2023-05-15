@@ -3,16 +3,16 @@ import selectBtn from "../../../assets/select_button.png";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useRecoilState } from "recoil";
-import { shopDataState } from "../../../recoil/atom";
+import { shopDataState, shopListState } from "../../../recoil/atom";
 
 export default function ShopList() {
   //response.data를 담을 변수
-  const [shopList, setShopList] = useState([]);
+  const [shopList, setShopList] = useRecoilState(shopListState);
   const [loading, setLoading] = useState(true); // 로딩 상태 추가
-  const [shopInfo, setShopInfo] = useRecoilState(shopDataState);
+  const [shopData, setShopData] = useRecoilState(shopDataState);
 
   const onclick = (shop: any) => {
-    setShopInfo(shop);
+    setShopData(shop);
   };
 
   useEffect(() => {
@@ -46,7 +46,7 @@ export default function ShopList() {
           가게선택
         </p>
       </div>
-      {shopList.map((shop: any, index) => (
+      {shopList.map((shop: any, index: any) => (
         <div
           key={index}
           className="bg-user_beige border-solid border-b border-user_green"

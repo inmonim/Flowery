@@ -112,10 +112,11 @@ export const reservationConfirmState = atom<boolean>({
   default: false,
 });
 
-//가게 정보
-export const shopInfo = atom({
-  key: "shopInfo",
-  default: [{}],
+//가게 리스트 (창근)
+export const shopListState = atom({
+  key: "shopListState",
+  default: [],
+  effects_UNSTABLE: [persistAtom],
 });
 
 //가게 정보(창근)
@@ -155,5 +156,22 @@ export const reservatonDayState = atom<string>({
 export const goodsState = atom({
   key: "goodsState",
   default: {},
+  effects_UNSTABLE: [persistAtom],
+});
+
+export const storeInfo = atom<any>({
+  key: "storeInfo",
+  default: {
+    storeId: 0,
+    storeName: "",
+    storePhone: "",
+    permit: 0,
+    open: 0,
+    close: 0,
+    address: "",
+    info: "",
+    image: "",
+    profile: "",
+  },
   effects_UNSTABLE: [persistAtom],
 });

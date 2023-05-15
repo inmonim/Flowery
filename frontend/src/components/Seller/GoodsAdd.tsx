@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./PrintCard.module.scss";
 import camera from "../../assets/add_logo.png";
 import axios from "axios";
 import { useRecoilValue } from "recoil";
 import { storeId } from "../../recoil/atom";
+
 interface modalProps {
   closeModal: () => void;
 }
@@ -12,8 +13,8 @@ export default function GoodsAdd(props: modalProps) {
   const [GoodsName, setGoodsName] = useState<string>("");
   const [GoodsPrice, setGoodsPrice] = useState<string>("");
   const [GoodsDetail, setGoodsDetail] = useState<string>("");
-  const [photoUrl2, setPhotoUrl2] = useState<string | null>(null);
-  const [formdatas, setFormdatas] = useState<FormData | null>(null);
+  const [formdatas, setFormdatas] = useState<FormData>(new FormData());
+  const [sampleImages, setSampleImages] = useState<string[]>([]);
   const myStoreId = useRecoilValue(storeId);
 
   function handleClick() {
@@ -32,37 +33,48 @@ export default function GoodsAdd(props: modalProps) {
       alert("숫자만 입력해야 합니다.");
     }
   }
+
   function handleDescriptionChange(event: React.ChangeEvent<HTMLInputElement>) {
     setGoodsDetail(event.target.value);
   }
 
   function handleCameraClick2() {
+    setSampleImages([]);
     const input = document.createElement("input");
     input.type = "file";
     input.accept = "image/*";
-    input.capture = "camera";
+    input.multiple = true;
     input.onchange = (e) => {
-      const file = (e.target as HTMLInputElement)?.files?.[0];
-      if (file) {
-        const formData2 = new FormData();
-        formData2.append("pictures", file);
-        formData2.append("storeId", String(myStoreId));
-        formData2.append("goodsName", String(GoodsName));
-        formData2.append("goodsPrice", String(GoodsPrice));
-        formData2.append("goodsDetail", String(GoodsDetail));
-        console.log(file, myStoreId, GoodsName, GoodsPrice, GoodsDetail);
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          setPhotoUrl2(e.target?.result as string);
-        };
-        reader.readAsDataURL(file);
-        setFormdatas(formData2);
+      const files = (e.target as HTMLInputElement)?.files;
+      if (files) {
+        for (let i = 0; i < files.length; i++) {
+          const file = files[i];
+          console.log(file);
+          formdatas.append("pictures", file);
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            setSampleImages((prevImages) => [
+              ...prevImages,
+              e.target?.result as string,
+            ]);
+          };
+          reader.readAsDataURL(file);
+        }
       }
     };
     input.click();
   }
 
+  useEffect(() => {
+    if (sampleImages.length > 0) {
+    }
+  }, [sampleImages]);
+
   function handlePrint() {
+    formdatas.append("storeId", String(myStoreId));
+    formdatas.append("goodsName", String(GoodsName));
+    formdatas.append("goodsPrice", String(GoodsPrice));
+    formdatas.append("goodsDetail", String(GoodsDetail));
     fetch("https://flowery.duckdns.org/api/goods", {
       method: "POST",
       body: formdatas,
@@ -71,23 +83,28 @@ export default function GoodsAdd(props: modalProps) {
       window.location.reload();
     });
   }
+
   return (
     <div className={styles.modal}>
       <div className={styles.modalContent}>
         <div className={styles.stepone}>
-          <div>
-            {photoUrl2 ? (
-              <img
-                src={photoUrl2}
-                alt="captured"
-                onClick={handleCameraClick2}
-              ></img>
+          <div className="flex flex-wrap">
+            {sampleImages.length !== 0 ? (
+              sampleImages.map((image, index) => (
+                <img
+                  key={index}
+                  src={image}
+                  alt={`Sample ${index}`}
+                  onClick={handleCameraClick2}
+                  className="w-1/3 h-auto m-5"
+                />
+              ))
             ) : (
               <img
                 src={camera}
                 alt="camera icon"
                 onClick={handleCameraClick2}
-              ></img>
+              />
             )}
           </div>
           <div>

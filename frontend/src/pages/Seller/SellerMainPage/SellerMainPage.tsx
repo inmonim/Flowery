@@ -6,6 +6,8 @@ import styles from "./SellerMainPage.module.scss";
 import "../../../assets/styles/variable.scss";
 import { useRecoilValue } from "recoil";
 import { storeName } from "../../../recoil/atom";
+import axios from "axios";
+
 export default function SellerMainPage() {
   const name = useRecoilValue(storeName);
   return (
