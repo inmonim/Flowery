@@ -67,15 +67,36 @@ public class GoodsService {
     }
 
 //  상품 목록 조회하기.
-    public List<Goods> findAllBystoreId(GoodsDto goodsDto) {
+    public List<GoodsDto> findAllBystoreId(GoodsDto goodsDto) {
         Integer storeId = goodsDto.getStoreId();
         Stores store = storeRepository.findByStoreId(storeId);
         if (store == null) {
-            throw new NoSuchElementException("해당 messageId가 없습니다.");
+            throw new NoSuchElementException("해당 storeId가 없습니다.");
         }
 
         List<Goods> goodsList = goodsRepository.findGoodsByStoreId(store);
-        return goodsList;
+        List<GoodsDto> result = new ArrayList<>();
+
+
+        for (Goods goods : goodsList) {
+            GoodsDto tempGoodsdto = new GoodsDto();
+            List<String> tmp = new ArrayList<>();
+            List<Samples> samplesList = samplesRepository.findAllByGoodsId(goods);
+            for (Samples sample : samplesList) {
+                tmp.add(sample.getPicture());
+            }
+
+            tempGoodsdto.setStoreId(goods.getGoodsId());
+            tempGoodsdto.setGoodsName(goods.getGoodsName());
+            tempGoodsdto.setGoodsPrice(goods.getGoodsPrice());
+            tempGoodsdto.setGoodsDetail(goods.getGoodsDetail());
+            tempGoodsdto.setSamples(tmp);
+
+            result.add(tempGoodsdto);
+
+        }
+
+        return result;
     }
 
     // 상품 생성

@@ -1,5 +1,6 @@
 package com.flowery.backend.controller;
 
+import com.amazonaws.services.kms.model.AlreadyExistsException;
 import com.flowery.backend.model.dto.MygardensDto;
 import com.flowery.backend.model.entity.Mygardens;
 import com.flowery.backend.sevice.MygardensService;
@@ -46,6 +47,10 @@ public class MygardensController {
         LOGGER.info("createMyGarden가 호출되었습니다.");
         try {
             return new ResponseEntity<Mygardens>(mygardensService.createMyGarden(mygardensDto), HttpStatus.CREATED);
+        } catch (AlreadyExistsException e) {
+            LOGGER.error("이미 저장된 메시지입니다.", e);
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                    .body(null);
         } catch (Exception e) {
             LOGGER.error("마이가든 저장에 실패했습니다.", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)

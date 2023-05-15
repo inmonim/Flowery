@@ -4,10 +4,7 @@ import com.amazonaws.services.kms.model.NotFoundException;
 import com.flowery.backend.model.dto.GoodsDto;
 import com.flowery.backend.model.dto.HolidaysDto;
 import com.flowery.backend.model.dto.StoresDto;
-import com.flowery.backend.model.entity.Goods;
-import com.flowery.backend.model.entity.Holidays;
-import com.flowery.backend.model.entity.Samples;
-import com.flowery.backend.model.entity.Stores;
+import com.flowery.backend.model.entity.*;
 import com.flowery.backend.repository.GoodsRepository;
 import com.flowery.backend.repository.HolidaysRepository;
 import com.flowery.backend.repository.SamplesRepository;
@@ -37,8 +34,37 @@ public class StoresService {
     }
 
     // 모든 상점 다 가져오기
-    public List<Stores> findAllStores(Integer permitted){
-        List<Stores> result = storeRepository.findByPermit(permitted);
+    public List<StoresDto> findAllStores(Integer permitted){
+        List<Stores> storesList = storeRepository.findByPermit(permitted);
+        List<StoresDto> result = new ArrayList<>();
+
+        for (Stores store : storesList){
+            StoresDto storesDto = new StoresDto();
+            List<Goods> goodsList = goodsRepository.findGoodsByStoreId(store);
+
+            storesDto.setStoreId(store.getStoreId());
+            storesDto.setStoreName(store.getStoreName());
+            storesDto.setStorePhone(store.getStorePhone());
+            storesDto.setPermit(store.getPermit());
+            storesDto.setOpen(store.getOpen());
+            storesDto.setClose(store.getClose());
+            storesDto.setAddress(store.getAddress());
+            storesDto.setInfo(store.getInfo());
+            storesDto.setImage(store.getImage());
+            storesDto.setProfile(store.getProfile());
+
+            List<String> tmp = new ArrayList<>();
+            for (Goods goods : goodsList) {
+                List<Samples> samplesList = samplesRepository.findAllByGoodsId(goods);
+                for (Samples sample : samplesList) {
+                    tmp.add(sample.getPicture());
+                }
+                storesDto.setSamples(tmp);
+
+            }
+            result.add(storesDto);
+
+        }
 
         return result;
     }
