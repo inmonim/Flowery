@@ -86,7 +86,8 @@ public class GoodsService {
                 tmp.add(sample.getPicture());
             }
 
-            tempGoodsdto.setStoreId(goods.getGoodsId());
+            tempGoodsdto.setGoodsId(goods.getGoodsId());
+            tempGoodsdto.setStoreId(goods.getStoreId().getStoreId());
             tempGoodsdto.setGoodsName(goods.getGoodsName());
             tempGoodsdto.setGoodsPrice(goods.getGoodsPrice());
             tempGoodsdto.setGoodsDetail(goods.getGoodsDetail());
