@@ -53,6 +53,18 @@ public class SalesService {
 
     }
 
+    // LinkedHashMap을 value 기준으로 정렬해주는 코드
+    public static LinkedHashMap<String, Integer> sortMapByValue(Map<String, Integer> map) {
+        List<Map.Entry<String, Integer>> entries = new LinkedList<>(map.entrySet());
+        Collections.sort(entries, (o1, o2) -> o1.getValue().compareTo(o2.getValue()));
+
+        LinkedHashMap<String, Integer> result = new LinkedHashMap<>();
+        for (Map.Entry<String, Integer> entry : entries) {
+            result.put(entry.getKey(), entry.getValue());
+        }
+        return result;
+    }
+
     public Map<String, Integer> findAllByGoods(Integer storeId, LocalDateTime startDate, LocalDateTime endDate) throws Exception {
         LocalDateTime startPoint = LocalDateTime.of(LocalDate.from(startDate), LocalTime.of(0,0,0));
         LocalDateTime endPoint = LocalDateTime.of(LocalDate.from(endDate), LocalTime.of(23,59,59));
@@ -65,13 +77,16 @@ public class SalesService {
         List<Reservation> list = reservationRepository.findAllByStoreIdAndDateBetween(store, startPoint,endPoint);
 
         // 각 goodsName 별로 예약 횟수를 저장할 맵
-        Map<String, Integer> reservationCountMap = new HashMap<>();
+        Map<String, Integer> reservationCountMap = new LinkedHashMap<>();
 
         // Reservation 리스트를 순회하면서 goodsName 별 예약 횟수를 카운트
         for (Reservation reservation : list) {
             String goodsName = reservation.getGoodsName();
             reservationCountMap.put(goodsName, reservationCountMap.getOrDefault(goodsName, 0) + 1);
         }
+
+        Map<String, Integer> result = sortMapByValue(reservationCountMap);
+
 
         return reservationCountMap;
     }
