@@ -65,7 +65,7 @@ public class SalesService {
         return result;
     }
 
-    public Map<String, Integer> findAllByGoods(Integer storeId, LocalDateTime startDate, LocalDateTime endDate) throws Exception {
+    public List<List<Object>> findAllByGoods(Integer storeId, LocalDateTime startDate, LocalDateTime endDate) throws Exception {
         LocalDateTime startPoint = LocalDateTime.of(LocalDate.from(startDate), LocalTime.of(0,0,0));
         LocalDateTime endPoint = LocalDateTime.of(LocalDate.from(endDate), LocalTime.of(23,59,59));
 
@@ -85,37 +85,80 @@ public class SalesService {
             reservationCountMap.put(goodsName, reservationCountMap.getOrDefault(goodsName, 0) + 1);
         }
 
-        Map<String, Integer> result = sortMapByValue(reservationCountMap);
+        List<List<Object>> result = new ArrayList<>();
+        for (Map.Entry<String, Integer> entry : reservationCountMap.entrySet()) {
+            List<Object> innerList = new ArrayList<>();
+            innerList.add(entry.getKey()); // goodsName
+            innerList.add(entry.getValue()); // count
+            result.add(innerList);
+        }
 
+        // 1번 인덱스 값으로 내림차순 정렬
+        Collections.sort(result, (list1, list2) -> Integer.compare((Integer) list2.get(1), (Integer) list1.get(1)));
 
-        return reservationCountMap;
+        return result;
+
     }
 
     // 꽃별 판매 내역 확인
-//    public Map<String, Integer> findAllByFlowers(Integer storeId, LocalDateTime startDate, LocalDateTime endDate) throws Exception {
-//        LocalDateTime startPoint = LocalDateTime.of(LocalDate.from(startDate), LocalTime.of(0,0,0));
-//        LocalDateTime endPoint = LocalDateTime.of(LocalDate.from(endDate), LocalTime.of(23,59,59));
-//
-//        Stores store = storeRepository.findByStoreId(storeId);
-//        if (store == null) {
-//            throw new NoSuchElementException("해당 storeId가 없습니다.");
-//        }
-//
-//        List<Reservation> list = reservationRepository.findAllByStoreIdAndDateBetween(store, startPoint,endPoint);
-//
-//        // 각 goodsName 별로 예약 횟수를 저장할 맵
-//        Map<String, Integer> reservationCountMap = new HashMap<>();
-//
-//        // Reservation 리스트를 순회하면서 goodsName 별 예약 횟수를 카운트
-//        for (Reservation reservation : list) {
-//            List<Sales> salesList = salesRepository.findAllByReservationId(reservation);
-//
-//            for (Sales sales : salesList) {
-//                Flowers flowers = sales.getFlowerId();
-//                reservationCountMap.put(goodsName, reservationCountMap.getOrDefault(goodsName, 0) + 1);
-//            }
-//        }
-//
-//        return reservationCountMap;
-//    }
+    public List<List<Object>> findAllByFlowers(Integer storeId, LocalDateTime startDate, LocalDateTime endDate) throws Exception {
+        LocalDateTime startPoint = LocalDateTime.of(startDate.toLocalDate(), LocalTime.of(0, 0, 0));
+        LocalDateTime endPoint = LocalDateTime.of(endDate.toLocalDate(), LocalTime.of(23, 59, 59));
+
+        Stores store = storeRepository.findByStoreId(storeId);
+        if (store == null) {
+            throw new NoSuchElementException("해당 storeId가 없습니다.");
+        }
+
+        List<Reservation> list = reservationRepository.findAllByStoreIdAndDateBetween(store, startPoint, endPoint);
+
+        // 각 flowerName 별로 예약 횟수를 저장할 맵
+        Map<String, Integer> reservationCountMap = new HashMap<>();
+
+        // Reservation 리스트를 순회하면서 flowerName 별 예약 횟수를 카운트
+        for (Reservation reservation : list) {
+            List<Sales> salesList = salesRepository.findAllByReservationId(reservation);
+
+            for (Sales sales : salesList) {
+                Flowers flowers = sales.getFlowerId();
+                reservationCountMap.put(flowers.getFlowerName(), reservationCountMap.getOrDefault(flowers.getFlowerName(), 0) + 1);
+            }
+        }
+
+        List<List<Object>> result = new ArrayList<>();
+        for (Map.Entry<String, Integer> entry : reservationCountMap.entrySet()) {
+            List<Object> innerList = new ArrayList<>();
+            innerList.add(entry.getKey()); // flowerName
+            innerList.add(entry.getValue()); // count
+            result.add(innerList);
+        }
+
+        // 1번 인덱스 값으로 내림차순 정렬
+        Collections.sort(result, (list1, list2) -> Integer.compare((Integer) list2.get(1), (Integer) list1.get(1)));
+
+        return result;
+    }
+
+
+    public Integer findAllByPrices(Integer storeId, LocalDateTime startDate, LocalDateTime endDate) {
+        LocalDateTime startPoint = LocalDateTime.of(LocalDate.from(startDate), LocalTime.of(0,0,0));
+        LocalDateTime endPoint = LocalDateTime.of(LocalDate.from(endDate), LocalTime.of(23,59,59));
+
+        Stores store = storeRepository.findByStoreId(storeId);
+        if (store == null) {
+            throw new NoSuchElementException("해당 storeId가 없습니다.");
+        }
+
+        List<Reservation> list = reservationRepository.findAllByStoreIdAndDateBetween(store, startPoint,endPoint);
+
+        Integer totalPrice = 0;
+
+        for (Reservation reservation : list) {
+            totalPrice += reservation.getPrice();
+            }
+
+
+        return totalPrice;
+
+    }
 }
