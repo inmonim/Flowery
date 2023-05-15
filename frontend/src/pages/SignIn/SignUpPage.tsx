@@ -145,6 +145,7 @@ export default function SignUpPage() {
                 }
                 value={inputPhone}
                 onKeyDown={pressCheck}
+                autoComplete="off"
                 placeholder=" "
                 className={`peer block text-sm min-h-[auto] w-full rounded-xl border-2 border-gray-200 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none focus:border-neutral-300 ${
                   isVerify ? "bg-gray-200" : ""
@@ -158,10 +159,9 @@ export default function SignUpPage() {
               </label>
               {!isVerify && (
                 <button
-                  type="button"
                   disabled={!isPhoneNum}
                   onClick={checkVerify}
-                  className={`absolute flex inset-y-0 right-0 h-full w-1/5 rounded-xl text-xs font-medium leading-normal ${
+                  className={`absolute flex inset-y-0 right-0 h-full w-1/4 rounded-xl text-xs font-medium leading-normal ${
                     isPhoneNum
                       ? "bg-red-300 text-white  shadow-[0_4px_9px_-4px_rgba(0,0,0,0.2)] transition duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] hover:outline-none hover:ring-0 active:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] "
                       : "bg-gray-50 text-gray-300"
@@ -313,7 +313,6 @@ export default function SignUpPage() {
                   )}
                 </div>
                 <button
-                  type="submit"
                   onClick={async (e) => {
                     if (
                       isId === true &&

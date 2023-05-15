@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useRecoilState } from "recoil";
 import { letterPaperState } from "../../../recoil/atom";
-import styles from "./LetterPaper.module.scss";
 
 export default function LetterPaper() {
   const [letterPaper, setLetterPaper] =
@@ -16,7 +15,9 @@ export default function LetterPaper() {
   }
 
   return (
-    <div className="flex justify-center border-t h-[150px]">
+    <div
+      className="flex justify-center border-t h-[150px]"
+    >
       {/* 글씨체 고르기 */}
       <div className="flex justify-between p-2 w-[35em]">
         {/* 왼쪽 화살표 */}
@@ -37,7 +38,7 @@ export default function LetterPaper() {
               <img
                 src={require(`../../../assets/letters/Letter${i}.png`)}
                 onClick={() => setLetterPaper(i)}
-                className="w-[100px] p-2"
+                className="w-[100px] p-2 cursor-pointer"
               />
             </div>
           ))}

@@ -1,18 +1,37 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import GardenCard from "../../components/User/MyGarden/GardenCard";
 
 export default function MyGarden() {
-  const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+  const [messages, setMessages] = useState<Array<string>>([]);
+
+  useEffect(() => {
+    const getMessages = async () => {
+      await axios
+        .post("https://flowery.duckdns.org/api/myGarden/get", { userId: 1 })
+        .then((response) => {
+          setMessages(response.data);
+        });
+    };
+    getMessages();
+  }, []);
+
+  useEffect(() => {}, [messages]);
+
+  console.log(messages);
+
   return (
     <div>
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4 p-4">
-        {cards.map((card, idx) => {
+        {messages.map((message, idx) => {
           return (
             <div key={idx}>
-              <img
+              <GardenCard />
+              {/* <img
                 className="h-auto max-w-full rounded-lg"
-                src={`https://flowbite.s3.amazonaws.com/docs/gallery/square/image-${card}.jpg`}
+                src={}
                 alt=""
-              />
+              /> */}
             </div>
           );
         })}
