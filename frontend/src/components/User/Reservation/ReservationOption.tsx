@@ -20,6 +20,7 @@ export default function ReservationOption() {
     useRecoilState(reservationTimeState);
 
   const shopData = useRecoilValue(shopDataState);
+  console.log(shopData);
 
   const getDay = (x: string) => {
     setReservationDay(x);
