@@ -32,10 +32,10 @@ public class GoodsController {
 
     // 상품 목록 조회하기
     @PostMapping("info")
-    public ResponseEntity<List<Goods>> findByStoreId(@RequestBody GoodsDto goodsDto){
+    public ResponseEntity<List<GoodsDto>> findByStoreId(@RequestBody GoodsDto goodsDto){
         LOGGER.info("findByStoreId가 호출되었습니다.");
         try{
-            return new ResponseEntity<List<Goods>>(goodsService.findAllBystoreId(goodsDto), HttpStatus.OK);
+            return new ResponseEntity<List<GoodsDto>>(goodsService.findAllBystoreId(goodsDto), HttpStatus.OK);
         }catch (Exception e){
             LOGGER.error("상품 조회에 실패했습니다.", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
