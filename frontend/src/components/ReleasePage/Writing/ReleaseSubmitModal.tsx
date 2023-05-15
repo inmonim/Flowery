@@ -76,7 +76,6 @@ const ReleaseSubmitModal = React.forwardRef<HTMLDivElement, any>(
       if (image.length > 0) {
         for (let i = 0; i < image.length; i++) {
           formData.append(`pictures`, image[i]);
-          console.log(image);
         }
       } else {
         formData.append(`pictures`, new Blob(undefined));

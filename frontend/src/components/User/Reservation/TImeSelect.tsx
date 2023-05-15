@@ -1,10 +1,18 @@
 import React, { useState } from "react";
 // import ReactDatePicker from "react-datepicker";
 
-export default function Timeselect() {
+type TimeselectProps = {
+  getTime: (x: string) => void;
+};
+
+export default function Timeselect({ getTime }: TimeselectProps) {
+  const [selectedTime, setSelectedTime] = useState("");
+  const onclick = (time: any) => {
+    setSelectedTime(time);
+    getTime(time);
+  };
   const open = 900;
   const close = 2100;
-
   const rezBefore = [];
   const rezAfter = [];
   for (let i = open; i < close; i += 30) {
@@ -23,7 +31,7 @@ export default function Timeselect() {
     }
   }
 
-  // console.log(rezAfter, "오후");
+  // /  console.log(selectedTime);
   // console.log(rezBefore, "오전");
 
   return (
@@ -35,6 +43,7 @@ export default function Timeselect() {
         {rezBefore.map((time, index) => (
           <div
             key={index}
+            onClick={() => onclick(time.replace(":", ""))}
             className="w-[4.5rem] p-1 text-center border-solid border-2 border-user_green hover:bg-user_sol text-user_green"
           >
             {time}
@@ -48,6 +57,7 @@ export default function Timeselect() {
         {rezAfter.map((time, index) => (
           <div
             key={index}
+            onClick={() => onclick(time.replace(":", ""))}
             className="w-[4.5rem] p-1  text-center border-solid border-2 border-user_green hover:bg-user_sol text-user_green"
           >
             {time}

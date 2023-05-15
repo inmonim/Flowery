@@ -1,39 +1,46 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import ShopInfo from "./ShopInfo";
 import OptionHeader from "./OptionHeader";
 import thumbnail from "../../../assets/example1.jpg";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import axios from "axios";
+import { useRecoilValue, useRecoilState } from "recoil";
+import { shopDataState, goodsState } from "../../../recoil/atom";
 
 export default function OrderPage() {
+  const location = useLocation();
+  const [goodsList, setGoodsList] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const shopData = useRecoilValue(shopDataState);
+  const [selectedGoods, setSelectedGoods] = useRecoilState(goodsState);
+
+  const onSelect = (goods: any) => {
+    setSelectedGoods(goods);
+  };
+
+  useEffect(() => {
+    async function getData() {
+      try {
+        const response = await axios.post(
+          "https://flowery.duckdns.org/api/goods/info",
+          {
+            storeId: shopData.storeId,
+          }
+        );
+        // console.log(response.data[0]);
+        setGoodsList(response.data);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false); // API 호출 완료 후 로딩 상태 해제
+      }
+    }
+    //첫 렌더링에만 실행
+    getData();
+  }, []);
+
   const productList = [
     {
-      title: "[가정의달 행사] 좋은 꽃다발",
-      price: "15,000원",
-      content: "직경 15cm 정도의 꽃다발",
-      thumbnail: thumbnail,
-    },
-    {
-      title: "[가정의달 행사] 좋은 꽃다발",
-      price: "15,000원",
-      content: "직경 15cm 정도의 꽃다발",
-      thumbnail: thumbnail,
-    },
-    {
-      title: "[가정의달 행사] 좋은 꽃다발",
-      price: "15,000원",
-      content: "직경 15cm 정도의 꽃다발",
-      thumbnail: thumbnail,
-    },
-    {
-      title: "[가정의달 행사] 좋은 꽃다발",
-      price: "15,000원",
-      content: "직경 15cm 정도의 꽃다발",
-      thumbnail: thumbnail,
-    },
-    {
-      title: "주문제작",
-      price: "가게에 문의",
-      content: "기타란에 문의 내역을 입력해 주세요/",
       thumbnail: thumbnail,
     },
   ];
@@ -45,27 +52,32 @@ export default function OrderPage() {
         <div className="w-[95%] mb-[10%] shadow-xl bg-white ">
           <ShopInfo />
           <div className="p-3 pt-8 pb-8 text-xs">
+            <p className="font-nasq font-bold">주의사항 ex) </p>
             <p className="font-nasq font-bold">
-              주의사항 ex) 사진은 실제 저희 가게에서 제공하는 같은 가격의
-              꽃다발이지만 꽃의 종류에 따라 분위기가 달라질 수 있는 점 주의 해라
+              사진은 실제 해당 가게에서 제공하는 같은 가격의 꽃다발이지만 꽃의
+              종류에 따라 분위기가 달라질 수 있는 점 주의 해주세요
             </p>
           </div>
           <div>
-            {productList.map((product, index) => (
+            {goodsList.map((product, index) => (
               <div
+                onClick={() => onSelect(product)}
                 className="flex border-t border-user_green pb-[1%] "
                 key={index}
               >
-                <div className="flex flex-col w-3/5 p-3 gap-1">
-                  <div className="font-nasq font-bold">{product.title}</div>
+                <div className="flex flex-col w-3/5 p-3 gap-1 justify-center items-center">
+                  <div className="font-nasq font-bold">{product.goodsName}</div>
                   <div className="font-nasq text-[#8D8E90] text-[0.5rem]">
-                    {product.content}
+                    {product.goodsDetail}
                   </div>
-                  <div className="font-bold">{product.price}</div>
+                  <div className="font-bold">
+                    {product.goodsPrice}
+                    <span className="pl-1 font-nasq">원</span>
+                  </div>
                 </div>
                 <div className="w-2/5">
                   <img
-                    src={product.thumbnail}
+                    src={productList[0].thumbnail}
                     alt="thumbnail"
                     className="p-3"
                   />

@@ -20,7 +20,6 @@ export default function UserProtoPage() {
   const [flowerData, setFlowerData] = useState<string>("");
 
   useEffect(() => {
-    console.log(messageId);
     async function getData() {
       try {
         const response = await axios.post(
@@ -47,10 +46,6 @@ export default function UserProtoPage() {
     }
     getData();
   }, []);
-
-  useEffect(() => {
-    console.log("letterData: ", letterData);
-  }, [letterData]);
 
   useEffect(() => {
     const handleWindowResize = () => {

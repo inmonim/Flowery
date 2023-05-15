@@ -5,15 +5,22 @@ import { ko } from "date-fns/esm/locale";
 import "./DaySelect.modules.scss";
 import moment from "moment";
 
-export default function Dayselect() {
+type DayselectProps = {
+  getDay: (x: string) => void;
+};
+
+export default function Dayselect({ getDay }: DayselectProps) {
   const [selectedDate, setSelectedDate] = useState(null);
 
   const handleDateChange = (date: any) => {
     setSelectedDate(date);
+    getDay(date);
   };
 
   const today = moment();
   const maxDate = moment(today).add(15, "days").toDate();
+
+  // console.log(selectedDate);
 
   return (
     <>
