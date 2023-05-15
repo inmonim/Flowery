@@ -12,6 +12,7 @@ public class SmsCertificationDao {
     private final int LIMIT_TIME = 3 * 60;  // (2)
 
     private final StringRedisTemplate stringRedisTemplate;
+    private final RedisTemplate<String, String> redisTemplate;
 
     public void createSmsCertification(String phone, String certificationNumber) { //(3)
         stringRedisTemplate.opsForValue()
@@ -27,7 +28,19 @@ public class SmsCertificationDao {
         stringRedisTemplate.delete(phone);
     }
 
-    public boolean hasKey(String phone) {  //(6)
-        return stringRedisTemplate.hasKey(phone);
+    public void setValues(String key, String data) {
+        ValueOperations<String, String> values = redisTemplate.opsForValue();
+        values.set(key, data);
     }
+
+    public String getValue(String key){
+        return stringRedisTemplate.opsForValue().get(key);
+    }
+
+    public void setValues(String key, String data, Duration duration) {
+        ValueOperations<String, String> values = redisTemplate.opsForValue();
+        values.set(key, data, duration);
+    }
+
+
 }

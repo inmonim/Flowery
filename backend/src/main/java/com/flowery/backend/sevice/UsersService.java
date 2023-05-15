@@ -1,5 +1,7 @@
 package com.flowery.backend.sevice;
 
+import com.flowery.backend.controller.MessagesController;
+import com.flowery.backend.jwt.exception.BadRequestException;
 import com.flowery.backend.model.dto.SellerDto;
 import com.flowery.backend.model.dto.UsersDto;
 import com.flowery.backend.model.entity.Seller;
@@ -7,12 +9,15 @@ import com.flowery.backend.model.entity.Users;
 import com.flowery.backend.repository.SellerRepository;
 import com.flowery.backend.repository.UsersRepository;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UsersService {
+    private final Logger LOGGER = LoggerFactory.getLogger(MessagesController.class);
     private UsersRepository usersRepository;
     private SellerRepository sellerRepository;
 
@@ -29,24 +34,23 @@ public class UsersService {
         return usersRepository.findById(userId).get();
     }
 
-    public boolean loginCheck(String userId, String pass) throws Exception{
+    public UsersDto loginCheck(UsersDto loginDto) throws Exception{
 
-        Users users = usersRepository.findById(userId);
+        Users users = usersRepository.findById(loginDto.getId());
 
-        if(users == null || !passwordEncoder.matches(pass, users.getPass())){
-            return false;
+        if(!passwordEncoder.matches(loginDto.getPass(), users.getPass())){
+            throw new BadRequestException("아이디 혹은 비밀번호를 확인하세요.");
         }
-        else return true;
+        else{
+            UsersDto usersDto = new UsersDto(users);
+            return usersDto;
+        }
     }
-
     public SellerDto sellerLoginCheck(String userId, String pass) throws Exception{
 
         Users users = usersRepository.findById(userId);
 
         SellerDto sellerDto = new SellerDto();
-
-        sellerDto.setUserId(-11);
-
 
         if(users == null || !passwordEncoder.matches(pass, users.getPass())){
             return sellerDto;
@@ -55,10 +59,6 @@ public class UsersService {
         Seller seller = sellerRepository.findByUserId(users);
 
         System.out.println(seller.getSellerId());
-
-        if(seller == null){
-            return sellerDto;
-        }
 
         sellerDto.setSellerId(seller.getSellerId());
         sellerDto.setStoreId(seller.getStoreId().getStoreId());

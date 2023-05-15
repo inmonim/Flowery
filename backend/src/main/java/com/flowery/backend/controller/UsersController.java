@@ -1,5 +1,7 @@
 package com.flowery.backend.controller;
 
+import com.flowery.backend.jwt.JwtProvider;
+import com.flowery.backend.jwt.TokenResponse;
 import com.flowery.backend.model.dto.SellerDto;
 import com.flowery.backend.model.dto.UsersDto;
 import com.flowery.backend.redis.PasswordGenerator;
@@ -35,30 +37,43 @@ public class UsersController {
     private UsersService usersService;
     private StoresService storesService;
     final DefaultMessageService messageService;
-
+    private final JwtProvider jwtProvider;
     private final SmsCertificationDao smsCertificationDao;
     private final int LIMIT_TIME = 3 * 60;  // (2)
 
-    UsersController(UsersService usersService, StoresService storesService, SmsCertificationDao smsCertificationDao){
+    UsersController(UsersService usersService, StoresService storesService, SmsCertificationDao smsCertificationDao, JwtProvider jwtProvider){
         this.usersService = usersService;
         this.storesService = storesService;
         this.smsCertificationDao = smsCertificationDao;
+        this.jwtProvider =jwtProvider;
         this.messageService = NurigoApp.INSTANCE.initialize("NCSCFJLKKGWYQQ0R", "SS1RDBJ0LYUXJGE5YLYK1EMMSJYKKBNJ", "https://api.coolsms.co.kr");
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<Boolean> login(@RequestBody UsersDto usersDto){
+    @PostMapping("/login-user")
+    public ResponseEntity<TokenResponse> loginUser(@RequestBody UsersDto loginDto) {
+        try {
+            UsersDto usersDto = usersService.loginCheck(loginDto);
+            return new ResponseEntity<>(jwtProvider.createTokensByLogin(usersDto), HttpStatus.ACCEPTED);
+        }catch (Exception e){
+            throw new RuntimeException("회원 정보를 다시 확인해주세요");
+        }
+    }
+
+
+    @PostMapping("/login-seller")
+    public ResponseEntity<TokenResponse> loginSeller(@RequestBody UsersDto loginDto){
 
         try {
-            return new ResponseEntity<>(usersService.loginCheck(usersDto.getId(), usersDto.getPass()), HttpStatus.ACCEPTED);
+            UsersDto usersDto = usersService.loginCheck(loginDto);
+            return new ResponseEntity<>(jwtProvider.createTokensBySellerLogin(usersDto), HttpStatus.ACCEPTED);
         }catch (Exception e){
-            return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
+            throw new RuntimeException("회원 정보를 다시 확인해주세요");
         }
 
     }
 
-    @PostMapping("/login-seller")
-    public ResponseEntity<SellerDto> login_seller(@RequestBody UsersDto usersDto){
+    @PostMapping("/get-seller")
+    public ResponseEntity<SellerDto> getSeller(@RequestBody UsersDto usersDto){
 
         try {
             SellerDto sellerDto = usersService.sellerLoginCheck(usersDto.getId(), usersDto.getPass());
@@ -128,7 +143,7 @@ public class UsersController {
         return new ResponseEntity<>(true, HttpStatus.ACCEPTED);
     }
 
-    @PostMapping("check")
+    @PostMapping("/phone-check")
     public ResponseEntity<Boolean> phoneCheck(@RequestBody UsersDto usersDto){
         String value = smsCertificationDao.getSmsCertification(usersDto.getPhone());
 
@@ -140,6 +155,11 @@ public class UsersController {
 
         return new ResponseEntity<>(true, HttpStatus.ACCEPTED);
 
+    }
+
+    @GetMapping("/ayo")
+    public ResponseEntity<String> hello(){
+        return new ResponseEntity<>("ayo",HttpStatus.ACCEPTED);
     }
 
 }
