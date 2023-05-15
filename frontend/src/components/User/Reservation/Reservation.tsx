@@ -36,8 +36,8 @@ export default function Reservation() {
           geocoder.addressSearch(shop.address, function (result, status) {
             if (status === window.kakao.maps.services.Status.OK) {
               const latlng = {
-                lat: parseFloat(result[0].x),
-                lng: parseFloat(result[0].y),
+                lat: parseFloat(result[0].y),
+                lng: parseFloat(result[0].x),
               };
               const updatedShop = { ...shop, latlng: latlng };
               updatedShops.push(updatedShop);
@@ -69,16 +69,16 @@ export default function Reservation() {
 
   //   setMarkers(marker);
   // };
-  // const handleMarkerClick = (index: number) => {
-  //   const marker: boolean[] = [];
-  //   updatedShopList.map((index: any) => {
-  //     marker.push(false);
-  //   });
+  const handleMarkerClick = (index: number) => {
+    const marker: boolean[] = [];
+    updatedShopList.map((index: any) => {
+      marker.push(false);
+    });
 
-  //   marker[index] = true;
+    marker[index] = true;
 
-  //   setMarkers(marker);
-  // };
+    setMarkers(marker);
+  };
 
   // useEffect(() => {
   //   initMarkers();
@@ -106,7 +106,7 @@ export default function Reservation() {
             <MapMarker
               position={value.latlng} // 마커를 표시할 위치
               image={{ src: imageSrc, size: { width: 35, height: 45 } }}
-              // onClick={() => handleMarkerClick(index)}
+              onClick={() => handleMarkerClick(index)}
               key={index}
             >
               {/* {markers[index] && <div>{value.title}</div>} */}
