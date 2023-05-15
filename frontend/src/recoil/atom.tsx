@@ -153,7 +153,7 @@ export const goodsState = atom({
   effects_UNSTABLE: [persistAtom],
 });
 
-export const storeInfo = atom<object>({
+export const storeInfo = atom<any>({
   key: "storeInfo",
   default: {
     storeId: 0,

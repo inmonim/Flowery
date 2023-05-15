@@ -32,6 +32,7 @@ export default function ManageItem() {
         storeId: myStoreId,
       })
       .then((response) => {
+        console.log(response.data);
         setMyItem(response.data as GoodsItem[]);
       })
       .catch((error) => {
