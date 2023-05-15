@@ -1,6 +1,7 @@
 @font-face {
   font-family: "KCC";
-  src: local('KCC'), url("../../assets/styles/fonts/KCC-Chassam.ttf"), format('truetype');
+  src: local("KCC"), url("../../assets/styles/fonts/KCC-Chassam.ttf"),
+    format("truetype");
 }
 
 .fontcheck {

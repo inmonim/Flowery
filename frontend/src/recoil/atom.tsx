@@ -152,3 +152,20 @@ export const goodsState = atom({
   default: {},
   effects_UNSTABLE: [persistAtom],
 });
+
+export const storeInfo = atom<object>({
+  key: "storeInfo",
+  default: {
+    storeId: 0,
+    storeName: "",
+    storePhone: "",
+    permit: 0,
+    open: 0,
+    close: 0,
+    address: "",
+    info: "",
+    image: "",
+    profile: "",
+  },
+  effects_UNSTABLE: [persistAtom],
+});
