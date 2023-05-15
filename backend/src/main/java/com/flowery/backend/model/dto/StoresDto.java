@@ -3,6 +3,7 @@ package com.flowery.backend.model.dto;
 import lombok.Data;
 
 import javax.persistence.Column;
+import java.util.List;
 
 @Data
 public class StoresDto {
@@ -25,4 +26,6 @@ public class StoresDto {
     private String image;
 
     private String profile;
+
+    private List<String> samples;
 }

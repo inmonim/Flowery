@@ -34,10 +34,10 @@ public class StoresController {
 
     // 모든 가게 정보 불러오기
     @GetMapping
-    public ResponseEntity<List<Stores>> findAllStores() {
+    public ResponseEntity<List<StoresDto>> findAllStores() {
         LOGGER.info("findAllStores가 호출되었습니다.");
         Integer permitted = 1;
-        return new ResponseEntity<List<Stores>>(storesService.findAllStores(permitted), HttpStatus.OK);
+        return new ResponseEntity<List<StoresDto>>(storesService.findAllStores(permitted), HttpStatus.OK);
     }
 
     // storeId로 가게 정보 가져오기
