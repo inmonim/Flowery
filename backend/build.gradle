@@ -41,6 +41,8 @@ dependencies {
 	/* redis */
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 	implementation group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.13'
+	// [JWT]
+	implementation 'io.jsonwebtoken:jjwt:0.9.1'
 }
 
 tasks.named('test') {
