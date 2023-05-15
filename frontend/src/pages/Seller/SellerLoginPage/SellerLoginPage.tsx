@@ -3,13 +3,14 @@ import styles from "./SellerLoginPage.module.scss";
 import InputForm from "../../../components/Common/InputForm";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
-import { storeId, storeName } from "../../../recoil/atom";
+import { storeId, storeName, storeInfo } from "../../../recoil/atom";
 import axios from "axios";
 
 export default function SellerLogin() {
   const navigate = useNavigate();
   const [myStoreId, setStoreId] = useRecoilState<number>(storeId);
   const [myStoreName, setStoreName] = useRecoilState<string>(storeName);
+  const [myStoreInfo, setStoreInfo] = useRecoilState<object>(storeInfo);
   const [myId, setMyId] = useState<string>("");
   const [myPw, setMyPw] = useState<string>("");
 
@@ -22,6 +23,13 @@ export default function SellerLogin() {
       })
       .then((response) => {
         setStoreId(response.data.storeId);
+        axios
+          .post("https://flowery.duckdns.org/api/stores/info", {
+            storeId: response.data.storeId,
+          })
+          .then((res) => {
+            setStoreInfo(res.data);
+          });
         axios
           .post("https://flowery.duckdns.org/api/stores/info", {
             storeId: response.data.storeId,

@@ -1,11 +1,12 @@
 import React from "react";
 import ManageItem from "../../../components/Seller/ManageItem";
-import "../../../assets/styles/variable.scss";
+import ChangeTime from "../../../components/Seller/ChangeTime";
 
-export default function SellerBookPage() {
+export default function SellerManagePage() {
   return (
     <div>
       <ManageItem />
+      <ChangeTime />
     </div>
   );
 }

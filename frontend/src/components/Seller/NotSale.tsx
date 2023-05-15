@@ -30,6 +30,7 @@ export default function NotSale(props: Props) {
   const [flowerData, setFlowerData] = useState<Array<object>>([]);
   const [message, setMessage] = useState<string>("");
   const [recogOK, setRecogOK] = useState<boolean>(false);
+  const [itemPictures, setItemPictures] = useState<Record<number, string>>({});
 
   function handleClick() {
     props.closeModal33();
@@ -57,6 +58,23 @@ export default function NotSale(props: Props) {
         console.error(error);
       });
   }, []);
+
+  useEffect(() => {
+    myGoods.forEach((item) => {
+      axios
+        .get(`https://flowery.duckdns.org/api/goods/${item.goodsId}/sample`)
+        .then((response) => {
+          const picture = response.data[0].picture;
+          setItemPictures((prevState) => ({
+            ...prevState,
+            [item.goodsId]: picture,
+          }));
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    });
+  }, [myGoods]);
 
   function handleCameraClick1() {
     const input = document.createElement("input");
@@ -290,7 +308,10 @@ export default function NotSale(props: Props) {
                     onClick={() => handleSelectItem(item)}
                   >
                     <div className={styles.picture}>
-                      <img src={flower} alt="flower" />
+                      <img
+                        src={itemPictures[item.goodsId] || flower}
+                        alt="flower"
+                      />
                     </div>
                     <div className={styles.description}>
                       <div className={styles.number}>{item.goodsName}</div>

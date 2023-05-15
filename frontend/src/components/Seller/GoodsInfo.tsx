@@ -25,6 +25,7 @@ export default function GoodsInfo(props: GoodsItem) {
       .delete(`https://flowery.duckdns.org/api/stores/goods/${id}`)
       .then(() => {
         alert("삭제되었습니다.");
+        window.location.reload();
       });
   }
   return (
