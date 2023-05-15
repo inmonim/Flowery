@@ -34,6 +34,7 @@ module.exports = {
         typing: "typing 3.5s steps(40, end)",
         beat: "beat 1s ease-in-out infinite",
         shakeRight: "shakeRight 1s ease-in-out infinite",
+        moveCenter: "moveCenter 1s ease-in-out forwards",
       },
       keyframes: {
         typing: {
@@ -84,6 +85,10 @@ module.exports = {
           "75%": { transform: "translateX(5px) rotateY(7deg)" },
           "100%": { transform: "translateX(0)" },
           // "0%": { transform: "translateX(5px)"}
+        },
+        moveCenter: {
+          "0%": { transform: "translate(0)" },
+          "100%": { transform: "translate(calc(50vw - 50%), calc(50vh -50%))" },
         },
       },
     },

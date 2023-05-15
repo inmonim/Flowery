@@ -7,7 +7,6 @@ import Alert from "../../../assets/alert.png";
 import { useRecoilState, useRecoilValue } from "recoil";
 import {
   cardContent,
-  cardImg,
   cardName,
   cardState,
   isCardContent,
@@ -19,7 +18,7 @@ interface CardProps {
 }
 
 export default function CardPreview() {
-  const [imgUrl, setImgUrl] = useRecoilState<string>(cardImg);
+  const [imgUrl, setImgUrl] = useState<string>("");
   const [name, setName] = useRecoilState<string>(cardName);
   const [content, setContent] = useRecoilState<string>(cardContent);
   const card = useRecoilValue<number>(cardState);
@@ -145,7 +144,7 @@ export default function CardPreview() {
       }
     };
     image1.src = image1Url;
-
+    
 
     return <img src={imgUrl} onLoad={handleCardDisplayed} />;
   }

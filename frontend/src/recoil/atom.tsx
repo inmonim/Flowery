@@ -17,6 +17,12 @@ export const phoneNumberState = atom<string>({
   effects_UNSTABLE: [persistAtom],
 });
 
+// 카드 이미지
+export const cardImg = atom<string>({
+  key: "cardImgState",
+  default: "",
+});
+
 // 카드 종류
 export const cardState = atom<number>({
   key: "cardState",
