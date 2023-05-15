@@ -71,7 +71,7 @@ public class GoodsService {
         Integer storeId = goodsDto.getStoreId();
         Stores store = storeRepository.findByStoreId(storeId);
         if (store == null) {
-            throw new NoSuchElementException("해당 messageId가 없습니다.");
+            throw new NoSuchElementException("해당 storeId가 없습니다.");
         }
 
         List<Goods> goodsList = goodsRepository.findGoodsByStoreId(store);
