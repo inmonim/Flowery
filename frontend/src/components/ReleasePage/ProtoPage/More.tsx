@@ -10,8 +10,6 @@ export default function More(props: any) {
     return null; // letterData가 없을 경우 컴포넌트를 렌더링하지 않음
   }
 
-  console.log(letterData);
-
   const flower = "카네이션";
 
   return (

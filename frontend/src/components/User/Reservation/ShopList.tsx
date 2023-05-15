@@ -3,12 +3,17 @@ import selectBtn from "../../../assets/select_button.png";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useRecoilState } from "recoil";
-import { shopInfo } from "../../../recoil/atom";
+import { shopDataState } from "../../../recoil/atom";
 
 export default function ShopList() {
   //response.data를 담을 변수
-  const [shopList, setShopList] = useRecoilState(shopInfo);
+  const [shopList, setShopList] = useState([]);
   const [loading, setLoading] = useState(true); // 로딩 상태 추가
+  const [shopInfo, setShopInfo] = useRecoilState(shopDataState);
+
+  const onclick = (shop: any) => {
+    setShopInfo(shop);
+  };
 
   useEffect(() => {
     async function getData() {
@@ -32,12 +37,11 @@ export default function ShopList() {
     return <div className="w-full h-full bg-[red]">Fuck yuo</div>; // 로딩 중일 때 보여줄 UI
   }
 
-  // console.log(shopList);
   // console.log(shopList[0].image);
 
   return (
     <div className="flex flex-col">
-      <div className="bg-user_beige">
+      <div className="bg-user_beige sticky top-[-2px]">
         <p className="text-xl font-medium p-2 text-user_green font-namyeong border-b border-user_green">
           가게선택
         </p>
@@ -50,7 +54,7 @@ export default function ShopList() {
           <div className="flex items-center space-x-4 pt-2">
             <div className="flex-none w-20 h-20 overflow-hidden rounded-full border-solid border-[1px] border-user_green mb-2">
               <img
-                src={shop.image}
+                src={shop.profile}
                 alt={shop.storeName}
                 className="w-full h-full"
               />
@@ -61,7 +65,7 @@ export default function ShopList() {
                 {shop.address}
               </div>
             </div>
-            <Link to={"/reservationoption"}>
+            <Link to="/reservationoption" onClick={() => onclick(shop)}>
               <div className="flex justify-center items-center bg-user_beige w-[4rem] h-[2.5rem] rounded-[20px] border-[1.75px] border-user_green ">
                 <p className=" font-nasq font-bold  text-user_green">선택</p>
               </div>

@@ -42,13 +42,11 @@ export default function ReleaseWrite() {
   const image = useRecoilValue<Array<File>>(imageState);
   const video = useRecoilValue<File | null>(videoState);
   const [loading, setLoading] = useState(false);
-  const [reservationConfirm, setReservationConfirm] =
-  useState<boolean>(false);
+  const [reservationConfirm, setReservationConfirm] = useState<boolean>(false);
 
   const navigate = useNavigate();
 
   const modalRef = useRef<HTMLDivElement>(null);
-
 
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
@@ -147,7 +145,6 @@ export default function ReleaseWrite() {
     if (image.length > 0) {
       for (let i = 0; i < image.length; i++) {
         formData.append(`pictures`, image[i]);
-        console.log(image);
       }
     } else {
       formData.append(`pictures`, new Blob(undefined));
@@ -162,7 +159,6 @@ export default function ReleaseWrite() {
       })
       .catch((e) => setLoading(false));
   };
-
 
   return (
     // 전체 페이지
@@ -179,13 +175,13 @@ export default function ReleaseWrite() {
         <ReleasePreview ref={modalRef} onClose={() => setShowModal(false)} />
       )}
 
-        {/* 제출하기 모달 */}
-        {reservationConfirm && (
-            <ReleaseSubmitModal
-              onClose={() => setReservationConfirm(false)}
-              ref={modalRef} 
-            />
-          )}
+      {/* 제출하기 모달 */}
+      {reservationConfirm && (
+        <ReleaseSubmitModal
+          onClose={() => setReservationConfirm(false)}
+          ref={modalRef}
+        />
+      )}
       <div>
         {/* 페이지 내용 */}
         <div>
