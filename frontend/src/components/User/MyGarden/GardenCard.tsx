@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useRecoilState } from "recoil";
 import { cardImg } from "../../../recoil/atom";
 import "./GardenCard.css";
+import GardenCardModal from "./GardenCardModal";
 
 interface cardType {
   flowerPicture: string;
@@ -16,23 +17,42 @@ interface cardType {
 }
 
 const GardenCard = (props: { card: cardType }) => {
-  const [isFlipped, setIsFlipped] = useState(false);
+  const [selectCard, setSelectCard] = useState<boolean>(false);
 
-  const handleClick = () => {
-    setIsFlipped(!isFlipped);
+  const modalRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
+
+  // Modal 이외의 곳을 클릭 하면 Modal 닫힘
+  const handleClickOutside = (event: MouseEvent) => {
+    if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+      setSelectCard(false);
+    }
   };
+
+  // esc를 누르면 Modal 닫힘
+  const handleKeyDown = (event: KeyboardEvent) => {
+    if (event.code === "Escape") {
+      setSelectCard(false);
+    }
+  };
+
   return (
-    <div
-      className={`flip-card ${isFlipped ? "flipped" : ""}`}
-      onClick={handleClick}
-    >
-      <div className="flip-card-inner">
-        <div className="flip-card-front">
-          <img src={props.card.flowerPicture} alt="Avatar" className="" />
-        </div>
-        <div className="flip-card-back">
-          <h1>John Doe</h1>
-        </div>
+    <div className="">
+      {selectCard && <GardenCardModal ref={modalRef} card={props.card} />}
+      <div className="p-4">
+        <img
+          src={props.card.flowerPicture}
+          onClick={() => setSelectCard(true)}
+          className="h-auto max-w-full rounded-lg"
+        />
       </div>
     </div>
   );

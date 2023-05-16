@@ -54,7 +54,7 @@ export default function MyGarden() {
   return (
     <div>
       {cards.length > 0 ? (
-        <div className="grid grid-cols-3 md:grid-cols-3 gap-4 p-4">
+        <div className="grid grid-cols-2 md:grid-cols-3">
           {cards.map((card: cardType, idx: number) => (
               <GardenCard key={idx} card={card} />
             ))}
