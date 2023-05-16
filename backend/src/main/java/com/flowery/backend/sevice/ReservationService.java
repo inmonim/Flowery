@@ -228,6 +228,7 @@ public class ReservationService {
         tmp.setCard(reservation.getCard());
         tmp.setMessageId(reservation.getMessageId() == null ? null : reservation.getMessageId().getMessageId());
         tmp.setImage(reservation.getImage() == null ? null : reservation.getImage());
+        tmp.setRenderedCard(reservation.getRenderedCard() == null ? null : reservation.getRenderedCard());
 
 
 
