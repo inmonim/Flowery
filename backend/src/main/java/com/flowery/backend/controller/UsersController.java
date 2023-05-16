@@ -13,6 +13,7 @@ import net.nurigo.sdk.message.model.Message;
 import net.nurigo.sdk.message.request.SingleMessageSendingRequest;
 import net.nurigo.sdk.message.response.SingleMessageSentResponse;
 import net.nurigo.sdk.message.service.DefaultMessageService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -31,7 +32,9 @@ public class UsersController {
     final DefaultMessageService messageService;
     private final JwtProvider jwtProvider;
     private final RedisDao redisDao;
-    private final int LIMIT_TIME = 3 * 60;  // (2)
+
+    @Value("${naver-cloud-sms.senderPhone}")
+    private String from;
 
     UsersController(UsersService usersService, StoresService storesService, RedisDao redisDao, JwtProvider jwtProvider){
         this.usersService = usersService;
@@ -65,22 +68,6 @@ public class UsersController {
 
     }
 
-    @PostMapping("/get-seller")
-    public ResponseEntity<SellerDto> getSeller(@RequestBody UsersDto usersDto){
-
-        try {
-            SellerDto sellerDto = usersService.sellerLoginCheck(usersDto.getId(), usersDto.getPass());
-            if(sellerDto.getUserId() <0 ){
-                return new ResponseEntity<>(sellerDto, HttpStatus.BAD_REQUEST);
-            }
-            return new ResponseEntity<>(sellerDto, HttpStatus.ACCEPTED);
-        }catch (Exception e){
-            SellerDto sellerDto = new SellerDto();
-            return new ResponseEntity<>(sellerDto, HttpStatus.BAD_REQUEST);
-        }
-
-    }
-
     @PostMapping("/register")
     public ResponseEntity<Boolean> register(@RequestBody UsersDto usersDto){
 
@@ -93,45 +80,56 @@ public class UsersController {
 
     }
     @PostMapping("/send-one")
-    public SingleMessageSentResponse sendOne(@RequestBody UsersDto usersDto) {
-        Message message = new Message();
-        // 발신번호 및 수신번호는 반드시 01012345678 형태로 입력되어야 합니다.
-        message.setFrom("01053270972");
+    public ResponseEntity<Boolean> sendOne(@RequestBody UsersDto usersDto) {
 
-        String phone = usersDto.getPhone().replaceAll("-","");
+        try {
+            Message message = new Message();
+            // 발신번호 및 수신번호는 반드시 01012345678 형태로 입력되어야 합니다.
+            message.setFrom(from);
 
-        message.setTo(phone);
-        message.setText("[Flowery] 꽃들 예약 완료 되었습니다. 하하 i got you baby");
+            String phone = usersDto.getPhone().replaceAll("-","");
 
-        Random random = new Random();
-        int randomNumber = random.nextInt(900000) + 100000; // 100,000 ~ 999,999 범위에서 랜덤으로 수를 생성
+            message.setTo(phone);
+            message.setText("[Flowery] 꽃들 예약 완료 되었습니다. 하하 i got you baby");
 
-        String code = String.valueOf(randomNumber);
+            Random random = new Random();
+            int randomNumber = random.nextInt(900000) + 100000; // 100,000 ~ 999,999 범위에서 랜덤으로 수를 생성
 
-        SingleMessageSentResponse response = this.messageService.sendOne(new SingleMessageSendingRequest(message));
-        System.out.println(response);
+            String code = String.valueOf(randomNumber);
 
-        redisDao.setValues(usersDto.getPhone(),code);
+            SingleMessageSentResponse response = this.messageService.sendOne(new SingleMessageSendingRequest(message));
+            System.out.println(response);
 
-        System.out.println(code);
+            redisDao.setValues(usersDto.getPhone(),code);
 
-        return response;
+            System.out.println(code);
+        }catch (Exception e){
+            return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(true, HttpStatus.ACCEPTED);
     }
 
+    // 임시 비밀번호 보내주는
     @PostMapping("/send-pass")
     public ResponseEntity<Boolean> sendPass(@RequestBody UsersDto usersDto) {
 
-        Message message = new Message();
+        try {
 
-        // 발신번호 및 수신번호는 반드시 01012345678 형태로 입력되어야 합니다.
-        message.setFrom("01053270972");
+            Message message = new Message();
 
-        String phone = usersDto.getPhone().replaceAll("-","");
+            // 발신번호 및 수신번호는 반드시 01012345678 형태로 입력되어야 합니다.
+            message.setFrom("01053270972");
 
-        message.setTo(phone);
-        message.setText("[Flowery] 발급된 임시 비밀번호는 아래와 같습니다. oh yes!\n"+PasswordGenerator.generatePassword());
+            String phone = usersDto.getPhone().replaceAll("-","");
 
-        SingleMessageSentResponse response = this.messageService.sendOne(new SingleMessageSendingRequest(message));
+            message.setTo(phone);
+            message.setText("[Flowery] 발급된 임시 비밀번호는 아래와 같습니다. oh yes!\n"+PasswordGenerator.generatePassword());
+
+            this.messageService.sendOne(new SingleMessageSendingRequest(message));
+
+        }catch (Exception e){
+            return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
+        }
 
         return new ResponseEntity<>(true, HttpStatus.ACCEPTED);
     }

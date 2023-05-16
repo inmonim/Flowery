@@ -35,5 +35,7 @@ public class NaverSmsController {
         return new ResponseEntity<>(smsResponseDTO, HttpStatus.ACCEPTED);
     }
 
+
+
 }
 
