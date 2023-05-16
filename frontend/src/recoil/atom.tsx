@@ -177,3 +177,15 @@ export const storeInfo = atom<any>({
   },
   effects_UNSTABLE: [persistAtom],
 });
+
+export const atk = atom<string>({
+  key: "atk",
+  default: "",
+  effects_UNSTABLE: [persistAtom],
+});
+
+export const rtk = atom<string>({
+  key: "rtk",
+  default: "",
+  effects_UNSTABLE: [persistAtom],
+});

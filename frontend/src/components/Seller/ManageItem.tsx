@@ -12,6 +12,7 @@ interface GoodsItem {
   goodsName: string;
   goodsPrice: number;
   goodsDetail: string;
+  samples: Array<string>;
 }
 
 export default function ManageItem() {
@@ -60,6 +61,7 @@ export default function ManageItem() {
               goodsName={item.goodsName}
               goodsPrice={item.goodsPrice}
               goodsDetail={item.goodsDetail}
+              samples={item.samples}
             />
           </div>
         ))}

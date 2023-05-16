@@ -17,7 +17,6 @@ export default function OrderPage() {
   const onSelect = (goods: any) => {
     setSelectedGoods(goods);
   };
-
   useEffect(() => {
     async function getData() {
       try {
@@ -37,6 +36,7 @@ export default function OrderPage() {
     }
     //첫 렌더링에만 실행
     getData();
+    window.scrollTo(0, 0);
   }, []);
 
   const productList = [
@@ -65,7 +65,7 @@ export default function OrderPage() {
                 className="flex border-t border-user_green pb-[1%] "
                 key={index}
               >
-                <div className="flex flex-col w-3/5 p-3 gap-1 justify-center items-center">
+                <div className="flex flex-col w-3/5 p-3 gap-1 justify-center">
                   <div className="font-nasq font-bold">{product.goodsName}</div>
                   <div className="font-nasq text-[#8D8E90] text-[0.5rem]">
                     {product.goodsDetail}
@@ -87,7 +87,7 @@ export default function OrderPage() {
           </div>
         </div>
         <div className="flex justify-center items-center pt-[4%] pb-[15%] bg-user_beige">
-          <Link to={"/reservationorder"}>
+          <Link to={"/writing"}>
             <button className="w-[10rem] h-30 shadow-lg rounded-xl bg-user_green text-white font-nasq font-bold">
               다음단계
             </button>
