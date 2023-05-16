@@ -33,7 +33,7 @@ module.exports = {
         heartBeat: "heartBeat 1s ease-in-out infinite",
         typing: "typing 3.5s steps(40, end)",
         beat: "heartBeat 1s ease-in-out infinite",
-        shakeRight: "shakeRight 1s ease-in-out infinite"
+        shakeRight: "shakeRight 1s ease-in-out infinite",
       },
       keyframes: {
         typing: {
