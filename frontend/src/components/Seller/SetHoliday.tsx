@@ -20,7 +20,6 @@ export default function SetHoliday() {
       })
       .then((response) => {
         setHoliday(response.data);
-        console.log(response.data);
         const updatedSelectedDays = daysOfWeek.map((day) =>
           response.data.includes(day)
         );
@@ -34,7 +33,7 @@ export default function SetHoliday() {
     setSelectedDays(updatedSelectedDays);
   };
 
-  const handleChange = () => {
+  const handleChange = async () => {
     let holidays = "";
     selectedDays.forEach((isSelected, index) => {
       if (isSelected) {
@@ -42,12 +41,10 @@ export default function SetHoliday() {
       }
     });
     setHoliday(holidays);
-    console.log(holidays);
-    console.log(holiday);
-    axios
+    await axios
       .put("https://flowery.duckdns.org/api/stores/holidays", {
         storeId: myStoreId,
-        holidays: holiday,
+        holidays: holidays,
       })
       .then(() => {
         alert("휴일 변경이 완료되었습니다");
