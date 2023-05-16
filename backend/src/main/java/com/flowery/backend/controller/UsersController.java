@@ -150,11 +150,6 @@ public class UsersController {
 
     }
 
-    @GetMapping("/ayo")
-    public ResponseEntity<String> hello(){
-        return new ResponseEntity<>("ayo",HttpStatus.ACCEPTED);
-    }
-
     @PostMapping("/logout")
     public ResponseEntity<Boolean> logout(@RequestBody UsersDto loginDto){
         try {

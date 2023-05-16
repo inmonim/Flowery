@@ -5,10 +5,8 @@ import com.flowery.backend.model.dto.GoodsDto;
 import com.flowery.backend.model.dto.HolidaysDto;
 import com.flowery.backend.model.dto.StoresDto;
 import com.flowery.backend.model.entity.*;
-import com.flowery.backend.repository.GoodsRepository;
-import com.flowery.backend.repository.HolidaysRepository;
-import com.flowery.backend.repository.SamplesRepository;
-import com.flowery.backend.repository.StoreRepository;
+import com.flowery.backend.repository.*;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -25,12 +23,19 @@ public class StoresService {
     private GoodsRepository goodsRepository;
     private SamplesRepository samplesRepository;
 
+    private SellerRepository sellerRepository;
+
+    private UsersRepository usersRepository;
+
     StoresService(StoreRepository storeRepository, HolidaysRepository holidaysRepository,
-                  GoodsRepository goodsRepository, SamplesRepository samplesRepository){
+                  GoodsRepository goodsRepository, SamplesRepository samplesRepository,
+                  SellerRepository sellerRepository, UsersRepository usersRepository){
         this.storeRepository = storeRepository;
         this.holidaysRepository = holidaysRepository;
         this.goodsRepository = goodsRepository;
         this.samplesRepository = samplesRepository;
+        this.sellerRepository = sellerRepository;
+        this.usersRepository = usersRepository;
     }
 
     // 모든 상점 다 가져오기
@@ -256,6 +261,14 @@ public class StoresService {
                 holidaysRepository.save(holiday);
             }
         }
+    }
+
+    public Stores findStoreByUserId(String userId) throws Exception{
+
+        Seller seller = sellerRepository.findByUserId(usersRepository.findById(userId));
+
+        return storeRepository.findByStoreId(seller.getStoreId().getStoreId());
+
     }
 
 
