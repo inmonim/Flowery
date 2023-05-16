@@ -2,7 +2,7 @@ import styles from "./UserHeader.module.scss";
 import logo from "../../../assets/Flowery_logo.png";
 import hamburger from "../../../assets/HamburgerGreen.png";
 import profile from "../../../assets/profileGreen.png";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function UserHeader() {
   const navigate = useNavigate();
@@ -19,7 +19,9 @@ export default function UserHeader() {
         Flowery
       </p>
       <div className="flex">
-        <img src={profile} alt="profile" className="w-[1rem] mr-3" />
+        <Link to="/mygarden">
+          <img src={profile} alt="profile" className="w-[1rem] mr-3" />
+        </Link>
         <img src={hamburger} alt="hamburger" className="w-[1rem] mr-3" />
       </div>
     </header>
