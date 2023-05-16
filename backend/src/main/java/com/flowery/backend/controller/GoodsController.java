@@ -46,19 +46,11 @@ public class GoodsController {
 
     // 상품을 추가
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Goods> createGoods(@RequestParam("storeId") int storeId,
-                                             @RequestParam("goodsName") String goodsName,
-                                             @RequestParam("goodsPrice") int goodsPrice,
-                                             @RequestParam("goodsDetail") String goodsDetail,
+    public ResponseEntity<Goods> createGoods(@ModelAttribute GoodsDto goodsDto,
                                              @RequestPart("pictures") MultipartFile[] pictures) {
         LOGGER.info("createGoods가 호출되었습니다.");
 
         try{
-            GoodsDto goodsDto = new GoodsDto();
-            goodsDto.setStoreId(storeId);
-            goodsDto.setGoodsName(goodsName);
-            goodsDto.setGoodsPrice(goodsPrice);
-            goodsDto.setGoodsDetail(goodsDetail);
 
             return new ResponseEntity<Goods>(goodsService.createGoods(goodsDto, pictures), HttpStatus.CREATED);
         }catch (Exception e){
