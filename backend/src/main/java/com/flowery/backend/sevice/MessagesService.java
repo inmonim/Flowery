@@ -21,16 +21,19 @@ public class MessagesService {
     private FlowerRepository flowerRepository;
     private MeaningRepository meaningRepository;
     private PoemsRepository poemsRepository;
+    private MyflowersRepository myflowersRepository;
 
     MessagesService(MessagesRepository messagesRepository, PicturesRepository picturesRepository,
                     ReservationRepository reservationRepository, FlowerRepository flowerRepository,
-                    MeaningRepository meaningRepository, PoemsRepository poemsRepository){
+                    MeaningRepository meaningRepository, PoemsRepository poemsRepository,
+                    MyflowersRepository myflowersRepository){
         this.messagesRepository = messagesRepository;
         this.picturesRepository = picturesRepository;
         this.reservationRepository = reservationRepository;
         this.flowerRepository = flowerRepository;
         this.meaningRepository = meaningRepository;
         this.poemsRepository = poemsRepository;
+        this.myflowersRepository = myflowersRepository;
     }
 
     public Messages findById(String code){
@@ -46,19 +49,29 @@ public class MessagesService {
         messagesDto.setPapers(messages.getPaper());
         messagesDto.setFont(messages.getFont());
         messagesDto.setMessageDate(messages.getMessageDate());
-        messagesDto.setPoem(messages.getPoemId() == null ? null : messages.getPoemId().getPoem());
+        messagesDto.setPoem(messages.getPoem() == null ? null : messages.getPoem());
 
+        // pictures에 저장된 데이터(사진 도메인) 불러오는 코드
         List<String> result = new ArrayList<>();
         for(int i=0; i<picturesList.size(); i++){
             result.add(picturesList.get(i).getUrl());
         }
-
         messagesDto.setPictures(result);
+
+        // 마이플라워를 거쳐 꽃말들을 가져오는 코드
+        List<String> meansList = new ArrayList<>();
+        List<Myflowers> myflowersList = myflowersRepository.findAllByMessageId(messages);
+        for(Myflowers myflowers : myflowersList){
+            Meaning meaning = myflowers.getMeanId();
+            meansList.add(meaning.getMean());
+        }
+        messagesDto.setMeans(meansList);
 
         return messagesDto;
     }
 
 
+    // 카드 정보 조회
     public MessagesDto findByMessageId(String id){
         System.out.println(id);
         Messages message = messagesRepository.findById(id).get();
@@ -131,7 +144,7 @@ public class MessagesService {
             Random random = new Random();
             int randomIndex = random.nextInt(poemsList.size());
             Poems randomPoem = poemsList.get(randomIndex);
-            message.setPoemId(randomPoem);
+//            message.setPoemId(randomPoem);
         }
 
 //        Messages result = new Messages();

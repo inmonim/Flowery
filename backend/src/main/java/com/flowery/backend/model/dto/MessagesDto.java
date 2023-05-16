@@ -17,5 +17,6 @@ public class MessagesDto {
     private LocalDateTime messageDate;
     private String poem;
     private List<String> pictures;
+    private List<String> means;
     
 }
