@@ -6,7 +6,9 @@ import com.flowery.backend.model.dto.StoresDto;
 import com.flowery.backend.model.entity.Goods;
 import com.flowery.backend.model.entity.Samples;
 import com.flowery.backend.model.entity.Stores;
+import com.flowery.backend.model.entity.Users;
 import com.flowery.backend.sevice.StoresService;
+import com.flowery.backend.sevice.UsersService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -172,6 +174,16 @@ public class StoresController {
         } catch (Exception e) {
             LOGGER.error("updateHolidays 처리 중 에러 발생", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(false); // 에러 발생 시 false 반환
+        }
+    }
+
+    @GetMapping("/storeInfo")
+    public ResponseEntity<StoresDto> getStores(@RequestParam String id){
+        try {
+            StoresDto storesDto = new StoresDto(storesService.findStoreByUserId(id));
+            return new ResponseEntity<>(storesDto, HttpStatus.ACCEPTED);
+        }catch (Exception e){
+            throw new RuntimeException("잘못된 요청입니다!");
         }
     }
 
