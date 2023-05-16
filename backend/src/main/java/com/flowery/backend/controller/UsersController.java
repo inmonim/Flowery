@@ -28,22 +28,16 @@ public class UsersController {
 
     // Users에서 로그인 관련, 일반 유저, 판매자 구분 가능
     private UsersService usersService;
-    private StoresService storesService;
     final DefaultMessageService messageService;
     private final JwtProvider jwtProvider;
-    private final RedisDao redisDao;
 
-    @Value("${naver-cloud-sms.senderPhone}")
-    private String from;
-
-    UsersController(UsersService usersService, StoresService storesService, RedisDao redisDao, JwtProvider jwtProvider){
+    UsersController(UsersService usersService, JwtProvider jwtProvider){
         this.usersService = usersService;
-        this.storesService = storesService;
-        this.redisDao = redisDao;
         this.jwtProvider =jwtProvider;
         this.messageService = NurigoApp.INSTANCE.initialize("NCSCFJLKKGWYQQ0R", "SS1RDBJ0LYUXJGE5YLYK1EMMSJYKKBNJ", "https://api.coolsms.co.kr");
     }
 
+    // 유저용 로그인
     @PostMapping("/login-user")
     public ResponseEntity<TokenResponse> loginUser(@RequestBody UsersDto loginDto) {
         try {
@@ -55,6 +49,7 @@ public class UsersController {
     }
 
 
+    // 판매자 로그인
     @PostMapping("/login-seller")
     public ResponseEntity<TokenResponse> loginSeller(@RequestBody UsersDto loginDto){
 
@@ -68,6 +63,7 @@ public class UsersController {
 
     }
 
+    // 회원가입
     @PostMapping("/register")
     public ResponseEntity<Boolean> register(@RequestBody UsersDto usersDto){
 
@@ -79,75 +75,10 @@ public class UsersController {
         }
 
     }
-    @PostMapping("/send-one")
-    public ResponseEntity<Boolean> sendOne(@RequestBody UsersDto usersDto) {
 
-        try {
-            Message message = new Message();
-            // 발신번호 및 수신번호는 반드시 01012345678 형태로 입력되어야 합니다.
-            message.setFrom(from);
+    //ㅇ
 
-            String phone = usersDto.getPhone().replaceAll("-","");
-
-            message.setTo(phone);
-            message.setText("[Flowery] 꽃들 예약 완료 되었습니다. 하하 i got you baby");
-
-            Random random = new Random();
-            int randomNumber = random.nextInt(900000) + 100000; // 100,000 ~ 999,999 범위에서 랜덤으로 수를 생성
-
-            String code = String.valueOf(randomNumber);
-
-            SingleMessageSentResponse response = this.messageService.sendOne(new SingleMessageSendingRequest(message));
-            System.out.println(response);
-
-            redisDao.setValues(usersDto.getPhone(),code);
-
-            System.out.println(code);
-        }catch (Exception e){
-            return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
-        }
-        return new ResponseEntity<>(true, HttpStatus.ACCEPTED);
-    }
-
-    // 임시 비밀번호 보내주는
-    @PostMapping("/send-pass")
-    public ResponseEntity<Boolean> sendPass(@RequestBody UsersDto usersDto) {
-
-        try {
-
-            Message message = new Message();
-
-            // 발신번호 및 수신번호는 반드시 01012345678 형태로 입력되어야 합니다.
-            message.setFrom("01053270972");
-
-            String phone = usersDto.getPhone().replaceAll("-","");
-
-            message.setTo(phone);
-            message.setText("[Flowery] 발급된 임시 비밀번호는 아래와 같습니다. oh yes!\n"+PasswordGenerator.generatePassword());
-
-            this.messageService.sendOne(new SingleMessageSendingRequest(message));
-
-        }catch (Exception e){
-            return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
-        }
-
-        return new ResponseEntity<>(true, HttpStatus.ACCEPTED);
-    }
-
-    @PostMapping("/phone-check")
-    public ResponseEntity<Boolean> phoneCheck(@RequestBody UsersDto usersDto){
-        String value = redisDao.getValue(usersDto.getPhone());
-
-        if(value==null || !value.equals(usersDto.getPass())){
-            return new ResponseEntity<>(false, HttpStatus.ACCEPTED);
-        }
-
-        redisDao.deleteKey(usersDto.getPhone());
-
-        return new ResponseEntity<>(true, HttpStatus.ACCEPTED);
-
-    }
-
+    // 로그아웃
     @PostMapping("/logout")
     public ResponseEntity<Boolean> logout(@RequestBody UsersDto loginDto){
         try {
