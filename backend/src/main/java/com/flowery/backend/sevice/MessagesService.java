@@ -47,7 +47,6 @@ public class MessagesService {
         messagesDto.setFont(messages.getFont());
         messagesDto.setMessageDate(messages.getMessageDate());
         messagesDto.setPoem(messages.getPoemId() == null ? null : messages.getPoemId().getPoem());
-        messagesDto.setMean(messages.getMeanId() == null ? null : messages.getMeanId().getMean());
 
         List<String> result = new ArrayList<>();
         for(int i=0; i<picturesList.size(); i++){
@@ -125,15 +124,6 @@ public class MessagesService {
 
         Integer carnation = 4;
         Flowers flower = flowerRepository.findById(carnation).orElseThrow(() -> new NotFoundException("꽃을 찾을 수 없습니다."));
-
-        List<Meaning> meanings = new ArrayList<>();
-        meanings = meaningRepository.findAllByFlowerId(flower);
-        if (!meanings.isEmpty()) {
-            Random random = new Random();
-            int randomIndex = random.nextInt(meanings.size());
-            Meaning randomMeaning = meanings.get(randomIndex);
-            message.setMeanId(randomMeaning);
-        }
 
 
         List<Poems> poemsList = poemsRepository.findAllByFlowerId(flower);
