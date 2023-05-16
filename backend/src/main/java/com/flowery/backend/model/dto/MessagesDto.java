@@ -16,7 +16,6 @@ public class MessagesDto {
     private int font;
     private LocalDateTime messageDate;
     private String poem;
-    private String mean;
     private List<String> pictures;
     
 }

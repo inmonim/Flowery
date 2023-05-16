@@ -34,4 +34,6 @@ public class ReservationDto {
 
     private Integer card;
 
+    private String renderedCard;
+
 }
