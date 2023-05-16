@@ -12,9 +12,9 @@ export default function OptionHeader() {
   const shopData = useRecoilValue(shopDataState);
 
   return (
-    <div className="w-100vh bg-user_sol flex justify-between items-center  border-solid border- border-b-black">
-      <img src={back_btn} alt="back" className="w-10 p-3" />
-      <div className="mr-auto ml-[38%]">
+    <div className="flex relative justify-center items-center h-[2.5rem] bg-user_sol border-solid border- border-b-black">
+      <img src={back_btn} alt="back" className="absolute left-2 w-10 p-3" />
+      <div className="">
         <p className=" font-bold font-nasq text-user_black ">
           {shopData.storeName}
         </p>

@@ -13,6 +13,7 @@
     "@types/react": "^18.0.38",
     "@types/react-dom": "^18.0.11",
     "@types/react-slick": "^0.23.10",
+    "aos": "^2.3.4",
     "axios": "^1.4.0",
     "browser-image-compression": "^2.0.2",
     "chart.js": "^4.2.1",
@@ -65,6 +66,7 @@
     ]
   },
   "devDependencies": {
+    "@types/aos": "^3.0.4",
     "@types/kakao-js-sdk": "^1.39.1",
     "@types/react-datepicker": "^4.11.2",
     "@types/react-router-dom": "^5.3.3",
