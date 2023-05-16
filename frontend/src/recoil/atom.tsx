@@ -153,6 +153,12 @@ export const goodsState = atom({
   effects_UNSTABLE: [persistAtom],
 });
 
+export const tabState = atom<string>({
+  key: "tabState",
+  default: "all",
+  effects_UNSTABLE: [persistAtom],
+});
+
 export const storeInfo = atom<any>({
   key: "storeInfo",
   default: {

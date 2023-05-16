@@ -75,11 +75,11 @@ export default function OrderPage() {
                     <span className="pl-1 font-nasq">원</span>
                   </div>
                 </div>
-                <div className="w-2/5">
+                <div className="w-[10rem] h-[10rem] ">
                   <img
-                    src={productList[0].thumbnail}
+                    src={product.samples[0]}
                     alt="thumbnail"
-                    className="p-3"
+                    className="w-full h-full p-3"
                   />
                 </div>
               </div>
