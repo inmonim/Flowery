@@ -16,7 +16,7 @@ public class ReservationDto {
 
     private String goodsName;
 
-    private int price;
+    private Integer price;
 
     private String demand;
 

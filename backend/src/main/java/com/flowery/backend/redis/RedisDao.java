@@ -18,8 +18,9 @@ public class RedisDao {
     private final RedisTemplate<String, Object> redisBlackListTemplate;
 
     public void setValues(String key, String data) {
+        redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer(String.class));
         ValueOperations<String, String> values = redisTemplate.opsForValue();
-        values.set(key, data);
+        values.set(key, data,Duration.ofSeconds(LIMIT_TIME));
     }
 
     public String getValue(String key){
@@ -27,6 +28,7 @@ public class RedisDao {
     }
 
     public void setValues(String key, String data, Duration duration) {
+        redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer(String.class));
         ValueOperations<String, String> values = redisTemplate.opsForValue();
         values.set(key, data, duration);
     }
