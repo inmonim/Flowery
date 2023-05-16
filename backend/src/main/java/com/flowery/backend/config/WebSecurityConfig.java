@@ -31,38 +31,38 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-//        http
-//                .authorizeRequests()
-//                .antMatchers("/**").permitAll()
-////                .antMatchers("/messages/**").permitAll()
-////                .antMatchers("/myGarden/**").permitAll()
-////                .antMatchers("/reservation/**").permitAll()
-////                .antMatchers("/storage/**").permitAll()
-////                .antMatchers("/sales/**").permitAll()
-////                .antMatchers("/stores/**").permitAll()
-////                .antMatchers("/users/**").permitAll()
-//                .anyRequest().authenticated()
-//                .and()
-//                .formLogin()
-//                .and()
-//                .csrf().disable()
-//                .httpBasic();
-
-        http.cors().and().csrf().disable()
-                .exceptionHandling()
-                .authenticationEntryPoint(customAuthenticationEntryPoint)
-                .and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
+        http
                 .authorizeRequests()
-                .antMatchers("/users/sign-up", "/users/login-user", "/users/login-seller", "/token/rtk",
-                        "/users/logout").permitAll()
-                .antMatchers("/test3/hi-user").hasRole("USER")
-                .antMatchers("/test3/hi-seller").hasRole("SELLER")
+                .antMatchers("/**").permitAll()
+//                .antMatchers("/messages/**").permitAll()
+//                .antMatchers("/myGarden/**").permitAll()
+//                .antMatchers("/reservation/**").permitAll()
+//                .antMatchers("/storage/**").permitAll()
+//                .antMatchers("/sales/**").permitAll()
+//                .antMatchers("/stores/**").permitAll()
+//                .antMatchers("/users/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .addFilterBefore(new JwtAuthenticationFilter(jwtProvider, usersDetailService),
-                        UsernamePasswordAuthenticationFilter.class);
+                .formLogin()
+                .and()
+                .csrf().disable()
+                .httpBasic();
+
+//        http.cors().and().csrf().disable()
+//                .exceptionHandling()
+//                .authenticationEntryPoint(customAuthenticationEntryPoint)
+//                .and()
+//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//                .and()
+//                .authorizeRequests()
+//                .antMatchers("/users/sign-up", "/users/login-user", "/users/login-seller", "/token/rtk",
+//                        "/users/logout").permitAll()
+//                .antMatchers("/test3/hi-user").hasRole("USER")
+//                .antMatchers("/test3/hi-seller").hasRole("SELLER")
+//                .anyRequest().authenticated()
+//                .and()
+//                .addFilterBefore(new JwtAuthenticationFilter(jwtProvider, usersDetailService),
+//                        UsernamePasswordAuthenticationFilter.class);
     }
 
     @Bean
