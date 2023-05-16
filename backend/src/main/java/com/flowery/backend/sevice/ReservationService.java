@@ -298,6 +298,7 @@ public class ReservationService {
         reservation.setPhrase(reservationDto.getPhrase());
 //        reservation.setImage(stores.getImage());
         reservation.setCard(reservationDto.getCard());
+        reservation.setRenderedCard(reservationDto.getRenderedCard());
 
         reservationRepository.save(reservation);
         return true;

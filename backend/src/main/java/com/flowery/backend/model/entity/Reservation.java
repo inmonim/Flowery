@@ -63,4 +63,7 @@ public class Reservation {
     @Column(name = "card")
     private int card;
 
+    @Column(name = "rendered_card")
+    private String renderedCard;
+
 }
