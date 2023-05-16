@@ -42,10 +42,10 @@ public class StoresController {
 
     // storeId로 가게 정보 가져오기
     @PostMapping("/info")
-    public ResponseEntity<Stores> findByStoreId(@RequestBody Map<String, Integer> requestData) {
+    public ResponseEntity<StoresDto> findByStoreId(@RequestBody Map<String, Integer> requestData) {
         LOGGER.info("findByStoreId가 호출되었습니다.");
         int storeId = requestData.get("storeId");
-        return new ResponseEntity<Stores>(storesService.findByStoreId(storeId), HttpStatus.OK);
+        return new ResponseEntity<StoresDto>(storesService.findByStoreId(storeId), HttpStatus.OK);
     }
 
     // 가게 생성하기
