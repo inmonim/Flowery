@@ -36,10 +36,7 @@ public class Messages {
     @Column(name = "message_date")
     private LocalDateTime messageDate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnore
-    @JoinColumn(name = "poem_id")
-    private Poems poemId;
-
+    @Column(name = "poem")
+    private String poem;
 
 }

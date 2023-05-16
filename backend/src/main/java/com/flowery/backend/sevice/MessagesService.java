@@ -49,7 +49,7 @@ public class MessagesService {
         messagesDto.setPapers(messages.getPaper());
         messagesDto.setFont(messages.getFont());
         messagesDto.setMessageDate(messages.getMessageDate());
-        messagesDto.setPoem(messages.getPoemId() == null ? null : messages.getPoemId().getPoem());
+        messagesDto.setPoem(messages.getPoem() == null ? null : messages.getPoem());
 
         // pictures에 저장된 데이터(사진 도메인) 불러오는 코드
         List<String> result = new ArrayList<>();
@@ -144,7 +144,7 @@ public class MessagesService {
             Random random = new Random();
             int randomIndex = random.nextInt(poemsList.size());
             Poems randomPoem = poemsList.get(randomIndex);
-            message.setPoemId(randomPoem);
+//            message.setPoemId(randomPoem);
         }
 
 //        Messages result = new Messages();
