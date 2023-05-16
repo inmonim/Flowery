@@ -100,9 +100,33 @@ public class StoresService {
         return storeRepository.save(store);
     }
 
-    public Stores findByStoreId(int storeId){
+    public StoresDto findByStoreId(int storeId){
         Stores store = storeRepository.findById(storeId).get();
-        return store;
+        StoresDto storesDto = new StoresDto();
+        List<Goods> goodsList = goodsRepository.findGoodsByStoreId(store);
+
+        storesDto.setStoreId(store.getStoreId());
+        storesDto.setStoreName(store.getStoreName());
+        storesDto.setStorePhone(store.getStorePhone());
+        storesDto.setPermit(store.getPermit());
+        storesDto.setOpen(store.getOpen());
+        storesDto.setClose(store.getClose());
+        storesDto.setAddress(store.getAddress());
+        storesDto.setInfo(store.getInfo());
+        storesDto.setImage(store.getImage());
+        storesDto.setProfile(store.getProfile());
+
+        List<String> tmp = new ArrayList<>();
+        for (Goods goods : goodsList) {
+            List<Samples> samplesList = samplesRepository.findAllByGoodsId(goods);
+            for (Samples sample : samplesList) {
+                tmp.add(sample.getPicture());
+            }
+            storesDto.setSamples(tmp);
+
+        }
+
+        return storesDto;
     }
 
     // 특정 상품의 샘플 사진들 가져오기
