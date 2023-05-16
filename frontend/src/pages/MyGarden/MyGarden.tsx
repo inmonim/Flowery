@@ -30,34 +30,40 @@ export default function MyGarden() {
         .post("https://flowery.duckdns.org/api/myGarden/get", { userId: 1 })
         .then((response) => {
           setMessages(response.data);
-        });
+        })
+        .catch((e) => console.log("에러", e));
     };
     getMessages();
   }, []);
 
   useEffect(() => {
-    const getCards = messages.map((message: messageType, idx: number) =>
-      axios
-        .post("https://flowery.duckdns.org/api/messages/get-card", {
-          messageId: message.messageId,
-        })
-        .then((response) => {
-          setCards((prevCards) => [...prevCards, response.data]);
-        })
-    );
+    const getCards = async () => {
+      messages.map((message: messageType, idx: number) =>
+        axios
+          .post("https://flowery.duckdns.org/api/messages/get-card", {
+            messageId: message.messageId,
+          })
+          .then((response) => {
+            setCards((prevCards) => [...prevCards, response.data]);
+          })
+      );
+    };
+    getCards();
   }, [messages]);
 
   return (
     <div>
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-4 p-4">
-        {cards.map((card: cardType, idx: number) => {
-          return (
-            <div key={idx}>
-              <GardenCard card={card} />
-            </div>
-          );
-        })}
-      </div>
+      {cards.length > 0 ? (
+        <div className="grid grid-cols-3 md:grid-cols-3 gap-4 p-4">
+          {cards.map((card: cardType, idx: number) => (
+              <GardenCard key={idx} card={card} />
+            ))}
+        </div>
+      ) : (
+        <div className="flex flex-col justify-center items-center">
+          <p className="pt-4 font-nasq">저장된 카드가 없습니다</p>
+        </div>
+      )}
     </div>
   );
 }

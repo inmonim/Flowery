@@ -20,6 +20,7 @@ import SellerBookPage from "../pages/Seller/SellerBookPage/SellerBookPage";
 import RealeaseWrite from "../components/ReleasePage/ProtoPage/ReleaseWrite";
 import ReleaseExitPage from "../components/ReleasePage/Writing/ReleaseExitPage";
 import SellerManagePage from "../pages/Seller/SellerManagePage/SellerManage";
+import MyReservation from "../pages/MyReservation/MyReservation";
 
 const router = createBrowserRouter([
   {
@@ -32,6 +33,7 @@ const router = createBrowserRouter([
       { path: "/test", element: <TestPage /> },
       { path: "/reservationoption", element: <ReservationOption /> },
       { path: "/mygarden", element: <MyGarden /> },
+      { path: "/myreservation", element: <MyReservation /> },
       { path: "/signin", element: <SignInPage /> },
       { path: "/signup", element: <SignUpPage /> },
       { path: "/nonmember", element: <NonMemberPage /> },
