@@ -55,32 +55,46 @@ public class ReservationService {
     public ReservationDto updateReservation(ReservationDto reservationDto) throws Exception {
         Reservation reservation = reservationRepository.findById(reservationDto.getReservationId())
                 .orElseThrow(() -> new ReservationNotFoundException("예약을 찾을 수 없습니다."));
+        boolean changed = false;
 
-        reservation.setGoodsName(reservationDto.getGoodsName());
-        reservation.setPrice(reservationDto.getPrice());
+        if (reservationDto.getGoodsName() != null){
+            reservation.setGoodsName(reservationDto.getGoodsName());
+            changed = true;
+        }
+        if (reservationDto.getPrice() != null) {
+            reservation.setPrice(reservationDto.getPrice());
+            changed = true;
 
-        List<Goods> goodsList = goodsRepository.findGoodsByStoreId(reservation.getStoreId());
-        // 올바른 가격과 상품이 선택되었는지 확인함
-        for(int i=0; i<goodsList.size(); i++){
-            if(goodsList.get(i).getGoodsName().equals(reservationDto.getGoodsName())){
-                Goods goods = goodsList.get(i);
-                List<Samples> samplesList = samplesRepository.findAllByGoodsId(goods);
-                if (samplesList.size() > 0) {
-                    String image = samplesList.get(0).getPicture();
-                    reservation.setImage(image);
-                }
-            }
+        }
+        if (reservationDto.getRenderedCard() != null) {
+            reservation.setRenderedCard(reservationDto.getRenderedCard());
+            changed = true;
         }
 
+        if (changed) {
+            List<Goods> goodsList = goodsRepository.findGoodsByStoreId(reservation.getStoreId());
+            // 올바른 가격과 상품이 선택되었는지 확인함
+            for(int i=0; i<goodsList.size(); i++){
+                if(goodsList.get(i).getGoodsName().equals(reservationDto.getGoodsName())){
+                    Goods goods = goodsList.get(i);
+                    List<Samples> samplesList = samplesRepository.findAllByGoodsId(goods);
+                    if (samplesList.size() > 0) {
+                        String image = samplesList.get(0).getPicture();
+                        reservation.setImage(image);
+                    }
+                }
+            }
+            reservationRepository.save(reservation);
+
+            ReservationDto tmp = new ReservationDto();
+            reservationEntityToDto(tmp, reservation);
 
 
-        reservationRepository.save(reservation);
-
-        ReservationDto tmp = new ReservationDto();
-        reservationEntityToDto(tmp, reservation);
-
-
-        return tmp;
+            return tmp;
+        }
+        else {
+            throw new Exception("변경사항이 입력되지 않았습니다.");
+        }
     }
 
 
