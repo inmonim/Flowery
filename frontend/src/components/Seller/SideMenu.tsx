@@ -26,12 +26,17 @@ export default function Modal(props: ModalProps) {
   function handleManage() {
     navigate("/seller/manage");
   }
+
+  function handleAnalyze() {
+    navigate("/seller/analyze");
+  }
+
   return (
     <div className={styles.bg} onClick={props.handleModalClose}>
       <div className={styles.menuItem} onClick={handleBook}>
         <img src={reserve} alt="" width="16"></img> <span>예약관리</span>
       </div>
-      <div className={styles.menuItem}>
+      <div className={styles.menuItem} onClick={handleAnalyze}>
         <img src={analysis} alt="" width="16"></img> <span>판매분석</span>
       </div>
       <div className={styles.menuItem} onClick={handleManage}>

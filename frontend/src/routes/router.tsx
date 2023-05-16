@@ -22,6 +22,7 @@ import ReleaseExitPage from "../components/ReleasePage/Writing/ReleaseExitPage";
 import SellerManagePage from "../pages/Seller/SellerManagePage/SellerManage";
 import HowTo from "../components/User/UserMain/HowTo";
 import Try from "../components/User/UserMain/Try";
+import SellerAnalyzePage from "../pages/Seller/SellerAnalyzePage/SellerAnalyzePage";
 
 const router = createBrowserRouter([
   { path: "/", element: <UserMainPage /> },
@@ -53,6 +54,7 @@ const router = createBrowserRouter([
       { path: "/seller/proto", element: <ProtoPage /> },
       { path: "/seller/book", element: <SellerBookPage /> },
       { path: "/seller/manage", element: <SellerManagePage /> },
+      { path: "/seller/analyze", element: <SellerAnalyzePage /> },
     ],
   },
   {
