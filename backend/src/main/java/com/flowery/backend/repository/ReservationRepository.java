@@ -19,7 +19,7 @@ public interface ReservationRepository extends JpaRepository<Reservation, Intege
 
     @Query(value = "SELECT * FROM reservation WHERE reservation.store_id = ?1 AND reservation.date >= ?2 AND reservation.date <= ?3 AND reservation.user_id != 0", nativeQuery = true)
     public List<Reservation> findAllByStoreIdInToday(Integer store, LocalDateTime from, LocalDateTime to);
-    public List<Reservation> findAllByStoreIdAndDateBetween(Integer store, LocalDateTime from, LocalDateTime to);
+    public List<Reservation> findAllByStoreIdAndDateBetween(Stores store, LocalDateTime from, LocalDateTime to);
 
     public List<Reservation> findAllByUserIdOrderByDateDesc(Users users);
 
