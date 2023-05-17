@@ -86,6 +86,10 @@ public class NaverSmsController {
 
         try {
 
+            if(infoWithSmsDto.getPhone() == null || usersRepository.findByPhone(infoWithSmsDto.getPhone())){
+                return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
+            }
+
             Random random = new Random();
             int randomNumber = random.nextInt(900000) + 100000; // 100,000 ~ 999,999 범위에서 랜덤으로 수를 생성
 

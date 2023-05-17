@@ -38,8 +38,8 @@ public class UsersController {
     }
 
     // 유저용 로그인
-    @PostMapping("/login-user")
-    public ResponseEntity<TokenResponse> loginUser(@RequestBody UsersDto loginDto) {
+    @PostMapping("/token-user")
+    public ResponseEntity<TokenResponse> tokenUser(@RequestBody UsersDto loginDto) {
         try {
             UsersDto usersDto = usersService.loginCheck(loginDto);
             return new ResponseEntity<>(jwtProvider.createTokensByLogin(usersDto), HttpStatus.ACCEPTED);
@@ -50,8 +50,8 @@ public class UsersController {
 
 
     // 판매자 로그인
-    @PostMapping("/login-seller")
-    public ResponseEntity<TokenResponse> loginSeller(@RequestBody UsersDto loginDto){
+    @PostMapping("/token-seller")
+    public ResponseEntity<TokenResponse> tokenSeller(@RequestBody UsersDto loginDto){
 
         try {
             UsersDto usersDto = usersService.loginCheck(loginDto);
@@ -97,6 +97,16 @@ public class UsersController {
             throw new RuntimeException("login 정보가 없습니다!");
         }
         return new ResponseEntity<>(true,HttpStatus.ACCEPTED);
+    }
+
+    @GetMapping("/login")
+    public ResponseEntity<UsersDto> login(@RequestParam String id){
+        try {
+            UsersDto usersDto =  usersService.loginWithId(id);
+            return ResponseEntity.ok(usersDto);
+        }catch (Exception e){
+            throw new RuntimeException("로그인 처리 중 문제가 발생하였습니다.");
+        }
     }
 
 }

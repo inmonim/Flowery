@@ -110,4 +110,10 @@ public class UsersService {
 
     }
 
+    public UsersDto loginWithId(String id) throws Exception{
+        Users users = usersRepository.findById(id);
+        UsersDto usersDto = new UsersDto(users);
+        return usersDto;
+    }
+
 }
