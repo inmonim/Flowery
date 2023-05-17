@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { phoneNumberState } from "../../recoil/atom";
 import { useSetRecoilState } from "recoil";
+import axios from "axios";
 
 export default function SignUpPage() {
   const [isVerify, setIsVerify] = useState<boolean>(false);
@@ -112,6 +113,29 @@ export default function SignUpPage() {
 
   // 회원가입이 완료됐으면
   const signUpComplete = () => {
+    let phoneNum = "";
+    if (inputPhone.length === 11) {
+      const phoneNum =
+        inputPhone.slice(0, 3) +
+        "-" +
+        inputPhone.slice(3, 7) +
+        "-" +
+        inputPhone.slice(7, 11);
+      console.log(phoneNum);
+    } else {
+      const phoneNum =
+        inputPhone.slice(0, 3) +
+        "-" +
+        inputPhone.slice(3, 6) +
+        "-" +
+        inputPhone.slice(6, 10);
+      console.log(phoneNum);
+    }
+    axios.post("https://flowery.duckdns.org/api/users/register", {
+      id: id,
+      password: password,
+      phone: phoneNum,
+    }).then((response) => console.log(response.data));
     // POST 요청
     // token 저장
     // atom에 로그인 정보(토큰, 전화번호) 저장
@@ -320,8 +344,7 @@ export default function SignUpPage() {
                       isPassword === true &&
                       isPasswordConfirm === true
                     ) {
-                      // 회원가입 axios
-                      navigate("/reservation");
+                      signUpComplete();
                     } else {
                       if (isId === false || existId === true) {
                         setWrongId(true);

@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 
 export default function MyReservationElement({ info }: any) {
   const [storeInfo, setStoreInfo] = useState<any>({});
-  const { reservation, check } = info;
+  const { reservation } = info;
 
   useEffect(() => {
     const getStoreInfo = () => {
