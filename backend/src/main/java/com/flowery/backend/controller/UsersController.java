@@ -76,7 +76,16 @@ public class UsersController {
 
     }
 
-    //ㅇ
+    @GetMapping("/id-check")
+    public ResponseEntity<Boolean> idCheck(@RequestParam String id){
+        try{
+            boolean check = usersService.idCheck(id);
+            return new ResponseEntity<>(check,HttpStatus.ACCEPTED);
+        }catch (Exception e){
+            throw new RuntimeException("서버 오류가 발생하였습니다.");
+        }
+    }
+
 
     // 로그아웃
     @PostMapping("/logout")
