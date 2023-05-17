@@ -20,6 +20,7 @@ interface ReservationItem {
   reservationName: string;
   phrase: string;
   image: string;
+  renderedCard: string;
 }
 
 export default function ManagePrint() {
@@ -27,6 +28,7 @@ export default function ManagePrint() {
   const myStoreId = useRecoilValue(storeId);
   const location = useLocation();
   const currentDate = new Date();
+  const options = { timeZone: "Asia/Seoul" };
   const formattedDate = currentDate.toISOString().split("T")[0] + "T00:00:00";
   useEffect(() => {
     axios
@@ -77,10 +79,13 @@ export default function ManagePrint() {
                 reservationName={item.reservationName}
                 date={item.date}
                 printed={item.printed}
+                goodsName={item.goodsName}
+                price={item.price}
                 reservationId={item.reservationId}
                 phrase={item.phrase}
                 permission={item.permission}
                 image={item.image}
+                renderedCard={item.renderedCard}
               />
             </div>
           ))}
