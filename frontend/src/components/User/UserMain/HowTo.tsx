@@ -10,7 +10,7 @@ import product from "../../../assets/UserMain/product_select.png";
 export default function HowTo() {
   AOS.init();
   return (
-    <div className="w-[100%] flex justify-center">
+    <div className="w-[100%] flex justify-center overflow-hidden">
       <div className="flex flex-col w-[90%]">
         <div
           data-aos="zoom-in"
@@ -30,7 +30,7 @@ export default function HowTo() {
           id="how to section"
           className="flex flex-col w-[100%] gap-10 pt-[10%] h-[fit-content]"
         >
-          <div className="h-[60vh] flex justify-between items-center">
+          <div className="h-[60vh] flex justify-between items-center overflow-hidden">
             <img
               data-aos="fade-right"
               src={store}
@@ -39,7 +39,7 @@ export default function HowTo() {
             />
             <div
               data-aos="fade-left"
-              className="flex flex-col absolute right-0 mr-[10%] items-center"
+              className="flex flex-col absolute right-0 mr-[10%] items-center overflow-hidden"
             >
               <p className="font-nasq font-bold">예약할 가게를</p>
               <p className="font-nasq font-bold">
@@ -48,10 +48,10 @@ export default function HowTo() {
               </p>
             </div>
           </div>
-          <div className="h-[60vh] flex justify-end items-center">
+          <div className="h-[60vh] flex justify-end items-center overflow-x-hidden">
             <div
               data-aos="fade-right"
-              className="flex flex-col absolute left-0 ml-[10%] items-center"
+              className="flex flex-col absolute left-0 ml-[10%] items-center overflow-hidden"
             >
               <p className="font-nasq font-bold">시간과 날짜를</p>
               <p className="font-nasq font-bold">
@@ -66,7 +66,7 @@ export default function HowTo() {
               className="w-[50%] mr-[5%]"
             />
           </div>
-          <div className="h-[60vh] flex justify-between items-center">
+          <div className="h-[60vh] flex justify-between items-center overflow-hidden">
             <img
               data-aos="fade-right"
               src={product}
@@ -75,7 +75,7 @@ export default function HowTo() {
             />
             <div
               data-aos="fade-left"
-              className="flex flex-col absolute right-0 mr-[10%] items-center"
+              className="flex flex-col absolute right-0 mr-[10%] items-center overflow-hidden"
             >
               <p className="font-nasq font-bold">예약할 상품을</p>
               <p className="font-nasq font-bold">

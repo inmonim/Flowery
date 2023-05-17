@@ -39,11 +39,7 @@ export default function OrderPage() {
     window.scrollTo(0, 0);
   }, []);
 
-  const productList = [
-    {
-      thumbnail: thumbnail,
-    },
-  ];
+  console.log(goodsList);
 
   return (
     <div className=" bg-user_beige ">
@@ -62,10 +58,16 @@ export default function OrderPage() {
             {goodsList.map((product, index) => (
               <div
                 onClick={() => onSelect(product)}
-                className="flex border-t border-user_green pb-[1%] "
+                className={`relative flex border-t border-user_green pb-[1%] ${
+                  selectedGoods?.goodsId === product.goodsId
+                    ? "bg-user_green opacity-[0.5]"
+                    : ""
+                }`}
                 key={index}
               >
-                <div className="flex flex-col w-3/5 p-3 gap-1 justify-center">
+                <div
+                  className={`flex flex-col w-3/5 p-3 gap-1 justify-center `}
+                >
                   <div className="font-nasq font-bold">{product.goodsName}</div>
                   <div className="font-nasq text-[#8D8E90] text-[0.5rem]">
                     {product.goodsDetail}
