@@ -22,3 +22,12 @@ class Sales(db.Model):
     reservation_id = Column(Integer)
     sale_date = Column(Date, default=datetime.now().date())
     count = Column(Integer)
+    
+
+class Myflowers(db.Model):
+    
+    __tablename__ = 'myflowers'
+    
+    myflowers_id = Column(Integer, primary_key=True, autoincrement=True)
+    message_id = Column(String(50))
+    mean_id = Column(Integer)
