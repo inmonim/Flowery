@@ -85,10 +85,15 @@ public class NaverSmsController {
     public ResponseEntity<Boolean> sendOne(@RequestBody InfoWithSmsDto infoWithSmsDto) {
 
         try {
+            System.out.println("ffff");
+            System.out.println(infoWithSmsDto.getPhone());
+            System.out.println(usersRepository.existsByPhone(infoWithSmsDto.getPhone()) );
 
-            if(infoWithSmsDto.getPhone() == null || usersRepository.findByPhone(infoWithSmsDto.getPhone())){
+            if(infoWithSmsDto.getPhone() == null || !usersRepository.existsByPhone(infoWithSmsDto.getPhone())){
                 return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
             }
+
+            System.out.println("ffff");
 
             Random random = new Random();
             int randomNumber = random.nextInt(900000) + 100000; // 100,000 ~ 999,999 범위에서 랜덤으로 수를 생성
