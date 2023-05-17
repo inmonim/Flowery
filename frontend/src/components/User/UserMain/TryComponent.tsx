@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import example1 from "../../../assets/UserMain/flowerbe.jpg";
 import example2 from "../../../assets/UserMain/flowerbe2.jpg";
 import example3 from "../../../assets/UserMain/flowerbe3.jpg";
+import gif1 from "../../../assets/UserMain/floweraf.gif";
+import gif2 from "../../../assets/UserMain/floweraf2.gif";
+import gif3 from "../../../assets/UserMain/floweraf3.gif";
 
 export default function TryComponent() {
   const exampleList = [example1, example2, example3];
@@ -28,9 +31,19 @@ export default function TryComponent() {
           </div>
         ))}
       </div>
-      {activeExample && (
+      {activeExample === example1 && (
         <div className="mt-4">
-          <img src={activeExample} alt="active-example" className="p-1" />
+          <img src={gif1} alt="active-example" className="p-1" />
+        </div>
+      )}
+      {activeExample === example2 && (
+        <div className="mt-4">
+          <img src={gif2} alt="active-example" className="p-1" />
+        </div>
+      )}
+      {activeExample === example3 && (
+        <div className="mt-4">
+          <img src={gif3} alt="active-example" className="p-1" />
         </div>
       )}
     </div>
