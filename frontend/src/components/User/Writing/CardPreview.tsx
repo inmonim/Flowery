@@ -15,6 +15,7 @@ import {
   isCardName,
   shopDataState,
 } from "../../../recoil/atom";
+import styles from "./CardPreview.module.scss"
 
 interface CardProps {
   card: number;
@@ -28,7 +29,7 @@ export default function CardPreview() {
   const [name, setName] = useRecoilState<string>(cardName);
   const [content, setContent] = useRecoilState<string>(cardContent);
   const card = useRecoilValue<number>(cardState);
-  const storeData = useRecoilValue(shopDataState);
+  const shopData = useRecoilValue<any>(shopDataState);
   const [inputName, setInputName] = useState<string>("");
   const [inputContent, setInputContent] = useState<string>("");
   const [isName, setIsName] = useRecoilState<boolean>(isCardName);
@@ -150,12 +151,12 @@ export default function CardPreview() {
       cardFrame(),
       `${content}`,
       `From. ${name}`,
-      "kkotdeul",
-      // storeData.storeName,
+      // "kkotdeul",
+      shopData.storeName,
       "card"
     );
   }, [card, content, name]);
-
+  console.log(shopData);
   // 카드 종류 고르기
   const cardFrame = () => {
     if (card === 0) {
@@ -206,6 +207,7 @@ export default function CardPreview() {
 
   return (
     <div className="">
+      <div className={styles.fontcheck}></div>
       <div className="relative">
         {cardImgFile && (
           <img

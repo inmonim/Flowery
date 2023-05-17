@@ -1,6 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useRecoilState } from "recoil";
 import { letterPaperState } from "../../../recoil/atom";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 export default function LetterPaper() {
   const [letterPaper, setLetterPaper] =
@@ -14,14 +17,25 @@ export default function LetterPaper() {
     letterPapers.push(i);
   }
 
+  const settings = {
+    infinite: false,
+    slidesToShow: 2,
+    slidesToScroll: 1,
+    autoplay: true,
+    arrows: true,
+    dots: false,
+    pauseOnHover: true,
+    draggable: true,
+    autoplaySpeed: 3000,
+    speed: 1200,
+  };
+
   return (
-    <div
-      className="flex justify-center border-t h-[150px]"
-    >
+    <div className="flex justify-center border-t h-[150px]">
       {/* 글씨체 고르기 */}
-      <div className="flex justify-between p-2 w-[35em]">
+      <div className="flex justify-center items-center p-2 ">
         {/* 왼쪽 화살표 */}
-        {startIndex !== 0 ? (
+        {/* {startIndex !== 0 ? (
           <input
             type="button"
             value="&lt;"
@@ -30,20 +44,24 @@ export default function LetterPaper() {
           ></input>
         ) : (
           <div></div>
-        )}
-        {letterPapers
-          .slice(startIndex, startIndex + visibleFontsCount)
-          .map((i: number) => (
-            <div key={i} className="">
+        )} */}
+        <Slider
+          {...settings}
+          className="w-[300px] "
+        >
+          {letterPapers.map((i: number) => (
+            <div key={i} className="flex">
               <img
                 src={require(`../../../assets/letters/Letter${i}.png`)}
                 onClick={() => setLetterPaper(i)}
-                className="w-[100px] p-2 cursor-pointer"
+                className="w-[100px] p-2 cursor-pointer mx-auto justify-center items-center"
               />
             </div>
           ))}
+        </Slider>
+
         {/* 오른쪽 화살표 */}
-        {startIndex + visibleFontsCount < letterPapers.length ? (
+        {/* {startIndex + visibleFontsCount < letterPapers.length ? (
           <input
             type="button"
             value="&gt;"
@@ -52,7 +70,7 @@ export default function LetterPaper() {
           ></input>
         ) : (
           <div></div>
-        )}
+        )} */}
       </div>
     </div>
   );

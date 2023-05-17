@@ -102,6 +102,21 @@ export default function WritingPage() {
     }
   };
 
+  // 제출하기 버튼
+  const handleReservationConfirm = () => {
+    window.scrollTo({ top: 0 });
+    if (name && content) {
+      setReservationConfirm(true);
+    } else {
+      if (!name) {
+        setIsName(false);
+      }
+      if (!content) {
+        setIsContent(false);
+      }
+    }
+  };
+
   return (
     // 전체 페이지
     <div
@@ -197,10 +212,12 @@ export default function WritingPage() {
           {showLetterInput && (
             <div>
               <LetterPaper />
+              <div className="pb-2">
+                <LetterFont />
+              </div>
               <div className="">
                 <LetterContent />
               </div>
-              <LetterFont />
               <hr className="" />
             </div>
           )}
@@ -312,8 +329,7 @@ export default function WritingPage() {
                   type="button"
                   value="제출하기"
                   onClick={() => {
-                    window.scrollTo({ top: 0 });
-                    setReservationConfirm(true);
+                    handleReservationConfirm();
                   }}
                   className="cursor-pointer"
                 ></input>

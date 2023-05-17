@@ -1,6 +1,8 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import GardenCard from "../../components/User/MyGarden/GardenCard";
+import { useRecoilValue } from "recoil";
+import { userIdState } from "../../recoil/atom";
 
 interface messageType {
   gardenId: number;
@@ -23,12 +25,13 @@ interface cardType {
 export default function MyGarden() {
   const [messages, setMessages] = useState<Array<messageType>>([]);
   const [cards, setCards] = useState<Array<cardType>>([]);
-
+  const userId = useRecoilValue<number>(userIdState);
   useEffect(() => {
     const getMessages = async () => {
       await axios
         .post("https://flowery.duckdns.org/api/myGarden/get", { userId: 1 })
         .then((response) => {
+          console.log(response, userId) 
           setMessages(response.data);
         })
     };
