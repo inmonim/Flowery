@@ -31,7 +31,6 @@ export default function MyGarden() {
         .then((response) => {
           setMessages(response.data);
         })
-        .catch((e) => console.log("에러", e));
     };
     getMessages();
   }, []);

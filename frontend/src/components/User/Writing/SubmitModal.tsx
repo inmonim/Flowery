@@ -7,11 +7,12 @@ import {
   cardState,
   imageState,
   reservationConfirmState,
-  userStoreIdState,
   totalTextState,
   userIdState,
   videoState,
   cardImgFileState,
+  shopDataState,
+  goodsState,
 } from "../../../recoil/atom";
 import axios from "axios";
 import { letterFontState } from "../../../recoil/atom";
@@ -19,7 +20,8 @@ import { letterPaperState } from "../../../recoil/atom";
 
 const SubmitModal = React.forwardRef<HTMLDivElement, any>((props, ref) => {
   const userId = useRecoilValue<number>(userIdState);
-  const storeId = useRecoilValue<number>(userStoreIdState);
+  const storeData = useRecoilValue<any>(shopDataState);
+  const goods = useRecoilValue<any>(goodsState);
   const letter = useRecoilValue<string>(totalTextState);
   const letterFont = useRecoilValue<number>(letterFontState);
   const letterPaper = useRecoilValue<number>(letterPaperState);
@@ -87,18 +89,18 @@ const SubmitModal = React.forwardRef<HTMLDivElement, any>((props, ref) => {
     const date = new Date(Date.now() - offset).toISOString().slice(0, -5);
     const jsonData = {
       userId: userId,
-      storeId: storeId,
+      storeId: storeData.storeId,
       messageId: messageId,
-      goodsName: "기타",
-      price: 0,
-      demand: "없음",
+      goodsName: goods.goodsName,
+      price: goods.goodsPrice,
+      demand: "",
       date: date,
       reservationName: name,
       phrase: content,
       card: card,
       renderedCard: cardUrl,
     };
-
+    console.log(jsonData);
     axios
       .post("https://flowery.duckdns.org/api/reservation/make", jsonData)
       .then((response) => {

@@ -41,7 +41,7 @@ const router = createBrowserRouter([
       { path: "/myreservation", element: <MyReservation /> },
       { path: "/signin", element: <SignInPage /> },
       { path: "/signup", element: <SignUpPage /> },
-      { path: "/nonmember", element: <NonMemberPage /> },
+      // { path: "/nonmember", element: <NonMemberPage /> },
       { path: "/writing", element: <WritingPage /> },
       { path: "/reservationorder", element: <OrderPage /> },
     ],
