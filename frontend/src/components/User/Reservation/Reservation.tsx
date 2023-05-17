@@ -3,6 +3,8 @@ import { Map, MapMarker, useMap } from "react-kakao-maps-sdk";
 import imageSrc from "../../../assets/flowery_marker.png";
 import "../../../assets/styles/variable.scss";
 import ShopList from "./ShopList";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { shopListState } from "../../../recoil/atom";
 
 //  이거 왜 해야하더라? -> kakao 객체는 브라우저 전역 객체인 window 안에 포
 
@@ -16,34 +18,60 @@ interface Position {
     lng: number;
   };
 }
+
 export default function Reservation() {
   const [markers, setMarkers] = useState([] as boolean[]);
+  // const [position, setPosition] = useState([] as Position[]);
+  const [updatedShopList, setUpdatedShopList] = useState([] as Position[]);
 
-  const positions: Position[] = [
-    {
-      content: "꽃들 info",
-      title: "꽃들",
-      latlng: { lat: 35.1569, lng: 129.0591 },
-    },
-    {
-      content: "써니플레르 info",
-      title: "써니플레르",
-      latlng: { lat: 35.313, lng: 129.0103 },
-    },
-  ];
+  const shopList = useRecoilState(shopListState)[0];
 
-  const initMarkers = () => {
-    const marker: boolean[] = [];
-    positions.map((index) => {
-      marker.push(false);
-    });
+  useEffect(() => {
+    async function geocodeShops() {
+      const updatedShops: Position[] = [];
+      const geocoder = new window.kakao.maps.services.Geocoder();
 
-    setMarkers(marker);
-  };
+      for (const shop of shopList) {
+        await new Promise<void>((resolve) => {
+          geocoder.addressSearch(shop.address, function (result, status) {
+            if (status === window.kakao.maps.services.Status.OK) {
+              const latlng = {
+                lat: parseFloat(result[0].y),
+                lng: parseFloat(result[0].x),
+              };
+              const updatedShop = { ...shop, latlng: latlng };
+              updatedShops.push(updatedShop);
+            }
+            resolve(); // 비동기 작업 완료 후 resolve 호출
+          });
+        });
+      }
 
+      setUpdatedShopList(updatedShops); // 업데이트된 상점 리스트 설정
+      // setPosition(updatedShops);
+      // 위치 설정
+    }
+
+    geocodeShops();
+  }, []);
+
+  console.log(shopList, "here");
+
+  useEffect(() => {
+    console.log(updatedShopList);
+  }, [updatedShopList]);
+
+  // const initMarkers = () => {
+  //   const marker: boolean[] = [];
+  //   updatedShopList.map((index: any) => {
+  //     marker.push(false);
+  //   });
+
+  //   setMarkers(marker);
+  // };
   const handleMarkerClick = (index: number) => {
     const marker: boolean[] = [];
-    positions.map((index) => {
+    updatedShopList.map((index: any) => {
       marker.push(false);
     });
 
@@ -52,9 +80,9 @@ export default function Reservation() {
     setMarkers(marker);
   };
 
-  useEffect(() => {
-    initMarkers();
-  }, []);
+  // useEffect(() => {
+  //   initMarkers();
+  // }, [updatedShopList]);
 
   return (
     <div className="flex flex-col w-screen h-auto">
@@ -73,21 +101,20 @@ export default function Reservation() {
             height: "50vh",
           }}
           level={11} // 지도의 확대 레벨
-          onClick={initMarkers} // 클릭 초기화
         >
-          {positions.map((value: any, index: number) => (
+          {updatedShopList.map((value: any, index: number) => (
             <MapMarker
               position={value.latlng} // 마커를 표시할 위치
               image={{ src: imageSrc, size: { width: 35, height: 45 } }}
               onClick={() => handleMarkerClick(index)}
               key={index}
             >
-              {markers[index] && <div>{value.title}</div>}
+              {/* {markers[index] && <div>{value.title}</div>} */}
             </MapMarker>
           ))}
         </Map>
       </div>
-      <div className="flex-auto absolute z-10 rounded-xl inset-x-0 bottom-0 h-80 overflow-scroll ">
+      <div className=" absolute z-10 rounded-xl inset-x-0 bottom-0 h-80 overflow-scroll ">
         <ShopList />
       </div>
     </div>

@@ -4,6 +4,10 @@ import styles from "./InputForm.module.scss";
 interface InputFormProps {
   label: string;
   placeholder: string;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  type: string;
+  onEnter?: () => void;
 }
 
 export default function InputForm(props: InputFormProps) {
@@ -17,8 +21,18 @@ export default function InputForm(props: InputFormProps) {
         <input
           className={styles.inputform}
           id="id"
-          type="text"
+          type={props.type}
           placeholder={placeholder}
+          value={props.value}
+          onChange={props.onChange}
+          onKeyDown={(event) => {
+            if (event.keyCode === 13) {
+              // Enter key was pressed
+              if (props.onEnter) {
+                props.onEnter(); // onEnter가 있는 경우에만 호출
+              }
+            }
+          }}
         />
       </div>
     </>

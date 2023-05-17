@@ -7,14 +7,76 @@ const { persistAtom } = recoilPersist();
 export const isLoggedIn = atom<boolean>({
   key: "isLoggedIn",
   default: false,
-  // effects_UNSTABLE: [persistAtom],
+  effects_UNSTABLE: [persistAtom],
 });
 
-// 인증된 전화번호
+// AccessToken
+export const AccessToken = atom<string>({
+  key: "AccessToken",
+  default: "",
+});
+
+// 유저 ID
+export const userIdState = atom<number>({
+  key: "userIdState",
+  default: 0,
+  effects_UNSTABLE: [persistAtom],
+});
+
+// 유저 전화번호
 export const phoneNumberState = atom<string>({
   key: "phoneNumberState",
   default: "0",
+});
+
+// 가게 ID
+export const userStoreIdState = atom<number>({
+  key: "userStoreIdState",
+  default: 0,
+});
+
+// 카드 이미지
+export const cardImg = atom<string>({
+  key: "cardImgState",
+  default: "",
+});
+
+// 카드 이미지 파일
+export const cardImgFileState = atom<File | null>({
+  key: "cardImgFileState",
+  default: null,
+});
+
+// 카드 종류
+export const cardState = atom<number>({
+  key: "cardState",
+  default: 0,
+});
+
+// 카드 보내는 이름
+export const cardName = atom<string>({
+  key: "cardNameState",
+  default: "",
   effects_UNSTABLE: [persistAtom],
+});
+
+// 카드 보내는 이름 입력 여부
+export const isCardName = atom<boolean>({
+  key: "isCardNameState",
+  default: true,
+});
+
+// 카드 한줄글
+export const cardContent = atom<string>({
+  key: "cardContentState",
+  default: "",
+  effects_UNSTABLE: [persistAtom],
+});
+
+// 카드 한줄글 입력 여부
+export const isCardContent = atom<boolean>({
+  key: "isCardContentState",
+  default: true,
 });
 
 // 업로드한 이미지
@@ -34,7 +96,7 @@ export const videoState = atom<File | null>({
 // 편지지 종류
 export const letterPaperState = atom<number>({
   key: "letterPaperState",
-  default: 2,
+  default: 1,
   effects_UNSTABLE: [persistAtom],
 });
 
@@ -48,6 +110,101 @@ export const letterFontState = atom<number>({
 // 편지 내용
 export const totalTextState = atom<string>({
   key: "totalTextState",
+  default: "",
+  effects_UNSTABLE: [persistAtom],
+});
+
+// 예약 최종 제출 모달 오픈 여부
+export const reservationConfirmState = atom<boolean>({
+  key: "reservationConfirmState",
+  default: false,
+});
+
+//가게 리스트 (창근)
+export const shopListState = atom({
+  key: "shopListState",
+  default: [],
+  effects_UNSTABLE: [persistAtom],
+});
+
+//가게 정보(창근)
+export const shopDataState = atom({
+  key: "shopDataState",
+  default: [],
+  effects_UNSTABLE: [persistAtom],
+});
+
+export const storeId = atom<number>({
+  key: "storeId",
+  default: 0,
+  effects_UNSTABLE: [persistAtom],
+});
+
+export const storeName = atom<string>({
+  key: "storeName",
+  default: "",
+  effects_UNSTABLE: [persistAtom],
+});
+
+// 예약 시간 (창근)
+export const reservationTimeState = atom<string>({
+  key: "storeTimeState",
+  default: "",
+  effects_UNSTABLE: [persistAtom],
+});
+
+// 예약 날짜 (창근)
+export const reservatonDayState = atom<string>({
+  key: "storeDayState",
+  default: "",
+  effects_UNSTABLE: [persistAtom],
+});
+
+// 상품 선택 (창근)
+export const goodsState = atom({
+  key: "goodsState",
+  default: {
+    goodsDetail: "",
+    goodsId: 0,
+    goodsName: "",
+    goodsPrice: 0,
+    samples: [],
+    storeId: 0,
+  },
+  effects_UNSTABLE: [persistAtom],
+});
+
+export const tabState = atom<string>({
+  key: "tabState",
+  default: "all",
+  effects_UNSTABLE: [persistAtom],
+});
+
+export const storeInfo = atom<any>({
+  key: "storeInfo",
+  default: {
+    storeId: 0,
+    storeName: "",
+    storePhone: "",
+    permit: 0,
+    open: 0,
+    close: 0,
+    address: "",
+    info: "",
+    image: "",
+    profile: "",
+  },
+  effects_UNSTABLE: [persistAtom],
+});
+
+export const atk = atom<string>({
+  key: "atk",
+  default: "",
+  effects_UNSTABLE: [persistAtom],
+});
+
+export const rtk = atom<string>({
+  key: "rtk",
   default: "",
   effects_UNSTABLE: [persistAtom],
 });

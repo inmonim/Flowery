@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import styles from "./ItemInfo.module.scss";
-import flower from "../../assets/example1.jpg";
 import PrintCard from "./PrintCard";
 import FetchCard from "./FetchCard";
 interface ItemInfoProps {
@@ -9,6 +8,8 @@ interface ItemInfoProps {
   printed: number;
   reservationId: number;
   phrase: string;
+  permission: number;
+  image: string;
 }
 
 export default function ItemInfo(props: ItemInfoProps) {
@@ -37,7 +38,7 @@ export default function ItemInfo(props: ItemInfoProps) {
       <div className={styles.itemcontainer}>
         <div className={styles.items}>
           <div className={styles.picture}>
-            <img src={flower} alt="flower" />
+            <img src={props.image} alt="flower" />
           </div>
           <div className={styles.description}>
             <div className={styles.number}>{props.reservationName}</div>
@@ -45,10 +46,22 @@ export default function ItemInfo(props: ItemInfoProps) {
           </div>
         </div>
         <div
-          className={props.printed === 0 ? styles.printing : styles.reprinting}
-          onClick={handleModal}
+          className={
+            props.permission === 0
+              ? styles.printreject
+              : props.printed === 0
+              ? styles.printing
+              : styles.reprinting
+          }
+          onClick={props.permission === 0 ? undefined : handleModal}
         >
-          <p>{props.printed === 0 ? "카드생성" : "가져오기"}</p>
+          <p>
+            {props.permission === 0
+              ? "취소됨"
+              : props.printed === 0
+              ? "카드생성"
+              : "가져오기"}
+          </p>
         </div>
       </div>
       {props.printed === 0 && showModal && (

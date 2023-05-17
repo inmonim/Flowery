@@ -56,7 +56,7 @@ export default function SignUpPage() {
     // if (verifyCode === 인증번호) {
     alert("인증되었습니다!"); // 모달창으로 예쁘게 만들기
     setPhoneNumber(inputPhone);
-    navigate('/reservation')
+    navigate("/reservation");
     // }
   };
 
@@ -66,7 +66,6 @@ export default function SignUpPage() {
       checkCode();
     }
   };
-
 
   return (
     <section className="bg-neutral-200">
@@ -110,7 +109,7 @@ export default function SignUpPage() {
                   type="button"
                   disabled={!isPhoneNum}
                   onClick={checkVerify}
-                  className={`absolute flex inset-y-0 right-0 h-full w-1/6 rounded-xl text-xs font-medium leading-normal ${
+                  className={`absolute flex inset-y-0 right-0 h-full w-1/5 rounded-xl text-xs font-medium leading-normal ${
                     isPhoneNum
                       ? "bg-red-300 text-white  shadow-[0_4px_9px_-4px_rgba(0,0,0,0.2)] transition duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] hover:outline-none hover:ring-0 active:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] "
                       : "bg-gray-50 text-gray-300"

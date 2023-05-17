@@ -2,14 +2,16 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { phoneNumberState } from "../../recoil/atom";
 import { useSetRecoilState } from "recoil";
+import axios from "axios";
 
 export default function SignUpPage() {
   const [isVerify, setIsVerify] = useState<boolean>(false);
   const [inputPhone, setInputPhone] = useState<string>("");
+  const [dashPhoneNum, setDashPhoneNum] = useState<string>("");
   const [isPhoneNum, setIsPhoneNum] = useState<boolean>(false);
   const [clickVerify, setClickVerify] = useState<boolean>(false);
   const [verifyCode, setVerifyCode] = useState<string>("");
-  const setPhoneNumber = useSetRecoilState(phoneNumberState);
+  const [phoneNumber, setPhoneNumber] = useState<string>("");
 
   const [id, setId] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -51,8 +53,16 @@ export default function SignUpPage() {
   // 휴대폰 번호 인증 버튼 클릭
   const checkVerify = () => {
     // 인증 번호 보내기
-    alert("인증번호가 전송됐습니다!");
-    setClickVerify(true);
+
+    axios
+      .post("https://flowery.duckdns.org/api/sms/send-cert", {
+        phone: inputPhone,
+      })
+      .then((response) => {
+        setClickVerify(true);
+        alert("인증번호가 전송됐습니다!");
+      })
+      .catch((e) => alert("인증번호 전송에 실패했습니다"));
   };
 
   // 휴대폰 번호 인증 버튼 Enter
@@ -64,14 +74,38 @@ export default function SignUpPage() {
 
   // 인증 번호 확인
   const checkCode = () => {
-    console.log("인증번호 확인");
+    let phoneNum = "";
+    if (inputPhone.length === 11) {
+      phoneNum =
+        inputPhone.slice(0, 3) +
+        "-" +
+        inputPhone.slice(3, 7) +
+        "-" +
+        inputPhone.slice(7, 11);
+    } else {
+      phoneNum =
+        inputPhone.slice(0, 3) +
+        "-" +
+        inputPhone.slice(3, 6) +
+        "-" +
+        inputPhone.slice(6, 10);
+    }
+    setDashPhoneNum(phoneNum);
 
     // 인증 번호가 일치하면
-    // if (verifyCode === 인증번호) {
-    alert("인증되었습니다!"); // 모달창으로 예쁘게 만들기
-    setPhoneNumber(inputPhone);
-    setIsVerify(true);
-    // }
+    const params = { phone: inputPhone, code: verifyCode };
+    axios
+      .get("https://flowery.duckdns.org/api/sms/certification", { params })
+      .then((response) => {
+        setIsVerify(true);
+        if (response.data) {
+          setPhoneNumber(inputPhone);
+          // setIsVerify(true);
+          alert("인증번호 확인됐습니다!");
+        } else {
+          alert("인증에 실패했습니다!\n인증번호는 3분간 유효합니다");
+        }
+      });
   };
 
   // 인증 번호 확인 Enter
@@ -91,7 +125,9 @@ export default function SignUpPage() {
   }
 
   function CheckPassword(password: string) {
-    if (/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{8,16}/.test(password)) {
+    if (
+      /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,16}/.test(password)
+    ) {
       return 1;
     } else {
       return 0;
@@ -106,15 +142,40 @@ export default function SignUpPage() {
   }
 
   // 중복 아이디 확인
-  function isExistId(name: string) {}
+  function isExistId(name: string) {
+    const params = { id: name };
+    axios
+      .get("https://flowery.duckdns.org/api/users/id-check", { params })
+      .then((response) => {
+        if (response.data === false) {
+          setExistId(true);
+        }
+      });
+  }
 
-  // 회원가입이 완료됐으면
+  // 회원가입
   const signUpComplete = () => {
-    // POST 요청
-    // token 저장
-    // atom에 로그인 정보(토큰, 전화번호) 저장
-    alert("회원가입이 완료되었습니다!");
-    // navigate("/");
+    axios
+      .post("https://flowery.duckdns.org/api/users/register", {
+        id: id,
+        pass: password,
+        phone: dashPhoneNum,
+      })
+      .then((response) => {
+        alert("회원가입이 완료되었습니다!");
+        // 로그인
+        axios
+          .post("https://flowery.duckdns.org/api/users/login-user", {
+            id: id,
+            pass: password,
+          })
+          .then((response) => {
+            console.log(response.data);
+            navigate("/reservation");
+          })
+          .catch((e) => alert("로그인에 실패했습니다."));
+      })
+      .catch((error) => alert("회원가입에 실패했습니다."));
   };
 
   return (
@@ -143,6 +204,7 @@ export default function SignUpPage() {
                 }
                 value={inputPhone}
                 onKeyDown={pressCheck}
+                autoComplete="off"
                 placeholder=" "
                 className={`peer block text-sm min-h-[auto] w-full rounded-xl border-2 border-gray-200 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none focus:border-neutral-300 ${
                   isVerify ? "bg-gray-200" : ""
@@ -156,10 +218,9 @@ export default function SignUpPage() {
               </label>
               {!isVerify && (
                 <button
-                  type="button"
                   disabled={!isPhoneNum}
                   onClick={checkVerify}
-                  className={`absolute flex inset-y-0 right-0 h-full w-1/5 rounded-xl text-xs font-medium leading-normal ${
+                  className={`absolute flex inset-y-0 right-0 h-full w-1/4 rounded-xl text-xs font-medium leading-normal ${
                     isPhoneNum
                       ? "bg-red-300 text-white  shadow-[0_4px_9px_-4px_rgba(0,0,0,0.2)] transition duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] hover:outline-none hover:ring-0 active:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] "
                       : "bg-gray-50 text-gray-300"
@@ -178,6 +239,7 @@ export default function SignUpPage() {
                   className="peer block min-h-[auto] w-full rounded-xl border-2 border-gray-200 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none focus:border-neutral-300"
                   id="exampleFormControlInput1"
                   placeholder=" "
+                  onChange={(e) => setVerifyCode(e.target.value)}
                 />
                 <label
                   htmlFor="exampleFormControlInput1"
@@ -214,7 +276,7 @@ export default function SignUpPage() {
                     // }
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                       setId(e.target.value);
-
+                      setExistId(false);
                       if (CheckId(e.target.value) === 1) {
                         setIsId(true);
                         setWrongId(false);
@@ -222,6 +284,9 @@ export default function SignUpPage() {
                         setIsId(false);
                       }
                     }}
+                    onBlur={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      isExistId(e.target.value)
+                    }
                   />
                   <label
                     htmlFor="id"
@@ -274,8 +339,8 @@ export default function SignUpPage() {
                   </label>
                   {password === "" || CheckPassword(password) ? null : (
                     <p className="text-xs ml-2 text-red-500">
-                      8~16자 영문 대 소문자, 숫자, 특수문자를 모두 사용해야
-                      합니다!
+                      8~16자 영문 대 소문자, 숫자, 특수문자(!,@,#,$,%,^,&,*)를
+                      모두 사용해야 합니다!
                     </p>
                   )}
                 </div>
@@ -310,8 +375,7 @@ export default function SignUpPage() {
                     </div>
                   )}
                 </div>
-                <button
-                  type="submit"
+                <div
                   onClick={async (e) => {
                     if (
                       isId === true &&
@@ -319,8 +383,7 @@ export default function SignUpPage() {
                       isPassword === true &&
                       isPasswordConfirm === true
                     ) {
-                      // 회원가입 axios
-                      navigate('/reservation')
+                      signUpComplete();
                     } else {
                       if (isId === false || existId === true) {
                         setWrongId(true);
@@ -333,10 +396,10 @@ export default function SignUpPage() {
                       }
                     }
                   }}
-                  className="mb-3 inline-block w-full rounded-xl px-6 pb-2 pt-2.5 text-xs font-medium leading-normal bg-red-300 text-white ease-in-out shadow-[0_4px_9px_-4px_rgba(0,0,0,0.2)] hover:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:outline-none focus:ring-0 active:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)]"
+                  className="mb-3 inline-block w-full text-center rounded-xl px-6 pb-2 pt-2.5 text-xs font-medium leading-normal bg-red-300 text-white ease-in-out shadow-[0_4px_9px_-4px_rgba(0,0,0,0.2)] hover:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:outline-none focus:ring-0 active:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)]"
                 >
                   회원가입
-                </button>
+                </div>
               </form>
             )}
           </div>

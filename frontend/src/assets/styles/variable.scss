@@ -84,6 +84,31 @@ $light-gray-color: #e8edef;
   src: url("./fonts/KCC-Chassam.ttf");
 }
 
+@font-face {
+  font-family: "utoB";
+  src: url("./fonts/utoimage\ gothic\ B\ TTF.ttf");
+}
+
+@font-face {
+  font-family: "utoL";
+  src: url("./fonts/utoimage\ gothic\ L\ TTF.ttf");
+}
+
+@font-face {
+  font-family: "utoR";
+  src: url("./fonts/utoimage\ gothic\ R\ TTF.ttf");
+}
+
+@font-face {
+  font-family: "gobaB";
+  src: url("./fonts/GowunBatang-Bold.ttf");
+}
+
+@font-face {
+  font-family: "gobaR";
+  src: url("./fonts/GowunBatang-Regular.ttf");
+}
+
 $gowndodum-font: GownDodum;
 $sunflower-font: Sunflower;
 $spoqa-font: Spoqa;

@@ -1,5 +1,4 @@
 /** @type {import('tailwindcss').Config} */
-
 module.exports = {
   // 템플릿 파일의 경로 설정 👀
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
@@ -9,6 +8,11 @@ module.exports = {
         ballet: ["ballet"],
         namyeong: ["namyeong"],
         nasq: ["nasq"],
+        utoB: ["utoB"],
+        utoL: ["utoL"],
+        utoR: ["utoR"],
+        gobaB: ["gobaB"],
+        gobaR: ["gobaR"],
       },
       colors: {
         sub: "#FFFAF5",
@@ -28,6 +32,9 @@ module.exports = {
         textSlideRtoL: "textSlideRtoL 1s ease-in-out forwards",
         heartBeat: "heartBeat 1s ease-in-out infinite",
         typing: "typing 3.5s steps(40, end)",
+        beat: "beat 1s ease-in-out infinite",
+        shakeRight: "shakeRight 1s ease-in-out infinite",
+        moveCenter: "moveCenter 1s ease-in-out forwards",
       },
       keyframes: {
         typing: {
@@ -62,6 +69,26 @@ module.exports = {
         textSlideRtoL: {
           "0%": { transform: "translateX(100%)" },
           "100%": { transform: "translateX(0)" },
+        },
+        beat: {
+          "0%": { transform: "scale(1);" },
+          "50%": { transform: "scale(1.2);" },
+          "100%": { transform: "scale(1);" },
+
+          // "50%": { transform: "scale(1);" },
+          // "75%": { transform: "scale(1.2);" },
+        },
+        shakeRight: {
+          "0%": { transform: "translateX(0)" },
+          "25%": { transform: "translateX(5px) rotateY(7deg)" },
+          "50%": { transform: "translateX(0)" },
+          "75%": { transform: "translateX(5px) rotateY(7deg)" },
+          "100%": { transform: "translateX(0)" },
+          // "0%": { transform: "translateX(5px)"}
+        },
+        moveCenter: {
+          "0%": { transform: "translate(0)" },
+          "100%": { transform: "translate(calc(50vw - 50%), calc(50vh -50%))" },
         },
       },
     },
