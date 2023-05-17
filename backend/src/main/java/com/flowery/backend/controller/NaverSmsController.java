@@ -85,15 +85,10 @@ public class NaverSmsController {
     public ResponseEntity<Boolean> sendOne(@RequestBody InfoWithSmsDto infoWithSmsDto) {
 
         try {
-            System.out.println("ffff");
-            System.out.println(infoWithSmsDto.getPhone());
-            System.out.println(usersRepository.existsByPhone(infoWithSmsDto.getPhone()) );
 
-            if(infoWithSmsDto.getPhone() == null || !usersRepository.existsByPhone(infoWithSmsDto.getPhone())){
+            if(infoWithSmsDto.getPhone() == null || usersRepository.existsByPhone(infoWithSmsDto.getPhone())){
                 return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
             }
-
-            System.out.println("ffff");
 
             Random random = new Random();
             int randomNumber = random.nextInt(900000) + 100000; // 100,000 ~ 999,999 범위에서 랜덤으로 수를 생성
@@ -126,11 +121,10 @@ public class NaverSmsController {
     public ResponseEntity<Boolean> checkOne(@RequestParam String phone, Integer code){
 
         try {
-            String phoneValue = phone.replaceAll("-", "");
-            if(!redisDao.hasKey(phoneValue)) return new ResponseEntity<>(false, HttpStatus.ACCEPTED);
+            if(!redisDao.hasKey(phone)) return new ResponseEntity<>(false, HttpStatus.ACCEPTED);
 
-            if (redisDao.getValue(phoneValue).equals(String.valueOf(code))){
-                System.out.println(phoneValue);
+            if (redisDao.getValue(phone).equals(String.valueOf(code))){
+                System.out.println(phone);
                 return new ResponseEntity<>(true, HttpStatus.ACCEPTED);
             }
             else return new ResponseEntity<>(false, HttpStatus.ACCEPTED);
