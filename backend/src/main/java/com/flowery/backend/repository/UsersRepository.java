@@ -7,6 +7,8 @@ public interface UsersRepository extends JpaRepository<Users, Integer> {
 
     Users findById(String userId);
 
+    boolean findByPhone(String phone);
+
     Users findByUsersId(int userId);
 
 }
