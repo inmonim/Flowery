@@ -11,7 +11,7 @@ export default function Try() {
   return (
     <div className="flex flex-col justify-center h-[fit-content]">
       <div className="h-[60vh] bg-user_beige pt-[30%]">
-        <div className="absolute left-[10%] top-[55%] w-[60%] h-[15%] z-20 p-2 bg-user_purple text-white ">
+        <div className="absolute left-[10%] top-[55%] w-[60%] h-[15%] z-20 p-2 bg-user_green text-white ">
           <p className="font-ballet text-[2rem]">Flowery</p>
           <p className="font-nasq font-bold text-[0.8rem] pt-2">
             꽃다발 자동 인식 기능
@@ -89,7 +89,7 @@ export default function Try() {
       </div>
       <div className="pt-[40%]">
         <p className="text-[3rem] font-nasq font-bold text-user_green pl-2">
-          Try!
+          Example
         </p>
         <p className="text-[1rem] font-namyeong text-[gray] pt-2 pl-1 pr-1">
           Flowery에서는 ai 다중 객체 인식 기술을 통해서 고객님께서 선물 하신
@@ -99,6 +99,14 @@ export default function Try() {
           밑 예시를 따라 직접 사진을 넣어보신 후, 이 놀라운 서비스를 경험하세요
         </p>
         <TryComponent />
+      </div>
+      <div className="pt-[30%]">
+        <p className="text-[3rem] font-nasq font-bold text-user_green pl-2">
+          DIY
+        </p>
+        <p className="text-[1rem] font-namyeong text-[gray] pt-2 pl-1 pr-1">
+          직접 꽃다발 사진을 넣어보신 후, 꽃의 종류와 꽃말을 확인해 보세요!
+        </p>
       </div>
     </div>
   );
