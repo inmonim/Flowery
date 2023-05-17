@@ -118,4 +118,15 @@ public class UsersService {
         return usersDto;
     }
 
+    public Boolean existId(String id) throws Exception{
+        return usersRepository.existsById(id);
+    }
+
+    public UsersDto changePass(UsersDto usersDto) throws Exception{
+        Users users = usersRepository.findByUsersId(usersDto.getUsersId());
+        String encryptedPass = passwordEncoder.encode(usersDto.getPass());
+        users.setPass(encryptedPass);
+        usersRepository.save(users);
+        return new UsersDto(users);
+    }
 }

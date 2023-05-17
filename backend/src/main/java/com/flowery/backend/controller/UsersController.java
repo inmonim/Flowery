@@ -59,6 +59,9 @@ public class UsersController {
     public ResponseEntity<Boolean> register(@RequestBody UsersDto usersDto){
 
         try {
+            if(usersService.existId(usersDto.getId())){
+                return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
+            }
             return new ResponseEntity<>(usersService.register(usersDto), HttpStatus.ACCEPTED);
         }catch (Exception e){
             return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
@@ -98,5 +101,16 @@ public class UsersController {
             throw new RuntimeException("로그인 처리 중 문제가 발생하였습니다.");
         }
     }
+
+    @PutMapping("/changePhone")
+    public ResponseEntity<Boolean> changePhone(@RequestBody UsersDto passDto){
+        try {
+            UsersDto usersDto = usersService.changePass(passDto);
+            return ResponseEntity.ok(true);
+        }catch (Exception e){
+            throw new RuntimeException("로그인 처리 중 문제가 발생하였습니다.");
+        }
+    }
+
 
 }

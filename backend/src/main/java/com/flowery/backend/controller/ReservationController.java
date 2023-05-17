@@ -30,18 +30,6 @@ public class ReservationController {
         this.reservationService = reservationService;
     }
 
-    // test
-    @GetMapping("/hi")
-    public ResponseEntity<List<ReservationDto>> findByDate(@RequestParam String date){
-        LOGGER.info("findByDate가 호출되었습니다.");
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
-        LocalDateTime dateTime = LocalDateTime.parse(date, formatter);
-        System.out.println(dateTime);
-
-        return new ResponseEntity<>(reservationService.findTodayReservation(dateTime), HttpStatus.ACCEPTED);
-    }
-
     // 예약을 수정
     @PostMapping("/fix")
     public ResponseEntity<ReservationDto> updateReservation(@RequestBody ReservationDto reservationDto){
