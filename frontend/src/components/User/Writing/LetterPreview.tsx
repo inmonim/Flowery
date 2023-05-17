@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import Flower from "../../../assets/ReleasePage/carnation.jpg";
 import styles from "./LetterPreview.module.scss";
 import { useRecoilState } from "recoil";
 import {
@@ -30,7 +31,12 @@ export default function LetterPreview() {
   return (
     // 전체 페이지
     <div className="">
-      <div className={styles[`letterPaper${letterPaper}`]}>
+      {/* <img
+        src={Flower}
+        alt=""
+        className="items-center justify-center p-2 mx-auto"
+      /> */}
+      <div className={`h-full ${styles[`letterPaper${letterPaper}`]}`}>
         {currentLetter()}
       </div>
     </div>

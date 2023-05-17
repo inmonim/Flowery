@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { phoneNumberState } from "../../recoil/atom";
 import { useSetRecoilState } from "recoil";
+import axios from "axios";
 
 export default function SignUpPage() {
   const [isVerify, setIsVerify] = useState<boolean>(false);
@@ -112,6 +113,29 @@ export default function SignUpPage() {
 
   // 회원가입이 완료됐으면
   const signUpComplete = () => {
+    let phoneNum = "";
+    if (inputPhone.length === 11) {
+      const phoneNum =
+        inputPhone.slice(0, 3) +
+        "-" +
+        inputPhone.slice(3, 7) +
+        "-" +
+        inputPhone.slice(7, 11);
+      console.log(phoneNum);
+    } else {
+      const phoneNum =
+        inputPhone.slice(0, 3) +
+        "-" +
+        inputPhone.slice(3, 6) +
+        "-" +
+        inputPhone.slice(6, 10);
+      console.log(phoneNum);
+    }
+    axios.post("https://flowery.duckdns.org/api/users/register", {
+      id: id,
+      password: password,
+      phone: phoneNum,
+    }).then((response) => console.log(response.data));
     // POST 요청
     // token 저장
     // atom에 로그인 정보(토큰, 전화번호) 저장
@@ -145,6 +169,7 @@ export default function SignUpPage() {
                 }
                 value={inputPhone}
                 onKeyDown={pressCheck}
+                autoComplete="off"
                 placeholder=" "
                 className={`peer block text-sm min-h-[auto] w-full rounded-xl border-2 border-gray-200 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none focus:border-neutral-300 ${
                   isVerify ? "bg-gray-200" : ""
@@ -158,10 +183,9 @@ export default function SignUpPage() {
               </label>
               {!isVerify && (
                 <button
-                  type="button"
                   disabled={!isPhoneNum}
                   onClick={checkVerify}
-                  className={`absolute flex inset-y-0 right-0 h-full w-1/5 rounded-xl text-xs font-medium leading-normal ${
+                  className={`absolute flex inset-y-0 right-0 h-full w-1/4 rounded-xl text-xs font-medium leading-normal ${
                     isPhoneNum
                       ? "bg-red-300 text-white  shadow-[0_4px_9px_-4px_rgba(0,0,0,0.2)] transition duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] hover:outline-none hover:ring-0 active:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] "
                       : "bg-gray-50 text-gray-300"
@@ -313,7 +337,6 @@ export default function SignUpPage() {
                   )}
                 </div>
                 <button
-                  type="submit"
                   onClick={async (e) => {
                     if (
                       isId === true &&
@@ -321,8 +344,7 @@ export default function SignUpPage() {
                       isPassword === true &&
                       isPasswordConfirm === true
                     ) {
-                      // 회원가입 axios
-                      navigate("/reservation");
+                      signUpComplete();
                     } else {
                       if (isId === false || existId === true) {
                         setWrongId(true);

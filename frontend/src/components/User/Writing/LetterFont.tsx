@@ -10,20 +10,12 @@ export default function LetterFont() {
 
   // 글씨체 종류
   const letterFonts: string[] = [
-    "하남다움체",
     "김정철명조",
-    "안성탕면체",
-    "제주돌담체",
     "조선100년체",
     "가나초콜릿체",
     "스위트체",
-    "삼립호빵체",
-    "둘기마요고딕",
     "거친둘기마요",
-    "수박화체",
-    "마이쮸체",
     "함박눈체",
-    "고령딸기체",
   ];
 
   return (
@@ -50,7 +42,7 @@ export default function LetterFont() {
               onClick={() => {
                 setLetterFont(startIndex + i + 1);
               }}
-              className="p-2 text-sm md:text-base align-middle justify-center"
+              className="p-1 text-sm md:text-base align-middle justify-center"
             >
               <div
                 className={`cursor-pointer ${

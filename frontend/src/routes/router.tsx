@@ -22,6 +22,7 @@ import ReleaseExitPage from "../components/ReleasePage/Writing/ReleaseExitPage";
 import SellerManagePage from "../pages/Seller/SellerManagePage/SellerManage";
 import HowTo from "../components/User/UserMain/HowTo";
 import Try from "../components/User/UserMain/Try";
+import MyReservation from "../pages/MyReservation/MyReservation";
 import SellerAnalyzePage from "../pages/Seller/SellerAnalyzePage/SellerAnalyzePage";
 
 const router = createBrowserRouter([
@@ -37,6 +38,7 @@ const router = createBrowserRouter([
       { path: "/test", element: <TestPage /> },
       { path: "/reservationoption", element: <ReservationOption /> },
       { path: "/mygarden", element: <MyGarden /> },
+      { path: "/myreservation", element: <MyReservation /> },
       { path: "/signin", element: <SignInPage /> },
       { path: "/signup", element: <SignUpPage /> },
       { path: "/nonmember", element: <NonMemberPage /> },

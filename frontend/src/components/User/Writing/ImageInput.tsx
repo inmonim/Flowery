@@ -5,12 +5,12 @@ import camera from "../../../assets/add_logo.png";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import imageCompression from "browser-image-compression";
 
 export default function ImageInput() {
   const [images, setImages] = useRecoilState<Array<File>>(imageState);
   const [selectIdx, setSelectIdx] = useState<number>(0);
   const [isDraggingOver, setIsDraggingOver] = useState(false);
-  const [activeDelete, setActiveDelete] = useState<boolean>(false);
 
   const imageInput = useRef<HTMLInputElement>(null);
   // 이미지 업로드
@@ -18,15 +18,21 @@ export default function ImageInput() {
     imageInput.current?.click();
   };
 
-  const handleImageInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageInput = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const file = event.target.files;
+    const maxSize = 6 * 1024 * 1024;
+    const options = {
+      maxSizeMB: 6,
+      maxWidthOrHeight: 500,
+    };
+
     if (file) {
       if (images.length + file.length > 5) {
         alert("최대 5장까지 업로드 가능합니다");
       } else {
         let newImages = [...images];
-        const maxSize = 6 * 1024 * 1024;
-
         for (let i = 0; i < file.length; i++) {
           const fileType = file[i].type;
           const fileSize = file[i].size;
@@ -35,7 +41,11 @@ export default function ImageInput() {
             if (fileSize > maxSize) {
               alert("최대 6MB까지 업로드 가능합니다.");
             } else {
-              newImages.push(file[i]);
+              const resizingBlob = await imageCompression(file[i], options);
+              const resizingFile = new File([resizingBlob], file[i].name, {
+                type: fileType,
+              });
+              newImages.push(resizingFile);
             }
           } else {
             alert("이미지 파일만 업로드 가능합니다.");
@@ -57,17 +67,21 @@ export default function ImageInput() {
     setIsDraggingOver(false);
   };
 
-  const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
+  const handleDrop = async (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
     setIsDraggingOver(false);
     const file = event.dataTransfer.files;
+    const maxSize = 6 * 1024 * 1024;
+    const options = {
+      maxSizeMB: 6,
+      maxWidthOrHeight: 500,
+    };
+
     if (file) {
       if (images.length + file.length > 5) {
         alert("최대 5장까지 업로드 가능합니다");
       } else {
         let newImages = [...images];
-        const maxSize = 6 * 1024 * 1024;
-
         for (let i = 0; i < file.length; i++) {
           const fileType = file[i].type;
           const fileSize = file[i].size;
@@ -76,7 +90,11 @@ export default function ImageInput() {
             if (fileSize > maxSize) {
               alert("최대 6MB까지 업로드 가능합니다.");
             } else {
-              newImages.push(file[i]);
+              const resizingBlob = await imageCompression(file[i], options);
+              const resizingFile = new File([resizingBlob], file[i].name, {
+                type: fileType,
+              });
+              newImages.push(resizingFile);
             }
           } else {
             alert("이미지 파일만 업로드 가능합니다.");
@@ -135,12 +153,8 @@ export default function ImageInput() {
                             setSelectIdx(index);
                             onClickImageUpload();
                           }}
-                          onMouseOver={() => setActiveDelete(true)}
-                          onMouseOut={() => setActiveDelete(false)}
                         ></img>
-                        {activeDelete && (
                           <div
-                            onMouseOver={() => setActiveDelete(true)}
                             className="absolute top-0 right-0 cursor-pointer bg-white p-1"
                           >
                             <svg
@@ -160,7 +174,6 @@ export default function ImageInput() {
                               />
                             </svg>
                           </div>
-                        )}
                       </div>
                     </div>
                   </div>
@@ -170,7 +183,7 @@ export default function ImageInput() {
           ) : (
             <label
               htmlFor="dropzoneImage"
-              className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+              className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50  hover:bg-gray-100"
             >
               <div
                 onDragOver={handleDragOver}
@@ -184,10 +197,10 @@ export default function ImageInput() {
                   className="w-10 h-10 mb-3 text-gray-400"
                 ></img>
 
-                <p className="text-base font-bold text-gray-500 dark:text-gray-400">
+                <p className="text-base font-bold text-gray-500 ">
                   보내고 싶은 사진을 업로드하세요!
                 </p>
-                <p className="text-xs text-gray-500 dark:text-gray-400">
+                <p className="text-xs text-gray-500 ">
                   (한 장당 6MB씩 최대 5장 가능합니다)
                 </p>
               </div>
@@ -204,8 +217,8 @@ export default function ImageInput() {
           />
         </div>
       </div>
-      <div className="text-center mt-5 pt-3">
-        {images.length > 0 && (
+      <div className="text-center mt-5 pt-3 mb-7">
+        {images.length > 0 && images.length < 5 && (
           <span
             onClick={() => {
               setSelectIdx(images.length);
