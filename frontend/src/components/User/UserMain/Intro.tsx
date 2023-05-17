@@ -25,7 +25,7 @@ export default function Intro() {
             시들지 않는 추억을 영원히
           </p>
         </div>
-        <div className="flex gap-2 m-2 overflow-scroll pb-3">
+        <div className="flex gap-2 m-2 w-[90%] pb-3">
           <button
             className={`${
               activeTab === "all"

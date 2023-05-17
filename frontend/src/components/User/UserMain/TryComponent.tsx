@@ -1,0 +1,40 @@
+import React, { useState } from "react";
+import example1 from "../../../assets/UserMain/flowerbe.jpg";
+import example2 from "../../../assets/UserMain/flowerbe2.jpg";
+import example3 from "../../../assets/UserMain/flowerbe3.jpg";
+
+export default function TryComponent() {
+  const exampleList = [example1, example2, example3];
+  const [activeExample, setActiveExample] = useState();
+
+  const handleExampleClick = (example: any) => {
+    setActiveExample(example);
+  };
+
+  return (
+    <div className="pt-[10%]">
+      <div className="flex flex-row">
+        {exampleList.map((product, index) => (
+          <div
+            key={index}
+            className={`p-1 ${
+              activeExample === product
+                ? "bg-user_green text-white"
+                : "bg-user_sol text-user_black"
+            }}`}
+            onClick={() => handleExampleClick(product)}
+          >
+            <img src={product} alt="index" />
+          </div>
+        ))}
+      </div>
+      {activeExample && (
+        <div className="mt-4">
+          <img src={activeExample} alt="active-example" className="p-1" />
+        </div>
+      )}
+    </div>
+  );
+}
+
+// w-[33%] p-1
