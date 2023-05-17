@@ -1,25 +1,16 @@
 package com.flowery.backend.controller;
 
+import com.flowery.backend.AES256.AES256Util;
 import com.flowery.backend.jwt.JwtProvider;
 import com.flowery.backend.jwt.TokenResponse;
-import com.flowery.backend.model.dto.SellerDto;
 import com.flowery.backend.model.dto.UsersDto;
-import com.flowery.backend.redis.PasswordGenerator;
-import com.flowery.backend.redis.RedisDao;
-import com.flowery.backend.sevice.StoresService;
 import com.flowery.backend.sevice.UsersService;
 import net.nurigo.sdk.NurigoApp;
-import net.nurigo.sdk.message.model.Message;
-import net.nurigo.sdk.message.request.SingleMessageSendingRequest;
-import net.nurigo.sdk.message.response.SingleMessageSentResponse;
 import net.nurigo.sdk.message.service.DefaultMessageService;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Random;
 
 
 @Controller
@@ -68,7 +59,6 @@ public class UsersController {
     public ResponseEntity<Boolean> register(@RequestBody UsersDto usersDto){
 
         try {
-            System.out.println(usersDto.getPhone());
             return new ResponseEntity<>(usersService.register(usersDto), HttpStatus.ACCEPTED);
         }catch (Exception e){
             return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
