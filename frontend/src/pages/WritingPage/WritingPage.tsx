@@ -110,7 +110,7 @@ export default function WritingPage() {
       onDragOver={handleDragOverPage}
       onDragLeave={handleDropPage}
       onDrop={handleDropPage}
-      className={`${isDrag && "bg-gray-300"}`}
+      className={`${isDrag ? "bg-gray-300" : 'bg-user_beige'}`}
       onDragStart={(event) => event.preventDefault()}
       // draggable="false"
     >
@@ -160,7 +160,7 @@ export default function WritingPage() {
               onClick={() => {
                 setShowLetterInput(!showLetterInput);
               }}
-              className="flex items-center justify-between w-full p-5 font-medium text-left text-gray-500 border border-b-0 border-gray-200 rounded-t-xl focus:ring-4 focus:ring-gray-200 hover:bg-gray-100"
+              className="flex items-center justify-between w-full p-5 font-medium text-left shadow-lg text-gray-500 border border-b-0 border-gray-200 rounded-t-xl focus:ring-4 focus:ring-gray-200 hover:bg-gray-100"
             >
               <span className="flex items-center">
                 {showLetterInput ? (
@@ -203,6 +203,7 @@ export default function WritingPage() {
                 <LetterContent />
               </div>
               <LetterFont />
+              <hr className="" />
             </div>
           )}
           <h2>
@@ -214,7 +215,7 @@ export default function WritingPage() {
               onClick={() => {
                 setShowImageInput(!showImageInput);
               }}
-              className="flex items-center justify-between w-full p-5 font-medium text-left text-gray-500 border border-b border-gray-200 focus:ring-4 focus:ring-gray-200 hover:bg-gray-100"
+              className="flex items-center justify-between w-full p-5 font-medium text-left shadow-lg bg-white text-gray-500 border border-b border-gray-200 focus:ring-4 focus:ring-gray-200 hover:bg-gray-100"
             >
               <span className="flex items-center">
                 <svg
@@ -291,6 +292,7 @@ export default function WritingPage() {
                   </div>
                 </div>
               </div>
+              <hr />
             </div>
           )}
         </div>
