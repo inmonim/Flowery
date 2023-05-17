@@ -93,7 +93,17 @@ public class NaverSmsController {
 
             redisDao.setValues(infoWithSmsDto.getPhone(),code);
 
-            System.out.println(code);
+            String phone = infoWithSmsDto.getPhone().replaceAll("-", "");
+
+            String content = preFix+" 비밀번호 인증 번호는 다음과 같습니다 [ " + code + "]";
+
+            SmsMessageDto smsMessageDto = new SmsMessageDto();
+
+            smsMessageDto.setTo(phone);
+            smsMessageDto.setContent(content);
+
+            naverSmsService.sendSms(smsMessageDto);
+
         }catch (Exception e){
             return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
         }

@@ -95,6 +95,12 @@ public class UsersService {
 
     }
 
+    public boolean idCheck(String userId) throws Exception{
+        Users users = usersRepository.findById(userId);
+        if(users == null) return true;
+        else return false;
+    }
+
     public void logout(UsersDto usersDto) throws Exception{
 
         redisDao.setBlackList(redisDao.getValue(atxPreFix+usersDto.getId()), "accessToken", 10);
