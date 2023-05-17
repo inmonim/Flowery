@@ -43,7 +43,13 @@ export default function All() {
           </p>
         </div>
       </div>
-      <div className="h-[300px] w-[85%] flex justify-center items-center overflow-hidden border-b rounded-2xl">
+      <div
+        onClick={() => {
+          setTab("try");
+          window.scrollTo(0, 0);
+        }}
+        className="h-[300px] w-[85%] flex justify-center items-center overflow-hidden border-b rounded-2xl"
+      >
         <div className="w-full h-full relative">
           <img src={card3} alt="card1" className="w-full " />
           <div className="absolute inset-0 bg-gradient-to-t opacity-[.8]     from-[#C9C0EC] to-transparent"></div>
