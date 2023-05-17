@@ -19,7 +19,6 @@ const GardenCardModal = React.forwardRef<HTMLDivElement, any>((props, ref) => {
   const handleClick = () => {
     setIsFlipped(!isFlipped);
   };
-  console.log(props.card)
 
   return (
     <div className="absolute inset-x-0 h-[100%] overflow-y-hidden-scroll bg-opacity-50 bg-black z-[20]">

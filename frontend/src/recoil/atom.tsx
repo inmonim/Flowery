@@ -10,23 +10,29 @@ export const isLoggedIn = atom<boolean>({
   effects_UNSTABLE: [persistAtom],
 });
 
+// AccessToken
+export const AccessToken = atom<string>({
+  key: "AccessToken",
+  default: "",
+});
+
 // 유저 ID
 export const userIdState = atom<number>({
   key: "userIdState",
   default: 0,
+  effects_UNSTABLE: [persistAtom],
+});
+
+// 유저 전화번호
+export const phoneNumberState = atom<string>({
+  key: "phoneNumberState",
+  default: "0",
 });
 
 // 가게 ID
 export const userStoreIdState = atom<number>({
   key: "userStoreIdState",
   default: 0,
-});
-
-// 인증된 전화번호
-export const phoneNumberState = atom<string>({
-  key: "phoneNumberState",
-  default: "0",
-  effects_UNSTABLE: [persistAtom],
 });
 
 // 카드 이미지
@@ -157,7 +163,14 @@ export const reservatonDayState = atom<string>({
 // 상품 선택 (창근)
 export const goodsState = atom({
   key: "goodsState",
-  default: {},
+  default: {
+    goodsDetail: "",
+    goodsId: 0,
+    goodsName: "",
+    goodsPrice: 0,
+    samples: [],
+    storeId: 0,
+  },
   effects_UNSTABLE: [persistAtom],
 });
 
