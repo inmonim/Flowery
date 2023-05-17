@@ -7,16 +7,6 @@ import { useRecoilValue } from "recoil";
 import { shopDataState } from "../../../recoil/atom";
 
 export default function ShopInfo(shopData: any) {
-  const positions = [
-    {
-      content: "오늘도 꽃을 열심히 팔아봅시다",
-      title: "꽃들",
-      address: "부산광역시 부산진구 부전동 번지 지하층 호 573-1",
-      latlng: { lat: 35.1569, lng: 129.0591 },
-      images: [picture1, picture2, picture1, picture2, picture1, picture2],
-      profile: profile3,
-    },
-  ];
   const shopInfo = useRecoilValue(shopDataState);
 
   return (
@@ -33,18 +23,15 @@ export default function ShopInfo(shopData: any) {
       <div className="mx-auto text-center p-2">
         <p>{shopInfo.info}</p>
       </div>
-      {positions.map((position, index) => (
-        <div className="flex flex-row space-10 gap-1 pl-2.5 pr-2.5  overflow-scroll">
-          {Array.from({ length: 4 }, (_, index) => (
-            <img
-              className="w-1/4"
-              src={position.images[index]}
-              alt="shop.title"
-              key={index}
-            />
+      <div className="flex overflow-scroll">
+        <div className="flex ">
+          {shopInfo.samples.map((position: any, index: any) => (
+            <div key={index} className="w-[25vw] h-[25vw] ml-1">
+              <img className="w-full h-full" src={position} alt="shop.title" />
+            </div>
           ))}
         </div>
-      ))}
+      </div>
     </div>
   );
 }
