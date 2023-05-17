@@ -129,8 +129,7 @@ public class ReservationService {
         int storeId = storesDto.getStoreId();
         Stores store = storeRepository.findById(storeId).get();
 
-//        List<Reservation> list = reservationRepository.findAllByDateBetween(yesterday,today);
-        List<Reservation> list = reservationRepository.findAllByStoreIdAndDateBetween(store, yesterday, today);
+        List<Reservation> list = reservationRepository.findAllByStoreIdInToday(store.getStoreId(), yesterday, today);
 
         List<ReservationDto> result = new ArrayList<>();
 

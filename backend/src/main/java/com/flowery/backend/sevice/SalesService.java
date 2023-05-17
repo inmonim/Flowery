@@ -74,7 +74,7 @@ public class SalesService {
             throw new NoSuchElementException("해당 storeId가 없습니다.");
         }
 
-        List<Reservation> list = reservationRepository.findAllByStoreIdAndDateBetween(store, startPoint,endPoint);
+        List<Reservation> list = reservationRepository.findAllByStoreIdAndDateBetween(store.getStoreId(), startPoint,endPoint);
 
         // 각 goodsName 별로 예약 횟수를 저장할 맵
         Map<String, Integer> reservationCountMap = new LinkedHashMap<>();
@@ -110,7 +110,7 @@ public class SalesService {
             throw new NoSuchElementException("해당 storeId가 없습니다.");
         }
 
-        List<Reservation> list = reservationRepository.findAllByStoreIdAndDateBetween(store, startPoint, endPoint);
+        List<Reservation> list = reservationRepository.findAllByStoreIdAndDateBetween(store.getStoreId(), startPoint, endPoint);
 
         // 각 flowerName 별로 예약 횟수를 저장할 맵
         Map<String, Integer> reservationCountMap = new HashMap<>();
@@ -149,7 +149,7 @@ public class SalesService {
             throw new NoSuchElementException("해당 storeId가 없습니다.");
         }
 
-        List<Reservation> list = reservationRepository.findAllByStoreIdAndDateBetween(store, startPoint,endPoint);
+        List<Reservation> list = reservationRepository.findAllByStoreIdAndDateBetween(store.getStoreId(), startPoint,endPoint);
 
         Integer totalPrice = 0;
 
