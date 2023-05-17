@@ -18,7 +18,7 @@ export default function SellerLogin() {
 
   function handleClick() {
     axios
-      .post("https://flowery.duckdns.org/api/users/login-seller", {
+      .post(`https://flowery.duckdns.org/api/users/token-seller`, {
         id: myId,
         pass: myPw,
       })
