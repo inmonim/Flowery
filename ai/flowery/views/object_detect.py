@@ -1,11 +1,11 @@
-from flask import Flask, Blueprint, request, Response, json, g
+from flask import Flask, Blueprint, request, Response, json
 import boto3
 from werkzeug.utils import secure_filename
 
 import random, os, uuid
 
-from flowery.module.model import get_result, make_poem, model_flower_label, flower_name_dict, flower_lang
-from flowery.models import Sales
+from flowery.module.model import get_result, make_poem, model_flower_label, flower_name_dict, flower_lang, flower_mean_id_dict, conn, text
+from flowery.models import Sales, Myflowers
 
 from flowery import db
 
@@ -69,18 +69,76 @@ def object_detect():
                             status=200)
         return response
     
+
+@bp.route('/landing/objectDetect', methods=['GET', 'POST'])
+def landing_object_detect():
+    if request.method == 'GET':
+        return 'POST 방식으로 접근하세용'
     
+    elif request.method == 'POST':
+        img = request.files['file']
+        filename = secure_filename(img.filename)
+        img_result = get_result(img)
+        
+        flower_result = {}
+        for pred in img_result.pred[0]:
+            flower_class = int(pred[5])
+            flower_result[model_flower_label[flower_class]] = flower_class
+        
+        flower_mean = {}
+        
+        for k, v in flower_result.items():
+            flower_mean[k] = flower_lang[v+1]
+        
+        img_result.files[0] = filename
+        
+        img_result.save(save_dir=f'./tmp_img/{filename[:-4]}/')
+        
+        uuid_name = uuid.uuid1()
+        
+        s3.upload_file(
+            Bucket = BUCKET_NAME,
+            Filename=f'./tmp_img/{filename[:-4]}/{filename}',
+            Key=f'object_detect/{uuid_name}.jpg'
+        )
+        os.remove(f'./tmp_img/{filename[:-4]}/{filename}')
+        os.rmdir(f'./tmp_img/{filename[:-4]}')
+
+        file_url = f"https://s3.{LOCAL}.amazonaws.com/{BUCKET_NAME}/object_detect/{uuid_name}.jpg"
+        
+        result = {'flower_object' : flower_mean,
+                  'file_url' : file_url,
+                  'message' : '꽃을 탐지했습니다.'}
+        
+        if int(img_result.pred[0].sum()) == 0:
+            result['message'] = '꽃이 탐지되지 않았습니다.'
+            return Response(json.dumps(result, ensure_ascii=False),
+                            headers=({'Access-Control-Allow-Origin': '*'}),
+                            content_type='application/json; charset=utf-8',
+                            status=200)
+        
+        response = Response(json.dumps(result, ensure_ascii=False),
+                            headers=({'Access-Control-Allow-Origin': '*'}),
+                            content_type='application/json; charset=utf-8',
+                            status=200)
+        return response
+
+
+
 @bp.route('/saveSales', methods=['POST'])
 def save_sales():
     if request.method == 'POST':
         
         res = request.get_json()
+        reservation_id = res['reservation_id']
+        
+        message_id = conn.execute(text(f"SELECT message_id FROM reservation WHERE reservation_id={reservation_id}")).one()[0]
         
         flower_id_list = []
         
         for k,v in res['flower_object'].items():
             sales = Sales()
-            sales.reservation_id = res['reservation_id']
+            sales.reservation_id = reservation_id
             flower_id = flower_name_dict[k]
             sales.flower_id = flower_id
             sales.count = v
@@ -89,6 +147,19 @@ def save_sales():
             db.session.commit()
             
             flower_id_list.append(flower_id)
+        
+        for i in flower_id_list:
+            
+            for mean_id in flower_mean_id_dict[i]:
+                
+                myflowers = Myflowers()
+                myflowers.message_id = message_id
+                myflowers.mean_id = mean_id
+                
+                db.session.add(myflowers)
+        
+        db.session.commit()
+        
         
         flower_lang_list = []
         if len(flower_id_list) >= 2:
@@ -100,8 +171,8 @@ def save_sales():
             flower_lang_list.extend(flower_lang[flower_id])
         
         f_lang_1, f_lang_2 = random.sample(flower_lang_list, 2)
-            
-        make_poem(f_lang_1, f_lang_2, res['reservation_id'], flower_id)
+        
+        make_poem(f_lang_1, f_lang_2, res['reservation_id'])
         
         response = Response(json.dumps({'message' : '입력 성공'}, ensure_ascii=False),
                             headers=({'Access-Control-Allow-Origin': '*'}),
