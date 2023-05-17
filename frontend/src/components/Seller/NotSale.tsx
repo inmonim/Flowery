@@ -15,6 +15,7 @@ interface Goods {
   goodsName: string;
   goodsPrice: number;
   goodsDetail: string;
+  samples: Array<string>;
 }
 
 export default function NotSale(props: Props) {
@@ -30,6 +31,7 @@ export default function NotSale(props: Props) {
   const [flowerData, setFlowerData] = useState<Array<object>>([]);
   const [message, setMessage] = useState<string>("");
   const [recogOK, setRecogOK] = useState<boolean>(false);
+  const [itemPictures, setItemPictures] = useState<Record<number, string>>({});
 
   function handleClick() {
     props.closeModal33();
@@ -290,7 +292,7 @@ export default function NotSale(props: Props) {
                     onClick={() => handleSelectItem(item)}
                   >
                     <div className={styles.picture}>
-                      <img src={flower} alt="flower" />
+                      <img src={item.samples[0] || flower} alt="flower" />
                     </div>
                     <div className={styles.description}>
                       <div className={styles.number}>{item.goodsName}</div>

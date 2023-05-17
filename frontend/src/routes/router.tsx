@@ -20,21 +20,28 @@ import SellerBookPage from "../pages/Seller/SellerBookPage/SellerBookPage";
 import RealeaseWrite from "../components/ReleasePage/ProtoPage/ReleaseWrite";
 import ReleaseExitPage from "../components/ReleasePage/Writing/ReleaseExitPage";
 import SellerManagePage from "../pages/Seller/SellerManagePage/SellerManage";
+import HowTo from "../components/User/UserMain/HowTo";
+import Try from "../components/User/UserMain/Try";
+import MyReservation from "../pages/MyReservation/MyReservation";
+import SellerAnalyzePage from "../pages/Seller/SellerAnalyzePage/SellerAnalyzePage";
 
 const router = createBrowserRouter([
+  { path: "/", element: <UserMainPage /> },
+  { path: "/howto", element: <HowTo /> },
+  { path: "/Try", element: <Try /> },
   {
     path: "/",
     element: <UserMainLayout />,
     // errorElement: <NotFound />, // 라우터에 없는 경로로 이동시 NotFound 컴포넌트 화면에 띄운다.
     children: [
-      { path: "/", element: <UserMainPage /> },
       { path: "/reservation", element: <Reservation /> },
       { path: "/test", element: <TestPage /> },
       { path: "/reservationoption", element: <ReservationOption /> },
       { path: "/mygarden", element: <MyGarden /> },
+      { path: "/myreservation", element: <MyReservation /> },
       { path: "/signin", element: <SignInPage /> },
       { path: "/signup", element: <SignUpPage /> },
-      { path: "/nonmember", element: <NonMemberPage /> },
+      // { path: "/nonmember", element: <NonMemberPage /> },
       { path: "/writing", element: <WritingPage /> },
       { path: "/reservationorder", element: <OrderPage /> },
     ],
@@ -48,7 +55,8 @@ const router = createBrowserRouter([
       { path: "/seller/login", element: <SellerLoginPage /> },
       { path: "/seller/proto", element: <ProtoPage /> },
       { path: "/seller/book", element: <SellerBookPage /> },
-      { path: "/seller/manage", element: <SellerManagePage />}
+      { path: "/seller/manage", element: <SellerManagePage /> },
+      { path: "/seller/analyze", element: <SellerAnalyzePage /> },
     ],
   },
   {

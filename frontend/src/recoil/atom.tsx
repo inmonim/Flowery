@@ -10,11 +10,41 @@ export const isLoggedIn = atom<boolean>({
   effects_UNSTABLE: [persistAtom],
 });
 
-// 인증된 전화번호
+// AccessToken
+export const AccessToken = atom<string>({
+  key: "AccessToken",
+  default: "",
+});
+
+// 유저 ID
+export const userIdState = atom<number>({
+  key: "userIdState",
+  default: 0,
+  effects_UNSTABLE: [persistAtom],
+});
+
+// 유저 전화번호
 export const phoneNumberState = atom<string>({
   key: "phoneNumberState",
   default: "0",
-  effects_UNSTABLE: [persistAtom],
+});
+
+// 가게 ID
+export const userStoreIdState = atom<number>({
+  key: "userStoreIdState",
+  default: 0,
+});
+
+// 카드 이미지
+export const cardImg = atom<string>({
+  key: "cardImgState",
+  default: "",
+});
+
+// 카드 이미지 파일
+export const cardImgFileState = atom<File | null>({
+  key: "cardImgFileState",
+  default: null,
 });
 
 // 카드 종류
@@ -84,33 +114,24 @@ export const totalTextState = atom<string>({
   effects_UNSTABLE: [persistAtom],
 });
 
-//예약 정보
-export const reservationInfo = atom({
-  key: "resrvationInfo",
-  default: {
-    userId: 1,
-    storeId: 1,
-    messageId: "1",
-    goodsName: "장미다발",
-    price: 10000,
-    demand: "여기 요청사항이 적혀진다 이말이야",
-    date: "2023-05-04T11:44:30.32795",
-    reservationName: "예약명",
-    phrase: "구매자 입력하는 짧은 카드 문구",
-  },
-});
-
 // 예약 최종 제출 모달 오픈 여부
 export const reservationConfirmState = atom<boolean>({
   key: "reservationConfirmState",
   default: false,
 });
 
+//가게 리스트 (창근)
+export const shopListState = atom({
+  key: "shopListState",
+  default: [],
+  effects_UNSTABLE: [persistAtom],
+});
 
-//가게 정보
-export const shopInfo = atom({
-  key: "shopInfo",
-  default: [{}],
+//가게 정보(창근)
+export const shopDataState = atom({
+  key: "shopDataState",
+  default: [],
+  effects_UNSTABLE: [persistAtom],
 });
 
 export const storeId = atom<number>({
@@ -125,4 +146,65 @@ export const storeName = atom<string>({
   effects_UNSTABLE: [persistAtom],
 });
 
+// 예약 시간 (창근)
+export const reservationTimeState = atom<string>({
+  key: "storeTimeState",
+  default: "",
+  effects_UNSTABLE: [persistAtom],
+});
 
+// 예약 날짜 (창근)
+export const reservatonDayState = atom<string>({
+  key: "storeDayState",
+  default: "",
+  effects_UNSTABLE: [persistAtom],
+});
+
+// 상품 선택 (창근)
+export const goodsState = atom({
+  key: "goodsState",
+  default: {
+    goodsDetail: "",
+    goodsId: 0,
+    goodsName: "",
+    goodsPrice: 0,
+    samples: [],
+    storeId: 0,
+  },
+  effects_UNSTABLE: [persistAtom],
+});
+
+export const tabState = atom<string>({
+  key: "tabState",
+  default: "all",
+  effects_UNSTABLE: [persistAtom],
+});
+
+export const storeInfo = atom<any>({
+  key: "storeInfo",
+  default: {
+    storeId: 0,
+    storeName: "",
+    storePhone: "",
+    permit: 0,
+    open: 0,
+    close: 0,
+    address: "",
+    info: "",
+    image: "",
+    profile: "",
+  },
+  effects_UNSTABLE: [persistAtom],
+});
+
+export const atk = atom<string>({
+  key: "atk",
+  default: "",
+  effects_UNSTABLE: [persistAtom],
+});
+
+export const rtk = atom<string>({
+  key: "rtk",
+  default: "",
+  effects_UNSTABLE: [persistAtom],
+});

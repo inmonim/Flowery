@@ -21,16 +21,19 @@ interface ReservationItem {
 }
 
 export default function WaitingApprove() {
-  const myStoreId = useRecoilValue(storeId)
+  const myStoreId = useRecoilValue(storeId);
   const [reservation, setReservation] = useState<ReservationItem[]>([]);
 
   useEffect(() => {
     const currentDate = new Date();
-const formattedDate = currentDate.toISOString().split('T')[0] + 'T00:00:00';
+    const formattedDate = currentDate.toISOString().split("T")[0] + "T00:00:00";
     axios
-      .post(`https://flowery.duckdns.org/api/reservation/day/?date=2023-05-14T00:00:00`, {
-        storeId: myStoreId,
-      })
+      .post(
+        `https://flowery.duckdns.org/api/reservation/day/?date=2023-05-14T00:00:00`,
+        {
+          storeId: myStoreId,
+        }
+      )
       .then((response) => {
         setReservation(response.data as ReservationItem[]);
       })

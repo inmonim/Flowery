@@ -1,15 +1,46 @@
-import { useEffect, useRef, useState } from "react";
+import axios from "axios";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { AccessToken, phoneNumberState, userIdState } from "../../recoil/atom";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { Cookies } from 'react-cookie';
 
 export default function SignInPage() {
-  //비회원 주문 Modal을 띄우기 위한 변수
-  const [showModal, setShowModal] = useState<string>("");
+  const [accessToken, setAccessToken] = useRecoilState<string>(AccessToken);
+  const setUserId = useSetRecoilState<number>(userIdState);
+  // const setPhoneNum = useSetRecoilState<string>(phoneNumberState);
+  const [id, setId] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
 
   const navigate = useNavigate();
 
   // 로그인 시도
   const checkSignIn = () => {
-    navigate("/reservation");
+    axios
+      .post("https://flowery.duckdns.org/api/users/login-user", {
+        id: id,
+        pass: password,
+      })
+      .then((response) => {
+        axios
+          .get("https://flowery.duckdns.org/api/users/login", {
+            params: { id: id },
+          })
+          .then((res) => {
+            const cookie = new Cookies()
+            setUserId(res.data.userId);
+            setAccessToken(response.data.atk);
+            cookie.set("refreshToken", response.data.rtk)
+          })
+          .catch((e) => alert("로그인에 실패했습니다"));
+      })
+      .catch((e) => alert("로그인에 실패했습니다"));
+  };
+
+  const pressEnter = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      checkSignIn();
+    }
   };
 
   // 회원가입
@@ -43,66 +74,67 @@ export default function SignInPage() {
                     </div>
 
                     <form>
-                      <div className="relative mb-4" data-te-input-wrapper-init>
+                      <div className="relative mb-4">
                         <input
                           type="text"
                           className="peer block min-h-[auto] w-full rounded-xl border-2 border-gray-200 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none focus:border-neutral-300"
-                          id="exampleFormControlInput1"
+                          id="idInput"
+                          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                            setId(e.target.value)
+                          }
+                          onKeyDown={pressEnter}
                           placeholder=" "
                         />
                         <label
-                          htmlFor="exampleFormControlInput1"
+                          htmlFor="idInput"
                           className="absolute cursor-text text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-primary peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
                         >
                           아이디
                         </label>
                       </div>
 
-                      <div className="relative mb-4" data-te-input-wrapper-init>
+                      <div className="relative mb-4">
                         <input
                           type="password"
-                          className="peer block min-h-[auto] w-full rounded-xl border-2 border-gray-200 px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0 focus:border-neutral-300"
-                          id="exampleFormControlInput11"
+                          className="peer block min-h-[auto] w-full rounded-xl border-2 border-gray-200 px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none  focus:border-neutral-300"
+                          id="passwordInput"
+                          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                            setPassword(e.target.value)
+                          }
+                          onKeyDown={pressEnter}
                           placeholder=" "
                         />
                         <label
-                          htmlFor="exampleFormControlInput11"
-                          className="absolute cursor-text text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-primary peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
+                          htmlFor="passwordInput"
+                          className="absolute cursor-text text-sm text-gray-500  duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-primary peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
                         >
                           비밀번호
                         </label>
                       </div>
 
                       <div className="mb-3 pb-1 pt-1 text-center">
-                        <button
-                          type="button"
-                          data-te-ripple-init
-                          data-te-ripple-color="light"
+                        <input
+                          defaultValue="로그인"
                           onClick={checkSignIn}
-                          className="mb-3 inline-block w-full rounded-xl px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal bg-red-300 text-white shadow-[0_4px_9px_-4px_rgba(0,0,0,0.2)] transition duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:outline-none focus:ring-0 active:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)]"
-                        >
-                          로그인
-                        </button>
+                          className="mb-3 inline-block w-full cursor-pointer rounded-xl px-6 pb-2 pt-2.5 text-xs text-center font-medium uppercase leading-normal bg-red-300 text-white shadow-[0_4px_9px_-4px_rgba(0,0,0,0.2)] transition duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:outline-none focus:ring-0 active:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)]"
+                        ></input>
                       </div>
-                      <div className="flex">
+                      {/* <div className="flex">
                         <p
                           onClick={goToNonmember}
                           className="text-blue-600 text-sm ml-auto mb-3 mr-2 cursor-pointer"
                         >
                           비회원 주문
                         </p>
-                      </div>
+                      </div> */}
                       <div className="flex items-center justify-between pb-6">
                         <div className="ml-auto">
-                          <button
+                          <input
                             type="button"
-                            data-te-ripple-init
-                            data-te-ripple-color="light"
+                            defaultValue="회원가입"
                             onClick={goToSignUp}
-                            className="inline-block items-center w-full rounded-2xl border-2 px-6 text-sm font-medium leading-normal transition duration-150 ease-in-out hover:border-danger-600 hover:bg-neutral-500 hover:bg-opacity-10 hover:text-danger-600 focus:border-danger-600 focus:text-danger-600 focus:outline-none focus:ring-0 active:border-danger-700 active:text-danger-700"
-                          >
-                            회원가입
-                          </button>
+                            className="inline-block items-center cursor-pointer w-full text-center rounded-2xl border-2 px-6 text-sm font-medium leading-normal transition duration-150 ease-in-out hover:border-danger-600 hover:bg-neutral-500 hover:bg-opacity-10 hover:text-danger-600 focus:border-danger-600 focus:text-danger-600 focus:outline-none focus:ring-0 active:border-danger-700 active:text-danger-700"
+                          ></input>
                         </div>
                       </div>
                     </form>
@@ -113,8 +145,7 @@ export default function SignInPage() {
                   src={require("../../assets/example1.jpg")}
                   alt=""
                   className="hidden items-center rounded-b-lg lg:w-6/12 lg:rounded-r-lg lg:rounded-bl-none lg:block"
-                >
-                </img>
+                ></img>
               </div>
             </div>
           </div>

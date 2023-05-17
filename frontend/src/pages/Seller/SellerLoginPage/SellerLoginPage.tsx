@@ -3,31 +3,34 @@ import styles from "./SellerLoginPage.module.scss";
 import InputForm from "../../../components/Common/InputForm";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
-import { storeId, storeName } from "../../../recoil/atom";
+import { storeId, storeName, storeInfo, atk, rtk } from "../../../recoil/atom";
 import axios from "axios";
 
 export default function SellerLogin() {
   const navigate = useNavigate();
   const [myStoreId, setStoreId] = useRecoilState<number>(storeId);
   const [myStoreName, setStoreName] = useRecoilState<string>(storeName);
+  const [myStoreInfo, setStoreInfo] = useRecoilState<object>(storeInfo);
+  const [myatk, setAtk] = useRecoilState<string>(atk);
+  const [myrtk, setRtk] = useRecoilState<string>(rtk);
   const [myId, setMyId] = useState<string>("");
   const [myPw, setMyPw] = useState<string>("");
 
   function handleClick() {
-    console.log(myId, myPw);
     axios
       .post("https://flowery.duckdns.org/api/users/login-seller", {
         id: myId,
         pass: myPw,
       })
       .then((response) => {
-        setStoreId(response.data.storeId);
+        setAtk(response.data.atk);
+        setRtk(response.data.rtk);
         axios
-          .post("https://flowery.duckdns.org/api/stores/info", {
-            storeId: response.data.storeId,
-          })
-          .then((responses) => {
-            setStoreName(responses.data.storeName);
+          .get(`https://flowery.duckdns.org/api/stores/storeInfo?id=${myId}`)
+          .then((res) => {
+            setStoreId(res.data.storeId);
+            setStoreInfo(res.data);
+            setStoreName(res.data.storeName);
             navigate("/seller");
           });
       })

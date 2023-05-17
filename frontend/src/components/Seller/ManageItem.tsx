@@ -12,18 +12,19 @@ interface GoodsItem {
   goodsName: string;
   goodsPrice: number;
   goodsDetail: string;
+  samples: Array<string>;
 }
 
 export default function ManageItem() {
   const [showModal, setShowModal] = useState(false);
-    function handleModal() {
+  function handleModal() {
     setShowModal(true); // 모달을 열기 위해 상태를 true로 변경합니다.
   }
 
   function closeModal() {
     setShowModal(false); // 모달을 닫기 위해 상태를 false로 변경합니다.
   }
-  const myStoreId = useRecoilValue(storeId)
+  const myStoreId = useRecoilValue(storeId);
   const [myItem, setMyItem] = useState<GoodsItem[]>([]);
 
   useEffect(() => {
@@ -32,6 +33,7 @@ export default function ManageItem() {
         storeId: myStoreId,
       })
       .then((response) => {
+        console.log(response.data);
         setMyItem(response.data as GoodsItem[]);
       })
       .catch((error) => {
@@ -43,10 +45,14 @@ export default function ManageItem() {
     <div className={styles.mainbox}>
       <div className={styles.secondbox}>
         <div className="flex justify-between w-[100%]">
-          <p className={styles.font1}>
-            상품 관리
-          </p>
-          <img src={additem} alt="" width="24" height="24" onClick={handleModal}/>
+          <p className={styles.font1}>상품 관리</p>
+          <img
+            src={additem}
+            alt=""
+            width="24"
+            height="24"
+            onClick={handleModal}
+          />
         </div>
         {myItem.map((item) => (
           <div key={item.goodsId}>
@@ -55,6 +61,7 @@ export default function ManageItem() {
               goodsName={item.goodsName}
               goodsPrice={item.goodsPrice}
               goodsDetail={item.goodsDetail}
+              samples={item.samples}
             />
           </div>
         ))}

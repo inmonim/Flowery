@@ -4,14 +4,50 @@ import LetterPaper from "../../components/User/Writing/LetterPaper";
 import LetterFont from "../../components/User/Writing/LetterFont";
 import LetterContent from "../../components/User/Writing/LetterContent";
 import VideoInput from "../../components/User/Writing/VideoInput";
-import PreviewModal from "../../components/User/Writing/PreviewModal";
 import CardPreview from "../../components/User/Writing/CardPreview";
+import PreviewModal from "../../components/User/Writing/PreviewModal";
+import SubmitModal from "../../components/User/Writing/SubmitModal";
+import Card0 from "../../assets/Card0.png";
+import Card1 from "../../assets/Card1.png";
+import Flowery from "../../assets/logo.png";
+import { useRecoilState, useRecoilValue } from "recoil";
+import {
+  cardContent,
+  cardImgFileState,
+  cardName,
+  cardState,
+  imageState,
+  isCardContent,
+  isCardName,
+  letterFontState,
+  letterPaperState,
+  totalTextState,
+  userIdState,
+  userStoreIdState,
+  videoState,
+} from "../../recoil/atom";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export default function WritingPage() {
   const [showModal, setShowModal] = useState<boolean>(false);
   const [showLetterInput, setShowLetterInput] = useState<boolean>(false);
   const [showImageInput, setShowImageInput] = useState<boolean>(false);
+  const [card, setCard] = useRecoilState<number>(cardState);
+  const name = useRecoilValue<string>(cardName);
+  const content = useRecoilValue<string>(cardContent);
+  const [isName, setIsName] = useRecoilState<boolean>(isCardName);
+  const [isContent, setIsContent] = useRecoilState<boolean>(isCardContent);
   const [isDrag, setIsDrag] = useState(false);
+  const letter = useRecoilValue<string>(totalTextState);
+  const letterFont = useRecoilValue<number>(letterFontState);
+  const letterPaper = useRecoilValue<number>(letterPaperState);
+  const image = useRecoilValue<Array<File>>(imageState);
+  const video = useRecoilValue<File | null>(videoState);
+  const [loading, setLoading] = useState(false);
+  const [reservationConfirm, setReservationConfirm] = useState<boolean>(false);
+
+  const navigate = useNavigate();
 
   const modalRef = useRef<HTMLDivElement>(null);
 
@@ -53,7 +89,17 @@ export default function WritingPage() {
 
   // 다음으로 버튼
   const submitButton = () => {
-    setShowModal(true);
+    window.scrollTo({ top: 0 });
+    if (name && content) {
+      setShowModal(true);
+    } else {
+      if (!name) {
+        setIsName(false);
+      }
+      if (!content) {
+        setIsContent(false);
+      }
+    }
   };
 
   return (
@@ -62,32 +108,59 @@ export default function WritingPage() {
       onDragOver={handleDragOverPage}
       onDragLeave={handleDropPage}
       onDrop={handleDropPage}
-      className={`${isDrag && "bg-gray-300"}`}
+      className={`${isDrag ? "bg-gray-300" : "bg-user_beige"}`}
       onDragStart={(event) => event.preventDefault()}
-      draggable="false"
+      // draggable="false"
     >
       {/* 미리보기 모달 */}
       {showModal && (
         <PreviewModal ref={modalRef} onClose={() => setShowModal(false)} />
       )}
 
+      {/* 제출하기 모달 */}
+      {reservationConfirm && (
+        <SubmitModal
+          onClose={() => setReservationConfirm(false)}
+          ref={modalRef}
+        />
+      )}
       <div>
         {/* 페이지 내용 */}
         <div>
+          <div className="flex">
+            <img src={Flowery} alt="" className="w-1/3 mx-auto p-7" />
+          </div>
+          <p className="mx-auto mt-1 text-sm text-center font-nasq font-bold">
+            카드 디자인을 선택해주세요.
+          </p>
           <h2>
-            <div className="p-20 mx-auto sm:w-[150px] md:w-[300px] lg:w-[450px]">
-              <CardPreview/>
+            <div className="flex justify-center ">
+              {[Card0, Card1].map((card, i: number) => (
+                <div key={i} className="">
+                  <img
+                    src={card}
+                    onClick={() => setCard(i)}
+                    className="w-[100px] p-4 cursor-pointer"
+                  />
+                </div>
+              ))}
+            </div>
+            <div className="p-16 pt-0 mx-auto sm:w-[150px] md:w-[300px] lg:w-[450px]">
+              <CardPreview />
             </div>
           </h2>
-          <h2>
+          <h2 className="">
+            <p className="pl-2 mb-4 text-[1rem] text-center font-nasq font-bold">
+              꽃을 받으실 분께 편지를 써보세요
+            </p>
             <button
               type="button"
               onClick={() => {
                 setShowLetterInput(!showLetterInput);
               }}
-              className="flex items-center justify-between w-full p-5 font-medium text-left text-gray-500 border border-b-0 border-gray-200 rounded-t-xl focus:ring-4 focus:ring-gray-200 hover:bg-gray-100"
+              className="flex items-center justify-between w-full p-5 font-medium text-left shadow-lg text-gray-500 border border-b-0 border-gray-200 rounded-t-xl focus:ring-4 focus:ring-gray-200 hover:bg-gray-100"
             >
-              <span className="flex items-center">
+              <span className="flex items-center font-nasq font-bold">
                 {showLetterInput ? (
                   <img
                     src={require("../../assets/letters/letter_open.png")}
@@ -124,21 +197,25 @@ export default function WritingPage() {
           {showLetterInput && (
             <div>
               <LetterPaper />
-              <div className="flex flex-col justify-center items-center border border-gray-200 md:flex-row ">
+              <div className="">
                 <LetterContent />
               </div>
               <LetterFont />
+              <hr className="" />
             </div>
           )}
           <h2>
+            <p className="mx-auto p-4 text-[1rem] text-center font-nasq font-bold">
+              사진이나 영상도 보낼 수 있습니다
+            </p>
             <button
               type="button"
               onClick={() => {
                 setShowImageInput(!showImageInput);
               }}
-              className="flex items-center justify-between w-full p-5 font-medium text-left text-gray-500 border border-b border-gray-200 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"
+              className="flex items-center justify-between w-full p-5 font-medium text-left shadow-lg bg-white text-gray-500 border border-b border-gray-200 focus:ring-4 focus:ring-gray-200 hover:bg-gray-100"
             >
-              <span className="flex items-center">
+              <span className="flex items-center ">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="48"
@@ -202,38 +279,42 @@ export default function WritingPage() {
               <div className="space-y-4">
                 <div className="card m-2  border-gray-400 rounded-lg transform transition-all duration-200">
                   <div className="m-3">
+                    {/* 이미지 업로드 */}
+                    <div className="mb-2">
+                      <ImageInput />
+                    </div>
                     {/* 영상 업로드 */}
                     <div className="mb-7">
                       <VideoInput />
                     </div>
-                    {/* 이미지 업로드 */}
-                    <div className="mb-7">
-                      <ImageInput />
-                    </div>
                   </div>
                 </div>
               </div>
+              <hr />
             </div>
           )}
         </div>
 
         {/* 페이지 이동 */}
         <div className="relative h-[15vh]">
-          <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2">
+          <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
             <div className="flex">
-              {/* <div className="cursor-pointer font-bold py-2 px-4 mx-4 rounded-full bg-[#eed3b5] hover:bg-[#eed3b5]">
+              <div className="cursor-pointer font-bold font-nasq border bg-user_green text-white py-2 pb-2 px-4 mx-4 rounded-full ">
                 <input
                   type="button"
-                  value="건너뛰기"
+                  value="미리보기"
                   onClick={submitButton}
                   className="cursor-pointer"
-                />
-              </div> */}
-              <div className="cursor-pointer font-bold py-2 px-4 mx-4 rounded-full bg-[#eed3b5] hover:bg-[#eed3b5]">
+                ></input>
+              </div>
+              <div className="cursor-pointer font-bold bg-user_green text-white font-nasq border py-2 pb-2 px-4 mx-4 rounded-full">
                 <input
                   type="button"
-                  value="다음으로"
-                  onClick={submitButton}
+                  value="제출하기"
+                  onClick={() => {
+                    window.scrollTo({ top: 0 });
+                    setReservationConfirm(true);
+                  }}
                   className="cursor-pointer"
                 ></input>
               </div>
