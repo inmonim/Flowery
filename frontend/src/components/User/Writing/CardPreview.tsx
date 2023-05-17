@@ -219,7 +219,7 @@ export default function CardPreview() {
 
       {cardDisplayed && (
         <div id="card">
-          <p className="mx-auto mt-2 text-xs text-center font-nasq">
+          <p className="mx-auto mt-2 text-xs text-center font-nasq font-bold">
             선물 주는 분의 이름을 적어주세요.
           </p>
           <div className="flex justify-center w-full">
@@ -245,7 +245,7 @@ export default function CardPreview() {
               </span>
             )}
           </div>
-          <p className="mx-auto mt-2 text-xs text-center  font-nasq">
+          <p className="mx-auto mt-2 text-xs text-center  font-nasq font-bold">
             한 줄로 마음을 전하세요.
           </p>
           <div className="flex justify-center">

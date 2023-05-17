@@ -162,7 +162,7 @@ const SubmitModal = React.forwardRef<HTMLDivElement, any>((props, ref) => {
                   }
                 }}
                 className={`inline-flex justify-center rounded-md px-3 py-2 mb-4 text-sm font-semibold shadow-sm z-[67] sm:ml-3 sm:w-auto ${
-                  loading ? "bg-gray-300" : "bg-[#eed3b5]"
+                  loading ? "bg-gray-300" : "bg-user_green text-white"
                 }`}
               >
                 제출하기

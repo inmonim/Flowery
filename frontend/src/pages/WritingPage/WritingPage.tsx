@@ -45,13 +45,11 @@ export default function WritingPage() {
   const image = useRecoilValue<Array<File>>(imageState);
   const video = useRecoilValue<File | null>(videoState);
   const [loading, setLoading] = useState(false);
-  const [reservationConfirm, setReservationConfirm] =
-  useState<boolean>(false);
+  const [reservationConfirm, setReservationConfirm] = useState<boolean>(false);
 
   const navigate = useNavigate();
 
   const modalRef = useRef<HTMLDivElement>(null);
-
 
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
@@ -110,7 +108,7 @@ export default function WritingPage() {
       onDragOver={handleDragOverPage}
       onDragLeave={handleDropPage}
       onDrop={handleDropPage}
-      className={`${isDrag ? "bg-gray-300" : 'bg-user_beige'}`}
+      className={`${isDrag ? "bg-gray-300" : "bg-user_beige"}`}
       onDragStart={(event) => event.preventDefault()}
       // draggable="false"
     >
@@ -119,20 +117,20 @@ export default function WritingPage() {
         <PreviewModal ref={modalRef} onClose={() => setShowModal(false)} />
       )}
 
-        {/* 제출하기 모달 */}
-        {reservationConfirm && (
-            <SubmitModal
-              onClose={() => setReservationConfirm(false)}
-              ref={modalRef} 
-            />
-          )}
+      {/* 제출하기 모달 */}
+      {reservationConfirm && (
+        <SubmitModal
+          onClose={() => setReservationConfirm(false)}
+          ref={modalRef}
+        />
+      )}
       <div>
         {/* 페이지 내용 */}
         <div>
           <div className="flex">
             <img src={Flowery} alt="" className="w-1/3 mx-auto p-7" />
           </div>
-          <p className="mx-auto mt-1 text-sm text-center font-nasq">
+          <p className="mx-auto mt-1 text-sm text-center font-nasq font-bold">
             카드 디자인을 선택해주세요.
           </p>
           <h2>
@@ -151,8 +149,8 @@ export default function WritingPage() {
               <CardPreview />
             </div>
           </h2>
-          <h2>
-            <p className="mx-auto mb-4 text-xs text-center font-nasq">
+          <h2 className="">
+            <p className="pl-2 mb-4 text-[1rem] text-center font-nasq font-bold">
               꽃을 받으실 분께 편지를 써보세요
             </p>
             <button
@@ -162,7 +160,7 @@ export default function WritingPage() {
               }}
               className="flex items-center justify-between w-full p-5 font-medium text-left shadow-lg text-gray-500 border border-b-0 border-gray-200 rounded-t-xl focus:ring-4 focus:ring-gray-200 hover:bg-gray-100"
             >
-              <span className="flex items-center">
+              <span className="flex items-center font-nasq font-bold">
                 {showLetterInput ? (
                   <img
                     src={require("../../assets/letters/letter_open.png")}
@@ -207,7 +205,7 @@ export default function WritingPage() {
             </div>
           )}
           <h2>
-            <p className="mx-auto p-4 text-xs text-center font-nasq">
+            <p className="mx-auto p-4 text-[1rem] text-center font-nasq font-bold">
               사진이나 영상도 보낼 수 있습니다
             </p>
             <button
@@ -217,7 +215,7 @@ export default function WritingPage() {
               }}
               className="flex items-center justify-between w-full p-5 font-medium text-left shadow-lg bg-white text-gray-500 border border-b border-gray-200 focus:ring-4 focus:ring-gray-200 hover:bg-gray-100"
             >
-              <span className="flex items-center">
+              <span className="flex items-center ">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="48"
@@ -301,7 +299,7 @@ export default function WritingPage() {
         <div className="relative h-[15vh]">
           <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
             <div className="flex">
-              <div className="cursor-pointer font-bold font-nasq border bg-[#eed3b5] py-2 pb-2 px-4 mx-4 rounded-full ">
+              <div className="cursor-pointer font-bold font-nasq border bg-user_green text-white py-2 pb-2 px-4 mx-4 rounded-full ">
                 <input
                   type="button"
                   value="미리보기"
@@ -309,7 +307,7 @@ export default function WritingPage() {
                   className="cursor-pointer"
                 ></input>
               </div>
-              <div className="cursor-pointer font-bold bg-[#eed3b5] font-nasq border py-2 pb-2 px-4 mx-4 rounded-full">
+              <div className="cursor-pointer font-bold bg-user_green text-white font-nasq border py-2 pb-2 px-4 mx-4 rounded-full">
                 <input
                   type="button"
                   value="제출하기"
