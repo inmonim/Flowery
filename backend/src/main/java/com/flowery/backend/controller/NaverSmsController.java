@@ -121,11 +121,10 @@ public class NaverSmsController {
     public ResponseEntity<Boolean> checkOne(@RequestParam String phone, Integer code){
 
         try {
-            String phoneValue = phone.replaceAll("-", "");
-            if(!redisDao.hasKey(phoneValue)) return new ResponseEntity<>(false, HttpStatus.ACCEPTED);
+            if(!redisDao.hasKey(phone)) return new ResponseEntity<>(false, HttpStatus.ACCEPTED);
 
-            if (redisDao.getValue(phoneValue).equals(String.valueOf(code))){
-                System.out.println(phoneValue);
+            if (redisDao.getValue(phone).equals(String.valueOf(code))){
+                System.out.println(phone);
                 return new ResponseEntity<>(true, HttpStatus.ACCEPTED);
             }
             else return new ResponseEntity<>(false, HttpStatus.ACCEPTED);
