@@ -3,8 +3,6 @@ import styles from "./PrintCard.module.scss";
 import camera from "../../assets/add_logo.png";
 import { saveAs } from "file-saver";
 import axios from "axios";
-import cardframe from "../../assets/card1234.png";
-import cardframe2 from "../../assets/card123.png";
 import { useRecoilValue } from "recoil";
 import { storeId } from "../../recoil/atom";
 import flower from "../../assets/example1.jpg";
@@ -12,8 +10,11 @@ interface PrintCardProps {
   closeModal: () => void;
   reservationId: number;
   printed: number;
+  goodsName: string;
+  price: number;
   reservationName: string;
   phrase: string;
+  renderedCard: string;
 }
 
 interface Goods {
@@ -88,11 +89,11 @@ export default function PrintCard(props: PrintCardProps) {
       }
     };
     setStepOne(true);
+    setCheckGoods(true);
     input.click();
   }
 
   function handleCameraClick2(reservationId: number) {
-    console.log(photoUrl1, flowerData.length, message);
     const input = document.createElement("input");
     input.type = "file";
     input.accept = "image/*";
@@ -115,44 +116,16 @@ export default function PrintCard(props: PrintCardProps) {
     input.click();
   }
 
-  function drawMultilineText(
-    ctx: CanvasRenderingContext2D,
-    text: string,
-    x: number,
-    y: number,
-    maxWidth: number,
-    lineHeight: number
-  ) {
-    const words = text.split(" ");
-    let line = "";
-    let posY = y;
-    for (let i = 0; i < words.length; i++) {
-      const testLine = line + words[i] + " ";
-      const metrics = ctx.measureText(testLine);
-      const testWidth = metrics.width;
-      if (testWidth > maxWidth && i > 0) {
-        ctx.fillText(line, x, posY);
-        line = words[i] + " ";
-        posY += lineHeight;
-      } else {
-        line = testLine;
-      }
-    }
-    ctx.fillText(line, x, posY);
-  }
-
   function mergeImages(
     image1Url: string,
     image2Base64: string,
-    text: string,
-    text2: string,
-    text3: string,
     outputFileName: string
   ) {
     const canvas = document.createElement("canvas");
     const ctx = canvas.getContext("2d");
 
     const image1 = new Image();
+    image1.setAttribute("crossorigin", "anonymous");
     image1.onload = () => {
       canvas.width = image1.width;
       canvas.height = image1.height;
@@ -162,6 +135,7 @@ export default function PrintCard(props: PrintCardProps) {
         ctx.drawImage(image1, 0, 0);
 
         const image2 = new Image();
+        image2.setAttribute("crossorigin", "anonymous");
         image2.onload = () => {
           // draw image2
           ctx.drawImage(
@@ -175,64 +149,30 @@ export default function PrintCard(props: PrintCardProps) {
             500,
             500
           );
-          ctx.font = "120px KCC";
-          ctx.fillStyle = "#000000";
-          ctx.textAlign = "center";
-          ctx.textBaseline = "bottom"; // 텍스트 기준선을 아래쪽으로 설정
-          drawMultilineText(
-            ctx,
-            text,
-            canvas.width / 2,
-            canvas.height * 0.555,
-            1500,
-            180
-          );
-
-          // draw additional text
-          ctx.font = "100px KCC";
-          ctx.fillStyle = "#000000";
-          ctx.textAlign = "center";
-          drawMultilineText(
-            ctx,
-            text2,
-            canvas.width / 2,
-            canvas.height * 0.46,
-            900,
-            100
-          );
-
-          const { width: width2, actualBoundingBoxDescent: descent2 } =
-            ctx.measureText(text2);
-          ctx.beginPath();
-          ctx.strokeStyle = "#000000";
-          ctx.lineWidth = 8;
-          ctx.moveTo(
-            canvas.width / 2 - width2 / 2 - 20,
-            canvas.height * 0.46 + descent2 + 45
-          );
-          ctx.lineTo(
-            canvas.width / 2 + width2 / 2,
-            canvas.height * 0.46 + descent2 + 45
-          );
-          ctx.stroke();
-
-          ctx.font = "100px KCC";
-          ctx.fillStyle = "#000000";
-          ctx.textAlign = "center";
-          drawMultilineText(
-            ctx,
-            text3,
-            canvas.width / 2,
-            canvas.height * 0.76,
-            900,
-            100
-          );
-
           // convert canvas to image file and save
           canvas.toBlob(
             (blob) => {
               if (blob) {
                 saveAs(blob, outputFileName);
+                const file = new File([blob], outputFileName, {
+                  type: "image/jpeg",
+                });
+                const formData3 = new FormData();
+                formData3.append("pictures", file);
+                axios
+                  .post(`https://flowery.duckdns.org/api/storage`, formData3)
+                  .then((response) => {
+                    console.log(response.data[0]);
+                    axios.post(
+                      `https://flowery.duckdns.org/api/reservation/fix`,
+                      {
+                        reservationId: props.reservationId,
+                        goodsName: selectedItem?.goodsName,
+                        price: selectedItem?.goodsPrice,
+                        renderedCard: response.data[0],
+                      }
+                    );
+                  });
               } else {
                 console.error("Failed to convert canvas to blob");
               }
@@ -255,23 +195,16 @@ export default function PrintCard(props: PrintCardProps) {
         });
       }
       if (inputValue !== "") {
-        console.log("나는 기타");
         axios.post("https://flowery.duckdns.org/api/reservation/fix", {
           reservationId: props.reservationId,
-          goodsName: selectedItem?.goodsName,
+          goodsName: selectedItem ? selectedItem.goodsName : props.goodsName,
           price: inputValue,
         });
       } else {
-        console.log("나는 선택한거");
-        console.log(
-          props.reservationId,
-          selectedItem?.goodsName,
-          selectedItem?.goodsPrice
-        );
         axios.post("https://flowery.duckdns.org/api/reservation/fix", {
           reservationId: props.reservationId,
-          goodsName: selectedItem?.goodsName,
-          price: selectedItem?.goodsPrice,
+          goodsName: selectedItem ? selectedItem.goodsName : props.goodsName,
+          price: selectedItem ? selectedItem.goodsPrice : props.price,
         });
       }
       fetch("https://flowery.duckdns.org/api/messages/flower-picture", {
@@ -289,25 +222,8 @@ export default function PrintCard(props: PrintCardProps) {
           });
         })
         .then((response) => {
-          if (response.data.card === 0) {
-            return mergeImages(
-              cardframe,
-              response.data.qrBase64,
-              `${props.phrase}`,
-              `From. ${props.reservationName}`,
-              `kkotdeul`,
-              "test1"
-            );
-          } else if (response.data.card === 1) {
-            return mergeImages(
-              cardframe2,
-              response.data.qrBase64,
-              `${props.phrase}`,
-              `From. ${props.reservationName}`,
-              `kkotdeul`,
-              "test1"
-            );
-          }
+          console.log(response);
+          mergeImages(props.renderedCard, response.data.qrBase64, "test1");
         })
         .then(() => {
           alert("저장이 완료되었습니다");
@@ -329,7 +245,6 @@ export default function PrintCard(props: PrintCardProps) {
   }
 
   function confirm(datas: any) {
-    console.log(props.reservationId);
     const tmp: { [key: string]: number } = {};
     datas.forEach((item: any) => {
       tmp[item.flower] = item.count;
@@ -365,7 +280,7 @@ export default function PrintCard(props: PrintCardProps) {
     <div className={styles.modal}>
       <div className={styles.fontcheck}>.</div>
       <div className={styles.modalContent}>
-        {!checkGoods ? (
+        {!checkGoods && props.goodsName === "기타" && props.price === 0 ? (
           <>
             <div className={styles.stepone}>
               <p>1. 판매 상품을 선택해주세요</p>
@@ -400,7 +315,8 @@ export default function PrintCard(props: PrintCardProps) {
           </>
         ) : (
           <>
-            {selectedItem && selectedItem.goodsName === "기타" ? (
+            {(selectedItem && selectedItem.goodsName === "기타") ||
+            (props.goodsName === "기타" && props.price !== 0) ? (
               <>
                 <div className="text-xl font-semibold mt-7 left">
                   기타(현장판매)
@@ -426,9 +342,11 @@ export default function PrintCard(props: PrintCardProps) {
             ) : (
               <div className={styles.stepone}>
                 <div className="text-xl font-semibold">
-                  {selectedItem?.goodsName}
+                  {selectedItem ? selectedItem.goodsName : props.goodsName}
                 </div>
-                <div className={styles.time}>₩ {selectedItem?.goodsPrice}</div>
+                <div className={styles.time}>
+                  ₩ {selectedItem ? selectedItem.goodsPrice : props.price}
+                </div>
               </div>
             )}
             <div className={styles.stepone}>
