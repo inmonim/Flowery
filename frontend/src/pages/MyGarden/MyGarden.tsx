@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import GardenCard from "../../components/User/MyGarden/GardenCard";
 import { useRecoilValue } from "recoil";
 import { userIdState } from "../../recoil/atom";
-
 interface messageType {
   gardenId: number;
   messageId: string;
@@ -31,9 +30,9 @@ export default function MyGarden() {
       await axios
         .post("https://flowery.duckdns.org/api/myGarden/get", { userId: 1 })
         .then((response) => {
-          console.log(response, userId) 
+          console.log(response, userId);
           setMessages(response.data);
-        })
+        });
     };
     getMessages();
   }, []);
@@ -58,8 +57,8 @@ export default function MyGarden() {
       {cards.length > 0 ? (
         <div className="grid grid-cols-2 md:grid-cols-3">
           {cards.map((card: cardType, idx: number) => (
-              <GardenCard key={idx} card={card} />
-            ))}
+            <GardenCard key={idx} card={card} />
+          ))}
         </div>
       ) : (
         <div className="flex flex-col justify-center items-center">
