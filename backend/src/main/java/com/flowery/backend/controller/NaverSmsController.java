@@ -67,7 +67,7 @@ public class NaverSmsController {
 
             SmsMessageDto smsMessageDto = new SmsMessageDto();
 
-            smsMessageDto.setTo("01053270972");
+            smsMessageDto.setTo(phone);
             smsMessageDto.setContent(content);
 
             naverSmsService.sendSms(smsMessageDto);
@@ -148,7 +148,7 @@ public class NaverSmsController {
 
             SmsMessageDto smsMessageDto = new SmsMessageDto();
 
-            smsMessageDto.setTo("01053270972");
+            smsMessageDto.setTo(phone);
             smsMessageDto.setContent(content);
 
             naverSmsService.sendSms(smsMessageDto);
@@ -173,7 +173,7 @@ public class NaverSmsController {
 
             SmsMessageDto smsMessageDto = new SmsMessageDto();
 
-            smsMessageDto.setTo("01053270972");
+            smsMessageDto.setTo(phone);
             smsMessageDto.setContent(content);
 
             naverSmsService.sendSms(smsMessageDto);
