@@ -111,7 +111,7 @@ openai.organization = org_id
 openai.api_key = api_key
 
 
-def make_poem(keyword1, keyword2, reservation_id, flower_id, conn=conn):
+def make_poem(keyword1, keyword2, reservation_id, conn=conn):
     
     k = keyword2[-1]
     
@@ -127,38 +127,32 @@ def make_poem(keyword1, keyword2, reservation_id, flower_id, conn=conn):
     poem = completion.choices[0].message.content
     
     message_id = conn.execute(text(f"SELECT message_id FROM reservation WHERE reservation_id = {reservation_id}")).one()[0]
-
-    
-    conn.execute(text(f"INSERT INTO poems (flower_id, poem) VALUES ({reservation_id}, '{poem}')"))
-
-    conn.commit()
-    
-    poem_id = conn.execute(text(f'SELECT poem_id FROM poems ORDER BY poem_id DESC LIMIT 1')).one()[0]
  
-    conn.execute(text(f"UPDATE messages SET poem_id = {poem_id} WHERE message_id = '{message_id}'"))
-    
-    flower_ids = conn.execute(text(f"SELECT mean_id FROM meaning WHERE flower_id = {flower_id}")).all()
-    
-    mean_id = random.choice(flower_ids)[0]
-    
-    conn.execute(text(f"UPDATE messages SET mean_id = {mean_id} WHERE message_id = '{message_id}'"))
+    conn.execute(text(f"UPDATE messages SET poem = '{poem}' WHERE message_id = '{message_id}'"))
     
     conn.commit()
     
 def get_flower_lang(conn=conn):
     
     flower_lang_dict = {}
+    flower_mean_id_dict = {}
     
     results = conn.execute(text("SELECT * FROM meaning"))
     
-    for _, flower_id, flower_lang in results:
+    for mean_id, flower_id, flower_lang in results:
         
         if flower_lang_dict.get(flower_id):
             flower_lang_dict[flower_id].append(flower_lang)
         
         else:
             flower_lang_dict[flower_id] = [flower_lang]
+        
+        if flower_mean_id_dict.get(flower_id):
+            flower_mean_id_dict[flower_id].append(mean_id)
+        else:
+            flower_mean_id_dict[flower_id] = [mean_id]
+            
     
-    return flower_lang_dict
+    return (flower_lang_dict, flower_mean_id_dict)
 
-flower_lang = get_flower_lang()
+flower_lang, flower_mean_id_dict = get_flower_lang()

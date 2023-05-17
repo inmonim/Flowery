@@ -4,7 +4,7 @@ from werkzeug.utils import secure_filename
 
 import random, os, uuid
 
-from flowery.module.model import get_result, make_poem, model_flower_label, flower_name_dict, flower_lang, conn, text
+from flowery.module.model import get_result, make_poem, model_flower_label, flower_name_dict, flower_lang, flower_mean_id_dict, conn, text
 from flowery.models import Sales, Myflowers
 
 from flowery import db
@@ -71,7 +71,7 @@ def object_detect():
     
 
 @bp.route('/landing/objectDetect', methods=['GET', 'POST'])
-def object_detect():
+def landing_object_detect():
     if request.method == 'GET':
         return 'POST 방식으로 접근하세용'
     
@@ -88,7 +88,7 @@ def object_detect():
         flower_mean = {}
         
         for k, v in flower_result.items():
-            flower_mean[k] = flower_lang[v]
+            flower_mean[k] = flower_lang[v+1]
         
         img_result.files[0] = filename
         
@@ -132,7 +132,7 @@ def save_sales():
         res = request.get_json()
         reservation_id = res['reservation_id']
         
-        message_id = conn.execute(text(f"SELECT message_id FROM reservation WHERE reservation_id={reservation_id}"))
+        message_id = conn.execute(text(f"SELECT message_id FROM reservation WHERE reservation_id={reservation_id}")).one()[0]
         
         flower_id_list = []
         
@@ -149,12 +149,16 @@ def save_sales():
             flower_id_list.append(flower_id)
         
         for i in flower_id_list:
-            myflowers = Myflowers()
-            myflowers.message_id = message_id
-            myflowers.mean_id = i
             
-            db.session.add(myflowers)
-            db.session.commit()
+            for mean_id in flower_mean_id_dict[i]:
+                
+                myflowers = Myflowers()
+                myflowers.message_id = message_id
+                myflowers.mean_id = mean_id
+                
+                db.session.add(myflowers)
+        
+        db.session.commit()
         
         
         flower_lang_list = []
@@ -168,7 +172,7 @@ def save_sales():
         
         f_lang_1, f_lang_2 = random.sample(flower_lang_list, 2)
         
-        make_poem(f_lang_1, f_lang_2, res['reservation_id'], flower_id)
+        make_poem(f_lang_1, f_lang_2, res['reservation_id'])
         
         response = Response(json.dumps({'message' : '입력 성공'}, ensure_ascii=False),
                             headers=({'Access-Control-Allow-Origin': '*'}),
