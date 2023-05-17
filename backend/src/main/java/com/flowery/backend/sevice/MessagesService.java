@@ -7,10 +7,7 @@ import com.flowery.backend.repository.*;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class MessagesService {
@@ -59,13 +56,17 @@ public class MessagesService {
         messagesDto.setPictures(result);
 
         // 마이플라워를 거쳐 꽃말들을 가져오는 코드
-        List<String> meansList = new ArrayList<>();
+        Map<String, List<String>> flowerAndMeaning = new HashMap<>();
         List<Myflowers> myflowersList = myflowersRepository.findAllByMessageId(messages);
         for(Myflowers myflowers : myflowersList){
             Meaning meaning = myflowers.getMeanId();
-            meansList.add(meaning.getMean());
+            Flowers flower = meaning.getFlowerId();
+            List<String> meanings = flowerAndMeaning.getOrDefault(flower.getFlowerName(), new ArrayList<>());
+            meanings.add(meaning.getMean());
+            flowerAndMeaning.put(flower.getFlowerName(), meanings);
         }
-        messagesDto.setMeans(meansList);
+        System.out.println(flowerAndMeaning);
+        messagesDto.setFlowerAndMeaning(flowerAndMeaning);
 
         return messagesDto;
     }
