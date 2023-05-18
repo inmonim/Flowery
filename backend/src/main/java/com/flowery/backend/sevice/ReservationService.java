@@ -46,6 +46,8 @@ public class ReservationService {
     }
 
 
+
+
     public class ReservationNotFoundException extends RuntimeException {
         public ReservationNotFoundException(String message) {
             super(message);
@@ -317,6 +319,71 @@ public class ReservationService {
         reservationRepository.save(reservation);
         return true;
     }
+
+    // 현장 구매
+    public int makeReservationOnSite(ReservationDto reservationDto) throws Exception {
+        Reservation reservation = new Reservation();
+        Users users = usersRepository.findById(reservationDto.getUserId()).get();
+        reservation.setUserId(users);
+
+        // store id를 가져와 goods에 해당 제품이 있는지 확인해준다.
+        // 해당 제품이 없고 해당 제품과 요청 가격이 같지 않다면 return false를 해준다.
+        Stores stores = storeRepository.findById(reservationDto.getStoreId()).get();
+
+        // 가게가 아직 승인되지 않은 가게라면 무조건 false 처리
+        if(stores.getPermit()==0){
+            throw new NotAuthorizedException("승인되지 않은 가게입니다.");
+        }
+
+        List<Goods> goodsList = goodsRepository.findGoodsByStoreId(stores);
+
+        boolean check = true;
+
+        // 올바른 가격과 상품이 선택되었는지 확인함
+        for(int i=0; i<goodsList.size(); i++){
+            if(goodsList.get(i).getGoodsName().equals(reservationDto.getGoodsName()) &&
+                    goodsList.get(i).getGoodsPrice() == reservationDto.getPrice()){
+                check = false;
+
+                // 샘플 이미지 가져오는 코드
+                Goods goods = goodsList.get(i);
+                List<Samples> samplesList = samplesRepository.findAllByGoodsId(goods);
+                if (samplesList.size() > 0) {
+                    String image = samplesList.get(0).getPicture();
+                    reservation.setImage(image);
+                }
+            }
+        }
+
+        // 만약 아니라면 false 리턴
+        if(check){
+            throw new NoSuchElementException("해당 상품이 없습니다.");
+        }
+
+        Messages messages = null;
+
+        reservation.setStoreId(stores);
+        reservation.setMessageId(messages);
+
+        reservation.setGoodsName(reservationDto.getGoodsName());
+        reservation.setPrice(reservationDto.getPrice());
+
+        reservation.setDemand(null);
+        reservation.setDate(reservationDto.getDate());
+        reservation.setPrinted(0);
+        // 곧바로 승인되버리게 변경
+        reservation.setPermission(1);
+
+        reservation.setReservationName("현장 판매");
+        reservation.setPhrase(null);
+//        reservation.setImage(stores.getImage());
+        reservation.setCard(0);
+        reservation.setRenderedCard(null);
+
+        reservationRepository.save(reservation);
+        return reservation.getReservationId();
+    }
+
 
 //    카드 프린트
     public CardDto getcardInfo (Integer reservationId) throws Exception {

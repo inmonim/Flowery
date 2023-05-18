@@ -161,8 +161,23 @@ public class ReservationController {
         }catch (Exception e){
             return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
         }
-
     }
+
+    @PostMapping("/make/on-site")
+    public ResponseEntity<Integer> createReservationOnSite (@RequestBody ReservationDto reservationDto){
+        LOGGER.info("createReservationOnSite가 호출되었습니다.");
+
+        try{
+            Integer result = reservationService.makeReservationOnSite(reservationDto);
+
+            return new ResponseEntity<>(result, HttpStatus.ACCEPTED);
+        }catch (Exception e){
+            LOGGER.error("현장 예약 생성에 실패했습니다.", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .build();
+        }
+    }
+
 
     @GetMapping("/card")
     public ResponseEntity<CardDto> getCardInfo (@RequestParam Integer reservationId) {
