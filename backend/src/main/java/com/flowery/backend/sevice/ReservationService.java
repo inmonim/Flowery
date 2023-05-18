@@ -251,7 +251,7 @@ public class ReservationService {
 
     }
 
-    public boolean makeReservation(ReservationDto reservationDto) throws Exception {
+    public int makeReservation(ReservationDto reservationDto) throws Exception {
 
         Reservation reservation = new Reservation();
         Users users = usersRepository.findById(reservationDto.getUserId()).get();
@@ -263,7 +263,7 @@ public class ReservationService {
 
         // 가게가 아직 승인되지 않은 가게라면 무조건 false 처리
         if(stores.getPermit()==0){
-            return false;
+            throw new NotAuthorizedException("승인되지 않은 가게입니다.");
         }
 
         List<Goods> goodsList = goodsRepository.findGoodsByStoreId(stores);
@@ -288,7 +288,7 @@ public class ReservationService {
 
         // 만약 아니라면 false 리턴
         if(check){
-            return false;
+            throw new NoSuchElementException("해당 상품이 없습니다.");
         }
 
         Messages messages = null;
@@ -317,7 +317,7 @@ public class ReservationService {
         reservation.setRenderedCard(reservationDto.getRenderedCard());
 
         reservationRepository.save(reservation);
-        return true;
+        return reservation.getReservationId();
     }
 
     // 현장 구매

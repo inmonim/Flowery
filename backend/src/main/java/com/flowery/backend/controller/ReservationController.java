@@ -149,17 +149,17 @@ public class ReservationController {
     }
 
     @PostMapping("/make")
-    public ResponseEntity<Boolean> createReservation (@RequestBody ReservationDto reservationDto){
+    public ResponseEntity<Integer> createReservation (@RequestBody ReservationDto reservationDto){
         LOGGER.info("createReservation이 호출되었습니다.");
 
         try{
-            boolean result = reservationService.makeReservation(reservationDto);
+            Integer result = reservationService.makeReservation(reservationDto);
 
-            if(result) return new ResponseEntity<>(true, HttpStatus.ACCEPTED);
-            return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
-
+            return new ResponseEntity<>(result, HttpStatus.ACCEPTED);
         }catch (Exception e){
-            return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
+            LOGGER.error("현장 예약 생성에 실패했습니다.", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .build();
         }
     }
 
