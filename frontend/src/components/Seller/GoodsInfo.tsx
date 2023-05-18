@@ -31,12 +31,14 @@ export default function GoodsInfo(props: GoodsItem) {
     <div className={styles.maincontainer}>
       <div className={styles.itemcontainer}>
         <div className={styles.items}>
-          <div className={styles.picture}>
-            <img src={images} alt="flower" />
-          </div>
-          <div className={styles.description}>
-            <div className={styles.number}>{props.goodsName}</div>
-            <div className={styles.time}>₩ {props.goodsPrice}</div>
+          <div className="flex gap-3">
+            <div className={styles.picture}>
+              <img src={images} alt="flower" />
+            </div>
+            <div className={styles.description}>
+              <div className={styles.number}>{props.goodsName}</div>
+              <div className={styles.time}>₩ {props.goodsPrice}</div>
+            </div>
           </div>
           <div className={styles.imgbtn}>
             <img

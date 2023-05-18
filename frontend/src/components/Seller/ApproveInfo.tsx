@@ -47,7 +47,6 @@ export default function ApproveInfo(props: ItemInfoProps) {
               {props.phone ? props.phone : props.reservationName}
             </div>
             <div className={styles.time}>{formattedDate}</div>
-            <div className={styles.time}>{props.demand}</div>
           </div>
         </div>
         <div className={styles.printing} onClick={handleModal}>
@@ -60,7 +59,7 @@ export default function ApproveInfo(props: ItemInfoProps) {
           goodsName={props.goodsName}
           reservationId={props.reservationId}
           reservationName={props.reservationName}
-          demand={props.goodsName}
+          demand={props.demand}
           date={props.date}
           phone={props.phone}
           image={props.image}

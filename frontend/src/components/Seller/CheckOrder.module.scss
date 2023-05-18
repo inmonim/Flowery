@@ -52,8 +52,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 24px;
-  gap: 16px;
+  padding: 1.5rem;
+  gap: 1rem;
 
   width: 90%;
   height: fit-content;
@@ -72,8 +72,8 @@
   font-family: "Inter";
   font-style: normal;
   font-weight: 500;
-  font-size: 18px;
-  line-height: 28px;
+  font-size: 1.125rem;
+  line-height: 1.75rem;
   /* identical to box height, or 140% */
 
   letter-spacing: -0.02em;
@@ -88,8 +88,8 @@
   font-family: "Inter";
   font-style: normal;
   font-weight: 400;
-  font-size: 11px;
-  line-height: 20px;
+  font-size: 0.6875rem;
+  line-height: 1.25rem;
   /* identical to box height, or 154% */
 
   text-align: center;
@@ -113,11 +113,11 @@ button {
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  padding: 12px 18px;
+  padding: 0.75rem 1.125rem;
   gap: 6px;
 
   width: 90%;
-  height: 48px;
+  height: 3rem;
 
   /* Base/White */
 
@@ -133,8 +133,8 @@ button {
   font-family: "Inter";
   font-style: normal;
   font-weight: 600;
-  font-size: 15px;
-  line-height: 22px;
+  font-size: 0.9375rem;
+  line-height: 1.375rem;
   /* identical to box height, or 147% */
 
   /* Gray/700 */

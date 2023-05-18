@@ -14,6 +14,7 @@ interface ItemInfoProps {
   image: string;
   renderedCard: string;
   phone: string;
+  demand: string;
 }
 
 export default function ItemInfo(props: ItemInfoProps) {
@@ -80,6 +81,7 @@ export default function ItemInfo(props: ItemInfoProps) {
           reservationName={props.reservationName}
           phrase={props.phrase}
           renderedCard={props.renderedCard}
+          demand={props.demand}
         />
       )}
       {props.printed === 1 && showModal && (

@@ -86,7 +86,10 @@ export default function SetHoliday() {
           ))}
         </div>
         <div className="w-[100%] flex justify-center"></div>
-        <button className="w-[100%]" onClick={handleChange}>
+        <button
+          className="w-[100%] bg-blue-500 hover:bg-blue-700 text-white"
+          onClick={handleChange}
+        >
           저장
         </button>
       </div>

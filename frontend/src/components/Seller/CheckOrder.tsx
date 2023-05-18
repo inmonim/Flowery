@@ -51,23 +51,9 @@ export default function CheckOrder(props: PrintCardProps) {
         }
       )
       .then(() => {
-        axios
-          .post(
-            "https://flowery.duckdns.org/api/sms/reservation",
-            {
-              reservationId: id,
-            },
-            {
-              headers: {
-                Authorization: `bearer ${myatk}`,
-              },
-            }
-          )
-          .then(() => {
-            alert("예약이 수락되었습니다.");
-            window.location.reload();
-            props.closeModal();
-          });
+        alert("예약이 수락되었습니다.");
+        window.location.reload();
+        props.closeModal();
       });
   }
   function isDenied() {
@@ -130,7 +116,11 @@ export default function CheckOrder(props: PrintCardProps) {
                   ? `전화번호: ${props.phone}`
                   : `예약명: ${props.reservationName}`}
               </p>
-              <p className={styles.stephint}>요청사항: {props.demand}</p>
+              {props.demand && props.demand !== "없음" ? (
+                <p className={styles.stephint}>요청사항: {props.demand}</p>
+              ) : (
+                ""
+              )}
             </div>
           </div>
         ) : (
