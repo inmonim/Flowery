@@ -18,7 +18,7 @@ s3 = boto3.client('s3',
 BUCKET_NAME = 's3.bucket.flowery.youngil'
 LOCAL = 'ap-northeast-2'
 
-@bp.route('/objectDetect', methods=['GET'])
+@bp.route('/objectDetect', methods=['POST'])
 def object_detect():
     
     if request.method == 'POST':
