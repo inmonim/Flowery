@@ -55,9 +55,6 @@ public class UsersService {
                 redisDao.setBlackList(redisDao.getValue(atxPreFix+usersDto.getId()), "accessToken", 10);
             }
 
-            redisDao.deleteKey(atxPreFix+usersDto.getId());
-            redisDao.deleteKey(rtxPreFix+usersDto.getId());
-            redisDao.deleteKey(rolePreFix+usersDto.getId());
             return usersDto;
         }
     }
