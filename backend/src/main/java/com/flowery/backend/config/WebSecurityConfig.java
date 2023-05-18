@@ -55,20 +55,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/users/sign-up", "/users/login-user", "/users/login-seller", "/token/rtk",
+                .antMatchers("/users/sign-up", "/users/token-user", "/users/token-seller", "/token/rtk",
                         "/users/logout", "/sms/*", "/users/register", "/users/id-check", "reservation/make/on-site"
                         ).permitAll()
                 .antMatchers("/test3/hi-user", "/stores", "/storage", "/user/reservation"
-                ,"/messages/card", "/messages/get-card", "/myGarden/*", "/myGarden", "").hasRole("USER")
+                ,"/messages/card", "/messages/get-card", "/myGarden/*", "/myGarden").hasRole("USER")
 
-                .antMatchers("/users/login","/users/change-pass", "/flask/*", "").hasAnyRole("USER","SELLER")
+                .antMatchers("/token/reissue,","/users/login","/users/change-pass", "/flask/*").hasAnyRole("USER","SELLER")
                 .antMatchers("/reservation/make", "/reservation/store", "/reservation/day","/reservation/fix"
                 ,"/reservation/deny","/reservation/accept","/stores/*", "/goods", "/goods/*" , "/stores/storeInfo",
                         "/reservation/card", "/sales/*").hasRole("SELLER")
                 .anyRequest().authenticated()
                 .and()
-                .addFilterBefore(new JwtAuthenticationFilter(jwtProvider, usersDetailService),
-                        UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(new JwtAuthenticationFilter(jwtProvider, usersDetailService), UsernamePasswordAuthenticationFilter.class)
+                .httpBasic();;
     }
 
     @Bean
