@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useRecoilState } from "recoil";
 import { cardImg } from "../../../recoil/atom";
-import "./GardenCard.css";
 import GardenCardModal from "./GardenCardModal";
 
 interface cardType {
@@ -45,13 +44,16 @@ const GardenCard = (props: { card: cardType }) => {
   };
 
   return (
-    <div className="">
+    <div className="flex-col">
       {selectCard && <GardenCardModal ref={modalRef} card={props.card} />}
-      <div className="p-4">
+      <div className="h-full p-4">
         <img
           src={props.card.flowerPicture}
-          onClick={() => setSelectCard(true)}
-          className="h-auto max-w-full rounded-lg"
+          onClick={() => {
+            setSelectCard(true);
+            window.scrollTo({ top: 0 });
+          }}
+          className=" max-w-full rounded-lg"
         />
       </div>
     </div>

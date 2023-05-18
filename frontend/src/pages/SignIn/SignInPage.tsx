@@ -1,15 +1,20 @@
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { AccessToken, phoneNumberState, userIdState } from "../../recoil/atom";
+import {
+  atk,
+  phoneNumberState,
+  userIdState,
+  userNameState,
+} from "../../recoil/atom";
 import { useRecoilState, useSetRecoilState } from "recoil";
-import { Cookies } from 'react-cookie';
+import { Cookies } from "react-cookie";
 
 export default function SignInPage() {
-  const [accessToken, setAccessToken] = useRecoilState<string>(AccessToken);
+  const [accessToken, setAccessToken] = useRecoilState<string>(atk);
   const setUserId = useSetRecoilState<number>(userIdState);
   // const setPhoneNum = useSetRecoilState<string>(phoneNumberState);
-  const [id, setId] = useState<string>("");
+  const [id, setId] = useRecoilState<string>(userNameState);
   const [password, setPassword] = useState<string>("");
 
   const navigate = useNavigate();
@@ -17,7 +22,7 @@ export default function SignInPage() {
   // 로그인 시도
   const checkSignIn = () => {
     axios
-      .post("https://flowery.duckdns.org/api/users/login-user", {
+      .post("https://flowery.duckdns.org/api/users/token-user", {
         id: id,
         pass: password,
       })
@@ -27,10 +32,11 @@ export default function SignInPage() {
             params: { id: id },
           })
           .then((res) => {
-            const cookie = new Cookies()
-            setUserId(res.data.userId);
+            const cookie = new Cookies();
+            setUserId(res.data.usersId);
             setAccessToken(response.data.atk);
-            cookie.set("refreshToken", response.data.rtk)
+            cookie.set("refreshToken", response.data.rtk);
+            navigate("/reservation");
           })
           .catch((e) => alert("로그인에 실패했습니다"));
       })

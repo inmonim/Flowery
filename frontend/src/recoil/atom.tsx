@@ -10,16 +10,17 @@ export const isLoggedIn = atom<boolean>({
   effects_UNSTABLE: [persistAtom],
 });
 
-// AccessToken
-export const AccessToken = atom<string>({
-  key: "AccessToken",
-  default: "",
-});
-
 // 유저 ID
 export const userIdState = atom<number>({
   key: "userIdState",
   default: 0,
+  effects_UNSTABLE: [persistAtom],
+});
+
+// 유저 아이디
+export const userNameState = atom<string>({
+  key: "userNameState",
+  default: "",
   effects_UNSTABLE: [persistAtom],
 });
 

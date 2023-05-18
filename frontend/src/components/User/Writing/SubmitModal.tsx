@@ -98,14 +98,14 @@ const SubmitModal = React.forwardRef<HTMLDivElement, any>((props, ref) => {
       reservationName: name,
       phrase: content,
       card: card,
-      renderedCard: cardUrl,
+      renderedCard: cardUrl[0],
     };
     console.log(jsonData);
     axios
       .post("https://flowery.duckdns.org/api/reservation/make", jsonData)
       .then((response) => {
         alert("제출이 완료됐습니다!");
-        localStorage.clear();
+        navigate("/");
       })
       .catch((error) => {
         alert("다시 시도해주세요!");
