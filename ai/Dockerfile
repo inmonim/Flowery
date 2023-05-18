@@ -33,6 +33,7 @@ RUN pip3 install matplotlib
 RUN pip3 install seaborn
 RUN pip3 install openai
 RUN pip3 install boto3
+RUN pip3 install ultralytics
 
 
 # set environment variables
