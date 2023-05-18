@@ -156,7 +156,7 @@ export default function CardPreview() {
       "card"
     );
   }, [card, content, name]);
-  console.log(shopData);
+
   // 카드 종류 고르기
   const cardFrame = () => {
     if (card === 0) {

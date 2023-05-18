@@ -31,13 +31,14 @@ interface cardType {
 export default function MyGarden() {
   const [messages, setMessages] = useState<Array<messageType>>([]);
   const [cards, setCards] = useState<Array<cardType>>([]);
+  const [card, setCard] = useState<cardType>();
   const [isExpand, setIsExpand] = useState<boolean>(false);
   const userId = useRecoilValue<number>(userIdState);
   useEffect(() => {
     const getMessages = () => {
       api
         .post("https://flowery.duckdns.org/api/myGarden/get", {
-          userId: userId,
+          userId: 15,
         })
         .then((response) => {
           response.data.map((message: messageType, idx: number) =>
@@ -75,6 +76,7 @@ export default function MyGarden() {
   };
 
   const settings = {
+    infinite: false,
     slidesToShow: 1,
     slidesToScroll: 1,
     arrows: true,
@@ -107,6 +109,7 @@ export default function MyGarden() {
       setSelectCard(false);
     }
   };
+
   return (
     <div className="bg-user_beige min-h-screen">
       <div className="relative justify-end flex">
@@ -122,14 +125,15 @@ export default function MyGarden() {
         {cards.length > 0 ? (
           isExpand ? (
             <div className="h-screen">
-              {selectCard && <GardenCardModal ref={modalRef} />}
+              {selectCard && <GardenCardModal card={card} ref={modalRef} />}
               <Slider {...settings} className="h-screen">
                 {cards.map((card: cardType, idx: number) => (
                   <div key={idx} className="flex-col">
                     <div className="h-full p-4">
                       <img
-                        src={card.pictures[0]}
+                        src={card.flowerPicture}
                         onClick={() => {
+                          setCard(card);
                           setSelectCard(true);
                           window.scrollTo({ top: 0 });
                         }}
