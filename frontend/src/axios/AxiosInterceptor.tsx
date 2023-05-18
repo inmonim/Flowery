@@ -14,8 +14,6 @@ const api = axios.create({
 api.interceptors.request.use(
   function (config: any) {
     const token = sessionStorage.getItem("atk");
-    console.log("토큰", token);
-    console.log(config, "config");
     //요청시 AccessToken 계속 보내주기
     if (!token) {
       config.headers.accessToken = null;
@@ -45,7 +43,6 @@ api.interceptors.response.use(
     return response;
   },
   async (error) => {
-    console.log("에러", error);
     const {
       config,
       response: { status },
@@ -53,7 +50,6 @@ api.interceptors.response.use(
     const [userId, setUserId] = useRecoilState<number>(userIdState);
     const setAccessToken = useSetRecoilState<string>(atk);
 
-    console.log("status", status);
     // 401에러 (토큰이 유효하지 않을 때)
     if (status === 401) {
       {
@@ -73,7 +69,7 @@ api.interceptors.response.use(
         //     { headers: { authorization: `Bearer ${refreshToken}` } }
         //   );
         const { data } = await axios.get(
-          "https://flowery.duckdns.org/api//token/rtk",
+          "https://flowery.duckdns.org/api/token/rtk",
           { params: { userId: userId } }
         );
         const { atk: newAccessToken } = data;
