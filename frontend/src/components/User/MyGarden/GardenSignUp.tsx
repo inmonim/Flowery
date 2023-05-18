@@ -5,14 +5,13 @@ import {
   phoneNumberState,
   userIdState,
   userNameState,
-} from "../../recoil/atom";
+} from "../../../recoil/atom";
 import { useSetRecoilState } from "recoil";
 import { Cookies } from "react-cookie";
 import axios from "axios";
 import { useRecoilState } from "recoil";
-import api from "../../axios/AxiosInterceptor";
 
-export default function SignUpPage() {
+export default function GardenSignUp() {
   const [isVerify, setIsVerify] = useState<boolean>(false);
   const [inputPhone, setInputPhone] = useState<string>("");
   const [dashPhoneNum, setDashPhoneNum] = useState<string>("");
@@ -179,7 +178,7 @@ export default function SignUpPage() {
             pass: password,
           })
           .then((response) => {
-            api
+            axios
               .get("https://flowery.duckdns.org/api/users/login", {
                 params: { id: id },
               })

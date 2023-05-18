@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import styles from "./CheckOrder.module.scss";
-import example1 from "../../assets/example1.jpg";
 import closebtn from "../../assets/close_btn.png";
 import axios from "axios";
 import Reason from "./RejectReason";
@@ -14,6 +13,8 @@ interface PrintCardProps {
   reservationName: string;
   demand: string;
   date: string;
+  phone: string;
+  image: string;
 }
 
 export default function CheckOrder(props: PrintCardProps) {
@@ -30,20 +31,43 @@ export default function CheckOrder(props: PrintCardProps) {
   const formattedDate = `${year}/${month}/${day} ${hours}:${minutes}`;
   const [isDeny, setIsDeny] = useState<number>(0);
   const [reason, setReason] = useState("");
+  const myatk = sessionStorage.getItem("atk");
 
   const handleReasonChange = (newReason: string) => {
     setReason(newReason);
   };
   function handleAccept(id: number) {
     axios
-      .post("https://flowery.duckdns.org/api/reservation/accept", {
-        reservationId: id,
-        storeId: myStoreId,
-      })
+      .post(
+        "https://flowery.duckdns.org/api/reservation/accept",
+        {
+          reservationId: id,
+          storeId: myStoreId,
+        },
+        {
+          headers: {
+            Authorization: `bearer ${myatk}`,
+          },
+        }
+      )
       .then(() => {
-        alert("예약이 수락되었습니다.");
-        window.location.reload();
-        props.closeModal();
+        axios
+          .post(
+            "https://flowery.duckdns.org/api/sms/reservation",
+            {
+              reservationId: id,
+            },
+            {
+              headers: {
+                Authorization: `bearer ${myatk}`,
+              },
+            }
+          )
+          .then(() => {
+            alert("예약이 수락되었습니다.");
+            window.location.reload();
+            props.closeModal();
+          });
       });
   }
   function isDenied() {
@@ -60,12 +84,32 @@ export default function CheckOrder(props: PrintCardProps) {
         {
           reservationId: id,
           storeId: myStoreId,
+        },
+        {
+          headers: {
+            Authorization: `bearer ${myatk}`,
+          },
         }
       )
       .then(() => {
-        alert("예약이 거절되었습니다.");
-        window.location.reload();
-        props.closeModal();
+        axios
+          .post(
+            "https://flowery.duckdns.org/api/sms/deny",
+            {
+              reservationId: id,
+              denyReason: reason,
+            },
+            {
+              headers: {
+                Authorization: `bearer ${myatk}`,
+              },
+            }
+          )
+          .then(() => {
+            alert("예약이 거절되었습니다.");
+            window.location.reload();
+            props.closeModal();
+          });
       });
   }
 
@@ -77,12 +121,14 @@ export default function CheckOrder(props: PrintCardProps) {
         </div>
         {isDeny === 0 ? (
           <div className={styles.stepone}>
-            <img src={example1} alt=""></img>
+            <img src={props.image} alt=""></img>
             <div>
               <p className={styles.steptitle}>{props.goodsName}</p>
               <p className={styles.stephint}>예약일시: {formattedDate}</p>
               <p className={styles.stephint}>
-                전화번호: {props.reservationName}
+                {props.phone
+                  ? `전화번호: ${props.phone}`
+                  : `예약명: ${props.reservationName}`}
               </p>
               <p className={styles.stephint}>요청사항: {props.demand}</p>
             </div>

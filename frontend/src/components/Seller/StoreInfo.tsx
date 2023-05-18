@@ -12,16 +12,24 @@ export default function StoreInfo() {
   const [myPhone, setMyPhone] = useState<string>(myStoreInfo.storePhone);
   const [mygreet, setMyGreet] = useState<string>(myStoreInfo.info);
   const [info, setInfo] = useRecoilState(storeInfo);
-
+  const myatk = sessionStorage.getItem("atk");
   function handleClick() {
     axios
-      .patch(`https://flowery.duckdns.org/api/stores/${myStoreId}`, {
-        storePhone: myPhone,
-        info: mygreet,
-        open: myStoreInfo.open,
-        close: myStoreInfo.close,
-        image: myStoreInfo.image,
-      })
+      .patch(
+        `https://flowery.duckdns.org/api/stores/${myStoreId}`,
+        {
+          storePhone: myPhone,
+          info: mygreet,
+          open: myStoreInfo.open,
+          close: myStoreInfo.close,
+          image: myStoreInfo.image,
+        },
+        {
+          headers: {
+            Authorization: `bearer ${myatk}`,
+          },
+        }
+      )
       .then(() => {
         setInfo({ ...info, storePhone: myPhone, info: mygreet });
         alert("매장 정보 변경이 완료되었습니다");

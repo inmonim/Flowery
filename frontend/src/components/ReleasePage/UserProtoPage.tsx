@@ -6,7 +6,7 @@ import ProtoIntro from "./ProtoPage/ProtoIntro";
 import Memories from "./ProtoPage/Memories";
 import More from "./ProtoPage/More";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import styles from "./UserProtoPage.module.scss";
 import mobile from "../../assets/pleasemobile.png";
 import { useRecoilState } from "recoil";
@@ -21,6 +21,9 @@ export default function UserProtoPage({ isQR }: { isQR: boolean }) {
   const [isVideo, setIsVideo] = useState(false);
   const [flowerData, setFlowerData] = useState<string>("");
   const [userId, setUserId] = useRecoilState<number>(userIdState);
+  const loggedIn = !!sessionStorage.getItem("atk");
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function getData() {
@@ -79,17 +82,21 @@ export default function UserProtoPage({ isQR }: { isQR: boolean }) {
   // 마이가든에 저장
   const saveMyGarden = () => {
     // 로그인 여부 확인
-    axios
-      .post("https://flowery.duckdns.org/api/myGarden", {
-        messageId: messageId,
-        userId: userId,
-      })
-      .then((response) => {
-        alert("저장되었습니다!");
-      })
-      .catch((error) => {
-        alert("다시 시도해주세요");
-      });
+    if (!loggedIn) {
+      navigate("/signin?messageId=" + messageId);
+    } else {
+      axios
+        .post("https://flowery.duckdns.org/api/myGarden", {
+          messageId: messageId,
+          userId: userId,
+        })
+        .then((response) => {
+          alert("저장되었습니다!");
+        })
+        .catch((error) => {
+          alert("다시 시도해주세요");
+        });
+    }
   };
 
   return (

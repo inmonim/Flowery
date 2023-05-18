@@ -13,6 +13,7 @@ interface ItemInfoProps {
   permission: number;
   image: string;
   renderedCard: string;
+  phone: string;
 }
 
 export default function ItemInfo(props: ItemInfoProps) {
@@ -44,7 +45,9 @@ export default function ItemInfo(props: ItemInfoProps) {
             <img src={props.image} alt="flower" />
           </div>
           <div className={styles.description}>
-            <div className={styles.number}>{props.reservationName}</div>
+            <div className={styles.number}>
+              {props.phone ? props.phone : props.reservationName}
+            </div>
             <div className={styles.time}>{formattedDate}</div>
           </div>
         </div>

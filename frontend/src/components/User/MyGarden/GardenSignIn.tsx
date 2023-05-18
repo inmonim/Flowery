@@ -1,22 +1,22 @@
 import axios from "axios";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   atk,
   phoneNumberState,
   userIdState,
   userNameState,
-} from "../../recoil/atom";
+} from "../../../recoil/atom";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { Cookies } from "react-cookie";
-import api from "../../axios/AxiosInterceptor";
 
-export default function SignInPage() {
+export default function GardenSignIn() {
   const [accessToken, setAccessToken] = useRecoilState<string>(atk);
   const setUserId = useSetRecoilState<number>(userIdState);
   // const setPhoneNum = useSetRecoilState<string>(phoneNumberState);
   const [id, setId] = useRecoilState<string>(userNameState);
   const [password, setPassword] = useState<string>("");
+  const { messageId } = useParams<{ messageId: string }>();
 
   const navigate = useNavigate();
 
@@ -28,17 +28,17 @@ export default function SignInPage() {
         pass: password,
       })
       .then((response) => {
-        const cookie = new Cookies();
-        setAccessToken(response.data.atk);
-        sessionStorage.setItem("atk", response.data.atk);
-        cookie.set("refreshToken", response.data.rtk);
-        api
+        axios
           .get("https://flowery.duckdns.org/api/users/login", {
             params: { id: id },
           })
           .then((res) => {
+            const cookie = new Cookies();
             setUserId(res.data.usersId);
-            navigate("/reservation");
+            setAccessToken(response.data.atk);
+            sessionStorage.setItem("atk", response.data.atk)
+            cookie.set("refreshToken", response.data.rtk);
+            navigate(`/userproto/${messageId}`);
           })
           .catch((e) => alert("로그인에 실패했습니다"));
       })
@@ -53,12 +53,7 @@ export default function SignInPage() {
 
   // 회원가입
   const goToSignUp = () => {
-    navigate("/signup");
-  };
-
-  // 비회원주문
-  const goToNonmember = () => {
-    navigate("/nonmember");
+    navigate("/mygardensignup");
   };
 
   return (
@@ -73,7 +68,7 @@ export default function SignInPage() {
                     <div className="text-center">
                       <img
                         className="mx-auto w-48"
-                        src={require("../../assets/logo.png")}
+                        src={require("../../../assets/logo.png")}
                         alt="logo"
                       />
                       <h4 className="mb-12 mt-1 pb-1 text-xl font-semibold">
@@ -150,7 +145,7 @@ export default function SignInPage() {
                 </div>
 
                 <img
-                  src={require("../../assets/example1.jpg")}
+                  src={require("../../../assets/example1.jpg")}
                   alt=""
                   className="hidden items-center rounded-b-lg lg:w-6/12 lg:rounded-r-lg lg:rounded-bl-none lg:block"
                 ></img>
