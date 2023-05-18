@@ -31,9 +31,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
-                .authorizeRequests()
-                .antMatchers("/**").permitAll()
+//        http
+//                .authorizeRequests()
+//                .antMatchers("/**").permitAll()
 //                .antMatchers("/messages/**").permitAll()
 //                .antMatchers("/myGarden/**").permitAll()
 //                .antMatchers("/reservation/**").permitAll()
@@ -41,34 +41,34 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .antMatchers("/sales/**").permitAll()
 //                .antMatchers("/stores/**").permitAll()
 //                .antMatchers("/users/**").permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .formLogin()
-                .and()
-                .csrf().disable()
-                .httpBasic();
-
-//        http.cors().and().csrf().disable()
-//                .exceptionHandling()
-//                .authenticationEntryPoint(customAuthenticationEntryPoint)
-//                .and()
-//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-//                .and()
-//                .authorizeRequests()
-//                .antMatchers("/users/sign-up", "/users/login-user", "/users/login-seller", "/token/rtk",
-//                        "/users/logout", "/sms/*", "/users/register", "/users/id-check", "reservation/make/on-site"
-//                ).permitAll()
-//                .antMatchers("/test3/hi-user", "/stores", "/storage", "/user/reservation"
-//                        ,"/messages/card", "/messages/get-card", "/myGarden/*", "/myGarden", "").hasRole("USER")
-//
-//                .antMatchers("/users/login","/users/change-pass", "/flask/*", "").hasAnyRole("USER","SELLER")
-//                .antMatchers("/reservation/make", "/reservation/store", "/reservation/day","/reservation/fix"
-//                        ,"/reservation/deny","/reservation/accept","/stores/*", "/goods", "/goods/*" , "/stores/storeInfo",
-//                        "/reservation/card", "/sales/*").hasRole("SELLER")
 //                .anyRequest().authenticated()
 //                .and()
-//                .addFilterBefore(new JwtAuthenticationFilter(jwtProvider, usersDetailService),
-//                        UsernamePasswordAuthenticationFilter.class);
+//                .formLogin()
+//                .and()
+//                .csrf().disable()
+//                .httpBasic();
+
+        http.cors().and().csrf().disable()
+                .exceptionHandling()
+                .authenticationEntryPoint(customAuthenticationEntryPoint)
+                .and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .authorizeRequests()
+                .antMatchers("/users/sign-up", "/users/login-user", "/users/login-seller", "/token/rtk",
+                        "/users/logout", "/sms/*", "/users/register", "/users/id-check", "reservation/make/on-site"
+                        ).permitAll()
+                .antMatchers("/test3/hi-user", "/stores", "/storage", "/user/reservation"
+                ,"/messages/card", "/messages/get-card", "/myGarden/*", "/myGarden", "").hasRole("USER")
+
+                .antMatchers("/users/login","/users/change-pass", "/flask/*", "").hasAnyRole("USER","SELLER")
+                .antMatchers("/reservation/make", "/reservation/store", "/reservation/day","/reservation/fix"
+                ,"/reservation/deny","/reservation/accept","/stores/*", "/goods", "/goods/*" , "/stores/storeInfo",
+                        "/reservation/card", "/sales/*").hasRole("SELLER")
+                .anyRequest().authenticated()
+                .and()
+                .addFilterBefore(new JwtAuthenticationFilter(jwtProvider, usersDetailService),
+                        UsernamePasswordAuthenticationFilter.class);
     }
 
     @Bean
