@@ -5,10 +5,10 @@ import { useRecoilValue, useRecoilState } from "recoil";
 import { storeId, storeInfo } from "../../recoil/atom";
 
 export default function ChangeTime() {
-  const [value1, setValue1] = useState(0);
-  const [value2, setValue2] = useState(0);
-  const myStoreId = useRecoilValue(storeId);
   const myStoreInfo = useRecoilValue(storeInfo);
+  const [value1, setValue1] = useState(myStoreInfo.open);
+  const [value2, setValue2] = useState(myStoreInfo.close);
+  const myStoreId = useRecoilValue(storeId);
   const [info, setInfo] = useRecoilState(storeInfo);
   const myatk = sessionStorage.getItem("atk");
   function convertToTime(value: any) {
@@ -29,18 +29,20 @@ export default function ChangeTime() {
 
   const handleInputChange1 = (event: any) => {
     const timeValue = event.target.value;
+    console.log(timeValue);
     const convertedValue = convertTimeToNumber(timeValue);
     setValue1(convertedValue);
   };
 
   const handleInputChange2 = (event: any) => {
     const timeValue = event.target.value;
+    console.log(timeValue);
     const convertedValue = convertTimeToNumber(timeValue);
     setValue2(convertedValue);
   };
 
   const applyChanges = () => {
-    if (value1 > 0 && value2 > 0 && value1 < value2) {
+    if (value1 >= 0 && value2 > 0 && value1 < value2) {
       axios
         .patch(
           `https://flowery.duckdns.org/api/stores/${myStoreId}`,
@@ -71,14 +73,17 @@ export default function ChangeTime() {
         <div className="flex justify-between w-[100%]">
           <p className={styles.font1}>영업시간 설정</p>
         </div>
-        <div className="w-[100%] flex justify-between"></div>
-        <div className="w-[100%] flex justify-center">
+        <div className="w-[100%]">
           <div>
+            시작시간 :{" "}
             <input
               type="time"
               onChange={handleInputChange1}
               defaultValue={convertToTime(myStoreInfo.open)}
             ></input>
+          </div>
+          <div>
+            종료시간 :{" "}
             <input
               type="time"
               onChange={handleInputChange2}
@@ -86,7 +91,10 @@ export default function ChangeTime() {
             ></input>
           </div>
         </div>
-        <button className="w-[100%]" onClick={applyChanges}>
+        <button
+          className="w-[100%] bg-blue-500 hover:bg-blue-700 text-white"
+          onClick={applyChanges}
+        >
           저장
         </button>
       </div>

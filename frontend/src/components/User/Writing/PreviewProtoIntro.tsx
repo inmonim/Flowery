@@ -26,34 +26,58 @@ export default function PreviewProtoIntro() {
   };
 
   return (
-    <div className="flex flex-col relative items-center">
-      {/* <div className="absoulte justify-center items-center  w-[100%]">
+    <div className="flex flex-col relative items-center h-[100vh]">
+      <div className="absoulte justify-center items-center  w-[100%]">
         <Slider {...settings}>
           {introBackground.map((bg, index) => (
             <div key={index}>
               <img src={bg} alt="index" className="h-screen" />
             </div>
           ))}
-          </Slider>
-        </div> */}
-        <p className="mx-auto text-[3rem] font-ballet">
+        </Slider>
+      </div>
+      <div>
+        <p className="absolute top-[33%] left-[28%] text-[4rem] text-white font-ballet">
           Flowery
         </p>
-        <img
-          src={Flower}
-          alt=""
-          className="items-center justify-center p-2 mx-auto"
-        />
-      <div>
       </div>
-      <div className="font-gobaB">
+      <div className="absolute bottom-[10%] text-white font-gobaB">
         <section className="flex justify-center items-center ">
-          <span className=" text-[25px] text-user_pink">{name}</span>님이
+          <span className=" text-[25px] text-user_pink">당신</span>을
         </section>
         <section className="">
-          <span>준비한 시들지 않는 선물</span>
+          <span>위한 시들지 않는 선물</span>
         </section>
       </div>
     </div>
+    // <div className="flex flex-col relative items-center">
+    //   {/* <div className="absoulte justify-center items-center  w-[100%]">
+    //     <Slider {...settings}>
+    //       {introBackground.map((bg, index) => (
+    //         <div key={index}>
+    //           <img src={bg} alt="index" className="h-screen" />
+    //         </div>
+    //       ))}
+    //       </Slider>
+    //     </div> */}
+    //     <p className="mx-auto text-[3rem] font-ballet">
+    //       Flowery
+    //     </p>
+    //     <img
+    //       src={Flower}
+    //       alt=""
+    //       className="items-center justify-center p-2 mx-auto"
+    //     />
+    //   <div>
+    //   </div>
+    //   <div className="font-gobaB">
+    //     <section className="flex justify-center items-center ">
+    //       <span className=" text-[25px] text-user_pink">{name}</span>님이
+    //     </section>
+    //     <section className="">
+    //       <span>준비한 시들지 않는 선물</span>
+    //     </section>
+    //   </div>
+    // </div>
   );
 }

@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { useRecoilState } from "recoil";
 import { shopDataState, shopListState } from "../../../recoil/atom";
+import api from "../../../axios/AxiosInterceptor";
 
 export default function ShopList() {
   //response.data를 담을 변수
@@ -18,7 +19,7 @@ export default function ShopList() {
   useEffect(() => {
     async function getData() {
       try {
-        const response = await axios.get(
+        const response = await api.get(
           "https://flowery.duckdns.org/api/stores"
         );
         // console.log(response.data[0]);
@@ -32,10 +33,6 @@ export default function ShopList() {
     //첫 렌더링에만 실행
     getData();
   }, []);
-
-  if (loading) {
-    return <div className="w-full h-full bg-[red]">Fuck yuo</div>; // 로딩 중일 때 보여줄 UI
-  }
 
   // console.log(shopList[0].image);
 

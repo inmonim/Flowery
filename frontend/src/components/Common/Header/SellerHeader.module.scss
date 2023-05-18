@@ -9,10 +9,10 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 16px 10px 10px;
+  padding: 0.625rem 1rem 0.625rem 0.625rem;
   z-index: 1000;
   width: 100vw;
-  height: 60px;
+  height: 3.75rem;
 
   /* Base/White */
   position: sticky;
@@ -31,10 +31,10 @@
 }
 
 .logo {
-  height: 40px;
-  width: 78px;
-  left: 10px;
-  top: 10px;
+  height: 2.5rem;
+  width: 4.875rem;
+  left: 0.625rem;
+  top: 0.625rem;
   border-radius: 0px;
 
   flex: none;
@@ -46,13 +46,13 @@
 .scan {
   display: inline-block;
   vertical-align: middle;
-  height: 18px;
+  height: 1.125rem;
   padding-right: 1.3rem;
   padding-bottom: 0.12rem;
 }
 
 .scan2 {
-  height: 20px;
+  height: 1.25rem;
 }
 .menu {
   display: inline-block;

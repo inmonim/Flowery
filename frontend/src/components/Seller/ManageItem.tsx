@@ -53,7 +53,7 @@ export default function ManageItem() {
   return (
     <div className={styles.mainbox}>
       <div className={styles.secondbox}>
-        <div className="flex justify-between w-[100%]">
+        <div className="flex justify-between w-[100%] mb-5">
           <p className={styles.font1}>상품 관리</p>
           <img
             src={additem}

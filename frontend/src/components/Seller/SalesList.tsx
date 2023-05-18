@@ -7,16 +7,39 @@ import BarChart from "./BarChart";
 import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import classNames from "classnames";
+import DatePicker from "./DatePicker";
 
 export default function SalesList() {
   const myStoreId = useRecoilValue(storeId);
-
+  const [startDate, setStartDate] = useState(
+    new Date(new Date().getTime() - 7 * 24 * 60 * 60 * 1000)
+  );
+  const [endDate, setEndDate] = useState(new Date());
   const [isDropdownOpen, setDropdownOpen] = useState(false);
+  const [showing, setShowing] = useState(false);
 
   const handleDropdownToggle = () => {
     setDropdownOpen(!isDropdownOpen);
   };
+  function handleState(date: number) {
+    if (date === 7) {
+      setShowing(false);
+      setStartDate(new Date(new Date().getTime() - 7 * 24 * 60 * 60 * 1000));
+      setEndDate(new Date());
+    } else if (date === 30) {
+      setShowing(false);
+      setStartDate(new Date(new Date().getTime() - 30 * 24 * 60 * 60 * 1000));
+      setEndDate(new Date());
+    } else if (date === 99) {
+      if (!showing) {
+        handleShow();
+      }
+    }
+  }
 
+  function handleShow() {
+    setShowing(!showing);
+  }
   return (
     <div className={styles.mainbox}>
       <div className={styles.secondbox}>
@@ -28,7 +51,7 @@ export default function SalesList() {
                 className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                 style={{ height: "1.2rem" }}
               >
-                Options
+                기간 설정
               </Menu.Button>
             </div>
 
@@ -46,6 +69,7 @@ export default function SalesList() {
                   <Menu.Item>
                     {({ active }) => (
                       <div
+                        onClick={() => handleState(7)}
                         className={classNames(
                           active
                             ? "bg-gray-100 text-gray-900"
@@ -60,6 +84,7 @@ export default function SalesList() {
                   <Menu.Item>
                     {({ active }) => (
                       <div
+                        onClick={() => handleState(30)}
                         className={classNames(
                           active
                             ? "bg-gray-100 text-gray-900"
@@ -74,6 +99,7 @@ export default function SalesList() {
                   <Menu.Item>
                     {({ active }) => (
                       <div
+                        onClick={() => handleState(99)}
                         className={classNames(
                           active
                             ? "bg-gray-100 text-gray-900"
@@ -81,7 +107,7 @@ export default function SalesList() {
                           "block px-4 py-2 text-sm"
                         )}
                       >
-                        기간 설정
+                        직접 입력
                       </div>
                     )}
                   </Menu.Item>
@@ -90,8 +116,13 @@ export default function SalesList() {
             </Transition>
           </Menu>
         </div>
+        {showing && (
+          <div>
+            <DatePicker />
+          </div>
+        )}
         <div className="w-[100%] h-[60vh] flex justify-center">
-          <BarChart />
+          <BarChart startDate={startDate} endDate={endDate} />
         </div>
       </div>
     </div>
