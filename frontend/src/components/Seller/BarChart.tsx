@@ -54,7 +54,7 @@ export default function BarChart() {
     () =>
       `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(
         Math.random() * 256
-      )}, ${Math.floor(Math.random() * 256)}, 0.2)`
+      )}, ${Math.floor(Math.random() * 256)}, 0.5)`
   );
   const borderColors = chartData.map(
     () =>
@@ -67,7 +67,7 @@ export default function BarChart() {
     labels: labels,
     datasets: [
       {
-        label: "# of Votes",
+        label: "판매량(개)",
         data: dataValues,
         backgroundColor: backgroundColors,
         borderColor: borderColors,
@@ -88,7 +88,11 @@ export default function BarChart() {
     },
     responsive: true,
     maintainAspectRatio: false,
-    plugins: {},
+    plugins: {
+      legend: {
+        display: false, // Hide the legend
+      },
+    },
     scales: {
       y: {
         beginAtZero: true,

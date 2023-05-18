@@ -7,9 +7,12 @@ interface ItemInfoProps {
   date: string;
   printed: number;
   reservationId: number;
+  goodsName: string;
+  price: number;
   phrase: string;
   permission: number;
   image: string;
+  renderedCard: string;
 }
 
 export default function ItemInfo(props: ItemInfoProps) {
@@ -68,16 +71,16 @@ export default function ItemInfo(props: ItemInfoProps) {
         <PrintCard
           closeModal={closeModal}
           reservationId={props.reservationId}
+          goodsName={props.goodsName}
+          price={props.price}
           printed={props.printed}
           reservationName={props.reservationName}
           phrase={props.phrase}
+          renderedCard={props.renderedCard}
         />
       )}
       {props.printed === 1 && showModal && (
-        <FetchCard
-          closeModal={closeModal}
-          reservationId={props.reservationId}
-        />
+        <FetchCard closeModal={closeModal} renderedCard={props.renderedCard} />
       )}
     </div>
   );

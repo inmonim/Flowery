@@ -35,6 +35,7 @@ export default function SignInPage() {
             const cookie = new Cookies();
             setUserId(res.data.usersId);
             setAccessToken(response.data.atk);
+            sessionStorage.setItem("atk", response.data.atk)
             cookie.set("refreshToken", response.data.rtk);
             navigate("/reservation");
           })

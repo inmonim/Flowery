@@ -44,6 +44,7 @@ export default function ApproveInfo(props: ItemInfoProps) {
           <div className={styles.description}>
             <div className={styles.number}>{props.reservationName}</div>
             <div className={styles.time}>{formattedDate}</div>
+            <div className={styles.time}>{props.demand}</div>
           </div>
         </div>
         <div className={styles.printing} onClick={handleModal}>

@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, redirect } from "react-router-dom";
 import UserMainLayout from "../layouts/UserMainLayout";
 import UserMainPage from "../pages/UserMainPage/UserMainPage";
 import SellerMainPage from "../pages/Seller/SellerMainPage/SellerMainPage";
@@ -34,16 +34,83 @@ const router = createBrowserRouter([
     element: <UserMainLayout />,
     // errorElement: <NotFound />, // 라우터에 없는 경로로 이동시 NotFound 컴포넌트 화면에 띄운다.
     children: [
-      { path: "/reservation", element: <Reservation /> },
-      { path: "/test", element: <TestPage /> },
-      { path: "/reservationoption", element: <ReservationOption /> },
-      { path: "/mygarden", element: <MyGarden /> },
-      { path: "/myreservation", element: <MyReservation /> },
+      {
+        path: "/reservation",
+        element: <Reservation />,
+        loader: () => {
+          const loggedIn = !!sessionStorage.getItem("atk");
+          if (!loggedIn) {
+            return redirect("/signin");
+          }
+
+          return null;
+        },
+      },
+      // { path: "/test", element: <TestPage /> },
+      {
+        path: "/reservationoption",
+        element: <ReservationOption />,
+        loader: () => {
+          const loggedIn = !!sessionStorage.getItem("atk");
+          if (!loggedIn) {
+            return redirect("/signin");
+          }
+
+          return null;
+        },
+      },
+      {
+        path: "/mygarden",
+        element: <MyGarden />,
+        loader: () => {
+          const loggedIn = !!sessionStorage.getItem("atk");
+          if (!loggedIn) {
+            return redirect("/signin");
+          }
+
+          return null;
+        },
+      },
+      {
+        path: "/myreservation",
+        element: <MyReservation />,
+
+        loader: () => {
+          const loggedIn = !!sessionStorage.getItem("atk");
+          if (!loggedIn) {
+            return redirect("/signin");
+          }
+
+          return null;
+        },
+      },
       { path: "/signin", element: <SignInPage /> },
       { path: "/signup", element: <SignUpPage /> },
       // { path: "/nonmember", element: <NonMemberPage /> },
-      { path: "/writing", element: <WritingPage /> },
-      { path: "/reservationorder", element: <OrderPage /> },
+      {
+        path: "/writing",
+        element: <WritingPage />,
+        loader: () => {
+          const loggedIn = !!sessionStorage.getItem("atk");
+          if (!loggedIn) {
+            return redirect("/signin");
+          }
+
+          return null;
+        },
+      },
+      {
+        path: "/reservationorder",
+        element: <OrderPage />,
+        loader: () => {
+          const loggedIn = !!sessionStorage.getItem("atk");
+          if (!loggedIn) {
+            return redirect("/signin");
+          }
+
+          return null;
+        },
+      },
     ],
   },
   {
@@ -66,7 +133,7 @@ const router = createBrowserRouter([
       { path: "/release", element: <ReleaseIntro /> },
       { path: "/releasewrite", element: <RealeaseWrite /> },
       { path: "/releaseexit", element: <ReleaseExitPage /> },
-      { path: "/userproto/:messageId", element: <UserProtoPage /> },
+      { path: "/userproto/:messageId", element: <UserProtoPage isQR={true} /> },
     ],
   },
 ]);
