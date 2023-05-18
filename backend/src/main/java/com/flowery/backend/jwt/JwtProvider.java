@@ -57,9 +57,9 @@ public class JwtProvider {
         String atk = createToken(atkSubject, atkLive);
         String rtk = createToken(rtkSubject, rtkLive);
 
-        redisDao.setValues(atxPreFix+usersDto.getId(), atk, Duration.ofMillis(atkLive));
-        redisDao.setValues(rtxPreFix+usersDto.getId(), rtk, Duration.ofMillis(rtkLive));
-        redisDao.setValues(rolePreFix+usersDto.getId(), "ROLE_USER", Duration.ofMillis(atkLive));
+        redisDao.setValues(atxPreFix+usersDto.getId(), atk, Duration.ofSeconds(atkLive));
+        redisDao.setValues(rtxPreFix+usersDto.getId(), rtk, Duration.ofMinutes(rtkLive));
+        redisDao.setValues(rolePreFix+usersDto.getId(), "ROLE_USER", Duration.ofSeconds(atkLive));
         return new TokenResponse(atk, rtk);
     }
 
@@ -76,9 +76,9 @@ public class JwtProvider {
         String atk = createToken(atkSubject, atkLive);
         String rtk = createToken(rtkSubject, rtkLive);
 
-        redisDao.setValues(atxPreFix+usersDto.getId(), atk, Duration.ofMillis(atkLive));
-        redisDao.setValues(rtxPreFix+usersDto.getId(), rtk, Duration.ofMillis(rtkLive));
-        redisDao.setValues(rolePreFix+usersDto.getId(), "ROLE_SELLER", Duration.ofMillis(atkLive));
+        redisDao.setValues(atxPreFix+usersDto.getId(), atk, Duration.ofSeconds(atkLive));
+        redisDao.setValues(rtxPreFix+usersDto.getId(), rtk, Duration.ofMinutes(rtkLive));
+        redisDao.setValues(rolePreFix+usersDto.getId(), "ROLE_SELLER", Duration.ofSeconds(atkLive));
 
         return new TokenResponse(atk, rtk);
     }
