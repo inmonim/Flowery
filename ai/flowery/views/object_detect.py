@@ -192,7 +192,7 @@ def save_sales():
     
     
 @bp.route('/saveSales/offline', methods=['POST'])
-def save_sales():
+def save_sales_offline():
     if request.method == 'POST':
         
         res = request.get_json()
