@@ -24,6 +24,7 @@ import HowTo from "../components/User/UserMain/HowTo";
 import Try from "../components/User/UserMain/Try";
 import MyReservation from "../pages/MyReservation/MyReservation";
 import SellerAnalyzePage from "../pages/Seller/SellerAnalyzePage/SellerAnalyzePage";
+import GardenSignIn from "../components/User/MyGarden/GardenSignIn";
 
 const router = createBrowserRouter([
   { path: "/", element: <UserMainPage /> },
@@ -58,6 +59,10 @@ const router = createBrowserRouter([
 
           return null;
         },
+      },
+      {
+        path: "/gardensignin/:messageId",
+        element: <GardenSignIn />,
       },
       {
         path: "/mygarden",

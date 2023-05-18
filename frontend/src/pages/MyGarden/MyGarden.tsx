@@ -9,7 +9,7 @@ import "slick-carousel/slick/slick-theme.css";
 import expand from "../../assets/expand.png";
 import collapse from "../../assets/collapse.png";
 import GardenCardModal from "../../components/User/MyGarden/GardenCardModal";
-
+import api from "../../axios/AxiosInterceptor";
 interface messageType {
   gardenId: number;
   messageId: string;
@@ -34,9 +34,11 @@ export default function MyGarden() {
   const [isExpand, setIsExpand] = useState<boolean>(false);
   const userId = useRecoilValue<number>(userIdState);
   useEffect(() => {
-    const getMessages = async () => {
-      await axios
-        .post("https://flowery.duckdns.org/api/myGarden/get", { userId: 1 })
+    const getMessages = () => {
+      api
+        .post("https://flowery.duckdns.org/api/myGarden/get", {
+          userId: userId,
+        })
         .then((response) => {
           setMessages(response.data);
         });
@@ -47,7 +49,7 @@ export default function MyGarden() {
   useEffect(() => {
     const getCards = async () => {
       messages.map((message: messageType, idx: number) =>
-        axios
+        api
           .post("https://flowery.duckdns.org/api/messages/get-card", {
             messageId: message.messageId,
           })
@@ -58,7 +60,7 @@ export default function MyGarden() {
     };
     getCards();
   }, [messages]);
-  console.log(cards)
+  console.log(cards);
   const handleExpand = () => {
     setIsExpand(!isExpand);
   };
