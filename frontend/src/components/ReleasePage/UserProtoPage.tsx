@@ -11,6 +11,7 @@ import styles from "./UserProtoPage.module.scss";
 import mobile from "../../assets/pleasemobile.png";
 import { useRecoilState } from "recoil";
 import { userIdState } from "../../recoil/atom";
+import api from "../../axios/AxiosInterceptor";
 
 export default function UserProtoPage({ isQR }: { isQR: boolean }) {
   const [letterData, setLetterData] = useState([]);
@@ -28,7 +29,7 @@ export default function UserProtoPage({ isQR }: { isQR: boolean }) {
   useEffect(() => {
     async function getData() {
       try {
-        const response = await axios.post(
+        const response = await api.post(
           "https://flowery.duckdns.org/api/messages/get-card",
           {
             messageId: messageId,

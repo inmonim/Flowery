@@ -32,7 +32,7 @@
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  border-radius: 50%;
+  // border-radius: 50%;
   transition: all 0.2s ease;
 }
 
@@ -41,17 +41,17 @@
 }
 
 .react-datepicker__day--today {
-  background-color: #316351;
-  opacity: 0.8;
+  background-color: red;
+  opacity: 0.4;
   font-weight: bold;
 }
 
 .react-datepicker__day--selected {
-  background-color: #333;
+  background-color: #316351;
   color: #fff;
   font-weight: bold;
 }
 
 .react-datepicker__day--keyboard-selected {
-  outline: 2px solid #333;
+  display: none;
 }

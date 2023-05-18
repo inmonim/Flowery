@@ -8,7 +8,7 @@ import gif3 from "../../../assets/UserMain/floweraf3.gif";
 
 export default function TryComponent() {
   const exampleList = [example1, example2, example3];
-  const [activeExample, setActiveExample] = useState();
+  const [activeExample, setActiveExample] = useState(example1);
 
   const handleExampleClick = (example: any) => {
     setActiveExample(example);
