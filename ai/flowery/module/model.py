@@ -88,7 +88,7 @@ def get_result(image_path, model=model):
             if src[4] < 0.3:
                 del_idx.append(i)
         else:
-            if xywhn_list[-1][4] < 0.3:
+            if (xywhn_list[-1][4] < 0.3) and (0 < len(xywhn_list)-1):
                 del_idx.append(i+1)
             del_idx = sorted(list(set(del_idx)), reverse=True)
             for di in del_idx:
