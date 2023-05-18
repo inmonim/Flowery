@@ -27,10 +27,10 @@ public class RedisDao {
         return redisTemplate.opsForValue().get(key);
     }
 
-    public void setValues(String key, String data, Duration duration) {
+    public void setValues(String key, String data, int duration) {
         redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer(String.class));
         ValueOperations<String, String> values = redisTemplate.opsForValue();
-        values.set(key, data, duration);
+        values.set(key, data, duration, TimeUnit.MINUTES);
     }
 
     public void deleteKey(String key){
