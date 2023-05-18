@@ -2,6 +2,9 @@ import React, { useState, useEffect, useRef } from "react";
 import styles from "./LetterFont.module.scss";
 import { useRecoilState } from "recoil";
 import { letterFontState } from "../../../recoil/atom";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 export default function LetterFont() {
   const [letterFont, setLetterFont] = useRecoilState<number>(letterFontState);
@@ -18,12 +21,25 @@ export default function LetterFont() {
     "함박눈체",
   ];
 
+  const settings = {
+    infinite: false,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    autoplay: true,
+    arrows: true,
+    dots: false,
+    pauseOnHover: true,
+    draggable: true,
+    autoplaySpeed: 3000,
+    speed: 1200,
+  };
+
   return (
     <div className="flex justify-center">
       {/* 글씨체 고르기 */}
-      <div className="flex justify-between p-2 w-[35em]">
+      <div className="flex justify-between p-2 ">
         {/* 왼쪽 화살표 */}
-        {startIndex !== 0 ? (
+        {/* {startIndex !== 0 ? (
           <input
             type="button"
             value="&lt;"
@@ -32,17 +48,16 @@ export default function LetterFont() {
           ></input>
         ) : (
           <div></div>
-        )}
+        )} */}
         {/* 글씨체 목록 */}
-        {letterFonts
-          .slice(startIndex, startIndex + visibleFontsCount)
-          .map((font: string, i: number) => (
+        <Slider {...settings} className="w-[300px] justify-center flex">
+          {letterFonts.map((font: string, i: number) => (
             <div
               key={i}
               onClick={() => {
                 setLetterFont(startIndex + i + 1);
               }}
-              className="p-1 text-sm md:text-base align-middle justify-center"
+              className="p-1 text-center text-sm md:text-base align-middle justify-center"
             >
               <div
                 className={`cursor-pointer ${
@@ -53,8 +68,9 @@ export default function LetterFont() {
               </div>
             </div>
           ))}
+        </Slider>
         {/* 오른쪽 화살표 */}
-        {startIndex + visibleFontsCount < letterFonts.length ? (
+        {/* {startIndex + visibleFontsCount < letterFonts.length ? (
           <input
             type="button"
             value="&gt;"
@@ -63,7 +79,7 @@ export default function LetterFont() {
           ></input>
         ) : (
           <div></div>
-        )}
+        )} */}
       </div>
     </div>
   );

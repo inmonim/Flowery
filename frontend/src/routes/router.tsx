@@ -66,7 +66,7 @@ const router = createBrowserRouter([
       { path: "/release", element: <ReleaseIntro /> },
       { path: "/releasewrite", element: <RealeaseWrite /> },
       { path: "/releaseexit", element: <ReleaseExitPage /> },
-      { path: "/userproto/:messageId", element: <UserProtoPage /> },
+      { path: "/userproto/:messageId", element: <UserProtoPage isQR={true}/> },
     ],
   },
 ]);

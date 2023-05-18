@@ -9,8 +9,10 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import styles from "./UserProtoPage.module.scss";
 import mobile from "../../assets/pleasemobile.png";
+import { useRecoilState } from "recoil";
+import { userIdState } from "../../recoil/atom";
 
-export default function UserProtoPage() {
+export default function UserProtoPage({ isQR }: { isQR: boolean }) {
   const [letterData, setLetterData] = useState([]);
   const [loading, setLoading] = useState(true);
   const { messageId } = useParams() as { messageId: string };
@@ -18,6 +20,7 @@ export default function UserProtoPage() {
   const [isPictures, setIsPictures] = useState(false);
   const [isVideo, setIsVideo] = useState(false);
   const [flowerData, setFlowerData] = useState<string>("");
+  const [userId, setUserId] = useRecoilState<number>(userIdState);
 
   useEffect(() => {
     async function getData() {
@@ -73,13 +76,41 @@ export default function UserProtoPage() {
     );
   }
 
+  // 마이가든에 저장
+  const saveMyGarden = () => {
+    // 로그인 여부 확인
+    axios
+      .post("https://flowery.duckdns.org/api/myGarden", {
+        messageId: messageId,
+        userId: userId,
+      })
+      .then((response) => {
+        alert("저장되었습니다!");
+      })
+      .catch((error) => {
+        alert("다시 시도해주세요");
+      });
+  };
+
   return (
     <div className={styles.customclass}>
       <ProtoIntro />
       {isPictures || isVideo ? <Memories letterData={letterData} /> : null}
       <ReleaseLetter letterData={letterData} flowerData={flowerData} />
       <More letterData={letterData} />
-      <Survey />
+      {/* <Survey /> */}
+      {isQR && (
+        <div className="cursor-pointer w-1/3 py-2 pb-2 px-4 flex mt-20 justify-center mx-auto font-bold bg-user_green text-white font-nasq border rounded-full">
+          <input
+            type="button"
+            defaultValue="저장하기"
+            onClick={() => {
+              saveMyGarden();
+            }}
+            className="cursor-pointer text-center mx-auto justify-center"
+          ></input>
+        </div>
+      )}
     </div>
   );
 }

@@ -1,8 +1,15 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { phoneNumberState } from "../../recoil/atom";
+import {
+  atk,
+  phoneNumberState,
+  userIdState,
+  userNameState,
+} from "../../recoil/atom";
 import { useSetRecoilState } from "recoil";
+import { Cookies } from "react-cookie";
 import axios from "axios";
+import { useRecoilState } from "recoil";
 
 export default function SignUpPage() {
   const [isVerify, setIsVerify] = useState<boolean>(false);
@@ -13,7 +20,7 @@ export default function SignUpPage() {
   const [verifyCode, setVerifyCode] = useState<string>("");
   const [phoneNumber, setPhoneNumber] = useState<string>("");
 
-  const [id, setId] = useState<string>("");
+  const [id, setId] = useRecoilState<string>(userNameState);
   const [password, setPassword] = useState<string>("");
   const [passwordConfirm, setPasswordConfirm] = useState<string>("");
 
@@ -26,6 +33,8 @@ export default function SignUpPage() {
   const [wrongPassword, setWrongPassword] = useState<boolean>(false);
   const [wrongPasswordConfirm, setWrongPasswordConfirm] =
     useState<boolean>(false);
+  const [accessToken, setAccessToken] = useRecoilState<string>(atk);
+  const setUserId = useSetRecoilState<number>(userIdState);
 
   const navigate = useNavigate();
 
@@ -52,28 +61,6 @@ export default function SignUpPage() {
 
   // 휴대폰 번호 인증 버튼 클릭
   const checkVerify = () => {
-    // 인증 번호 보내기
-
-    axios
-      .post("https://flowery.duckdns.org/api/sms/send-cert", {
-        phone: inputPhone,
-      })
-      .then((response) => {
-        setClickVerify(true);
-        alert("인증번호가 전송됐습니다!");
-      })
-      .catch((e) => alert("인증번호 전송에 실패했습니다"));
-  };
-
-  // 휴대폰 번호 인증 버튼 Enter
-  const pressCheck = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (isPhoneNum && event.key === "Enter") {
-      checkVerify();
-    }
-  };
-
-  // 인증 번호 확인
-  const checkCode = () => {
     let phoneNum = "";
     if (inputPhone.length === 11) {
       phoneNum =
@@ -92,15 +79,36 @@ export default function SignUpPage() {
     }
     setDashPhoneNum(phoneNum);
 
+    // 인증 번호 보내기
+    axios
+      .post("https://flowery.duckdns.org/api/sms/send-cert", {
+        phone: phoneNum,
+      })
+      .then((response) => {
+        setClickVerify(true);
+        alert("인증번호가 전송됐습니다!");
+      })
+      .catch((e) => alert("인증번호 전송에 실패했습니다"));
+  };
+
+  // 휴대폰 번호 인증 버튼 Enter
+  const pressCheck = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (isPhoneNum && event.key === "Enter") {
+      checkVerify();
+    }
+  };
+
+  // 인증 번호 확인
+  const checkCode = () => {
     // 인증 번호가 일치하면
-    const params = { phone: inputPhone, code: verifyCode };
+    const params = { phone: dashPhoneNum, code: verifyCode };
     axios
       .get("https://flowery.duckdns.org/api/sms/certification", { params })
       .then((response) => {
-        setIsVerify(true);
+        // setIsVerify(true);
         if (response.data) {
           setPhoneNumber(inputPhone);
-          // setIsVerify(true);
+          setIsVerify(true);
           alert("인증번호 확인됐습니다!");
         } else {
           alert("인증에 실패했습니다!\n인증번호는 3분간 유효합니다");
@@ -165,15 +173,31 @@ export default function SignUpPage() {
         alert("회원가입이 완료되었습니다!");
         // 로그인
         axios
-          .post("https://flowery.duckdns.org/api/users/login-user", {
+          .post("https://flowery.duckdns.org/api/users/token-user", {
             id: id,
             pass: password,
           })
           .then((response) => {
-            console.log(response.data);
-            navigate("/reservation");
+            axios
+              .get("https://flowery.duckdns.org/api/users/login", {
+                params: { id: id },
+              })
+              .then((res) => {
+                const cookie = new Cookies();
+                setUserId(res.data.userId);
+                setAccessToken(response.data.atk);
+                cookie.set("refreshToken", response.data.rtk);
+                navigate("/reservation");
+              })
+              .catch((e) => {
+                alert("로그인에 실패했습니다");
+                navigate("/signin");
+              });
           })
-          .catch((e) => alert("로그인에 실패했습니다."));
+          .catch((e) => {
+            alert("로그인에 실패했습니다");
+            navigate("/signin");
+          });
       })
       .catch((error) => alert("회원가입에 실패했습니다."));
   };
