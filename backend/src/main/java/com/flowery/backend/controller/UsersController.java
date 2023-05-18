@@ -102,7 +102,7 @@ public class UsersController {
         }
     }
 
-    @PutMapping("/changePhone")
+    @PutMapping("/change-pass")
     public ResponseEntity<Boolean> changePhone(@RequestBody UsersDto passDto){
         try {
             UsersDto usersDto = usersService.changePass(passDto);

@@ -123,7 +123,7 @@ public class UsersService {
     }
 
     public UsersDto changePass(UsersDto usersDto) throws Exception{
-        Users users = usersRepository.findByUsersId(usersDto.getUsersId());
+        Users users = usersRepository.findById(usersDto.getId());
         String encryptedPass = passwordEncoder.encode(usersDto.getPass());
         users.setPass(encryptedPass);
         usersRepository.save(users);
