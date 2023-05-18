@@ -92,9 +92,6 @@ export default function NotSale(props: Props) {
         fetch("https://flowery.duckdns.org/flask/objectDetect", {
           method: "POST",
           body: formData,
-          headers: {
-            Authorization: `bearer ${myatk}`,
-          },
         })
           .then((response) => {
             return response.json();
@@ -145,18 +142,10 @@ export default function NotSale(props: Props) {
         )
         .then((response) => {
           axios
-            .post(
-              "https://flowery.duckdns.org/flask/saveSales/offline",
-              {
-                flower_object: flowerObject,
-                reservation_id: response.data,
-              },
-              {
-                headers: {
-                  Authorization: `bearer ${myatk}`,
-                },
-              }
-            )
+            .post("https://flowery.duckdns.org/flask/saveSales/offline", {
+              flower_object: flowerObject,
+              reservation_id: response.data,
+            })
             .then(() => {
               alert("판매내역이 저장되었습니다.");
               props.closeModal33();

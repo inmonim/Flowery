@@ -78,9 +78,6 @@ export default function PrintCard(props: PrintCardProps) {
         fetch("https://flowery.duckdns.org/flask/objectDetect", {
           method: "POST",
           body: formData,
-          headers: {
-            Authorization: `bearer ${myatk}`,
-          },
         })
           .then((response) => {
             return response.json();
@@ -303,18 +300,10 @@ export default function PrintCard(props: PrintCardProps) {
     });
 
     axios
-      .post(
-        "https://flowery.duckdns.org/flask/saveSales",
-        {
-          flower_object: tmp,
-          reservation_id: props.reservationId,
-        },
-        {
-          headers: {
-            Authorization: `bearer ${myatk}`,
-          },
-        }
-      )
+      .post("https://flowery.duckdns.org/flask/saveSales", {
+        flower_object: tmp,
+        reservation_id: props.reservationId,
+      })
       .then(() => {
         setRecogOK(true);
       })
