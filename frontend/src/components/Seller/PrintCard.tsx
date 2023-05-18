@@ -5,7 +5,7 @@ import { saveAs } from "file-saver";
 import axios from "axios";
 import { useRecoilValue } from "recoil";
 import { storeId } from "../../recoil/atom";
-import flower from "../../assets/example1.jpg";
+import LoadingSpinner from "../Common/LoadingSpin";
 interface PrintCardProps {
   closeModal: () => void;
   reservationId: number;
@@ -15,6 +15,7 @@ interface PrintCardProps {
   reservationName: string;
   phrase: string;
   renderedCard: string;
+  demand: string;
 }
 
 interface Goods {
@@ -22,6 +23,7 @@ interface Goods {
   goodsName: string;
   goodsPrice: number;
   goodsDetail: string;
+  samples: any;
 }
 
 export default function PrintCard(props: PrintCardProps) {
@@ -39,6 +41,7 @@ export default function PrintCard(props: PrintCardProps) {
   const [selectedItem, setSelectedItem] = useState<Goods | null>(null);
   const [inputValue, setInputValue] = useState("");
   const myatk = sessionStorage.getItem("atk");
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     axios
@@ -78,9 +81,6 @@ export default function PrintCard(props: PrintCardProps) {
         fetch("https://flowery.duckdns.org/flask/objectDetect", {
           method: "POST",
           body: formData,
-          headers: {
-            Authorization: `bearer ${myatk}`,
-          },
         })
           .then((response) => {
             return response.json();
@@ -229,7 +229,7 @@ export default function PrintCard(props: PrintCardProps) {
           "https://flowery.duckdns.org/api/reservation/fix",
           {
             reservationId: props.reservationId,
-            goodsName: selectedItem ? selectedItem.goodsName : props.goodsName,
+            goodsName: "기타",
             price: inputValue,
           },
           {
@@ -288,6 +288,7 @@ export default function PrintCard(props: PrintCardProps) {
   }
 
   function checkStep1() {
+    setInputValue("");
     setCheckGoods(true);
   }
 
@@ -301,22 +302,15 @@ export default function PrintCard(props: PrintCardProps) {
     datas.forEach((item: any) => {
       tmp[item.flower] = item.count;
     });
-
+    setIsLoading(true);
     axios
-      .post(
-        "https://flowery.duckdns.org/flask/saveSales",
-        {
-          flower_object: tmp,
-          reservation_id: props.reservationId,
-        },
-        {
-          headers: {
-            Authorization: `bearer ${myatk}`,
-          },
-        }
-      )
+      .post("https://flowery.duckdns.org/flask/saveSales", {
+        flower_object: tmp,
+        reservation_id: props.reservationId,
+      })
       .then(() => {
         setRecogOK(true);
+        setIsLoading(false);
       })
       .catch((err) => {
         console.log(err);
@@ -338,6 +332,7 @@ export default function PrintCard(props: PrintCardProps) {
   }
   return (
     <div className={styles.modal}>
+      {isLoading ? <LoadingSpinner /> : ""}
       <div className={styles.fontcheck}>.</div>
       <div className={styles.modalContent}>
         {!checkGoods && props.goodsName === "기타" && props.price === 0 ? (
@@ -353,7 +348,7 @@ export default function PrintCard(props: PrintCardProps) {
                     onClick={() => handleSelectItem(item)}
                   >
                     <div className={styles.picture}>
-                      <img src={flower} alt="flower" />
+                      <img src={item.samples[0]} alt="flower" />
                     </div>
                     <div className={styles.description}>
                       <div className={styles.number}>{item.goodsName}</div>
@@ -375,7 +370,9 @@ export default function PrintCard(props: PrintCardProps) {
           </>
         ) : (
           <>
-            {(selectedItem && selectedItem.goodsName === "기타") ||
+            {(selectedItem &&
+              selectedItem.goodsName === "기타" &&
+              selectedItem.goodsPrice !== 0) ||
             (props.goodsName === "기타" && props.price !== 0) ? (
               <>
                 <div className="text-xl font-semibold mt-7 left">
@@ -407,6 +404,11 @@ export default function PrintCard(props: PrintCardProps) {
                 <div className={styles.time}>
                   ₩ {selectedItem ? selectedItem.goodsPrice : props.price}
                 </div>
+                {props.demand && props.demand !== "없음" ? (
+                  <div className={styles.time}>요청사항: {props.demand}</div>
+                ) : (
+                  ""
+                )}
               </div>
             )}
             <div className={styles.stepone}>
@@ -436,7 +438,7 @@ export default function PrintCard(props: PrintCardProps) {
                       </div>
                     ))}
                     {recogOK ? (
-                      <p className="text-center">인식이 완료되었습니다.</p>
+                      <p className={styles.classTim}>인식이 완료되었습니다.</p>
                     ) : (
                       <>
                         <p className="pt-5 text-center">

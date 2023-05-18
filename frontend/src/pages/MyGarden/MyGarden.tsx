@@ -9,7 +9,7 @@ import "slick-carousel/slick/slick-theme.css";
 import expand from "../../assets/expand.png";
 import collapse from "../../assets/collapse.png";
 import GardenCardModal from "../../components/User/MyGarden/GardenCardModal";
-
+import api from "../../axios/AxiosInterceptor";
 interface messageType {
   gardenId: number;
   messageId: string;
@@ -31,39 +31,52 @@ interface cardType {
 export default function MyGarden() {
   const [messages, setMessages] = useState<Array<messageType>>([]);
   const [cards, setCards] = useState<Array<cardType>>([]);
+  const [card, setCard] = useState<cardType>();
   const [isExpand, setIsExpand] = useState<boolean>(false);
   const userId = useRecoilValue<number>(userIdState);
   useEffect(() => {
-    const getMessages = async () => {
-      await axios
-        .post("https://flowery.duckdns.org/api/myGarden/get", { userId: 1 })
+    const getMessages = () => {
+      api
+        .post("https://flowery.duckdns.org/api/myGarden/get", {
+          userId: 15,
+        })
         .then((response) => {
-          setMessages(response.data);
+          response.data.map((message: messageType, idx: number) =>
+            api
+              .post("https://flowery.duckdns.org/api/messages/get-card", {
+                messageId: message.messageId,
+              })
+              .then((response) => {
+                setCards((prevCards) => [...prevCards, response.data]);
+              })
+          );
+          // setMessages(response.data);
         });
     };
     getMessages();
   }, []);
 
-  useEffect(() => {
-    const getCards = async () => {
-      messages.map((message: messageType, idx: number) =>
-        axios
-          .post("https://flowery.duckdns.org/api/messages/get-card", {
-            messageId: message.messageId,
-          })
-          .then((response) => {
-            setCards((prevCards) => [...prevCards, response.data]);
-          })
-      );
-    };
-    getCards();
-  }, [messages]);
-  console.log(cards)
+  // useEffect(() => {
+  //   const getCards = async () => {
+  //     messages.map((message: messageType, idx: number) =>
+  //       api
+  //         .post("https://flowery.duckdns.org/api/messages/get-card", {
+  //           messageId: message.messageId,
+  //         })
+  //         .then((response) => {
+  //           setCards((prevCards) => [...prevCards, response.data]);
+  //         })
+  //     );
+  //   };
+  //   getCards();
+  // }, [messages]);
+
   const handleExpand = () => {
     setIsExpand(!isExpand);
   };
 
   const settings = {
+    infinite: false,
     slidesToShow: 1,
     slidesToScroll: 1,
     arrows: true,
@@ -96,8 +109,9 @@ export default function MyGarden() {
       setSelectCard(false);
     }
   };
+
   return (
-    <div className="bg-user_beige">
+    <div className="bg-user_beige min-h-screen">
       <div className="relative justify-end flex">
         <div className="p-4">
           {!isExpand ? (
@@ -111,7 +125,7 @@ export default function MyGarden() {
         {cards.length > 0 ? (
           isExpand ? (
             <div className="h-screen">
-              {selectCard && <GardenCardModal ref={modalRef} />}
+              {selectCard && <GardenCardModal card={card} ref={modalRef} />}
               <Slider {...settings} className="h-screen">
                 {cards.map((card: cardType, idx: number) => (
                   <div key={idx} className="flex-col">
@@ -119,6 +133,7 @@ export default function MyGarden() {
                       <img
                         src={card.flowerPicture}
                         onClick={() => {
+                          setCard(card);
                           setSelectCard(true);
                           window.scrollTo({ top: 0 });
                         }}

@@ -4,8 +4,8 @@ import { recoilPersist } from "recoil-persist";
 const { persistAtom } = recoilPersist();
 
 // 로그인 여부
-export const isLoggedIn = atom<boolean>({
-  key: "isLoggedIn",
+export const isLoggedInState = atom<boolean>({
+  key: "isLoggedInState",
   default: false,
   effects_UNSTABLE: [persistAtom],
 });
@@ -155,7 +155,7 @@ export const reservationTimeState = atom<string>({
 });
 
 // 예약 날짜 (창근)
-export const reservatonDayState = atom<string>({
+export const reservationDayState = atom<string>({
   key: "storeDayState",
   default: "",
   effects_UNSTABLE: [persistAtom],

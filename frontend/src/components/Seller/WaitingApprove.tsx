@@ -29,9 +29,10 @@ export default function WaitingApprove() {
   useEffect(() => {
     const currentDate = new Date();
     const formattedDate = currentDate.toISOString().split("T")[0] + "T00:00:00";
+    console.log(formattedDate);
     axios
       .post(
-        `https://flowery.duckdns.org/api/reservation/day/?date=${formattedDate}`,
+        `https://flowery.duckdns.org/api/reservation/day/?date=2023-05-19T00:00:00`,
         {
           storeId: myStoreId,
         },

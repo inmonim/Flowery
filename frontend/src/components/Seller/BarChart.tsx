@@ -10,13 +10,16 @@ import "react-date-range/dist/styles.css"; // 스타일 시트를 임포트합�
 import "react-date-range/dist/theme/default.css"; // 테마를 임포트합니다.
 ChartJS.register(...registerables);
 
-export default function BarChart() {
+interface DateInfo {
+  startDate: any;
+  endDate: any;
+}
+
+export default function BarChart(props: DateInfo) {
   const [chartData, setChartData] = useState([]);
-  const [startDate, setStartDate] = useState(
-    new Date(new Date().getTime() - 7 * 24 * 60 * 60 * 1000)
-  );
+  const [startDate, setStartDate] = useState(props.startDate);
   const location = useLocation();
-  const [endDate, setEndDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(props.endDate);
   const myStoreId = useRecoilValue(storeId);
   const myatk = sessionStorage.getItem("atk");
   // const [selectedRange, setSelectedRange] = useState([
@@ -35,40 +38,20 @@ export default function BarChart() {
 
   const fetchData = async () => {
     try {
-      if (location.pathname === "/seller") {
-        const new_date = new Date(
-          new Date().getTime() - 30 * 24 * 60 * 60 * 1000
-        );
-        const response = await axios.get(
-          "https://flowery.duckdns.org/api/sales/goods",
-          {
-            params: {
-              storeId: myStoreId,
-              startDate: new_date.toISOString().split("T")[0] + "T00:00:00",
-              endDate: endDate.toISOString().split("T")[0] + "T00:00:00",
-            },
-            headers: {
-              Authorization: `bearer ${myatk}`,
-            },
-          }
-        );
-        setChartData(response.data);
-      } else {
-        const response = await axios.get(
-          "https://flowery.duckdns.org/api/sales/goods",
-          {
-            params: {
-              storeId: myStoreId,
-              startDate: startDate.toISOString().split("T")[0] + "T00:00:00",
-              endDate: endDate.toISOString().split("T")[0] + "T00:00:00",
-            },
-            headers: {
-              Authorization: `bearer ${myatk}`,
-            },
-          }
-        );
-        setChartData(response.data);
-      }
+      const response = await axios.get(
+        "https://flowery.duckdns.org/api/sales/goods",
+        {
+          params: {
+            storeId: myStoreId,
+            startDate: startDate.toISOString().split("T")[0] + "T00:00:00",
+            endDate: endDate.toISOString().split("T")[0] + "T00:00:00",
+          },
+          headers: {
+            Authorization: `bearer ${sessionStorage.getItem("atk")}`,
+          },
+        }
+      );
+      setChartData(response.data);
     } catch (error) {
       console.error(error);
     }
@@ -76,18 +59,7 @@ export default function BarChart() {
 
   const labels = chartData.map((item) => item[0]);
   const dataValues = chartData.map((item) => item[1]);
-  const backgroundColors = chartData.map(
-    () =>
-      `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(
-        Math.random() * 256
-      )}, ${Math.floor(Math.random() * 256)}, 0.5)`
-  );
-  const borderColors = chartData.map(
-    () =>
-      `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(
-        Math.random() * 256
-      )}, ${Math.floor(Math.random() * 256)}, 1)`
-  );
+  const backgroundColors = chartData.map(() => "lightblue");
 
   const data = {
     labels: labels,
@@ -96,7 +68,6 @@ export default function BarChart() {
         label: "판매량(개)",
         data: dataValues,
         backgroundColor: backgroundColors,
-        borderColor: borderColors,
         borderWidth: 1,
       },
     ],

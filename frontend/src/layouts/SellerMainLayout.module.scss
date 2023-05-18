@@ -5,16 +5,6 @@
   src: url("../assets/styles/fonts/Inter-SemiBold.ttf");
 }
 
-.main {
-  @include breakpoint(md) {
-    text-align: center;
-  }
-
-  @include breakpoint(sm) {
-    padding: 0 3rem;
-  }
-}
-
 .body {
   display: flex;
   flex-direction: column;
@@ -30,8 +20,8 @@
 .containers {
   display: flex;
   flex-direction: column;
-  padding: 30px 24px 12px;
-  gap: 24px;
+  padding: 1.875rem 1.5rem 0.75rem;
+  gap: 1.5rem;
   height: fit-content;
   flex: none;
   order: 1;
@@ -55,13 +45,13 @@
   width: fit-content;
   background-color: #fff;
   padding: 0.5rem 1rem 0.5rem 1rem;
-  box-shadow: 0 0 16px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);
   transition: transform 0.3s ease-in-out;
   /* transform: translateX(15rem); */
   overflow-y: auto;
   box-sizing: border-box;
   position: absolute;
-  top: 60px;
+  top: 3.75rem;
   right: 0;
 }
 

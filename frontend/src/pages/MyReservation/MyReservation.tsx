@@ -44,7 +44,7 @@ export default function MyReservation() {
 
   return (
     <div>
-      <div className="p-4">
+      <div className="p-4 bg-user_beige min-h-screen">
         <div>
           {reservationsAfterToday.length > 0 ? (
             reservationsAfterToday.map((reservation, idx) => (

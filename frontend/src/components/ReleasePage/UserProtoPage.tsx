@@ -6,26 +6,33 @@ import ProtoIntro from "./ProtoPage/ProtoIntro";
 import Memories from "./ProtoPage/Memories";
 import More from "./ProtoPage/More";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import styles from "./UserProtoPage.module.scss";
 import mobile from "../../assets/pleasemobile.png";
-import { useRecoilState } from "recoil";
-import { userIdState } from "../../recoil/atom";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { isLoggedInState, userIdState } from "../../recoil/atom";
+import api from "../../axios/AxiosInterceptor";
 
-export default function UserProtoPage({ isQR }: { isQR: boolean }) {
+export default function UserProtoPage({ isQR, id }: any) {
   const [letterData, setLetterData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const { messageId } = useParams() as { messageId: string };
+  let { messageId } = useParams() as { messageId: string };
   const [isMobileView, setIsMobileView] = useState(false);
   const [isPictures, setIsPictures] = useState(false);
   const [isVideo, setIsVideo] = useState(false);
   const [flowerData, setFlowerData] = useState<string>("");
   const [userId, setUserId] = useRecoilState<number>(userIdState);
+  const isloggedIn = useRecoilValue<boolean>(isLoggedInState);
+
+  const navigate = useNavigate();
+  if (messageId === undefined) {
+    messageId = id;
+  }
 
   useEffect(() => {
     async function getData() {
       try {
-        const response = await axios.post(
+        const response = await api.post(
           "https://flowery.duckdns.org/api/messages/get-card",
           {
             messageId: messageId,
@@ -79,17 +86,21 @@ export default function UserProtoPage({ isQR }: { isQR: boolean }) {
   // 마이가든에 저장
   const saveMyGarden = () => {
     // 로그인 여부 확인
-    axios
-      .post("https://flowery.duckdns.org/api/myGarden", {
-        messageId: messageId,
-        userId: userId,
-      })
-      .then((response) => {
-        alert("저장되었습니다!");
-      })
-      .catch((error) => {
-        alert("다시 시도해주세요");
-      });
+    if (isloggedIn) {
+      axios
+        .post("https://flowery.duckdns.org/api/myGarden", {
+          messageId: messageId,
+          userId: userId,
+        })
+        .then((response) => {
+          alert("저장되었습니다!");
+        })
+        .catch((error) => {
+          alert("다시 시도해주세요");
+        });
+    } else {
+      navigate("/signin");
+    }
   };
 
   return (

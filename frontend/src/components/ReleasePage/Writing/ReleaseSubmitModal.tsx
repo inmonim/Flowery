@@ -35,8 +35,8 @@ const ReleaseSubmitModal = React.forwardRef<HTMLDivElement, any>(
       const offset = new Date().getTimezoneOffset() * 60000;
       const date = new Date(Date.now() - offset).toISOString().slice(0, -5);
       const jsonData = {
-        userId: 2,
-        storeId: 3,
+        userId: 5,
+        storeId: 5,
         messageId: messageId,
         goodsName: "기타",
         price: 0,
@@ -139,8 +139,8 @@ const ReleaseSubmitModal = React.forwardRef<HTMLDivElement, any>(
                       submitReservationInfo();
                     }
                   }}
-                  className={`inline-flex justify-center rounded-md px-3 py-2 mb-4 text-sm font-semibold shadow-sm z-[67] sm:ml-3 sm:w-auto ${
-                    loading ? "bg-gray-300" : "bg-[#eed3b5]"
+                  className={`inline-flex justify-center rounded-md text-white px-3 py-2 mb-4 text-sm font-semibold shadow-sm z-[67] sm:ml-3 sm:w-auto ${
+                    loading ? "bg-gray-300" : "bg-user_green"
                   }`}
                 >
                   제출하기

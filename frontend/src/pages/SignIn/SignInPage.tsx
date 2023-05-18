@@ -3,15 +3,18 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   atk,
+  isLoggedInState,
   phoneNumberState,
   userIdState,
   userNameState,
 } from "../../recoil/atom";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { Cookies } from "react-cookie";
+import api from "../../axios/AxiosInterceptor";
 
 export default function SignInPage() {
   const [accessToken, setAccessToken] = useRecoilState<string>(atk);
+  const [isLoggedIn, setIsLoggedIn] = useRecoilState<boolean>(isLoggedInState);
   const setUserId = useSetRecoilState<number>(userIdState);
   // const setPhoneNum = useSetRecoilState<string>(phoneNumberState);
   const [id, setId] = useRecoilState<string>(userNameState);
@@ -27,17 +30,18 @@ export default function SignInPage() {
         pass: password,
       })
       .then((response) => {
-        axios
+        const cookie = new Cookies();
+        setAccessToken(response.data.atk);
+        sessionStorage.setItem("atk", response.data.atk);
+        cookie.set("refreshToken", response.data.rtk);
+        api
           .get("https://flowery.duckdns.org/api/users/login", {
             params: { id: id },
           })
           .then((res) => {
-            const cookie = new Cookies();
             setUserId(res.data.usersId);
-            setAccessToken(response.data.atk);
-            sessionStorage.setItem("atk", response.data.atk)
-            cookie.set("refreshToken", response.data.rtk);
-            navigate("/reservation");
+            setIsLoggedIn(true);
+            navigate(-1);
           })
           .catch((e) => alert("로그인에 실패했습니다"));
       })
@@ -123,7 +127,7 @@ export default function SignInPage() {
                         <input
                           defaultValue="로그인"
                           onClick={checkSignIn}
-                          className="mb-3 inline-block w-full cursor-pointer rounded-xl px-6 pb-2 pt-2.5 text-xs text-center font-medium uppercase leading-normal bg-red-300 text-white shadow-[0_4px_9px_-4px_rgba(0,0,0,0.2)] transition duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:outline-none focus:ring-0 active:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)]"
+                          className="mb-3 inline-block w-full cursor-pointer rounded-xl px-6 pb-2 pt-2.5 text-xs text-center font-medium uppercase leading-normal bg-user_green text-white shadow-[0_4px_9px_-4px_rgba(0,0,0,0.2)] transition duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:outline-none focus:ring-0 active:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)]"
                         ></input>
                       </div>
                       {/* <div className="flex">
@@ -134,7 +138,15 @@ export default function SignInPage() {
                           비회원 주문
                         </p>
                       </div> */}
-                      <div className="flex items-center justify-between pb-6">
+                      <div className="flex">
+                        <p
+                          onClick={goToSignUp}
+                          className="text-blue-600 text-sm ml-auto pb-6 mb-3 mr-2 cursor-pointer"
+                        >
+                          회원가입
+                        </p>
+                      </div>
+                      {/* <div className="flex items-center justify-between pb-6">
                         <div className="ml-auto">
                           <input
                             type="button"
@@ -143,7 +155,7 @@ export default function SignInPage() {
                             className="inline-block items-center cursor-pointer w-full text-center rounded-2xl border-2 px-6 text-sm font-medium leading-normal transition duration-150 ease-in-out hover:border-danger-600 hover:bg-neutral-500 hover:bg-opacity-10 hover:text-danger-600 focus:border-danger-600 focus:text-danger-600 focus:outline-none focus:ring-0 active:border-danger-700 active:text-danger-700"
                           ></input>
                         </div>
-                      </div>
+                      </div> */}
                     </form>
                   </div>
                 </div>

@@ -133,7 +133,7 @@ const ReleasePreviewModal = React.forwardRef<HTMLDivElement, any>(
                 <div className="flex justify-center pb-6">
                   <span
                     onClick={props.onClose}
-                    className="cursor-pointer border rounded-full p-2 px-4 mr-2 font-bold text-white bg-[#eed3b5]"
+                    className="cursor-pointer border rounded-full p-2 px-4 mr-2 font-bold text-white bg-user_green"
                   >
                     이전으로
                   </span>
@@ -142,7 +142,7 @@ const ReleasePreviewModal = React.forwardRef<HTMLDivElement, any>(
                       window.scrollTo({ top: 0 });
                       setReservationConfirm(true);
                     }}
-                    className="cursor-pointer border rounded-full p-2 px-4 ml-2 font-bold text-white bg-[#eed3b5]"
+                    className="cursor-pointer border rounded-full p-2 px-4 ml-2 font-bold text-white bg-user_green"
                   >
                     제출하기
                   </span>
