@@ -15,6 +15,7 @@ export default function Timeselect({ getTime }: TimeselectProps) {
   const close = 2100;
   const rezBefore = [];
   const rezAfter = [];
+
   for (let i = open; i < close; i += 30) {
     let hour = Math.floor(i / 100);
     let minute = i % 100;

@@ -10,7 +10,7 @@ type DayselectProps = {
 };
 
 export default function Dayselect({ getDay }: DayselectProps) {
-  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
   const handleDateChange = (date: any) => {
     setSelectedDate(date);
@@ -18,7 +18,7 @@ export default function Dayselect({ getDay }: DayselectProps) {
   };
 
   const today = moment();
-  const maxDate = moment(today).add(15, "days").toDate();
+  const maxDate = moment(today).add(14, "days").toDate();
 
   // console.log(selectedDate);
 

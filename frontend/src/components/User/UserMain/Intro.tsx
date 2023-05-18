@@ -25,38 +25,40 @@ export default function Intro() {
             시들지 않는 추억을 영원히
           </p>
         </div>
-        <div className="flex gap-2 m-2 w-[90%] pb-3">
-          <button
-            className={`${
-              activeTab === "all"
-                ? "bg-user_green text-white"
-                : "bg-user_sol text-user_black"
-            }} min-w-[100px] w-[fit-content] p-2 h-[2.5rem]  rounded-xl text-white font-nasq font-bold`}
-            onClick={() => handleTabClick("all")}
-          >
-            ALL
-          </button>
+        <div className="flex justify-center">
+          <div className="flex gap-2 m-3 w-[90%] pb-3">
+            <button
+              className={`${
+                activeTab === "all"
+                  ? "bg-user_green text-white"
+                  : "bg-user_sol text-user_black"
+              }} min-w-[100px] w-1/3 p-2 h-[2.5rem]  rounded-xl text-white font-nasq font-bold`}
+              onClick={() => handleTabClick("all")}
+            >
+              ALL
+            </button>
 
-          <button
-            className={`${
-              activeTab === "howto"
-                ? "bg-user_green text-white"
-                : "bg-user_sol text-user_black"
-            }} min-w-[100px] w-[fit-content] p-2 h-[2.5rem]  rounded-xl text-white font-nasq font-bold`}
-            onClick={() => handleTabClick("howto")}
-          >
-            How To
-          </button>
-          <button
-            className={`${
-              activeTab === "try"
-                ? "bg-user_green text-white"
-                : "bg-user_sol text-user_black"
-            }} min-w-[100px] w-[fit-content] p-2 h-[2.5rem]  rounded-xl text-white font-nasq font-bold`}
-            onClick={() => handleTabClick("try")}
-          >
-            Try
-          </button>
+            <button
+              className={`${
+                activeTab === "howto"
+                  ? "bg-user_green text-white"
+                  : "bg-user_sol text-user_black"
+              }} min-w-[100px] w-1/3 p-2 h-[2.5rem]  rounded-xl text-white font-nasq font-bold`}
+              onClick={() => handleTabClick("howto")}
+            >
+              How To
+            </button>
+            <button
+              className={`${
+                activeTab === "try"
+                  ? "bg-user_green text-white"
+                  : "bg-user_sol text-user_black"
+              }} min-w-[100px] w-1/3 p-2 h-[2.5rem]  rounded-xl text-white font-nasq font-bold`}
+              onClick={() => handleTabClick("try")}
+            >
+              Try
+            </button>
+          </div>
         </div>
         <div>
           {activeTab === "all" && <All />}
