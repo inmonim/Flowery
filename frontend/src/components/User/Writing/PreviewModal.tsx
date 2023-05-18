@@ -90,16 +90,16 @@ const PreviewModal = React.forwardRef<HTMLDivElement, any>((props, ref) => {
                     />
                   </svg>
                 </div>
-                <div className="absolute flex w-[8%] top-[28.5%] left-[20%]">
-                  {/* <p className="mr-2 font-bold text-red-500">Click!</p> */}
-                  <img src={Arrow} className="animate-shakeRight" />
+                <div className="absolute flex w-[8%] top-[28.5%] left-[10%]">
+                  <p className="mr-2 font-bold text-sm text-red-500">Click!</p>
+                  <img src={Arrow} className="" />
                 </div>
                 <div className="w-full mx-auto flex items-center justify-center">
                   <img
                     src={QRImg}
                     alt="QR"
                     onClick={() => setClickQR(true)}
-                    className="absolute mx-auto w-[15%] top-[26%] cursor-pointer z-10 hover:z-30 animate-beat"
+                    className="absolute mx-auto w-[15%] top-[26%] cursor-pointer z-10 hover:z-30"
                   />
                 </div>
               </div>
@@ -129,7 +129,7 @@ const PreviewModal = React.forwardRef<HTMLDivElement, any>((props, ref) => {
               <div className="flex justify-center pb-6">
                 <span
                   onClick={props.onClose}
-                  className="cursor-pointer border rounded-full p-2 px-4 mr-2 font-bold text-white bg-[#eed3b5]"
+                  className="cursor-pointer border rounded-full p-2 px-4 mr-2 font-bold bg-user_green text-white"
                 >
                   이전으로
                 </span>
@@ -138,7 +138,7 @@ const PreviewModal = React.forwardRef<HTMLDivElement, any>((props, ref) => {
                     window.scrollTo({ top: 0 });
                     setReservationConfirm(true);
                   }}
-                  className="cursor-pointer border rounded-full p-2 px-4 ml-2 font-bold text-white bg-[#eed3b5]"
+                  className="cursor-pointer border rounded-full p-2 px-4 ml-2 font-bold bg-user_green text-white"
                 >
                   제출하기
                 </span>
