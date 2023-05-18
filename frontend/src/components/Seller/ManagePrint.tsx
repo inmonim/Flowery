@@ -21,6 +21,7 @@ interface ReservationItem {
   phrase: string;
   image: string;
   renderedCard: string;
+  phone: string;
 }
 
 export default function ManagePrint() {
@@ -30,12 +31,20 @@ export default function ManagePrint() {
   const currentDate = new Date();
   const options = { timeZone: "Asia/Seoul" };
   const formattedDate = currentDate.toISOString().split("T")[0] + "T00:00:00";
+  const myatk = sessionStorage.getItem("atk");
+
   useEffect(() => {
+    console.log(myatk);
     axios
       .post(
         `https://flowery.duckdns.org/api/reservation/day/?date=${formattedDate}`,
         {
           storeId: myStoreId,
+        },
+        {
+          headers: {
+            Authorization: `bearer ${myatk}`,
+          },
         }
       )
       .then((response) => {
@@ -86,6 +95,7 @@ export default function ManagePrint() {
                 permission={item.permission}
                 image={item.image}
                 renderedCard={item.renderedCard}
+                phone={item.phone}
               />
             </div>
           ))}

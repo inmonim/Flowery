@@ -38,12 +38,21 @@ export default function PrintCard(props: PrintCardProps) {
   const [myGoods, setMyGoods] = useState<Goods[]>([]);
   const [selectedItem, setSelectedItem] = useState<Goods | null>(null);
   const [inputValue, setInputValue] = useState("");
+  const myatk = sessionStorage.getItem("atk");
 
   useEffect(() => {
     axios
-      .post(`https://flowery.duckdns.org/api/goods/info`, {
-        storeId: myStoreId,
-      })
+      .post(
+        `https://flowery.duckdns.org/api/goods/info`,
+        {
+          storeId: myStoreId,
+        },
+        {
+          headers: {
+            Authorization: `bearer ${myatk}`,
+          },
+        }
+      )
       .then((response) => {
         setMyGoods(response.data as Goods[]);
       })
@@ -69,6 +78,9 @@ export default function PrintCard(props: PrintCardProps) {
         fetch("https://flowery.duckdns.org/flask/objectDetect", {
           method: "POST",
           body: formData,
+          headers: {
+            Authorization: `bearer ${myatk}`,
+          },
         })
           .then((response) => {
             return response.json();
@@ -82,6 +94,7 @@ export default function PrintCard(props: PrintCardProps) {
             const flowerDataArray = Object.entries(data.flower_object).map(
               ([flower, count]) => ({ flower, count })
             );
+            console.log(flowerDataArray);
             setFlowerData(flowerDataArray);
 
             setMessage(data.message);
@@ -160,7 +173,11 @@ export default function PrintCard(props: PrintCardProps) {
                 const formData3 = new FormData();
                 formData3.append("pictures", file);
                 axios
-                  .post(`https://flowery.duckdns.org/api/storage`, formData3)
+                  .post(`https://flowery.duckdns.org/api/storage`, formData3, {
+                    headers: {
+                      Authorization: `bearer ${myatk}`,
+                    },
+                  })
                   .then((response) => {
                     console.log(response.data[0]);
                     axios.post(
@@ -170,6 +187,11 @@ export default function PrintCard(props: PrintCardProps) {
                         goodsName: selectedItem?.goodsName,
                         price: selectedItem?.goodsPrice,
                         renderedCard: response.data[0],
+                      },
+                      {
+                        headers: {
+                          Authorization: `bearer ${myatk}`,
+                        },
                       }
                     );
                   });
@@ -190,26 +212,53 @@ export default function PrintCard(props: PrintCardProps) {
   function handlePrint(reservationId1: number) {
     if (formdatas) {
       if (!props.printed) {
-        axios.post("https://flowery.duckdns.org/api/reservation/print", {
-          reservationId: reservationId1,
-        });
+        axios.post(
+          "https://flowery.duckdns.org/api/reservation/print",
+          {
+            reservationId: reservationId1,
+          },
+          {
+            headers: {
+              Authorization: `bearer ${myatk}`,
+            },
+          }
+        );
       }
       if (inputValue !== "") {
-        axios.post("https://flowery.duckdns.org/api/reservation/fix", {
-          reservationId: props.reservationId,
-          goodsName: selectedItem ? selectedItem.goodsName : props.goodsName,
-          price: inputValue,
-        });
+        axios.post(
+          "https://flowery.duckdns.org/api/reservation/fix",
+          {
+            reservationId: props.reservationId,
+            goodsName: selectedItem ? selectedItem.goodsName : props.goodsName,
+            price: inputValue,
+          },
+          {
+            headers: {
+              Authorization: `bearer ${myatk}`,
+            },
+          }
+        );
       } else {
-        axios.post("https://flowery.duckdns.org/api/reservation/fix", {
-          reservationId: props.reservationId,
-          goodsName: selectedItem ? selectedItem.goodsName : props.goodsName,
-          price: selectedItem ? selectedItem.goodsPrice : props.price,
-        });
+        axios.post(
+          "https://flowery.duckdns.org/api/reservation/fix",
+          {
+            reservationId: props.reservationId,
+            goodsName: selectedItem ? selectedItem.goodsName : props.goodsName,
+            price: selectedItem ? selectedItem.goodsPrice : props.price,
+          },
+          {
+            headers: {
+              Authorization: `bearer ${myatk}`,
+            },
+          }
+        );
       }
       fetch("https://flowery.duckdns.org/api/messages/flower-picture", {
         method: "POST",
         body: formdatas,
+        headers: {
+          Authorization: `bearer ${myatk}`,
+        },
       })
         .then((response) => {
           return response.json();
@@ -218,6 +267,9 @@ export default function PrintCard(props: PrintCardProps) {
           return axios.get("https://flowery.duckdns.org/api/reservation/card", {
             params: {
               reservationId: reservationId1,
+            },
+            headers: {
+              Authorization: `bearer ${myatk}`,
             },
           });
         })
@@ -251,10 +303,18 @@ export default function PrintCard(props: PrintCardProps) {
     });
 
     axios
-      .post("https://flowery.duckdns.org/flask/saveSales", {
-        flower_object: tmp,
-        reservation_id: props.reservationId,
-      })
+      .post(
+        "https://flowery.duckdns.org/flask/saveSales",
+        {
+          flower_object: tmp,
+          reservation_id: props.reservationId,
+        },
+        {
+          headers: {
+            Authorization: `bearer ${myatk}`,
+          },
+        }
+      )
       .then(() => {
         setRecogOK(true);
       })
@@ -376,7 +436,7 @@ export default function PrintCard(props: PrintCardProps) {
                       </div>
                     ))}
                     {recogOK ? (
-                      <p>인식이 완료되었습니다.</p>
+                      <p className="text-center">인식이 완료되었습니다.</p>
                     ) : (
                       <>
                         <p className="pt-5 text-center">

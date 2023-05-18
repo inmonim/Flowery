@@ -16,6 +16,7 @@ export default function GoodsAdd(props: modalProps) {
   const [formdatas, setFormdatas] = useState<FormData>(new FormData());
   const [sampleImages, setSampleImages] = useState<string[]>([]);
   const myStoreId = useRecoilValue(storeId);
+  const myatk = sessionStorage.getItem("atk");
 
   function handleClick() {
     props.closeModal();
@@ -78,6 +79,9 @@ export default function GoodsAdd(props: modalProps) {
     fetch("https://flowery.duckdns.org/api/goods", {
       method: "POST",
       body: formdatas,
+      headers: {
+        Authorization: `bearer ${myatk}`,
+      },
     }).then((response) => {
       alert("등록이 완료되었습니다.");
       window.location.reload();
