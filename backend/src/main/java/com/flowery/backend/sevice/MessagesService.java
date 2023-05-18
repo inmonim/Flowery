@@ -48,6 +48,8 @@ public class MessagesService {
         messagesDto.setMessageDate(messages.getMessageDate());
         messagesDto.setPoem(messages.getPoem() == null ? null : messages.getPoem());
 
+        messagesDto.setRenderedCard(reservationRepository.findByMessageId(messages).getRenderedCard());
+
         // pictures에 저장된 데이터(사진 도메인) 불러오는 코드
         List<String> result = new ArrayList<>();
         for(int i=0; i<picturesList.size(); i++){

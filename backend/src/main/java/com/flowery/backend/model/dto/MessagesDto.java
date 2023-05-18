@@ -19,5 +19,6 @@ public class MessagesDto {
     private String poem;
     private List<String> pictures;
     private Map<String, List<String>> flowerAndMeaning;
+    private String renderedCard;
 
 }

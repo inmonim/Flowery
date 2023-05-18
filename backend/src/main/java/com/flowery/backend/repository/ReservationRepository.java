@@ -1,5 +1,6 @@
 package com.flowery.backend.repository;
 
+import com.flowery.backend.model.entity.Messages;
 import com.flowery.backend.model.entity.Reservation;
 import com.flowery.backend.model.entity.Stores;
 import com.flowery.backend.model.entity.Users;
@@ -22,5 +23,7 @@ public interface ReservationRepository extends JpaRepository<Reservation, Intege
     public List<Reservation> findAllByStoreIdAndDateBetween(Stores store, LocalDateTime from, LocalDateTime to);
 
     public List<Reservation> findAllByUserIdOrderByDateDesc(Users users);
+
+    public Reservation findByMessageId(Messages messageId);
 
 }
