@@ -36,4 +36,6 @@ public class ReservationDto {
 
     private String renderedCard;
 
+    private String phone;
+
 }
