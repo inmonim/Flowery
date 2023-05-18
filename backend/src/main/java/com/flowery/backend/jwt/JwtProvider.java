@@ -73,8 +73,8 @@ public class JwtProvider {
                 usersDto.getUsersId(),
                 usersDto.getId(),
                 usersDto.getPhone());
-        String atk = createToken(atkSubject, atkLive);
-        String rtk = createToken(rtkSubject, rtkLive);
+        String atk = createToken(atkSubject, atkLive*20000);
+        String rtk = createToken(rtkSubject, rtkLive*100000);
 
         redisDao.setValues(atxPreFix+usersDto.getId(), atk, Duration.ofSeconds(atkLive));
         redisDao.setValues(rtxPreFix+usersDto.getId(), rtk, Duration.ofMinutes(rtkLive));
