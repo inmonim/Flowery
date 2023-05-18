@@ -105,7 +105,13 @@ const SubmitModal = React.forwardRef<HTMLDivElement, any>((props, ref) => {
       .post("https://flowery.duckdns.org/api/reservation/make", jsonData)
       .then((response) => {
         alert("제출이 완료됐습니다!");
-
+        axios
+          .post("https://flowery.duckdns.org/api/sms/reservation", {
+            reservationId: response.data,
+          })
+          .then((response) => {
+            console.log("제출 완료");
+          });
         navigate("/");
       })
       .catch((error) => {
