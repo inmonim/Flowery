@@ -58,7 +58,7 @@ export default function MyGarden() {
     };
     getCards();
   }, [messages]);
-
+  console.log(cards)
   const handleExpand = () => {
     setIsExpand(!isExpand);
   };

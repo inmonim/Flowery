@@ -100,11 +100,12 @@ const SubmitModal = React.forwardRef<HTMLDivElement, any>((props, ref) => {
       card: card,
       renderedCard: cardUrl[0],
     };
-    console.log(jsonData);
+
     axios
       .post("https://flowery.duckdns.org/api/reservation/make", jsonData)
       .then((response) => {
         alert("제출이 완료됐습니다!");
+
         navigate("/");
       })
       .catch((error) => {
@@ -112,6 +113,17 @@ const SubmitModal = React.forwardRef<HTMLDivElement, any>((props, ref) => {
         setLoading(false);
       });
   };
+
+  // const reservationId = () => {
+  //   axios.post("https://flowery.duckdns.org/api/user/reservation", {userId: userId})
+  //   .then((response) => {
+  //     sendMessage()
+  //   })
+  // }
+
+  // const sendMessage = () => {
+  //   axios.
+  // }
 
   return (
     <div className="relative z-[50]">
