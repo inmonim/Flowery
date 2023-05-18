@@ -31,10 +31,11 @@ export default function ManagePrint() {
   const currentDate = new Date();
   const options = { timeZone: "Asia/Seoul" };
   const formattedDate = currentDate.toISOString().split("T")[0] + "T00:00:00";
-  const myatk = sessionStorage.getItem("atk");
 
   useEffect(() => {
+    const myatk = sessionStorage.getItem("atk");
     console.log(myatk);
+    console.log(`bearer ${myatk}`);
     axios
       .post(
         `https://flowery.duckdns.org/api/reservation/day/?date=${formattedDate}`,
@@ -43,7 +44,7 @@ export default function ManagePrint() {
         },
         {
           headers: {
-            Authorization: `bearer ${myatk}`,
+            Authorization: `bearer ${sessionStorage.getItem("atk")}`,
           },
         }
       )

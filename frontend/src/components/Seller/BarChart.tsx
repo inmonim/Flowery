@@ -48,7 +48,7 @@ export default function BarChart() {
               endDate: endDate.toISOString().split("T")[0] + "T00:00:00",
             },
             headers: {
-              Authorization: `bearer ${myatk}`,
+              Authorization: `bearer ${sessionStorage.getItem("atk")}`,
             },
           }
         );
@@ -63,7 +63,7 @@ export default function BarChart() {
               endDate: endDate.toISOString().split("T")[0] + "T00:00:00",
             },
             headers: {
-              Authorization: `bearer ${myatk}`,
+              Authorization: `bearer ${sessionStorage.getItem("atk")}`,
             },
           }
         );
