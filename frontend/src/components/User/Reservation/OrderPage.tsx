@@ -6,6 +6,7 @@ import { Link, useLocation } from "react-router-dom";
 import axios from "axios";
 import { useRecoilValue, useRecoilState } from "recoil";
 import { shopDataState, goodsState } from "../../../recoil/atom";
+import api from "../../../axios/AxiosInterceptor";
 
 export default function OrderPage() {
   const location = useLocation();
@@ -20,7 +21,7 @@ export default function OrderPage() {
   useEffect(() => {
     async function getData() {
       try {
-        const response = await axios.post(
+        const response = await api.post(
           "https://flowery.duckdns.org/api/goods/info",
           {
             storeId: shopData.storeId,
