@@ -57,13 +57,16 @@ model_flower_label, flower_name_dict = get_flower_dict(conn)
 model = torch.hub.load('ultralytics/yolov5', 'custom', path=f'./flowery/module/main_5_9.pt', force_reload=True, trust_repo=True)
 
 def get_result(image_path, model=model):
-    img = Image.open(image_path)
-    x, y = img.size
-    L, M = max(x,y), min(x,y)
-    if x == L:
-        img = img.resize([640,int(640/L * M)])
-    else:
-        img = img.resize([int(640/L * M), 640])
+    try:
+        img = Image.open(image_path)
+        x, y = img.size
+        L, M = max(x,y), min(x,y)
+        if x == L:
+            img = img.resize([640,int(640/L * M)])
+        else:
+            img = img.resize([int(640/L * M), 640])
+    except:
+        return 'img_break'
     results = model(img)
     if len(results.xywh[0]):
         
