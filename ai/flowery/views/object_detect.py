@@ -18,15 +18,25 @@ s3 = boto3.client('s3',
 BUCKET_NAME = 's3.bucket.flowery.youngil'
 LOCAL = 'ap-northeast-2'
 
-@bp.route('/objectDetect', methods=['GET', 'POST'])
+@bp.route('/objectDetect', methods=['GET'])
 def object_detect():
-    if request.method == 'GET':
-        return 'POST 방식으로 접근하세용'
     
-    elif request.method == 'POST':
+    if request.method == 'POST':
         img = request.files['file']
         filename = secure_filename(img.filename)
         img_result = get_result(img)
+        
+        if img_result == 'img_break':
+            
+            result = {'flower_object' : {},
+                  'file_url' : '',
+                  'message' : '사진이 손상되어 탐지할 수 없습니다.'}
+            
+            return Response(json.dumps(result, ensure_ascii=False),
+                            headers=({'Access-Control-Allow-Origin': '*'}),
+                            content_type='application/json; charset=utf-8',
+                            status=415)
+            
         
         flower_result = {}
         for pred in img_result.pred[0]:
@@ -70,12 +80,10 @@ def object_detect():
         return response
     
 
-@bp.route('/landing/objectDetect', methods=['GET', 'POST'])
+@bp.route('/landing/objectDetect', methods=['POST'])
 def landing_object_detect():
-    if request.method == 'GET':
-        return 'POST 방식으로 접근하세용'
     
-    elif request.method == 'POST':
+    if request.method == 'POST':
         img = request.files['file']
         filename = secure_filename(img.filename)
         img_result = get_result(img)
@@ -178,5 +186,31 @@ def save_sales():
                             headers=({'Access-Control-Allow-Origin': '*'}),
                             content_type='application/json; charset=utf-8',
                             status=200)
+        
+        return response
+    
+    
+    
+@bp.route('/saveSales/offline', methods=['POST'])
+def save_sales():
+    if request.method == 'POST':
+        
+        res = request.get_json()
+        reservation_id = res['reservation_id']
+        
+        for k,v in res['flower_object'].items():
+            sales = Sales()
+            sales.reservation_id = reservation_id
+            flower_id = flower_name_dict[k]
+            sales.flower_id = flower_id
+            sales.count = v
+        
+            db.session.add(sales)
+            db.session.commit()
+        
+        response = Response(json.dumps({'message' : '입력 성공'}, ensure_ascii=False),
+                    headers=({'Access-Control-Allow-Origin': '*'}),
+                    content_type='application/json; charset=utf-8',
+                    status=200)
         
         return response
