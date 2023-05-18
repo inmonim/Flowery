@@ -4,7 +4,7 @@ from werkzeug.utils import secure_filename
 
 import random, os, uuid
 
-from flowery.module.model import get_result, make_poem, model_flower_label, flower_name_dict, flower_lang, flower_mean_id_dict, conn, text
+from flowery.module.model import get_result, make_poem, model_flower_label, flower_name_dict, flower_lang, flower_mean_id_dict, get_message_id
 from flowery.models import Sales, Myflowers
 
 from flowery import db
@@ -140,7 +140,7 @@ def save_sales():
         res = request.get_json()
         reservation_id = res['reservation_id']
         
-        message_id = conn.execute(text(f"SELECT message_id FROM reservation WHERE reservation_id={reservation_id}")).one()[0]
+        message_id = get_message_id(reservation_id)
         
         flower_id_list = []
         

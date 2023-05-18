@@ -5,24 +5,24 @@ from PIL import Image
 
 from sqlalchemy import create_engine, Table, MetaData, text
 
-def engine():
-    user = 'root'
-    password = 'Sw3lOZMzHc'
-    host = 'k8e107.p.ssafy.io'
-    port = 3306
-    database = 'flowery'
 
-    SQLALCHEMY_DATABASE_URI = f'mysql+pymysql://{user}:{password}@{host}:{port}/{database}?charset=utf8mb4'
-    engine = create_engine(url=SQLALCHEMY_DATABASE_URI)
+user = 'root'
+password = 'Sw3lOZMzHc'
+host = 'k8e107.p.ssafy.io'
+port = 3306
+database = 'flowery'
+
+SQLALCHEMY_DATABASE_URI = f'mysql+pymysql://{user}:{password}@{host}:{port}/{database}?charset=utf8mb4'
+engine = create_engine(url=SQLALCHEMY_DATABASE_URI)
+
+
+def get_flower_dict(engine=engine):
     
-    return engine.connect()
-
-conn = engine()
-
-def get_flower_dict(conn):
-    metadata = MetaData()
-    flowers_table = Table('flowers', metadata, autoload_with=conn)
-    flowers = conn.execute(flowers_table.select())
+    with engine.connect() as conn:
+        metadata = MetaData()
+        flowers_table = Table('flowers', metadata, autoload_with=conn)
+        flowers = conn.execute(flowers_table.select())
+        
     model_flower_label = {
         0 : '장미',
         1 : 'empty',
@@ -52,7 +52,9 @@ def get_flower_dict(conn):
     
     return [model_flower_label, flower_name_dict]
 
-model_flower_label, flower_name_dict = get_flower_dict(conn)
+model_flower_label, flower_name_dict = get_flower_dict()
+
+
 
 model = torch.hub.load('ultralytics/yolov5', 'custom', path=f'./flowery/module/main_5_9.pt', force_reload=True, trust_repo=True)
 
@@ -67,6 +69,7 @@ def get_result(image_path, model=model):
             img = img.resize([int(640/L * M), 640])
     except:
         return 'img_break'
+    
     results = model(img)
     if len(results.xywh[0]):
         
@@ -98,8 +101,6 @@ def get_result(image_path, model=model):
 
 
 import openai
-import random
-
 
 # current_directory = os.path.dirname(__file__)
 # file_path = os.path.join(current_directory, 'openai_api_key.txt')
@@ -114,7 +115,7 @@ openai.organization = org_id
 openai.api_key = api_key
 
 
-def make_poem(keyword1, keyword2, reservation_id, conn=conn):
+def make_poem(keyword1, keyword2, reservation_id, engine=engine):
     
     k = keyword2[-1]
     
@@ -129,19 +130,22 @@ def make_poem(keyword1, keyword2, reservation_id, conn=conn):
     
     poem = completion.choices[0].message.content
     
-    message_id = conn.execute(text(f"SELECT message_id FROM reservation WHERE reservation_id = {reservation_id}")).one()[0]
- 
-    conn.execute(text(f"UPDATE messages SET poem = '{poem}' WHERE message_id = '{message_id}'"))
+    with engine.connect() as conn:
     
-    conn.commit()
+        message_id = conn.execute(text(f"SELECT message_id FROM reservation WHERE reservation_id = {reservation_id}")).one()[0]
     
-def get_flower_lang(conn=conn):
+        conn.execute(text(f"UPDATE messages SET poem = '{poem}' WHERE message_id = '{message_id}'"))
+        
+        conn.commit()
+    
+def get_flower_lang(engine=engine):
     
     flower_lang_dict = {}
     flower_mean_id_dict = {}
     
-    results = conn.execute(text("SELECT * FROM meaning"))
-    
+    with engine.connect() as conn:
+        results = conn.execute(text("SELECT * FROM meaning"))
+        
     for mean_id, flower_id, flower_lang in results:
         
         if flower_lang_dict.get(flower_id):
@@ -159,3 +163,9 @@ def get_flower_lang(conn=conn):
     return (flower_lang_dict, flower_mean_id_dict)
 
 flower_lang, flower_mean_id_dict = get_flower_lang()
+
+
+def get_message_id(reservation_id, engine=engine):
+    with engine.connect() as conn:
+        message_id = conn.execute(text(f"SELECT message_id FROM reservation WHERE reservation_id={reservation_id}")).one()[0]
+    return message_id
