@@ -20,7 +20,7 @@ export default function PreviewMemories() {
     autoplaySpeed: 4000,
     speed: 1200,
   };
-
+  console.log(images)
   return (
     <div className="mb-[30%]">
       {/* <div className="mb-[25%] flex justify-center">
@@ -48,12 +48,12 @@ export default function PreviewMemories() {
                 : "w-[90%] ml-auto"
             }`}
           >
-            <img src={image} alt="couple" />
+            <img src={URL.createObjectURL(image)} alt="couple" />
           </div>
         ))}
       {video && (
         <div>
-          <video src={URL.createObjectURL(video)} className="w-[100%]" controls poster={VideoPoster}/>
+          <video src={URL.createObjectURL(video)} className="w-[100%]" controls/>
         </div>
       )}
     </div>
