@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import styles from "./ApproveInfo.module.scss";
-import flower from "../../assets/example1.jpg";
 import CheckOrder from "./CheckOrder";
 
 interface ItemInfoProps {
@@ -11,6 +10,8 @@ interface ItemInfoProps {
   reservationId: number;
   phrase: string;
   demand: string;
+  phone: string;
+  image: string;
 }
 
 export default function ApproveInfo(props: ItemInfoProps) {
@@ -39,10 +40,12 @@ export default function ApproveInfo(props: ItemInfoProps) {
       <div className={styles.itemcontainer}>
         <div className={styles.items}>
           <div className={styles.picture}>
-            <img src={flower} alt="flower" />
+            <img src={props.image} alt="flower" />
           </div>
           <div className={styles.description}>
-            <div className={styles.number}>{props.reservationName}</div>
+            <div className={styles.number}>
+              {props.phone ? props.phone : props.reservationName}
+            </div>
             <div className={styles.time}>{formattedDate}</div>
             <div className={styles.time}>{props.demand}</div>
           </div>
@@ -59,6 +62,8 @@ export default function ApproveInfo(props: ItemInfoProps) {
           reservationName={props.reservationName}
           demand={props.goodsName}
           date={props.date}
+          phone={props.phone}
+          image={props.image}
         />
       )}
     </div>

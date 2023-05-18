@@ -23,10 +23,15 @@ export default function SellerLogin() {
         pass: myPw,
       })
       .then((response) => {
+        sessionStorage.setItem("atk", response.data.atk);
         setAtk(response.data.atk);
         setRtk(response.data.rtk);
         axios
-          .get(`https://flowery.duckdns.org/api/stores/storeInfo?id=${myId}`)
+          .get(`https://flowery.duckdns.org/api/stores/storeInfo?id=${myId}`, {
+            headers: {
+              Authorization: `bearer ${response.data.atk}`,
+            },
+          })
           .then((res) => {
             setStoreId(res.data.storeId);
             setStoreInfo(res.data);

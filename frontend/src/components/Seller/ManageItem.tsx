@@ -17,6 +17,7 @@ interface GoodsItem {
 
 export default function ManageItem() {
   const [showModal, setShowModal] = useState(false);
+  const myatk = sessionStorage.getItem("atk");
   function handleModal() {
     setShowModal(true); // 모달을 열기 위해 상태를 true로 변경합니다.
   }
@@ -29,9 +30,17 @@ export default function ManageItem() {
 
   useEffect(() => {
     axios
-      .post(`https://flowery.duckdns.org/api/goods/info`, {
-        storeId: myStoreId,
-      })
+      .post(
+        `https://flowery.duckdns.org/api/goods/info`,
+        {
+          storeId: myStoreId,
+        },
+        {
+          headers: {
+            Authorization: `bearer ${myatk}`,
+          },
+        }
+      )
       .then((response) => {
         console.log(response.data);
         setMyItem(response.data as GoodsItem[]);

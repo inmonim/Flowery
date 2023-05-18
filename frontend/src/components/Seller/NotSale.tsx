@@ -22,6 +22,7 @@ export default function NotSale(props: Props) {
   const [photoUrl1, setPhotoUrl1] = useState<string | null>(null);
   const [step1, setStep1] = useState(false);
   const [step2, setStep2] = useState(false);
+  const [step3, setStep3] = useState(false);
   const [formdatas, setFormdatas] = useState<FormData | null>(null);
   const myStoreId = useRecoilValue(storeId);
   const [myGoods, setMyGoods] = useState<Goods[]>([]);
@@ -35,6 +36,8 @@ export default function NotSale(props: Props) {
   const [flowerObject, setFlowerObject] = useState<any>();
   const options = { timeZone: "Asia/Seoul" };
   const currentDate = new Date();
+  const myatk = sessionStorage.getItem("atk");
+
   const formattedDate = currentDate
     .toLocaleString("en-US", options)
     .split(",")
@@ -57,9 +60,17 @@ export default function NotSale(props: Props) {
 
   useEffect(() => {
     axios
-      .post(`https://flowery.duckdns.org/api/goods/info`, {
-        storeId: myStoreId,
-      })
+      .post(
+        `https://flowery.duckdns.org/api/goods/info`,
+        {
+          storeId: myStoreId,
+        },
+        {
+          headers: {
+            Authorization: `bearer ${myatk}`,
+          },
+        }
+      )
       .then((response) => {
         setMyGoods(response.data as Goods[]);
       })
@@ -81,6 +92,9 @@ export default function NotSale(props: Props) {
         fetch("https://flowery.duckdns.org/flask/objectDetect", {
           method: "POST",
           body: formData,
+          headers: {
+            Authorization: `bearer ${myatk}`,
+          },
         })
           .then((response) => {
             return response.json();
@@ -93,7 +107,7 @@ export default function NotSale(props: Props) {
               ([flower, count]) => ({ flower, count })
             );
             setFlowerData(flowerDataArray);
-
+            setStep3(true);
             setMessage(data.message);
           });
       }
@@ -114,19 +128,35 @@ export default function NotSale(props: Props) {
       alert("판매 금액을 입력해주세요");
     } else {
       axios
-        .post("https://flowery.duckdns.org/api/reservation/make/on-site", {
-          userId: 0,
-          storeId: myStoreId,
-          goodsName: selectedItem?.goodsName,
-          price: inputValue ? inputValue : selectedItem?.goodsPrice,
-          date: date1,
-        })
+        .post(
+          "https://flowery.duckdns.org/api/reservation/make/on-site",
+          {
+            userId: 0,
+            storeId: myStoreId,
+            goodsName: selectedItem?.goodsName,
+            price: inputValue ? inputValue : selectedItem?.goodsPrice,
+            date: date1,
+          },
+          {
+            headers: {
+              Authorization: `bearer ${myatk}`,
+            },
+          }
+        )
         .then((response) => {
           axios
-            .post("https://flowery.duckdns.org/flask/saveSales", {
-              flower_object: flowerObject,
-              reservation_id: response.data,
-            })
+            .post(
+              "https://flowery.duckdns.org/flask/saveSales/offline",
+              {
+                flower_object: flowerObject,
+                reservation_id: response.data,
+              },
+              {
+                headers: {
+                  Authorization: `bearer ${myatk}`,
+                },
+              }
+            )
             .then(() => {
               alert("판매내역이 저장되었습니다.");
               props.closeModal33();
@@ -259,7 +289,7 @@ export default function NotSale(props: Props) {
                   )}
                 </div>
                 <div className="w-[87vw] flex justify-center">
-                  {selectedItem && selectedItem.goodsName === "기타" ? (
+                  {step3 ? (
                     <button
                       className={styles.successbutton}
                       onClick={() => checkStep2(inputValue)}

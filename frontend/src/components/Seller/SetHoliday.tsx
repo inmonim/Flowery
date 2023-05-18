@@ -12,12 +12,20 @@ export default function SetHoliday() {
   const myStoreId = useRecoilValue(storeId);
   const myStoreInfo = useRecoilValue(storeInfo);
   const [holiday, setHoliday] = useState("");
-
+  const myatk = sessionStorage.getItem("atk");
   useEffect(() => {
     axios
-      .post("https://flowery.duckdns.org/api/stores/holidays", {
-        storeId: myStoreId,
-      })
+      .post(
+        "https://flowery.duckdns.org/api/stores/holidays",
+        {
+          storeId: myStoreId,
+        },
+        {
+          headers: {
+            Authorization: `bearer ${myatk}`,
+          },
+        }
+      )
       .then((response) => {
         setHoliday(response.data);
         const updatedSelectedDays = daysOfWeek.map((day) =>
@@ -42,10 +50,18 @@ export default function SetHoliday() {
     });
     setHoliday(holidays);
     await axios
-      .put("https://flowery.duckdns.org/api/stores/holidays", {
-        storeId: myStoreId,
-        holidays: holidays,
-      })
+      .put(
+        "https://flowery.duckdns.org/api/stores/holidays",
+        {
+          storeId: myStoreId,
+          holidays: holidays,
+        },
+        {
+          headers: {
+            Authorization: `bearer ${myatk}`,
+          },
+        }
+      )
       .then(() => {
         alert("휴일 변경이 완료되었습니다");
       });
