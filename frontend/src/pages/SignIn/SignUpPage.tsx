@@ -247,7 +247,7 @@ export default function SignUpPage() {
                   onClick={checkVerify}
                   className={`absolute flex inset-y-0 right-0 h-full w-1/4 rounded-xl text-xs font-medium leading-normal ${
                     isPhoneNum
-                      ? "bg-red-300 text-white  shadow-[0_4px_9px_-4px_rgba(0,0,0,0.2)] transition duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] hover:outline-none hover:ring-0 active:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] "
+                      ? "bg-user_green text-white  shadow-[0_4px_9px_-4px_rgba(0,0,0,0.2)] transition duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] hover:outline-none hover:ring-0 active:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] "
                       : "bg-gray-50 text-gray-300"
                   }`}
                 >
@@ -278,7 +278,7 @@ export default function SignUpPage() {
             {!isVerify && clickVerify && (
               <button
                 onClick={checkCode}
-                className="mb-3 inline-block w-full rounded-xl px-6 pb-2 pt-2.5 text-xs font-medium leading-normal bg-red-300 text-white transform shadow-[0_4px_9px_-4px_rgba(0,0,0,0.2)] hover:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:outline-none focus:ring-0 active:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)]"
+                className="mb-3 inline-block w-full rounded-xl px-6 pb-2 pt-2.5 text-xs font-medium leading-normal bg-user_green text-white transform shadow-[0_4px_9px_-4px_rgba(0,0,0,0.2)] hover:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:outline-none focus:ring-0 active:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)]"
               >
                 확인
               </button>
@@ -421,7 +421,7 @@ export default function SignUpPage() {
                       }
                     }
                   }}
-                  className="mb-3 inline-block w-full text-center rounded-xl px-6 pb-2 pt-2.5 text-xs font-medium leading-normal bg-red-300 text-white ease-in-out shadow-[0_4px_9px_-4px_rgba(0,0,0,0.2)] hover:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:outline-none focus:ring-0 active:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)]"
+                  className="mb-3 inline-block w-full text-center rounded-xl px-6 pb-2 pt-2.5 text-xs font-medium leading-normal bg-user_green text-white ease-in-out shadow-[0_4px_9px_-4px_rgba(0,0,0,0.2)] hover:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:outline-none focus:ring-0 active:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)]"
                 >
                   회원가입
                 </div>

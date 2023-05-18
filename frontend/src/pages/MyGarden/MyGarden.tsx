@@ -40,26 +40,35 @@ export default function MyGarden() {
           userId: userId,
         })
         .then((response) => {
-          setMessages(response.data);
+          response.data.map((message: messageType, idx: number) =>
+            api
+              .post("https://flowery.duckdns.org/api/messages/get-card", {
+                messageId: message.messageId,
+              })
+              .then((response) => {
+                setCards((prevCards) => [...prevCards, response.data]);
+              })
+          );
+          // setMessages(response.data);
         });
     };
     getMessages();
   }, []);
 
-  useEffect(() => {
-    const getCards = async () => {
-      messages.map((message: messageType, idx: number) =>
-        api
-          .post("https://flowery.duckdns.org/api/messages/get-card", {
-            messageId: message.messageId,
-          })
-          .then((response) => {
-            setCards((prevCards) => [...prevCards, response.data]);
-          })
-      );
-    };
-    getCards();
-  }, [messages]);
+  // useEffect(() => {
+  //   const getCards = async () => {
+  //     messages.map((message: messageType, idx: number) =>
+  //       api
+  //         .post("https://flowery.duckdns.org/api/messages/get-card", {
+  //           messageId: message.messageId,
+  //         })
+  //         .then((response) => {
+  //           setCards((prevCards) => [...prevCards, response.data]);
+  //         })
+  //     );
+  //   };
+  //   getCards();
+  // }, [messages]);
   console.log(cards);
   const handleExpand = () => {
     setIsExpand(!isExpand);
@@ -119,7 +128,7 @@ export default function MyGarden() {
                   <div key={idx} className="flex-col">
                     <div className="h-full p-4">
                       <img
-                        src={card.flowerPicture}
+                        src={card.pictures[0]}
                         onClick={() => {
                           setSelectCard(true);
                           window.scrollTo({ top: 0 });

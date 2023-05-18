@@ -124,7 +124,7 @@ export default function SignInPage() {
                         <input
                           defaultValue="로그인"
                           onClick={checkSignIn}
-                          className="mb-3 inline-block w-full cursor-pointer rounded-xl px-6 pb-2 pt-2.5 text-xs text-center font-medium uppercase leading-normal bg-red-300 text-white shadow-[0_4px_9px_-4px_rgba(0,0,0,0.2)] transition duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:outline-none focus:ring-0 active:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)]"
+                          className="mb-3 inline-block w-full cursor-pointer rounded-xl px-6 pb-2 pt-2.5 text-xs text-center font-medium uppercase leading-normal bg-user_green text-white shadow-[0_4px_9px_-4px_rgba(0,0,0,0.2)] transition duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:outline-none focus:ring-0 active:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)]"
                         ></input>
                       </div>
                       {/* <div className="flex">
@@ -135,7 +135,15 @@ export default function SignInPage() {
                           비회원 주문
                         </p>
                       </div> */}
-                      <div className="flex items-center justify-between pb-6">
+                      <div className="flex">
+                        <p
+                          onClick={goToSignUp}
+                          className="text-blue-600 text-sm ml-auto pb-6 mb-3 mr-2 cursor-pointer"
+                        >
+                          회원가입
+                        </p>
+                      </div>
+                      {/* <div className="flex items-center justify-between pb-6">
                         <div className="ml-auto">
                           <input
                             type="button"
@@ -144,7 +152,7 @@ export default function SignInPage() {
                             className="inline-block items-center cursor-pointer w-full text-center rounded-2xl border-2 px-6 text-sm font-medium leading-normal transition duration-150 ease-in-out hover:border-danger-600 hover:bg-neutral-500 hover:bg-opacity-10 hover:text-danger-600 focus:border-danger-600 focus:text-danger-600 focus:outline-none focus:ring-0 active:border-danger-700 active:text-danger-700"
                           ></input>
                         </div>
-                      </div>
+                      </div> */}
                     </form>
                   </div>
                 </div>

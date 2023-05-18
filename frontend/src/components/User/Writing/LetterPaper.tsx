@@ -21,13 +21,11 @@ export default function LetterPaper() {
     infinite: false,
     slidesToShow: 2,
     slidesToScroll: 1,
-    autoplay: true,
+    autoplay: false,
     arrows: true,
     dots: false,
     pauseOnHover: true,
     draggable: true,
-    autoplaySpeed: 3000,
-    speed: 1200,
   };
 
   return (
