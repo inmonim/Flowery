@@ -11,20 +11,29 @@ type DayselectProps = {
 
 export default function Dayselect({ getDay }: DayselectProps) {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [showPopup, setShowPopup] = useState(false);
 
   const handleDateChange = (date: any) => {
-    setSelectedDate(date);
-    getDay(date);
+    if (date && date <= maxDate) {
+      setSelectedDate(date);
+      getDay(moment(date).format("yyyy-MM-dd"));
+      setShowPopup(false);
+    } else {
+      setShowPopup(true);
+    }
   };
-
   const today = moment();
   const maxDate = moment(today).add(14, "days").toDate();
 
-  // console.log(selectedDate);
-
+  const togglePopup = () => {
+    setShowPopup(!showPopup);
+  };
   return (
     <>
-      <div className="flex justify-center pt-[10%] pb-[10%]">
+      <div className="flex flex-col items-center justify-center pb-[1%]">
+        <p className="font-nasq pt-[10%] font-bold text-center text-[1.3rem] text-user_green pb-[10%]">
+          예약 일자 선택
+        </p>
         <DatePicker
           selected={selectedDate}
           shouldCloseOnSelect={false}
@@ -37,6 +46,19 @@ export default function Dayselect({ getDay }: DayselectProps) {
           className="DaySelect.modules.scss"
         />
       </div>
+      <p className="font-namyeong font-bold text-center text-[0.5rem] text-[gray] pb-[10%]">
+        ※ 예약은 오늘 기준 다음날부터 2주 후까지 가능합니다
+      </p>
+      {showPopup && (
+        <div className="popup">
+          <p className="popup-message">
+            예약은 내일부터 2주 후까지만 가능합니다.
+          </p>
+          <button className="popup-close" onClick={togglePopup}>
+            닫기
+          </button>
+        </div>
+      )}
     </>
   );
 }

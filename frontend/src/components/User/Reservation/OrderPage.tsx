@@ -30,7 +30,7 @@ export default function OrderPage() {
         // console.log(response.data[0]);
         setGoodsList(response.data);
       } catch (error) {
-        console.error(error);
+        // console.error(error);
       } finally {
         setLoading(false); // API 호출 완료 후 로딩 상태 해제
       }
@@ -39,8 +39,6 @@ export default function OrderPage() {
     getData();
     window.scrollTo(0, 0);
   }, []);
-
-  console.log(goodsList);
 
   return (
     <div className=" bg-user_beige ">

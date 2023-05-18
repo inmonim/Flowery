@@ -55,10 +55,8 @@ export default function Reservation() {
     geocodeShops();
   }, []);
 
-  console.log(shopList, "here");
-
   useEffect(() => {
-    console.log(updatedShopList);
+    // console.log(updatedShopList);
   }, [updatedShopList]);
 
   // const initMarkers = () => {
