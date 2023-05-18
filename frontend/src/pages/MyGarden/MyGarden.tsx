@@ -3,7 +3,6 @@ import React, { useEffect, useRef, useState } from "react";
 import GardenCard from "../../components/User/MyGarden/GardenCard";
 import { useRecoilValue } from "recoil";
 import { userIdState } from "../../recoil/atom";
-import ReactFullpage from "@fullpage/react-fullpage";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
