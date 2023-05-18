@@ -35,8 +35,8 @@ const ReleaseSubmitModal = React.forwardRef<HTMLDivElement, any>(
       const offset = new Date().getTimezoneOffset() * 60000;
       const date = new Date(Date.now() - offset).toISOString().slice(0, -5);
       const jsonData = {
-        userId: 2,
-        storeId: 3,
+        userId: 5,
+        storeId: 5,
         messageId: messageId,
         goodsName: "기타",
         price: 0,
