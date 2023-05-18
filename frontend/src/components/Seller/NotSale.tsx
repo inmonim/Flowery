@@ -26,12 +26,20 @@ export default function NotSale(props: Props) {
   const myStoreId = useRecoilValue(storeId);
   const [myGoods, setMyGoods] = useState<Goods[]>([]);
   const [selectedItem, setSelectedItem] = useState<Goods | null>(null);
-  const [inputValue, setInputValue] = useState("");
+  const [inputValue, setInputValue] = useState<number>(0);
   const [filedata, setFileData] = useState<any>(null);
   const [flowerData, setFlowerData] = useState<Array<object>>([]);
   const [message, setMessage] = useState<string>("");
   const [recogOK, setRecogOK] = useState<boolean>(false);
   const [itemPictures, setItemPictures] = useState<Record<number, string>>({});
+  const [flowerObject, setFlowerObject] = useState<any>();
+  const options = { timeZone: "Asia/Seoul" };
+  const currentDate = new Date();
+  const formattedDate = currentDate
+    .toLocaleString("en-US", options)
+    .split(",")
+    .join("");
+  const date1 = new Date(formattedDate).toISOString().substring(0, 19);
 
   function handleClick() {
     props.closeModal33();
@@ -41,7 +49,7 @@ export default function NotSale(props: Props) {
     const value = event.target.value;
 
     if (/^\d*$/.test(value)) {
-      setInputValue(value);
+      setInputValue(Number(value));
     } else {
       alert("숫자만 입력해야 합니다.");
     }
@@ -101,19 +109,30 @@ export default function NotSale(props: Props) {
     setStep1(true);
   }
 
-  function checkStep2() {}
-
-  function checkwithStep2(price: number) {
-    axios.patch(
-      `https://flowery.duckdns.org/api/stores/goods/${selectedItem?.goodsId}`,
-      {
-        storeId: myStoreId,
-        goodsId: selectedItem?.goodsId,
-        goodsName: selectedItem?.goodsName,
-        goodsPrice: price,
-        goodsDetail: selectedItem?.goodsDetail,
-      }
-    );
+  function checkStep2(price: number) {
+    if (selectedItem?.goodsName === "기타" && inputValue === 0) {
+      alert("판매 금액을 입력해주세요");
+    } else {
+      axios
+        .post("https://flowery.duckdns.org/api/reservation/make/on-site", {
+          userId: 0,
+          storeId: myStoreId,
+          goodsName: selectedItem?.goodsName,
+          price: inputValue ? inputValue : selectedItem?.goodsPrice,
+          date: date1,
+        })
+        .then((response) => {
+          axios
+            .post("https://flowery.duckdns.org/flask/saveSales", {
+              flower_object: flowerObject,
+              reservation_id: response.data,
+            })
+            .then(() => {
+              alert("판매내역이 저장되었습니다.");
+              props.closeModal33();
+            });
+        });
+    }
   }
 
   function retry() {
@@ -126,20 +145,8 @@ export default function NotSale(props: Props) {
     datas.forEach((item: any) => {
       tmp[item.flower] = item.count;
     });
-
-    axios
-      .post("https://flowery.duckdns.org/flask/saveSales", {
-        flower_object: tmp,
-        reservation_id: 227,
-      })
-      .then(() => {
-        setRecogOK(true);
-        alert("저장이 완료되었습니다.");
-        props.closeModal33();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    setFlowerObject(tmp);
+    setRecogOK(true);
   }
 
   return (
@@ -252,26 +259,15 @@ export default function NotSale(props: Props) {
                   )}
                 </div>
                 <div className="w-[87vw] flex justify-center">
-                  {selectedItem &&
-                  selectedItem.goodsName === "기타" &&
-                  inputValue !== "" ? (
+                  {selectedItem && selectedItem.goodsName === "기타" ? (
                     <button
                       className={styles.successbutton}
-                      onClick={() => checkwithStep2(selectedItem.goodsPrice)}
+                      onClick={() => checkStep2(inputValue)}
                     >
                       저장
                     </button>
-                  ) : selectedItem &&
-                    selectedItem.goodsName === "기타" &&
-                    inputValue === "" ? (
-                    <button className={styles.printbutton}>저장</button>
                   ) : (
-                    <button
-                      className={styles.successbutton}
-                      onClick={checkStep2}
-                    >
-                      저장
-                    </button>
+                    <button className={styles.printbutton}>저장</button>
                   )}
                 </div>
               </>
