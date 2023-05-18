@@ -12,8 +12,11 @@ export default function MainAnalyzing() {
     <div className={styles.chartcontainer}>
       <div className={styles.cardheader}>판매 분석</div>
       <div className={styles.cardmain}>
-        <div className={styles.pp}>월간 품목별 판매량</div>
-        <BarChart />
+        <div className={styles.pp}>최근 30일 품목별 판매량</div>
+        <BarChart
+          startDate={new Date(new Date().getTime() - 30 * 24 * 60 * 60 * 1000)}
+          endDate={new Date()}
+        />
       </div>
       <div className={styles.cardfooter} onClick={handlenavi}>
         더보기

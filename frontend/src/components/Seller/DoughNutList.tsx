@@ -3,7 +3,7 @@ import styles from "./SalesList.module.scss";
 import axios from "axios";
 import { useRecoilValue, useRecoilState } from "recoil";
 import { storeId, storeInfo } from "../../recoil/atom";
-import BarChart from "./BarChart";
+import DonutChart from "./DonutChart";
 import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import classNames from "classnames";
@@ -44,7 +44,7 @@ export default function SalesList() {
     <div className={styles.mainbox}>
       <div className={styles.secondbox}>
         <div className="flex justify-between w-[100%]">
-          <p className={styles.font1}>판매 내역</p>
+          <p className={styles.font1}>판매 비율</p>
           <Menu as="div" className="relative inline-block text-left">
             <div>
               <Menu.Button
@@ -122,7 +122,7 @@ export default function SalesList() {
           </div>
         )}
         <div className="w-[100%] h-[60vh] flex justify-center">
-          <BarChart startDate={startDate} endDate={endDate} />
+          <DonutChart startDate={startDate} endDate={endDate} />
         </div>
       </div>
     </div>

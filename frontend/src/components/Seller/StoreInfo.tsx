@@ -74,7 +74,10 @@ export default function StoreInfo() {
             type="text"
           />
         </div>
-        <button className="w-[100%]" onClick={handleClick}>
+        <button
+          className="w-[100%] bg-blue-500 hover:bg-blue-700 text-white"
+          onClick={handleClick}
+        >
           저장
         </button>
       </div>
