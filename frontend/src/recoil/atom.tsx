@@ -155,7 +155,7 @@ export const reservationTimeState = atom<string>({
 });
 
 // 예약 날짜 (창근)
-export const reservatonDayState = atom<string>({
+export const reservationDayState = atom<string>({
   key: "storeDayState",
   default: "",
   effects_UNSTABLE: [persistAtom],

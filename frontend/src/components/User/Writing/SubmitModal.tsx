@@ -13,6 +13,8 @@ import {
   cardImgFileState,
   shopDataState,
   goodsState,
+  reservationTimeState,
+  reservationDayState,
 } from "../../../recoil/atom";
 import axios from "axios";
 import { letterFontState } from "../../../recoil/atom";
@@ -34,6 +36,8 @@ const SubmitModal = React.forwardRef<HTMLDivElement, any>((props, ref) => {
   const [loading, setLoading] = useState(false);
   // const [cardUrl, setCardUrl] = useState<string>("");
   const cardImgFile = useRecoilValue<File | null>(cardImgFileState);
+  const reservationDay = useRecoilValue<String>(reservationDayState);
+  const reservationTime = useRecoilValue<String>(reservationTimeState);
 
   const navigate = useNavigate();
 
@@ -55,9 +59,12 @@ const SubmitModal = React.forwardRef<HTMLDivElement, any>((props, ref) => {
   const submitReservationInfo = (cardUrl: string) => {
     const formData = new FormData();
 
-    const offset = new Date().getTimezoneOffset() * 60000;
-    const date = new Date(Date.now() - offset).toISOString().slice(0, -5);
-
+    // const offset = new Date().getTimezoneOffset() * 60000;
+    // const date = new Date(Date.now() - offset).toISOString().slice(0, -5);
+    const date = `${reservationDay.slice(0, 10)}T${reservationTime.slice(
+      0,
+      2
+    )}:${reservationTime.slice(2)}:00`;
     formData.append("message", letter);
 
     if (video) {
@@ -85,8 +92,11 @@ const SubmitModal = React.forwardRef<HTMLDivElement, any>((props, ref) => {
   };
 
   const submitCardInfo = (messageId: string, cardUrl: string) => {
-    const offset = new Date().getTimezoneOffset() * 60000;
-    const date = new Date(Date.now() - offset).toISOString().slice(0, -5);
+    const date = `${reservationDay.slice(0, 10)}T${reservationTime.slice(
+      0,
+      2
+    )}:${reservationTime.slice(2)}:00`;
+
     const jsonData = {
       userId: userId,
       storeId: storeData.storeId,

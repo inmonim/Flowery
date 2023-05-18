@@ -8,14 +8,14 @@ import OrderPage from "./OrderPage";
 import {
   shopDataState,
   reservationTimeState,
-  reservatonDayState,
+  reservationDayState,
 } from "../../../recoil/atom";
 import { useRecoilState, useRecoilValue } from "recoil";
 
 export default function ReservationOption() {
   const location = useLocation();
   const [reservationDay, setReservationDay] =
-    useRecoilState(reservatonDayState);
+    useRecoilState(reservationDayState);
   const [reservationTime, setReservationTime] =
     useRecoilState(reservationTimeState);
 
