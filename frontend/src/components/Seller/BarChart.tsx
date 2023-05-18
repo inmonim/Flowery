@@ -5,6 +5,7 @@ import { Bar, Chart } from "react-chartjs-2";
 import { useRecoilValue } from "recoil";
 import { storeId } from "../../recoil/atom";
 import { DateRange } from "react-date-range";
+import { useLocation } from "react-router-dom";
 import "react-date-range/dist/styles.css"; // 스타일 시트를 임포트합니다.
 import "react-date-range/dist/theme/default.css"; // 테마를 임포트합니다.
 ChartJS.register(...registerables);
@@ -14,8 +15,10 @@ export default function BarChart() {
   const [startDate, setStartDate] = useState(
     new Date(new Date().getTime() - 7 * 24 * 60 * 60 * 1000)
   );
+  const location = useLocation();
   const [endDate, setEndDate] = useState(new Date());
   const myStoreId = useRecoilValue(storeId);
+  const myatk = sessionStorage.getItem("atk");
   // const [selectedRange, setSelectedRange] = useState([
   //   {
   //     startDate: new Date(),
@@ -32,17 +35,40 @@ export default function BarChart() {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(
-        "https://flowery.duckdns.org/api/sales/goods",
-        {
-          params: {
-            storeId: myStoreId,
-            startDate: startDate.toISOString().split("T")[0] + "T00:00:00",
-            endDate: endDate.toISOString().split("T")[0] + "T00:00:00",
-          },
-        }
-      );
-      setChartData(response.data);
+      if (location.pathname === "/seller") {
+        const new_date = new Date(
+          new Date().getTime() - 30 * 24 * 60 * 60 * 1000
+        );
+        const response = await axios.get(
+          "https://flowery.duckdns.org/api/sales/goods",
+          {
+            params: {
+              storeId: myStoreId,
+              startDate: new_date.toISOString().split("T")[0] + "T00:00:00",
+              endDate: endDate.toISOString().split("T")[0] + "T00:00:00",
+            },
+            headers: {
+              Authorization: `bearer ${myatk}`,
+            },
+          }
+        );
+        setChartData(response.data);
+      } else {
+        const response = await axios.get(
+          "https://flowery.duckdns.org/api/sales/goods",
+          {
+            params: {
+              storeId: myStoreId,
+              startDate: startDate.toISOString().split("T")[0] + "T00:00:00",
+              endDate: endDate.toISOString().split("T")[0] + "T00:00:00",
+            },
+            headers: {
+              Authorization: `bearer ${myatk}`,
+            },
+          }
+        );
+        setChartData(response.data);
+      }
     } catch (error) {
       console.error(error);
     }

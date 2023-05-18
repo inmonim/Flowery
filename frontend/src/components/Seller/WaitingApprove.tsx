@@ -18,20 +18,27 @@ interface ReservationItem {
   permission: number;
   reservationName: string;
   phrase: string;
+  phone: string;
+  image: string;
 }
 
 export default function WaitingApprove() {
   const myStoreId = useRecoilValue(storeId);
   const [reservation, setReservation] = useState<ReservationItem[]>([]);
-
+  const myatk = sessionStorage.getItem("atk");
   useEffect(() => {
     const currentDate = new Date();
     const formattedDate = currentDate.toISOString().split("T")[0] + "T00:00:00";
     axios
       .post(
-        `https://flowery.duckdns.org/api/reservation/day/?date=2023-05-14T00:00:00`,
+        `https://flowery.duckdns.org/api/reservation/day/?date=${formattedDate}`,
         {
           storeId: myStoreId,
+        },
+        {
+          headers: {
+            Authorization: `bearer ${myatk}`,
+          },
         }
       )
       .then((response) => {
@@ -67,6 +74,8 @@ export default function WaitingApprove() {
                   reservationId={item.reservationId}
                   phrase={item.phrase}
                   demand={item.demand}
+                  phone={item.phone}
+                  image={item.image}
                 />
               </div>
             ))

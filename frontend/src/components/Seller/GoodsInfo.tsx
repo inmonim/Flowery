@@ -13,9 +13,15 @@ interface GoodsItem {
 
 export default function GoodsInfo(props: GoodsItem) {
   const images = props.samples[0];
+  const myatk = sessionStorage.getItem("atk");
+
   function deleteGoods(id: number) {
     axios
-      .delete(`https://flowery.duckdns.org/api/stores/goods/${id}`)
+      .delete(`https://flowery.duckdns.org/api/stores/goods/${id}`, {
+        headers: {
+          Authorization: `bearer ${myatk}`,
+        },
+      })
       .then(() => {
         alert("삭제되었습니다.");
         window.location.reload();

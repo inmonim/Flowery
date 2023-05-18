@@ -15,7 +15,7 @@ import {
   isCardName,
   shopDataState,
 } from "../../../recoil/atom";
-import styles from "./CardPreview.module.scss"
+import styles from "./CardPreview.module.scss";
 
 interface CardProps {
   card: number;

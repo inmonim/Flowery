@@ -10,7 +10,7 @@ export default function ChangeTime() {
   const myStoreId = useRecoilValue(storeId);
   const myStoreInfo = useRecoilValue(storeInfo);
   const [info, setInfo] = useRecoilState(storeInfo);
-
+  const myatk = sessionStorage.getItem("atk");
   function convertToTime(value: any) {
     const hours = Math.floor(value / 100);
     const minutes = value % 100;
@@ -42,14 +42,22 @@ export default function ChangeTime() {
   const applyChanges = () => {
     if (value1 > 0 && value2 > 0 && value1 < value2) {
       axios
-        .patch(`https://flowery.duckdns.org/api/stores/${myStoreId}`, {
-          storePhone: myStoreInfo.storePhone,
-          info: myStoreInfo.info,
-          open: value1,
-          close: value2,
-          image: myStoreInfo.image,
-          profile: myStoreInfo.profile,
-        })
+        .patch(
+          `https://flowery.duckdns.org/api/stores/${myStoreId}`,
+          {
+            storePhone: myStoreInfo.storePhone,
+            info: myStoreInfo.info,
+            open: value1,
+            close: value2,
+            image: myStoreInfo.image,
+            profile: myStoreInfo.profile,
+          },
+          {
+            headers: {
+              Authorization: `bearer ${myatk}`,
+            },
+          }
+        )
         .then(() => {
           setInfo({ ...info, open: value1, close: value2 });
           alert("영업시간이 변경되었습니다");
