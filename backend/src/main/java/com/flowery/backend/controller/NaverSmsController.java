@@ -184,4 +184,29 @@ public class NaverSmsController {
         }
     }
 
+    // 승인 여부 api
+    @PostMapping("/accept")
+    public ResponseEntity<Boolean> accept(@RequestBody InfoWithSmsDto infoWithSmsDto){
+
+        try {
+            Reservation reservation = reservationRepository.findById(infoWithSmsDto.getReservationId()).get();
+
+            // 예약을 건 유저의 전화번호를 가져옴
+            String phone = reservation.getUserId().getPhone().replaceAll("-", "");
+
+            String content = preFix+" "+reservation.getUserId().getId()+"님의 " + reservation.getDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")) + " 날짜의 [ "+ reservation.getGoodsName() +" ] 상품 예약이 승인 되었습니다.\n예약 날짜에 예쁜 꽃 받으러오세요!";
+
+            SmsMessageDto smsMessageDto = new SmsMessageDto();
+
+            smsMessageDto.setTo(phone);
+            smsMessageDto.setContent(content);
+
+            naverSmsService.sendSms(smsMessageDto);
+
+            return new ResponseEntity<>(true, HttpStatus.ACCEPTED);
+        }catch (Exception e){
+            throw new RuntimeException("API 요청 중 오류가 발생하였습니다.");
+        }
+    }
+
 }
