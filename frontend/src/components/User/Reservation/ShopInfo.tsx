@@ -14,13 +14,13 @@ export default function ShopInfo(shopData: any) {
       <div className="p-1 h-[50vh] overflow-hidden">
         <img src={shopInfo.image} alt="main" className="w-full h-full " />
       </div>
-      <div className="mx-auto font-bold pt-[5%] font-nasq">
+      <div className="mx-auto font-bold pt-[5%] font-bold text-[1.5rem] font-nasq">
         <p>{shopInfo.storeName}</p>
       </div>
       <div className="mx-auto pt-2 text-[0.5rem] text-gray-500">
         <p>{shopInfo.address}</p>
       </div>
-      <div className="mx-auto text-center p-2">
+      <div className="mx-auto text-center font-nasq font-bold text-[0.9rem] p-2">
         <p>{shopInfo.info}</p>
       </div>
       <div className="flex overflow-scroll">
