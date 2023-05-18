@@ -63,7 +63,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .antMatchers("/token/reissue,","/users/login","/users/change-pass", "/flask/*").hasAnyRole("USER","SELLER")
                 .antMatchers("/reservation/make", "/reservation/store", "/reservation/day","/reservation/fix"
-                ,"/reservation/deny","/reservation/accept","/stores/*", "/goods", "/goods/*" , "/stores/storeInfo",
+                ,"/reservation/deny","/reservation/accept","/stores/*", "/goods/*",
                         "/reservation/card", "/sales/*").hasRole("SELLER")
                 .anyRequest().authenticated()
                 .and()
