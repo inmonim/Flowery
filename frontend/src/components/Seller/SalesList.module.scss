@@ -52,3 +52,24 @@
 canvas {
   height: inherit;
 }
+
+.dropdownContainer {
+  position: relative;
+}
+
+.dropdownMenu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 9999; /* Ensure the dropdown appears above other elements */
+  background-color: white;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+li {
+  width: 5rem;
+  border: 1px solid black;
+  display: flex, flex-end;
+}
