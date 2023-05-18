@@ -38,6 +38,14 @@ const SubmitModal = React.forwardRef<HTMLDivElement, any>((props, ref) => {
   const cardImgFile = useRecoilValue<File | null>(cardImgFileState);
   const reservationDay = useRecoilValue<String>(reservationDayState);
   const reservationTime = useRecoilValue<String>(reservationTimeState);
+  const date = `${reservationDay.slice(0, 10)}T${reservationTime.slice(
+    0,
+    2
+  )}:${reservationTime.slice(2)}:00`;
+  const time = `${reservationDay.slice(5, 7)}월 ${reservationDay.slice(
+    8,
+    10
+  )}일 ${reservationTime.slice(0, 2)}:${reservationTime.slice(2)}`;
 
   const navigate = useNavigate();
 
@@ -61,10 +69,10 @@ const SubmitModal = React.forwardRef<HTMLDivElement, any>((props, ref) => {
 
     // const offset = new Date().getTimezoneOffset() * 60000;
     // const date = new Date(Date.now() - offset).toISOString().slice(0, -5);
-    const date = `${reservationDay.slice(0, 10)}T${reservationTime.slice(
-      0,
-      2
-    )}:${reservationTime.slice(2)}:00`;
+    // const date = `${reservationDay.slice(0, 10)}T${reservationTime.slice(
+    //   0,
+    //   2
+    // )}:${reservationTime.slice(2)}:00`;
     formData.append("message", letter);
 
     if (video) {
@@ -92,10 +100,10 @@ const SubmitModal = React.forwardRef<HTMLDivElement, any>((props, ref) => {
   };
 
   const submitCardInfo = (messageId: string, cardUrl: string) => {
-    const date = `${reservationDay.slice(0, 10)}T${reservationTime.slice(
-      0,
-      2
-    )}:${reservationTime.slice(2)}:00`;
+    // const date = `${reservationDay.slice(0, 10)}T${reservationTime.slice(
+    //   0,
+    //   2
+    // )}:${reservationTime.slice(2)}:00`;
 
     const jsonData = {
       userId: userId,
@@ -173,10 +181,31 @@ const SubmitModal = React.forwardRef<HTMLDivElement, any>((props, ref) => {
                     className="text-base mb-4 font-semibold leading-6 text-gray-900"
                     id="modal-title"
                   >
-                    확인
+                    예약 정보
                   </h3>
-                  <div className="mt-2">
-                    <p className="text-sm text-gray-500">제출하시겠습니까?</p>
+                  <div className="mt-2 flex justify-between">
+                    <p className=" text-sm text-gray-500">가게</p>
+                    <p className=" text-sm text-gray-500 border-b-2 border-user_green">
+                      {storeData.storeName}
+                    </p>
+                  </div>
+                  <div className="mt-2 flex justify-between">
+                    <p className=" text-sm text-gray-500">예약 상품</p>
+                    <p className=" text-sm text-gray-500 border-b-2 border-user_green">
+                      {goods.goodsName}
+                    </p>
+                  </div>
+                  <div className="mt-2 flex justify-between">
+                    <p className=" text-sm text-gray-500">가격</p>
+                    <p className=" text-sm text-gray-500 border-b-2 border-user_green">
+                      {goods.goodsPrice}원
+                    </p>
+                  </div>
+                  <div className="mt-2 flex justify-between">
+                    <p className=" text-sm text-gray-500">예약 날짜</p>
+                    <p className=" text-sm text-gray-500 border-b-2 border-user_green">
+                      {time}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -193,7 +222,7 @@ const SubmitModal = React.forwardRef<HTMLDivElement, any>((props, ref) => {
                   loading ? "bg-gray-300" : "bg-user_green text-white"
                 }`}
               >
-                제출하기
+                예약하기
               </div>
             </div>
           </div>
