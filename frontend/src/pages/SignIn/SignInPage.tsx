@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   atk,
+  isLoggedInState,
   phoneNumberState,
   userIdState,
   userNameState,
@@ -13,6 +14,7 @@ import api from "../../axios/AxiosInterceptor";
 
 export default function SignInPage() {
   const [accessToken, setAccessToken] = useRecoilState<string>(atk);
+  const [isLoggedIn, setIsLoggedIn] = useRecoilState<boolean>(isLoggedInState);
   const setUserId = useSetRecoilState<number>(userIdState);
   // const setPhoneNum = useSetRecoilState<string>(phoneNumberState);
   const [id, setId] = useRecoilState<string>(userNameState);
@@ -38,7 +40,8 @@ export default function SignInPage() {
           })
           .then((res) => {
             setUserId(res.data.usersId);
-            navigate("/reservation");
+            setIsLoggedIn(true);
+            navigate(-1);
           })
           .catch((e) => alert("로그인에 실패했습니다"));
       })

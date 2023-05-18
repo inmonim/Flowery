@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   atk,
+  isLoggedInState,
   phoneNumberState,
   userIdState,
   userNameState,
@@ -36,6 +37,8 @@ export default function SignUpPage() {
     useState<boolean>(false);
   const [accessToken, setAccessToken] = useRecoilState<string>(atk);
   const setUserId = useSetRecoilState<number>(userIdState);
+  const [isLoggedIn, setIsLoggedIn] = useRecoilState<boolean>(isLoggedInState);
+
 
   const navigate = useNavigate();
 
@@ -179,16 +182,18 @@ export default function SignUpPage() {
             pass: password,
           })
           .then((response) => {
+            const cookie = new Cookies();
+            setAccessToken(response.data.atk);
+            sessionStorage.setItem("atk", response.data.atk);
+            cookie.set("refreshToken", response.data.rtk);
             api
               .get("https://flowery.duckdns.org/api/users/login", {
                 params: { id: id },
               })
               .then((res) => {
-                const cookie = new Cookies();
                 setUserId(res.data.userId);
-                setAccessToken(response.data.atk);
-                cookie.set("refreshToken", response.data.rtk);
-                navigate("/reservation");
+                setIsLoggedIn(true);
+                navigate(-1)
               })
               .catch((e) => {
                 alert("로그인에 실패했습니다");

@@ -69,7 +69,7 @@ export default function MyGarden() {
   //   };
   //   getCards();
   // }, [messages]);
-  console.log(cards);
+
   const handleExpand = () => {
     setIsExpand(!isExpand);
   };
@@ -108,7 +108,7 @@ export default function MyGarden() {
     }
   };
   return (
-    <div className="bg-user_beige">
+    <div className="bg-user_beige min-h-screen">
       <div className="relative justify-end flex">
         <div className="p-4">
           {!isExpand ? (
