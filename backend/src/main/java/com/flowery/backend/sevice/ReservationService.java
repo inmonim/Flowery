@@ -245,6 +245,9 @@ public class ReservationService {
         tmp.setImage(reservation.getImage() == null ? null : reservation.getImage());
         tmp.setRenderedCard(reservation.getRenderedCard() == null ? null : reservation.getRenderedCard());
 
+        Users user = usersRepository.findByUsersId(reservation.getUserId().getUsersId());
+        tmp.setPhone(user.getPhone());
+
 
 
         return;
