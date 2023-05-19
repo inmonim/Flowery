@@ -26,7 +26,7 @@ export default function Detect() {
       const formData = new FormData();
       formData.append("file", file); // 파일 추가
       // POST 요청 보내기
-      const response = await api.post(
+      const response = await axios.post(
         "https://flowery.duckdns.org/flask/landing/objectDetect",
         formData
       );

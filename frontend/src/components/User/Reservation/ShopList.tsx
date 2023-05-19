@@ -34,8 +34,6 @@ export default function ShopList() {
     getData();
   }, []);
 
-  // console.log(shopList[0].image);
-
   return (
     <div className="flex flex-col">
       <div className="bg-user_beige sticky top-[-2px]">
@@ -68,17 +66,22 @@ export default function ShopList() {
               </div>
             </Link>
           </div>
-          <div className="flex-none w-full h-20 border-solid border-2">
-            <div className="flex flex-row space-10">
-              {Array.from({ length: 4 }, (_, index) => (
-                <div className="w-1/4" key={index}>
-                  <img
-                    className="p-1 w-full h-full "
-                    src={shop.image}
-                    alt="shop.title"
-                  />
-                </div>
-              ))}
+          <div className="overflow-x-scroll">
+            <div className="flex flex-nowrap">
+              {shop.samples
+                ? shop.samples.map((shop: any, index: any) => (
+                    <div
+                      className="w-[25vw] h-[25vw] flex-shrink-0"
+                      key={index}
+                    >
+                      <img
+                        className="p-1 object-cover w-full h-full "
+                        src={shop}
+                        alt="shop.title"
+                      />
+                    </div>
+                  ))
+                : null}
             </div>
           </div>
         </div>

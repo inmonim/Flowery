@@ -108,20 +108,24 @@ export default function UserProtoPage({ isQR, id }: any) {
       <ProtoIntro />
       {isPictures || isVideo ? <Memories letterData={letterData} /> : null}
       <ReleaseLetter letterData={letterData} flowerData={flowerData} />
-      <More letterData={letterData} />
       {/* <Survey /> */}
-      {isQR && (
-        <div className="cursor-pointer w-1/3 py-2 pb-2 px-4 flex mt-20 justify-center mx-auto font-bold bg-user_green text-white font-nasq border rounded-full">
-          <input
-            type="button"
-            defaultValue="저장하기"
-            onClick={() => {
-              saveMyGarden();
-            }}
-            className="cursor-pointer text-center mx-auto justify-center"
-          ></input>
-        </div>
-      )}
+      <div className="flex flex-col">
+        <More letterData={letterData} />
+      </div>
+      <div>
+        {isQR && (
+          <div className=" cursor-pointer w-1/3 py-2 pb-2 px-4 flex mt-20 mx-auto justify-center  font-bold bg-user_green text-white font-nasq border rounded-full">
+            <input
+              type="button"
+              defaultValue="저장하기"
+              onClick={() => {
+                saveMyGarden();
+              }}
+              className="cursor-pointer text-center mx-auto justify-center"
+            ></input>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

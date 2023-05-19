@@ -10,8 +10,9 @@ import axios from "axios";
 
 export default function UserHeader() {
   const [showDropDown, setShowDropDown] = useState<boolean>(false);
-  const isLoggedIn = useRecoilValue<boolean>(isLoggedInState);
+  // const isLoggedIn = useRecoilValue<boolean>(isLoggedInState);
   const userId = useRecoilValue<String>(userNameState);
+  const isLoggedIn = !!sessionStorage.getItem("atk");
 
   const navigate = useNavigate();
 

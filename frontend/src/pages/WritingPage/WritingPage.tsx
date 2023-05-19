@@ -16,11 +16,15 @@ import {
   cardImgFileState,
   cardName,
   cardState,
+  dateState,
   imageState,
   isCardContent,
   isCardName,
   letterFontState,
   letterPaperState,
+  reservationDayState,
+  reservationTimeState,
+  timeState,
   totalTextState,
   userIdState,
   userStoreIdState,
@@ -46,6 +50,34 @@ export default function WritingPage() {
   const video = useRecoilValue<File | null>(videoState);
   const [loading, setLoading] = useState(false);
   const [reservationConfirm, setReservationConfirm] = useState<boolean>(false);
+  const reservationDay = useRecoilValue<String>(reservationDayState);
+  const reservationTime = useRecoilValue<String>(reservationTimeState);
+  const [time, setTime] = useRecoilState<String>(timeState);
+  const [date, setDate] = useRecoilState<String>(dateState);
+
+  useEffect(() => {
+    let resTime = reservationTime;
+    if (reservationTime.length === 3) {
+      resTime = "0" + reservationTime;
+    }
+
+    const reservateDate = `${reservationDay.slice(
+      6,
+      10
+    )}-${reservationDay.slice(0, 2)}-${reservationDay.slice(
+      3,
+      5
+    )}T${reservationTime.slice(0, 2)}:${reservationTime.slice(2)}:00`;
+    setDate(reservateDate);
+
+    const revervateTime = `${reservationDay.slice(
+      0,
+      2
+    )}월 ${reservationDay.slice(3, 5)}일 ${resTime.slice(0, 2)}:${resTime.slice(
+      2
+    )}`;
+    setTime(revervateTime);
+  }, [reservationDay, reservationTime]);
 
   const navigate = useNavigate();
 
