@@ -42,21 +42,21 @@ export default function MyGarden() {
           userId: userId,
         })
         .then((response) => {
+          console.log(response.data)
           response.data.map((message: messageType, idx: number) =>
-            api
+            axios
               .post("https://flowery.duckdns.org/api/messages/get-card", {
                 messageId: message.messageId,
               })
               .then((response) => {
                 setCards((prevCards) => [...prevCards, response.data]);
-              })
+              }).catch((error) => console.log('error', error))
           );
           // setMessages(response.data);
-        });
+        })
     };
     getMessages();
   }, []);
-
   // useEffect(() => {
   //   const getCards = async () => {
   //     messages.map((message: messageType, idx: number) =>
