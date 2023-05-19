@@ -15,8 +15,13 @@ export default function Dayselect({ getDay }: DayselectProps) {
 
   const handleDateChange = (date: any) => {
     if (date && date <= maxDate) {
-      setSelectedDate(date);
-      getDay(moment(date).format("yyyy-MM-dd"));
+      const formattedDate = date.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    })
+    setSelectedDate(date);
+      getDay(formattedDate);
       setShowPopup(false);
     } else {
       setShowPopup(true);

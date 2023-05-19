@@ -9,6 +9,7 @@ interface cardType {
   mean: string;
   message: string;
   messageDate: string;
+  renderedCard: string;
   messageId: string;
   pictures: string[];
   poem: string;
@@ -48,7 +49,7 @@ const GardenCard = (props: { card: cardType }) => {
       {selectCard && <GardenCardModal ref={modalRef} card={props.card} />}
       <div className="h-full p-4">
         <img
-          src={props.card.flowerPicture}
+          src={props.card.renderedCard}
           onClick={() => {
             setSelectCard(true);
             window.scrollTo({ top: 0 });
