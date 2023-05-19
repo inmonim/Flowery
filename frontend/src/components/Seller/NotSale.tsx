@@ -97,7 +97,6 @@ export default function NotSale(props: Props) {
             return response.json();
           })
           .then((data) => {
-            console.log(data.file_url, data.flower_object, data.message);
             setPhotoUrl1(data.file_url);
 
             const flowerDataArray = Object.entries(data.flower_object).map(
