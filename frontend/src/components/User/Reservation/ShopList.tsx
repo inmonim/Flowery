@@ -34,8 +34,6 @@ export default function ShopList() {
     getData();
   }, []);
 
-  console.log(shopList[0].samples);
-
   return (
     <div className="flex flex-col">
       <div className="bg-user_beige sticky top-[-2px]">
