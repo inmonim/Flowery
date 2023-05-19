@@ -42,7 +42,6 @@ export default function ManageItem() {
         }
       )
       .then((response) => {
-        console.log(response.data);
         setMyItem(response.data as GoodsItem[]);
       })
       .catch((error) => {

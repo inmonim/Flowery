@@ -25,7 +25,6 @@ export default function ManagePrint() {
   useEffect(() => {
     const currentDate = new Date();
     const formattedDate = currentDate.toISOString().split("T")[0] + "T00:00:00";
-    console.log(formattedDate);
     axios
       .post(
         `https://flowery.duckdns.org/api/reservation/day/?date=${formattedDate}`,

@@ -94,7 +94,6 @@ export default function PrintCard(props: PrintCardProps) {
             const flowerDataArray = Object.entries(data.flower_object).map(
               ([flower, count]) => ({ flower, count })
             );
-            console.log(flowerDataArray);
             setFlowerData(flowerDataArray);
 
             setMessage(data.message);
@@ -179,7 +178,6 @@ export default function PrintCard(props: PrintCardProps) {
                     },
                   })
                   .then((response) => {
-                    console.log(response.data[0]);
                     axios.post(
                       `https://flowery.duckdns.org/api/reservation/fix`,
                       {
@@ -274,7 +272,6 @@ export default function PrintCard(props: PrintCardProps) {
           });
         })
         .then((response) => {
-          console.log(response);
           mergeImages(props.renderedCard, response.data.qrBase64, "test1");
         })
         .then(() => {
@@ -311,9 +308,6 @@ export default function PrintCard(props: PrintCardProps) {
       .then(() => {
         setRecogOK(true);
         setIsLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
       });
   }
 
