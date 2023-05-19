@@ -16,11 +16,11 @@ export default function Dayselect({ getDay }: DayselectProps) {
   const handleDateChange = (date: any) => {
     if (date && date <= maxDate) {
       const formattedDate = date.toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-    })
-    setSelectedDate(date);
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+      });
+      setSelectedDate(date);
       getDay(formattedDate);
       setShowPopup(false);
     } else {
@@ -54,16 +54,6 @@ export default function Dayselect({ getDay }: DayselectProps) {
       <p className="font-namyeong font-bold text-center text-[0.5rem] text-[gray] pb-[10%]">
         ※ 예약은 오늘 기준 다음날부터 2주 후까지 가능합니다
       </p>
-      {showPopup && (
-        <div className="popup">
-          <p className="popup-message">
-            예약은 내일부터 2주 후까지만 가능합니다.
-          </p>
-          <button className="popup-close" onClick={togglePopup}>
-            닫기
-          </button>
-        </div>
-      )}
     </>
   );
 }
