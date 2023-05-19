@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import styles from "./SellerHeader.module.scss";
 import Logo from "../../../assets/Seller_logo.png";
 import scan from "../../../assets/scan_logo.png";
@@ -14,7 +14,7 @@ export default function Header(props: HeaderProps) {
   const location = useLocation();
   const navigate = useNavigate();
   const [showModal33, setShowModal33] = useState(false);
-    function handleModal33() {
+  function handleModal33() {
     setShowModal33(true); // 모달을 열기 위해 상태를 true로 변경합니다.
   }
 
@@ -35,16 +35,12 @@ export default function Header(props: HeaderProps) {
   } else if (location.pathname === "/seller/proto") {
     return (
       <header className={styles.header}>
-        <img
-          src={Logo}
-          alt=""
-          className={styles.logo}
-        />
+        <img src={Logo} alt="" className={styles.logo} />
       </header>
     );
   }
 
-  function openmodal () {
+  function openmodal() {
     handleModal33();
   }
   return (
@@ -58,7 +54,7 @@ export default function Header(props: HeaderProps) {
         />
       </div>
       <div>
-        <img src={scan} alt="" className={styles.scan} onClick={openmodal}/>
+        <img src={scan} alt="" className={styles.scan} onClick={openmodal} />
         <img
           src={menu}
           alt=""

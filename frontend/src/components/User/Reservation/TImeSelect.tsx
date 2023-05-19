@@ -37,6 +37,13 @@ export default function Timeselect({ getTime }: TimeselectProps) {
 
   return (
     <div className="flex flex-col pb-[15%]">
+      <div>
+        <div>
+          <p className="font-nasq pt-[10%] font-bold text-center text-[1.3rem] text-user_green pb-[10%]">
+            예약 시간 선택
+          </p>
+        </div>
+      </div>
       <p className="pl-[8%] text-user_green font-bold font-nasq pb-[2%]">
         오전
       </p>

@@ -140,7 +140,7 @@ export default function HowTo() {
             </div>
             <img
               data-aos="fade-left"
-              src={reservation}
+              src={file_input}
               alt="sf"
               className="w-[50%] mr-[5%]"
             />

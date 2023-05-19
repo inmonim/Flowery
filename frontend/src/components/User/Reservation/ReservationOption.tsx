@@ -18,15 +18,20 @@ export default function ReservationOption() {
     useRecoilState(reservationDayState);
   const [reservationTime, setReservationTime] =
     useRecoilState(reservationTimeState);
+  const [showPopup, setShowPopup] = useState(false);
 
   const shopData = useRecoilValue(shopDataState);
-  console.log(shopData);
 
   const getDay = (x: string) => {
     setReservationDay(x);
   };
   const getTime = (x: string) => {
     setReservationTime(x);
+  };
+  const handleNextClick = () => {
+    if (reservationDay === null || reservationTime === null) {
+      setShowPopup(true);
+    }
   };
 
   // console.log(reservationDay, "here");
@@ -51,6 +56,16 @@ export default function ReservationOption() {
           </button>
         </Link>
       </div>
+      {showPopup && (
+        <div className="popup">
+          <p className="popup-message">
+            예약 날짜와 예약 시간을 확인한 후 다시 시도해주세요.
+          </p>
+          <button className="popup-close" onClick={() => setShowPopup(false)}>
+            닫기
+          </button>
+        </div>
+      )}
     </div>
   );
 }
