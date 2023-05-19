@@ -1,7 +1,6 @@
 .react-datepicker {
   font-size: 16px;
   color: #333;
-  display: hidden;
 }
 
 .react-datepicker__month-container {
@@ -31,6 +30,7 @@
   height: 32px;
   display: flex;
   justify-content: center;
+  display: hidden;
   align-items: center;
   cursor: pointer;
   // border-radius: 50%;
@@ -54,5 +54,5 @@
 }
 
 .react-datepicker__day--keyboard-selected {
-  display: none;
+  outline: 2px solid #316351;
 }
