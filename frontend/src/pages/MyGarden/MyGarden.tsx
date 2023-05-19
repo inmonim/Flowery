@@ -110,7 +110,6 @@ export default function MyGarden() {
       setSelectCard(false);
     }
   };
-  console.log(cards)
 
   return (
     <div className="bg-user_beige min-h-screen">
