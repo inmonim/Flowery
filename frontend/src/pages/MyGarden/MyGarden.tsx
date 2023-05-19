@@ -22,6 +22,7 @@ interface cardType {
   mean: string;
   message: string;
   messageDate: string;
+  renderedCard: string;
   messageId: string;
   pictures: string[];
   poem: string;
@@ -38,7 +39,7 @@ export default function MyGarden() {
     const getMessages = () => {
       api
         .post("https://flowery.duckdns.org/api/myGarden/get", {
-          userId: 15,
+          userId: userId,
         })
         .then((response) => {
           response.data.map((message: messageType, idx: number) =>
@@ -109,6 +110,7 @@ export default function MyGarden() {
       setSelectCard(false);
     }
   };
+  console.log(cards)
 
   return (
     <div className="bg-user_beige min-h-screen">
@@ -131,7 +133,7 @@ export default function MyGarden() {
                   <div key={idx} className="flex-col">
                     <div className="h-full p-4">
                       <img
-                        src={card.flowerPicture}
+                        src={card.renderedCard}
                         onClick={() => {
                           setCard(card);
                           setSelectCard(true);
