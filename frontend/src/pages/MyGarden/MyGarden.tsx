@@ -42,6 +42,7 @@ export default function MyGarden() {
           userId: userId,
         })
         .then((response) => {
+          console.log(response.data)
           response.data.map((message: messageType, idx: number) =>
             axios
               .post("https://flowery.duckdns.org/api/messages/get-card", {
