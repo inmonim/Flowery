@@ -121,7 +121,7 @@ public class SalesService {
 
             for (Sales sales : salesList) {
                 Flowers flowers = sales.getFlowerId();
-                reservationCountMap.put(flowers.getFlowerName(), reservationCountMap.getOrDefault(flowers.getFlowerName(), 0) + 1);
+                reservationCountMap.put(flowers.getFlowerName(), reservationCountMap.getOrDefault(flowers.getFlowerName(), 0) + sales.getCount());
             }
         }
 
