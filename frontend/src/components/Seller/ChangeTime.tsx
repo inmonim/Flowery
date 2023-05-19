@@ -29,14 +29,12 @@ export default function ChangeTime() {
 
   const handleInputChange1 = (event: any) => {
     const timeValue = event.target.value;
-    console.log(timeValue);
     const convertedValue = convertTimeToNumber(timeValue);
     setValue1(convertedValue);
   };
 
   const handleInputChange2 = (event: any) => {
     const timeValue = event.target.value;
-    console.log(timeValue);
     const convertedValue = convertTimeToNumber(timeValue);
     setValue2(convertedValue);
   };

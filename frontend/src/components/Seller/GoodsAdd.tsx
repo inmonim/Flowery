@@ -50,7 +50,6 @@ export default function GoodsAdd(props: modalProps) {
       if (files) {
         for (let i = 0; i < files.length; i++) {
           const file = files[i];
-          console.log(file);
           formdatas.append("pictures", file);
           const reader = new FileReader();
           reader.onload = (e) => {

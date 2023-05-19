@@ -34,11 +34,9 @@ export default function ManagePrint() {
 
   useEffect(() => {
     const myatk = sessionStorage.getItem("atk");
-    console.log(myatk);
-    console.log(`bearer ${myatk}`);
     axios
       .post(
-        `https://flowery.duckdns.org/api/reservation/day/?date=2023-05-19T00:00:00`,
+        `https://flowery.duckdns.org/api/reservation/day/?date=${formattedDate}`,
         {
           storeId: myStoreId,
         },
