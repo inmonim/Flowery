@@ -209,3 +209,15 @@ export const rtk = atom<string>({
   default: "",
   effects_UNSTABLE: [persistAtom],
 });
+
+export const timeState = atom<String>({
+  key: "timeState",
+  default: "",
+  effects_UNSTABLE: [persistAtom],
+});
+
+export const dateState = atom<String>({
+  key: "dateState",
+  default: "",
+  effects_UNSTABLE: [persistAtom],
+});

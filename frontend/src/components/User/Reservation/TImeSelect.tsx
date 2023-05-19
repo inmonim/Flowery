@@ -7,7 +7,7 @@ type TimeselectProps = {
 
 export default function Timeselect({ getTime }: TimeselectProps) {
   const [selectedTime, setSelectedTime] = useState("");
-  const onclick = (time: any) => {
+  const onclick = (time: string) => {
     setSelectedTime(time);
     getTime(time);
   };

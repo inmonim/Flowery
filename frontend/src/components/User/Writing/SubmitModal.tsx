@@ -15,6 +15,8 @@ import {
   goodsState,
   reservationTimeState,
   reservationDayState,
+  timeState,
+  dateState,
 } from "../../../recoil/atom";
 import axios from "axios";
 import { letterFontState } from "../../../recoil/atom";
@@ -38,14 +40,27 @@ const SubmitModal = React.forwardRef<HTMLDivElement, any>((props, ref) => {
   const cardImgFile = useRecoilValue<File | null>(cardImgFileState);
   const reservationDay = useRecoilValue<String>(reservationDayState);
   const reservationTime = useRecoilValue<String>(reservationTimeState);
-  const date = `${reservationDay.slice(0, 10)}T${reservationTime.slice(
-    0,
-    2
-  )}:${reservationTime.slice(2)}:00`;
-  const time = `${reservationDay.slice(5, 7)}월 ${reservationDay.slice(
-    8,
-    10
-  )}일 ${reservationTime.slice(0, 2)}:${reservationTime.slice(2)}`;
+  const [time, setTime] = useRecoilState<String>(timeState);
+  const [date, setDate] = useRecoilState<String>(dateState);
+
+  // useEffect(() => {
+  //   const resDay = String(reservationDay);
+  //   const resTime = String(reservationTime);
+  //   console.log("resDay", resDay);
+  //   console.log("resTime", resTime);
+
+  //   const reservateDate = `${resDay.slice(0, 10)}T${resTime.slice(
+  //     0,
+  //     2
+  //   )}:${resTime.slice(2)}:00`;
+  //   setDate(reservateDate);
+
+  //   const revervateTime = `${resDay.slice(5, 7)}월 ${resDay.slice(
+  //     8,
+  //     10
+  //   )}일 ${resTime.slice(0, 2)}:${resTime.slice(2)}`;
+  //   setTime(revervateTime);
+  // }, [reservationDay]);
 
   const navigate = useNavigate();
 
@@ -89,7 +104,7 @@ const SubmitModal = React.forwardRef<HTMLDivElement, any>((props, ref) => {
     }
     formData.append("font", String(letterFont));
     formData.append("paper", String(letterPaper));
-    formData.append("date", date);
+    formData.append("date", String(date));
 
     axios
       .post("https://flowery.duckdns.org/api/messages/card", formData)

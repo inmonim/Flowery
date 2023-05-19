@@ -13,8 +13,13 @@ export default function Dayselect({ getDay }: DayselectProps) {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
   const handleDateChange = (date: any) => {
+    const formattedDate = date.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    })
     setSelectedDate(date);
-    getDay(date);
+    getDay(formattedDate);
   };
 
   const today = moment();

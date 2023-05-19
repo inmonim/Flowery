@@ -38,10 +38,10 @@ export default function SignInPage() {
           .get("https://flowery.duckdns.org/api/users/login", {
             params: { id: id },
           })
-          .then((res) => {
+          .then(async (res) => {
             setUserId(res.data.usersId);
             setIsLoggedIn(true);
-            navigate(-1);
+            await navigate(-1);
           })
           .catch((e) => alert("로그인에 실패했습니다"));
       })
