@@ -95,6 +95,8 @@
 
 - **Flask** : YOLOv5 모델을 서빙할 Python 서버 구축.
 
+- **openAI API** : chatGPT 3.5 모델 API를 활용해 꽃말을 기반으로 한 짧은 시 생성.
+
 **[ BACK END ]**
 
 - **Spring Boot** : Run WIth Me Project의 전반적인 Rest Controller 구현.
