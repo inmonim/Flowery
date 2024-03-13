@@ -1,12 +1,17 @@
 with open('.env', 'r', encoding='utf-8') as f:
-    db_con = f.read()
+    conf = f.read()
 
-user = db_con.user
-password = db_con.password
-host = db_con.host
-port = db_con.port
-database = db_con.database
+user = conf.user
+password = conf.password
+host = conf.host
+port = conf.port
+database = conf.database
 
 SQLALCHEMY_DATABASE_URI = f'mysql+pymysql://{user}:{password}@{host}:{port}/{database}?charset=utf8mb4'
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 UPLOAD_FOLDER = 'tmp'
+
+AWS_ACCESS_KEY_ID = conf.aws_access_key_id
+AWS_SECRET_ACCESS_KEY = conf.aws_secret_access_key
+BUCKET_NAME = conf.AWS_BUCKEY_NAME
+LOCAL = conf.AWS_LOCAL

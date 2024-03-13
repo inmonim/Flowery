@@ -4,7 +4,6 @@ from sqlalchemy.orm import relationship
 
 from datetime import datetime
 
-
 class Flowers(db.Model):
     
     __tablename__ = 'flowers'

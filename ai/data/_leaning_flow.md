@@ -131,5 +131,3 @@
 ### yolo 다운
 
 git clone https://github.com/ultralytics/yolov5.git
-
-###

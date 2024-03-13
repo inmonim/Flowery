@@ -11,12 +11,11 @@ from flowery import db
 
 bp = Blueprint('object_detect', __name__, url_prefix='/flask/')
 
-s3 = boto3.client('s3',
-                  aws_access_key_id='AKIA3FXULGKK3QVK3SOY',
-                  aws_secret_access_key='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')
+from ...config import AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, BUCKET_NAME, LOCAL
 
-BUCKET_NAME = 's3.bucket.flowery.youngil'
-LOCAL = 'ap-northeast-2'
+s3 = boto3.client('s3',
+                  aws_access_key_id=AWS_ACCESS_KEY_ID,
+                  aws_secret_access_key=AWS_SECRET_ACCESS_KEY)
 
 @bp.route('/objectDetect', methods=['POST'])
 def object_detect():
@@ -36,8 +35,7 @@ def object_detect():
                             headers=({'Access-Control-Allow-Origin': '*'}),
                             content_type='application/json; charset=utf-8',
                             status=415)
-            
-        
+
         flower_result = {}
         for pred in img_result.pred[0]:
             flower_class = int(pred[5])
@@ -132,7 +130,7 @@ def landing_object_detect():
         return response
 
 
-
+# 판매 내역 저장
 @bp.route('/saveSales', methods=['POST'])
 def save_sales():
     if request.method == 'POST':
@@ -152,7 +150,6 @@ def save_sales():
             sales.count = v
         
             db.session.add(sales)
-            db.session.commit()
             
             flower_id_list.append(flower_id)
         

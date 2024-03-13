@@ -5,15 +5,36 @@ from PIL import Image
 
 from sqlalchemy import create_engine, Table, MetaData, text
 
-
-user = 'root'
-password = 'Sw3lOZMzHc'
-host = 'k8e107.p.ssafy.io'
-port = 3306
-database = 'flowery'
-
-SQLALCHEMY_DATABASE_URI = f'mysql+pymysql://{user}:{password}@{host}:{port}/{database}?charset=utf8mb4'
+# DB 연결 정보 갱신
+from ...config import SQLALCHEMY_DATABASE_URI
 engine = create_engine(url=SQLALCHEMY_DATABASE_URI)
+
+# ===시작과 동시에 메모리에 바운드, 객체를 생성하는 함수===
+def get_flower_lang(engine=engine):
+    
+    flower_lang_dict = {}
+    flower_mean_id_dict = {}
+    
+    with engine.connect() as conn:
+        results = conn.execute(text("SELECT * FROM meaning"))
+        
+    for mean_id, flower_id, flower_lang in results:
+        
+        if flower_lang_dict.get(flower_id):
+            flower_lang_dict[flower_id].append(flower_lang)
+        
+        else:
+            flower_lang_dict[flower_id] = [flower_lang]
+        
+        if flower_mean_id_dict.get(flower_id):
+            flower_mean_id_dict[flower_id].append(mean_id)
+        else:
+            flower_mean_id_dict[flower_id] = [mean_id]
+            
+    
+    return (flower_lang_dict, flower_mean_id_dict)
+
+flower_lang, flower_mean_id_dict = get_flower_lang()
 
 
 def get_flower_dict(engine=engine):
@@ -22,7 +43,8 @@ def get_flower_dict(engine=engine):
         metadata = MetaData()
         flowers_table = Table('flowers', metadata, autoload_with=conn)
         flowers = conn.execute(flowers_table.select())
-        
+    
+    # db에 존재하는 꽃 객체와 ai 모델의 객체 인덱스 정보가 불일치하므로, 맞춰주기
     model_flower_label = {
         0 : '장미',
         1 : 'empty',
@@ -38,13 +60,6 @@ def get_flower_dict(engine=engine):
         11 : '알스트로메리아',
         12 : '수국',
         13 : '작약',
-        14 : '스토크',
-        15 : '프리지아',
-        16 : '라넌큘러스',
-        17 : 'empty',
-        18 : '버터플라이',
-        19 : '칼라',
-        20 : '금어초',
     }
     
     flower_list = [[k,v] for k,v in flowers]
@@ -53,23 +68,27 @@ def get_flower_dict(engine=engine):
     return [model_flower_label, flower_name_dict]
 
 model_flower_label, flower_name_dict = get_flower_dict()
-
-
-
 model = torch.hub.load('ultralytics/yolov5', 'custom', path=f'./flowery/module/main_5_9.pt', force_reload=True, trust_repo=True)
 
+# ==== 호출 함수 ====
+
 def get_result(image_path, model=model):
+    
+    # yolo 모델의 검출 정확성을 위해 이미지 리사이징
+    # yolo 모델의 학습 이미지 크기가 바뀔 경우 변환할 필요 있음.
+    IMG_SIZE = 640
     try:
         img = Image.open(image_path)
         x, y = img.size
         L, M = max(x,y), min(x,y)
         if x == L:
-            img = img.resize([640,int(640/L * M)])
+            img = img.resize([IMG_SIZE,int(IMG_SIZE/L * M)])
         else:
-            img = img.resize([int(640/L * M), 640])
+            img = img.resize([int(IMG_SIZE/L * M), IMG_SIZE])
     except:
         return 'img_break'
     
+    # 객체 검출
     results = model(img)
     if len(results.xywh[0]):
         
@@ -99,6 +118,12 @@ def get_result(image_path, model=model):
 
     return results
 
+def get_message_id(reservation_id, engine=engine):
+    with engine.connect() as conn:
+        message_id = conn.execute(text(f"SELECT message_id FROM reservation WHERE reservation_id={reservation_id}")).one()[0]
+    return message_id
+
+# ==== gpt api ====
 
 import openai
 
@@ -135,36 +160,3 @@ def make_poem(keyword1, keyword2, reservation_id, engine=engine):
         conn.execute(text(f"UPDATE messages SET poem = '{poem}' WHERE message_id = '{message_id}'"))
         
         conn.commit()
-
-
-def get_flower_lang(engine=engine):
-    
-    flower_lang_dict = {}
-    flower_mean_id_dict = {}
-    
-    with engine.connect() as conn:
-        results = conn.execute(text("SELECT * FROM meaning"))
-        
-    for mean_id, flower_id, flower_lang in results:
-        
-        if flower_lang_dict.get(flower_id):
-            flower_lang_dict[flower_id].append(flower_lang)
-        
-        else:
-            flower_lang_dict[flower_id] = [flower_lang]
-        
-        if flower_mean_id_dict.get(flower_id):
-            flower_mean_id_dict[flower_id].append(mean_id)
-        else:
-            flower_mean_id_dict[flower_id] = [mean_id]
-            
-    
-    return (flower_lang_dict, flower_mean_id_dict)
-
-flower_lang, flower_mean_id_dict = get_flower_lang()
-
-
-def get_message_id(reservation_id, engine=engine):
-    with engine.connect() as conn:
-        message_id = conn.execute(text(f"SELECT message_id FROM reservation WHERE reservation_id={reservation_id}")).one()[0]
-    return message_id
