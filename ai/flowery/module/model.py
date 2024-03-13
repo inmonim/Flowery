@@ -102,14 +102,12 @@ def get_result(image_path, model=model):
 
 import openai
 
-# current_directory = os.path.dirname(__file__)
-# file_path = os.path.join(current_directory, 'openai_api_key.txt')
+current_directory = os.path.dirname(__file__)
+file_path = os.path.join(current_directory, 'openai_api_key.txt')
 
-# with open(file_path, 'r') as f:
-#     api_key = f.readline()
-
-api_key = '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'
-org_id = 'org-Qet9aDzXT2R98RAzCWgbUKtR'
+with open(file_path, 'r') as f:
+    api_key = f.readline()
+    org_id = f.readline()
 
 openai.organization = org_id
 openai.api_key = api_key
@@ -137,7 +135,8 @@ def make_poem(keyword1, keyword2, reservation_id, engine=engine):
         conn.execute(text(f"UPDATE messages SET poem = '{poem}' WHERE message_id = '{message_id}'"))
         
         conn.commit()
-    
+
+
 def get_flower_lang(engine=engine):
     
     flower_lang_dict = {}
